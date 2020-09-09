@@ -11,7 +11,12 @@ export const configureStore = () => {
 
   const store = toolkitConfigureStore({
     reducer: rootReducer,
-    middleware: [loggerMiddleware, ...getDefaultMiddleware()], // redux-thunk is added by default
+    middleware: [
+      loggerMiddleware,
+      ...getDefaultMiddleware({
+        serializableCheck: false,
+      }),
+    ], // redux-thunk is added by default
     preloadedState, //initialState
   });
 

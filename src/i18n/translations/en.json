@@ -1,1 +1,25 @@
-{}
+{
+  "landingScreen": {
+    "weclomeText": "Welcome",
+    "getStartedButton": "Get Started",
+    "RequestInviteButton": "Request An Invitation"
+  },
+  "requestInviteScreen": {
+    "headerText": "Request An Invitation",
+    "formHeaderText": "Please fill out the form.",
+    "emailField": "Email *",
+    "linkedinProfile": "LinkedIn Profile URL *",
+    "angelListProfile": "AngelList Profile URL",
+    "submitButton": "Submit Request",
+    "investor": "Investor",
+    "enterpreneur": "Enterpreneur"
+  },
+  "validator": {
+    "email_invalid": "Invalid email",
+    "email_required": "Email is required",
+    "url_not_valid": "Invalid URL",
+    "linkedIn_url_required": "LinkedIn URL is required",
+    "linkedIn_url_not_valid": "Please enter a valid LinkedIn profile URL",
+    "angelList_url_not_valid": "Please enter a valid AngelList profile URL"
+  }
+}

@@ -8,7 +8,13 @@
  npm install
 ```
 
-2. Start the Expo server:
+2. Set the environment variables by running:
+
+```
+cp env.dev .env
+```
+
+3. Start the Expo server:
 
 ```
 npm start
@@ -43,3 +49,6 @@ Once you have Android Studio/Xcode you can create a virtual device (emulator) an
 2. [React Redux documentation](https://react-redux.js.org/introduction/quick-start)
 3. [Redux Toolkit API documentation](https://redux-toolkit.js.org/api/configureStore)
 4. [React Navigation documentation](https://reactnavigation.org/docs/getting-started)
+5. [NativeBase documentation](https://docs.nativebase.io/Components.html#Components)
+6. [Formik documentation](https://formik.org/docs/overview)
+7. [Yup documentation](https://github.com/jquense/yup)
