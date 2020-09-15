@@ -6,8 +6,11 @@
  * https://github.com/erikras/ducks-modular-redux
  */
 import { combineReducers } from "redux";
+import requestInviteSlice from "./requestInvite";
 
-const appReducer = combineReducers({});
+const appReducer = combineReducers({
+  requestInvite: requestInviteSlice,
+});
 
 export const rootReducer = (state, action) => {
   return appReducer(state, action);
