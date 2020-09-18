@@ -32,7 +32,7 @@ export const requestInvite = (data) => {
     dispatch(requestInviteSlice.actions.requestInvite());
 
     axios
-      .post(`${API_URL}/invitation-requests`, data)
+      .post(`${API_URL}/public/invitation-requests`, data)
       .then((r) => {
         return r.data;
       })

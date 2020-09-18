@@ -1,12 +1,13 @@
 export const colors = {
   mainColor: "white",
-  secondaryColor: "#1179E6", // blue
+  secondaryColor: "#1A82EF", // blue
   tertiaryColor: "#004a85", // dark blue
   mainText: "#3e3e3e", // dark gray
+  secondaryText: "#d9d5dc", // light gray
   darkText: "#262F3E",
-  lightText: "white",
-  mainButton: "#1179E6", // blue, same as secondaryColor
+  lightText: "#8F8F8F",
+  mainButton: "#1A82EF", // blue, same as secondaryColor
   secondaryButton: "white",
   mainButtonText: "white",
-  secondaryButtonText: "#1179E6", // blue, same as secondaryColor
+  secondaryButtonText: "#1A82EF", // blue, same as secondaryColor
 };
