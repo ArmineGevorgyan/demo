@@ -18,6 +18,12 @@
     "investor": "Investor",
     "enterpreneur": "Enterpreneur"
   },
+  "requestInviteSuccess": {
+    "congratulations": "Congratulations",
+    "contextHeading": "Your request has been sent successfully.",
+    "context": "In case of passing the initial screening you will receive an invite link to your email within 7 days",
+    "OKButton": "OK"
+  },
   "validator": {
     "email_invalid": "Please input a valid email address",
     "email_required": "Email is required",

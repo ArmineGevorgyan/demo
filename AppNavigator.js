@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RequestInviteScreen from "./src/screens/RequestInviteScreen";
 import LandingScreen from "./src/screens/LandingScreen";
 import { headerStyles } from "./src/styles/baseStylesheet";
+import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
 
 class AppNavigator extends Component {
   render() {
@@ -28,6 +29,13 @@ class AppNavigator extends Component {
             }}
             name="RequestAnInvite"
             component={RequestInviteScreen}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="RequestInviteSuccess"
+            component={RequestInviteSuccess}
           />
         </Stack.Navigator>
       </NavigationContainer>

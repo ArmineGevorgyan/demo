@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import SwitchSelector from "react-native-switch-selector";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Item, Input, Icon, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
@@ -11,12 +10,21 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import schema from "../validation/requestInviteSchema";
 import Validation from "../validation";
-import { requestInvite } from "../redux/ducks/requestInvite";
 import WelcomeHeader from "../components/welcomeHeader";
 import Background from "../components/background";
 import constants from "../constants";
+import { requestInvite } from "../redux/ducks/requestInvite";
 
 class RequestInviteScreen extends Component {
+  componentDidUpdate(prevProps) {
+    const { request, navigation } = this.props;
+
+    if (!prevProps.request && request) {
+      navigation.pop();
+      navigation.navigate("RequestInviteSuccess");
+    }
+  }
+
   onSubmit = (values) => {
     const { requestInvite } = this.props;
 
@@ -25,7 +33,6 @@ class RequestInviteScreen extends Component {
 
   render() {
     const { t } = this.props;
-
     return (
       <Content style={baseStylesheet.baseContainer}>
         <WelcomeHeader />
@@ -145,7 +152,8 @@ class RequestInviteScreen extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {};
+  const request = state.requestInvite.request;
+  return { request };
 };
 
 const mapDispatchToProps = (dispatch) => {
