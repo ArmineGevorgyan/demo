@@ -1,22 +1,20 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Item, Input, Icon } from "native-base";
+import { Item, Input, Icon, Content } from "native-base";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import Validation from "../validation";
 import { checkEmailStatus } from "../redux/ducks/authentication";
 import schema from "../validation/authenticationSchema";
+import WelcomeHeader from "../components/welcomeHeader";
+import Background from "../components/background";
+import Copyright from "../components/copyright";
+import constants from "../constants";
 
 class LandingScreen extends Component {
   componentDidUpdate(prevProps) {
@@ -55,68 +53,65 @@ class LandingScreen extends Component {
     const { t } = this.props;
 
     return (
-      <KeyboardAvoidingView style={baseStylesheet.baseContainer}>
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.weclomeText}>
-            {t("landingScreen.weclomeTitle")}
-          </Text>
-          <View style={styles.subtitleContainer}>
-            <Text style={[styles.subtitleText, styles.boldText]}>
-              {t("landingScreen.Draper") + " "}
-            </Text>
-            <Text style={styles.subtitleText}>{t("landingScreen.Rhino")}</Text>
+      <Content style={baseStylesheet.baseContainer}>
+        <WelcomeHeader />
+        <Background minHeight={constants.blueHeaderContentHeight}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={require("../../assets/logo.png")}
+              style={styles.logo}
+            />
           </View>
-        </View>
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.logo}
-            source={require("../../assets/logo.png")}
-          />
-        </View>
-        <Formik
-          initialValues={{
-            email: "",
-          }}
-          onSubmit={this.onSubmit}
-          validationSchema={schema}
-        >
-          {(props) => {
-            const values = props.values;
-            return (
-              <Validation name="email" showMessage={true}>
-                <Item rounded style={baseStylesheet.inlineButtonInputItem}>
-                  <Icon
-                    style={baseStylesheet.icon}
-                    name="mail"
-                    type="Feather"
-                  />
-                  <Input
-                    style={baseStylesheet.inputField}
-                    placeholder={t("landingScreen.emailField")}
-                    placeholderTextColor={colors.lightText}
-                    value={values.email}
-                    onChangeText={props.handleChange("email")}
-                  />
-                  <View style={styles.submitButton}>
-                    <TouchableOpacity onPress={props.handleSubmit}>
-                      <Text style={baseStylesheet.inlineButton}>
-                        <Icon
-                          style={styles.icon}
-                          name="arrow-right"
-                          type="Feather"
-                        />
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Item>
-              </Validation>
-            );
-          }}
-        </Formik>
-        <View style={styles.copyrightContainer}>
-          <Text style={styles.copyright}>{t("landingScreen.copyright")}</Text>
-        </View>
-      </KeyboardAvoidingView>
+          <View style={baseStylesheet.paddedContent}>
+            <View>
+              <Text style={baseStylesheet.mainContentText}>
+                {t("landingScreen.formContext")}
+              </Text>
+            </View>
+            <Formik
+              initialValues={{
+                email: "",
+              }}
+              onSubmit={this.onSubmit}
+              validationSchema={schema}
+            >
+              {(props) => {
+                const values = props.values;
+                return (
+                  <Validation name="email" showMessage={true}>
+                    <Item rounded style={baseStylesheet.inlineButtonInputItem}>
+                      <Icon
+                        style={baseStylesheet.icon}
+                        name="mail"
+                        type="Feather"
+                      />
+                      <Input
+                        style={baseStylesheet.inputField}
+                        placeholder={t("landingScreen.emailField")}
+                        placeholderTextColor={colors.lightText}
+                        value={values.email}
+                        onChangeText={props.handleChange("email")}
+                      />
+                      <View style={styles.submitButton}>
+                        <TouchableOpacity onPress={props.handleSubmit}>
+                          <Text style={baseStylesheet.inlineButton}>
+                            <Icon
+                              style={styles.icon}
+                              name="arrow-right"
+                              type="Feather"
+                            />
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </Item>
+                  </Validation>
+                );
+              }}
+            </Formik>
+          </View>
+          <Copyright />
+        </Background>
+      </Content>
     );
   }
 }
@@ -145,51 +140,17 @@ export default compose(
 )(LandingScreen);
 
 const styles = StyleSheet.create({
-  welcomeContainer: {
-    justifyContent: "flex-end",
-    marginTop: 50,
-    marginBottom: 20,
-    alignItems: "center",
-  },
-  weclomeText: {
-    textAlign: "center",
-    fontSize: 40,
-    fontFamily: "sans-serif-light",
-    color: colors.mainText,
-  },
-  subtitleText: {
-    fontSize: 34,
-    textAlign: "center",
-    fontFamily: "sans-serif-light",
-    color: colors.mainText,
-  },
-  subtitleContainer: {
-    flexDirection: "row",
-  },
-  boldText: {
-    fontWeight: "bold",
-  },
   imageContainer: {
     alignItems: "center",
-    marginTop: 20,
-    marginBottom: 50,
+    marginTop: "-10%",
+    marginBottom: "9%",
   },
   logo: {
-    width: 150,
-    height: 155,
+    width: 146,
+    height: 150,
   },
   submitButton: {
     minWidth: 30,
-  },
-  copyrightContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.mainColor,
-    marginTop: 100,
-  },
-  copyright: {
-    textAlign: "center",
-    color: colors.lightText,
   },
   icon: { color: "white", fontSize: 20 },
 });

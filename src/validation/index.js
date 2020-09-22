@@ -59,16 +59,17 @@ export default compose(connect)(Validation);
 const styles = StyleSheet.create({
   errorContainer: {
     flexDirection: "row",
+    marginLeft: 20,
   },
   error: {
     color: "red",
-    width: "85%",
+    width: "100%",
     marginLeft: 5,
-    fontSize: 15,
+    fontSize: 12,
   },
 
   alertIcon: {
-    fontSize: 17,
+    fontSize: 15,
     color: "red",
   },
 

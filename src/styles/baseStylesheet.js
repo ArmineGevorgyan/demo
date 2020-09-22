@@ -3,24 +3,31 @@ import { colors } from "./colors";
 
 export const baseStylesheet = StyleSheet.create({
   baseContainer: {
-    marginTop: 10,
+    backgroundColor: colors.mainColor,
+  },
+
+  content: {
     flex: 1,
-    padding: 15,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.mainColor,
   },
 
+  paddedContent: {
+    padding: 15,
+  },
+
   mainButton: {
     backgroundColor: colors.mainButton,
     color: colors.mainButtonText,
-    padding: 11,
+    padding: 15,
     marginBottom: 10,
     marginTop: 15,
-    borderRadius: 5,
+    borderRadius: 6,
     textAlign: "center",
     textTransform: "uppercase",
-    fontSize: 15,
+    fontFamily: "montserrat-semi-bold",
+    fontSize: 16,
   },
 
   inlineButton: {
@@ -30,21 +37,22 @@ export const baseStylesheet = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
     textTransform: "uppercase",
-    fontWeight: "bold",
-    padding: 6,
-    marginTop: 2,
+    fontFamily: "montserrat-semi-bold",
+    padding: 12,
+    marginTop: 4,
+    marginBottom: 4,
     marginRight: 4,
     minWidth: 70,
-    height: 34,
-    borderRadius: 17,
+    height: 44,
+    borderRadius: 25,
   },
 
   inlineButtonInputItem: {
     marginTop: 3,
-    marginBottom: 5,
+    marginBottom: 15,
     paddingLeft: 10,
     width: "100%",
-    height: 40,
+    height: 50,
     backgroundColor: "white",
 
     borderColor: "transparent",
@@ -60,26 +68,27 @@ export const baseStylesheet = StyleSheet.create({
 
   mainContentText: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
     color: colors.mainText,
-    marginBottom: 20,
+    marginBottom: "8%",
   },
 
   largeHeadingText: {
     textAlign: "center",
     fontSize: 30,
-    fontFamily: "sans-serif-light",
+    fontFamily: "montserrat-light",
     color: colors.mainText,
     marginBottom: 20,
   },
 
   inputItem: {
     marginTop: 10,
-    marginBottom: 5,
+    marginBottom: 10,
     paddingRight: 20,
     paddingLeft: 10,
     width: "100%",
-    height: 40,
+    height: 50,
     backgroundColor: "white",
 
     borderColor: "transparent",
@@ -94,13 +103,20 @@ export const baseStylesheet = StyleSheet.create({
   },
 
   inputField: {
-    fontSize: 15,
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
+    width: 100,
   },
 
   icon: {
     color: colors.lightText,
-    fontSize: 17,
-    paddingRight: 0,
+    fontSize: 20,
+  },
+
+  blueHeader: {
+    width: "100%",
+    flex: 1,
+    height: 204,
   },
 });
 

@@ -5,6 +5,7 @@
     "Rhino": "Rhino",
     "emailField": "Email",
     "weclomeSubtitle": "Draper Rhino",
+    "formContext": "Please enter the email your Draper Rhino invitation was sent to.",
     "copyright": "Copyright 2020. Draper Rhino. \n\r  All Right’s Reserved."
   },
   "requestInviteScreen": {
