@@ -3,10 +3,18 @@ import { colors } from "./colors";
 
 export const baseStylesheet = StyleSheet.create({
   baseContainer: {
+    backgroundColor: colors.mainColor,
+  },
+
+  content: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.mainColor,
+  },
+
+  paddedContent: {
+    padding: 15,
   },
 
   mainButton: {
@@ -14,32 +22,101 @@ export const baseStylesheet = StyleSheet.create({
     color: colors.mainButtonText,
     padding: 15,
     marginBottom: 10,
-    marginTop: 10,
-    borderRadius: 5,
+    marginTop: 15,
+    borderRadius: 6,
     textAlign: "center",
     textTransform: "uppercase",
-    fontWeight: "bold",
+    fontFamily: "montserrat-semi-bold",
+    fontSize: 16,
   },
 
-  secondaryButton: {
-    backgroundColor: colors.secondaryButton,
-    color: colors.secondaryButtonText,
-    padding: 15,
-    marginBottom: 10,
-    marginTop: 10,
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: colors.secondaryButtonText,
+  inlineButton: {
+    backgroundColor: colors.mainButton,
+    color: colors.mainButtonText,
+    justifyContent: "center",
+    alignItems: "center",
     textAlign: "center",
     textTransform: "uppercase",
-    fontWeight: "bold",
+    fontFamily: "montserrat-semi-bold",
+    padding: 12,
+    marginTop: 4,
+    marginBottom: 4,
+    marginRight: 4,
+    minWidth: 70,
+    height: 44,
+    borderRadius: 25,
+  },
+
+  inlineButtonInputItem: {
+    marginTop: 3,
+    marginBottom: 15,
+    paddingLeft: 10,
+    width: "100%",
+    height: 50,
+    backgroundColor: "white",
+
+    borderColor: "transparent",
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    borderLeftWidth: 0,
+    shadowColor: "#000",
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 3,
   },
 
   mainContentText: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
     color: colors.mainText,
-    marginBottom: 30,
+    marginBottom: "8%",
+  },
+
+  largeHeadingText: {
+    textAlign: "center",
+    fontSize: 30,
+    fontFamily: "montserrat-light",
+    color: colors.mainText,
+    marginBottom: 20,
+  },
+
+  inputItem: {
+    marginTop: 10,
+    marginBottom: 10,
+    paddingRight: 20,
+    paddingLeft: 10,
+    width: "100%",
+    height: 50,
+    backgroundColor: "white",
+
+    borderColor: "transparent",
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    borderLeftWidth: 0,
+    shadowColor: "#000",
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+
+  inputField: {
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
+    width: 100,
+  },
+
+  icon: {
+    color: colors.lightText,
+    fontSize: 20,
+  },
+
+  blueHeader: {
+    width: "100%",
+    flex: 1,
+    height: 204,
   },
 });
 

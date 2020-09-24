@@ -7,9 +7,11 @@
  */
 import { combineReducers } from "redux";
 import requestInviteSlice from "./requestInvite";
+import authSlice from "./authentication";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
+  authentication: authSlice,
 });
 
 export const rootReducer = (state, action) => {

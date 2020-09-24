@@ -2,6 +2,8 @@
 
 ### Run React Native App
 
+Prerequisites: NodeJS
+
 1. Go into the project folder and install the dependencies:
 
 ```
@@ -26,6 +28,8 @@ You will be given a QR code that can be used to run the app on a physical device
 You can also run the application in the browser by typing `w` in the expo terminal.
 
 ### Test the React Native App on a phone
+
+When testing on a device with the backend server running locally, you need to change the `API_URL` in the `.env` file as follows: replace `localhost` with the ip address that expo gives you on your network. You can see this address both in the expo terminal and the Metro builder tab.
 
 1. Download `Expo Client` on Play Store / App Store
 2. Make sure you are on the same network as the Expo server

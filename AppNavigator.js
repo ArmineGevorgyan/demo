@@ -22,8 +22,9 @@ class AppNavigator extends Component {
           />
           <Stack.Screen
             options={{
-              title: t("requestInviteScreen.headerText"),
-              ...headerStyles,
+              headerShown: false,
+              // title: t("requestInviteScreen.headerText"),
+              // ...headerStyles,
             }}
             name="RequestAnInvite"
             component={RequestInviteScreen}

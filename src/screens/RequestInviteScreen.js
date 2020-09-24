@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import SwitchSelector from "react-native-switch-selector";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Item, Input } from "native-base";
+import { Item, Input, Icon, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -12,6 +12,9 @@ import { colors } from "../styles/colors";
 import schema from "../validation/requestInviteSchema";
 import Validation from "../validation";
 import { requestInvite } from "../redux/ducks/requestInvite";
+import WelcomeHeader from "../components/welcomeHeader";
+import Background from "../components/background";
+import constants from "../constants";
 
 class RequestInviteScreen extends Component {
   onSubmit = (values) => {
@@ -24,90 +27,119 @@ class RequestInviteScreen extends Component {
     const { t } = this.props;
 
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"} // comment this out when testing in the web browser, otherwise you will get a "Platform is not defined" error
-        style={baseStylesheet.baseContainer}
-      >
-        <Formik
-          initialValues={{
-            email: "",
-            linkedinProfile: "",
-            angelListProfile: "",
-            isEntrepreneur: false,
-          }}
-          onSubmit={this.onSubmit}
-          validationSchema={schema}
-        >
-          {(props) => {
-            const values = props.values;
-            return (
-              <View
-                style={[baseStylesheet.baseContainer, styles.formContainer]}
-              >
-                <Text style={baseStylesheet.mainContentText}>
-                  {t("requestInviteScreen.formHeaderText")}
-                </Text>
-
-                <SwitchSelector
-                  style={[styles.switchSelector]}
-                  initial={0}
-                  onPress={() =>
-                    (values.isEntrepreneur = !values.isEntrepreneur)
-                  }
-                  textColor={colors.darkText}
-                  selectedColor={colors.lightText}
-                  buttonColor={colors.mainButton}
-                  borderColor={colors.secondaryColor}
-                  hasPadding
-                  options={[
-                    { label: t("requestInviteScreen.investor"), value: false },
-                    {
-                      label: t("requestInviteScreen.enterpreneur"),
-                      value: true,
-                    },
-                  ]}
-                />
-
-                <Validation name="email" showMessage={true}>
-                  <Item style={styles.inputField}>
-                    <Input
-                      placeholder={t("requestInviteScreen.emailField")}
-                      value={values.email}
-                      onChangeText={props.handleChange("email")}
+      <Content style={baseStylesheet.baseContainer}>
+        <WelcomeHeader />
+        <Background minHeight={constants.blueHeaderContentHeight}>
+          <Formik
+            initialValues={{
+              email: "",
+              linkedinProfile: "",
+              angelListProfile: "",
+              isEntrepreneur: false,
+            }}
+            onSubmit={this.onSubmit}
+            validationSchema={schema}
+          >
+            {(props) => {
+              const values = props.values;
+              return (
+                <View style={styles.formContainer}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      style={styles.logo}
+                      source={require("../../assets/logo.png")}
                     />
-                  </Item>
-                </Validation>
-                <Validation name="linkedinProfile" showMessage={true}>
-                  <Item style={styles.inputField}>
-                    <Input
-                      placeholder={t("requestInviteScreen.linkedinProfile")}
-                      value={values.linkedinProfile}
-                      onChangeText={props.handleChange("linkedinProfile")}
-                    />
-                  </Item>
-                </Validation>
-                <Validation name="angelListProfile" showMessage={true}>
-                  <Item style={styles.inputField}>
-                    <Input
-                      placeholder={t("requestInviteScreen.angelListProfile")}
-                      value={values.angelListProfile}
-                      onChangeText={props.handleChange("angelListProfile")}
-                    />
-                  </Item>
-                </Validation>
+                  </View>
+                  <Text style={baseStylesheet.largeHeadingText}>
+                    {t("requestInviteScreen.formHeaderText")}
+                  </Text>
 
-                <View style={[styles.inputField, styles.submitButton]}>
-                  <TouchableOpacity onPress={props.handleSubmit}>
-                    <Text style={baseStylesheet.mainButton}>
-                      {t("requestInviteScreen.submitButton")}
-                    </Text>
-                  </TouchableOpacity>
+                  <SwitchSelector
+                    style={[styles.switchSelector]}
+                    initial={0}
+                    onPress={() =>
+                      (values.isEntrepreneur = !values.isEntrepreneur)
+                    }
+                    textColor={colors.darkText}
+                    selectedColor={colors.mainButtonText}
+                    buttonColor={colors.mainButton}
+                    borderColor={colors.lightBorder}
+                    height={50}
+                    fontSize={15}
+                    hasPadding
+                    options={[
+                      {
+                        label: t("requestInviteScreen.investor"),
+                        value: false,
+                      },
+                      {
+                        label: t("requestInviteScreen.enterpreneur"),
+                        value: true,
+                      },
+                    ]}
+                  />
+                  <Validation name="email" showMessage={true}>
+                    <Item rounded style={baseStylesheet.inputItem}>
+                      <Icon
+                        style={baseStylesheet.icon}
+                        name="mail"
+                        type="Feather"
+                      />
+                      <Input
+                        style={baseStylesheet.inputField}
+                        placeholder={t("requestInviteScreen.emailField")}
+                        placeholderTextColor={colors.lightText}
+                        value={values.email}
+                        onChangeText={props.handleChange("email")}
+                      />
+                    </Item>
+                  </Validation>
+                  <Validation name="linkedinProfile" showMessage={true}>
+                    <Item rounded style={baseStylesheet.inputItem}>
+                      <Icon
+                        style={baseStylesheet.icon}
+                        name="linkedin"
+                        type="Feather"
+                      />
+                      <Input
+                        style={baseStylesheet.inputField}
+                        placeholder={t("requestInviteScreen.linkedinProfile")}
+                        placeholderTextColor={colors.lightText}
+                        value={values.linkedinProfile}
+                        onChangeText={props.handleChange("linkedinProfile")}
+                      />
+                    </Item>
+                  </Validation>
+                  <Validation name="angelListProfile" showMessage={true}>
+                    <Item rounded style={baseStylesheet.inputItem}>
+                      <Icon
+                        style={baseStylesheet.icon}
+                        name="angellist"
+                        type="FontAwesome"
+                      />
+                      <Input
+                        style={baseStylesheet.inputField}
+                        placeholder={t("requestInviteScreen.angelListProfile")}
+                        placeholderTextColor={colors.lightText}
+                        value={values.angelListProfile}
+                        onChangeText={props.handleChange("angelListProfile")}
+                      />
+                    </Item>
+                  </Validation>
+
+                  <View style={styles.submitButton}>
+                    <TouchableOpacity onPress={props.handleSubmit}>
+                      <Text style={baseStylesheet.mainButton}>
+                        {t("requestInviteScreen.submitButton")}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            );
-          }}
-        </Formik>
-      </KeyboardAvoidingView>
+              );
+            }}
+          </Formik>
+        </Background>
+      </Content>
     );
   }
 }
@@ -133,25 +165,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  inputField: {
-    width: "90%",
-    marginBottom: 10,
+  imageContainer: {
+    alignItems: "center",
+    marginBottom: 20,
   },
-  toggleField: {
-    width: "85%",
-    marginBottom: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  toggleOption: {
-    fontSize: 17,
-    color: colors.mainText,
+  logo: {
+    width: 100,
+    height: 103,
   },
   submitButton: {
-    marginTop: 20,
+    width: "100%",
   },
   switchSelector: {
-    width: "90%",
-    marginBottom: 20,
+    marginBottom: 25,
+    width: "100%",
+    height: 30,
   },
 });

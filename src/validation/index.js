@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "formik";
 import { compose } from "redux";
 import { StyleSheet, Text } from "react-native";
+import { Icon, View } from "native-base";
 
 class Validation extends Component {
   render() {
@@ -38,10 +39,15 @@ class Validation extends Component {
             },
           });
         })}
-        {showMessage && (
-          <Text style={styles.error}>
-            {errors[name] && touched[name] ? errors[name] : ""}
-          </Text>
+        {showMessage && errors[name] && touched[name] && (
+          <View style={styles.errorContainer}>
+            <Icon
+              style={styles.alertIcon}
+              name="alert-triangle"
+              type="Feather"
+            />
+            <Text style={styles.error}>{errors[name]}</Text>
+          </View>
         )}
       </React.Fragment>
     );
@@ -51,11 +57,20 @@ class Validation extends Component {
 export default compose(connect)(Validation);
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    flexDirection: "row",
+    marginLeft: 20,
+  },
   error: {
     color: "red",
-    width: "90%",
+    width: "100%",
+    marginLeft: 5,
+    fontSize: 12,
+  },
+
+  alertIcon: {
     fontSize: 15,
-    marginBottom: 5,
+    color: "red",
   },
 
   invalid: {
