@@ -4,6 +4,8 @@ import { API_URL } from "../../config";
 
 const initialState = {
   isLoading: false,
+  request: null,
+  isModalOpen: false,
 };
 
 const requestInviteSlice = createSlice({
@@ -13,6 +15,7 @@ const requestInviteSlice = createSlice({
     requestInvite: (state) => ({
       ...state,
       isLoading: true,
+      request: null,
     }),
     requestInviteSuccess: (state, action) => ({
       ...state,
@@ -23,6 +26,8 @@ const requestInviteSlice = createSlice({
       ...state,
       isLoading: false,
       error: action.payload,
+      isModalOpen: false,
+      request: null,
     }),
   },
 });

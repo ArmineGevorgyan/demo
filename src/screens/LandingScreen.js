@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Item, Input, Icon, Content } from "native-base";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";

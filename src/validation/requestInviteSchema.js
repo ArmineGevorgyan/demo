@@ -8,11 +8,11 @@ const requestInviteSchema = Yup.object().shape({
   linkedinProfile: Yup.string()
     .required(i18n.t("validator.linkedIn_url_required"))
     .matches(
-      /^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile)\/([A-Za-z0-9$-_.~])*\s*$/,
+      /^(http(s)?:\/\/)?([\w]+\.)?(linkedin|Linkedin)\.com\/(pub|in|profile)\/[A-Za-z0-9$-_.~]+\s*$/,
       i18n.t("validator.linkedIn_url_not_valid")
     ),
   angelListProfile: Yup.string().matches(
-    /^(http(s)?:\/\/)?([\w]+\.)?angel\.co\/(p|u)\/([A-Za-z0-9$-_.~]*\s*$)/,
+    /^(http(s)?:\/\/)?([\w]+\.)?(angel|Angel)\.co\/(p|u)\/[A-Za-z0-9$-_.~]+\s*$/,
     i18n.t("validator.angelList_url_not_valid")
   ),
 });

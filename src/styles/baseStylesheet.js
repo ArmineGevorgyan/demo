@@ -11,6 +11,7 @@ export const baseStylesheet = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.mainColor,
+    width: "100%",
   },
 
   paddedContent: {
@@ -28,6 +29,20 @@ export const baseStylesheet = StyleSheet.create({
     textTransform: "uppercase",
     fontFamily: "montserrat-semi-bold",
     fontSize: 16,
+  },
+
+  secondaryButton: {
+    backgroundColor: colors.secondaryButton,
+    color: colors.secondaryButtonText,
+    padding: 11,
+    marginBottom: 10,
+    marginTop: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: colors.secondaryButtonText,
+    textAlign: "center",
+    textTransform: "uppercase",
+    fontSize: 15,
   },
 
   inlineButton: {
@@ -99,7 +114,7 @@ export const baseStylesheet = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.5,
     shadowRadius: 2,
-    elevation: 2,
+    elevation: 3,
   },
 
   inputField: {
