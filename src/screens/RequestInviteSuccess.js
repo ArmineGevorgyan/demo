@@ -39,8 +39,11 @@ class RequestInviteSuccess extends Component {
             </Text>
 
             <View style={styles.buttonView}>
-              <TouchableOpacity onPress={() => this.handleClose()}>
-                <Text style={baseStylesheet.secondaryButton}>
+              <TouchableOpacity
+                onPress={() => this.handleClose()}
+                style={baseStylesheet.secondaryButton}
+              >
+                <Text style={baseStylesheet.secondaryButtonText}>
                   {t("requestInviteSuccess.OKButton")}
                 </Text>
               </TouchableOpacity>

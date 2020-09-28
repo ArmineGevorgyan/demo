@@ -12,7 +12,8 @@
     "header": "Invitation",
     "resendButton": "Resend",
     "closeButton": "Close",
-    "context": "We’ve sent the invitation link to your email. \n\r \n\r Do you want us to resend it?"
+    "contextLine1": "We’ve sent the invitation link to your email.",
+    "contextLine2": "Do you want us to resend it?"
   },
   "requestInviteScreen": {
     "headerText": "Request An Invitation",
