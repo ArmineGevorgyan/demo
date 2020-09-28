@@ -9,34 +9,31 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import Validation from "../validation";
 import { checkEmailStatus } from "../redux/ducks/authentication";
+import { openModal } from "../redux/ducks/resendInvite";
 import schema from "../validation/authenticationSchema";
 import WelcomeHeader from "../components/welcomeHeader";
+import ResendInviteModal from "../components/resendInviteModal";
 import Background from "../components/background";
 import Copyright from "../components/copyright";
 import constants from "../constants";
 
 class LandingScreen extends Component {
   componentDidUpdate(prevProps) {
-    const { emailStatus } = this.props;
+    const { emailStatus, openModal } = this.props;
 
     if (!emailStatus) {
       return;
     }
 
     switch (emailStatus.value) {
-      case "REGISTERED":
+      case constants.emailStatus.registered:
         // TODO: navigate to the login screen
         break;
-      case "ACCEPTED":
-        // TODO: navigate to the registration screen
-        break;
-      case "REQUESTED":
-        // TODO: show "Resend invitation link" popup
-        break;
-      case "REJECTED":
-        // TODO: handle REJECTED case
-        break;
-      case "NOT_FOUND":
+      case constants.emailStatus.accepted:
+        return openModal();
+      case constants.emailStatus.requested:
+      case constants.emailStatus.rejected:
+      case constants.emailStatus.notFound:
         return this.props.navigation.navigate("RequestAnInvite");
       default:
     }
@@ -77,33 +74,40 @@ class LandingScreen extends Component {
               {(props) => {
                 const values = props.values;
                 return (
-                  <Validation name="email" showMessage={true}>
-                    <Item rounded style={baseStylesheet.inlineButtonInputItem}>
-                      <Icon
-                        style={baseStylesheet.icon}
-                        name="mail"
-                        type="Feather"
-                      />
-                      <Input
-                        style={baseStylesheet.inputField}
-                        placeholder={t("landingScreen.emailField")}
-                        placeholderTextColor={colors.lightText}
-                        value={values.email}
-                        onChangeText={props.handleChange("email")}
-                      />
-                      <View style={styles.submitButton}>
-                        <TouchableOpacity onPress={props.handleSubmit}>
-                          <Text style={baseStylesheet.inlineButton}>
-                            <Icon
-                              style={styles.icon}
-                              name="arrow-right"
-                              type="Feather"
-                            />
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    </Item>
-                  </Validation>
+                  <React.Fragment>
+                    <ResendInviteModal email={values.email} />
+
+                    <Validation name="email" showMessage={true}>
+                      <Item
+                        rounded
+                        style={baseStylesheet.inlineButtonInputItem}
+                      >
+                        <Icon
+                          style={baseStylesheet.icon}
+                          name="mail"
+                          type="Feather"
+                        />
+                        <Input
+                          style={baseStylesheet.inputField}
+                          placeholder={t("landingScreen.emailField")}
+                          placeholderTextColor={colors.lightText}
+                          value={values.email}
+                          onChangeText={props.handleChange("email")}
+                        />
+                        <View style={styles.submitButton}>
+                          <TouchableOpacity onPress={props.handleSubmit}>
+                            <Text style={baseStylesheet.inlineButton}>
+                              <Icon
+                                style={styles.icon}
+                                name="arrow-right"
+                                type="Feather"
+                              />
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </Item>
+                    </Validation>
+                  </React.Fragment>
                 );
               }}
             </Formik>
@@ -130,6 +134,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     checkEmailStatus: (email) => dispatch(checkEmailStatus(email)),
+    openModal: () => dispatch(openModal()),
   };
 };
 

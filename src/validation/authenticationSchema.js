@@ -3,6 +3,7 @@ import i18n from "../i18n";
 
 const authenticationSchema = Yup.object().shape({
   email: Yup.string()
+    .trim()
     .email(i18n.t("validator.email_invalid"))
     .required(i18n.t("validator.email_required")),
 });

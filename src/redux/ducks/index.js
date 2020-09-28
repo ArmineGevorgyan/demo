@@ -7,10 +7,12 @@
  */
 import { combineReducers } from "redux";
 import requestInviteSlice from "./requestInvite";
+import resendInviteSlice from "./resendInvite";
 import authSlice from "./authentication";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
+  resendInvite: resendInviteSlice,
   authentication: authSlice,
 });
 

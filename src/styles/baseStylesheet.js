@@ -45,6 +45,15 @@ export const baseStylesheet = StyleSheet.create({
     fontSize: 15,
   },
 
+  tertiaryButton: {
+    color: colors.secondaryButtonText,
+    textDecorationLine: "underline",
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "montserrat-semi-bold",
+    textTransform: "uppercase",
+  },
+
   inlineButton: {
     backgroundColor: colors.mainButton,
     color: colors.mainButtonText,
@@ -128,10 +137,10 @@ export const baseStylesheet = StyleSheet.create({
     fontSize: 20,
   },
 
-  blueHeader: {
-    width: "100%",
-    flex: 1,
-    height: 204,
+  modalView: {
+    backgroundColor: colors.mainColor,
+    padding: "12%",
+    borderRadius: 20,
   },
 });
 

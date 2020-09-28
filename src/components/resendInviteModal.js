@@ -1,0 +1,107 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import Modal from "react-native-modal";
+import { withTranslation } from "react-i18next";
+import { baseStylesheet } from "../styles/baseStylesheet";
+import {
+  openModal,
+  closeModal,
+  resendInvite,
+} from "../redux/ducks/resendInvite";
+import DraperRhino from "../../assets/draper-rhino.svg";
+import Email from "../../assets/email.svg";
+
+class ResendInviteModal extends Component {
+  handleResend = () => {
+    const { resendInvite, email } = this.props;
+
+    resendInvite(email);
+  };
+
+  handleCancel = () => {
+    const { closeModal } = this.props;
+
+    closeModal();
+  };
+
+  render() {
+    const { t, isModalOpen } = this.props;
+
+    return (
+      <Modal
+        isVisible={isModalOpen}
+        backdropOpacity={0.5}
+        onBackButtonPress={() => this.handleCancel()}
+      >
+        <View style={baseStylesheet.modalView}>
+          <View style={styles.imageContainer}>
+            <DraperRhino style={styles.draperRhinoImage} />
+          </View>
+          <Text style={styles.header}>{t("resendInviteModal.header")}</Text>
+          <View style={styles.imageContainer}>
+            <Email style={styles.emailImage} />
+          </View>
+          <Text style={baseStylesheet.mainContentText}>
+            {t("resendInviteModal.context")}
+          </Text>
+
+          <View style={styles.buttonView}>
+            <TouchableOpacity onPress={() => this.handleResend()}>
+              <Text style={baseStylesheet.mainButton}>
+                {t("resendInviteModal.resendButton")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity onPress={() => this.handleCancel()}>
+            <Text style={baseStylesheet.tertiaryButton}>
+              {t("resendInviteModal.closeButton")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    );
+  }
+}
+
+const mapStateToProps = (state, props) => {
+  const isModalOpen = state.resendInvite.isModalOpen;
+
+  return {
+    isModalOpen,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openModal: () => dispatch(openModal()),
+    closeModal: () => dispatch(closeModal()),
+    resendInvite: (email) => dispatch(resendInvite(email)),
+  };
+};
+
+export default compose(
+  withTranslation("translations"),
+  connect(mapStateToProps, mapDispatchToProps)
+)(ResendInviteModal);
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    marginBottom: "10%",
+    alignItems: "center",
+  },
+  header: {
+    fontSize: 30,
+    textAlign: "center",
+    fontFamily: "montserrat-light",
+    marginBottom: "10%",
+  },
+  buttonView: {
+    width: "100%",
+    marginBottom: "15%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
+  },
+});
