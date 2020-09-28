@@ -20,11 +20,15 @@ export const baseStylesheet = StyleSheet.create({
 
   mainButton: {
     backgroundColor: colors.mainButton,
-    color: colors.mainButtonText,
     padding: 15,
     marginBottom: 10,
     marginTop: 15,
     borderRadius: 6,
+  },
+
+  mainButtonText: {
+    color: colors.mainButtonText,
+    width: "100%",
     textAlign: "center",
     textTransform: "uppercase",
     fontFamily: "montserrat-semi-bold",
@@ -33,16 +37,28 @@ export const baseStylesheet = StyleSheet.create({
 
   secondaryButton: {
     backgroundColor: colors.secondaryButton,
-    color: colors.secondaryButtonText,
     padding: 11,
-    marginBottom: 10,
     marginTop: 10,
     borderRadius: 5,
     borderWidth: 2,
     borderColor: colors.secondaryButtonText,
+  },
+
+  secondaryButtonText: {
     textAlign: "center",
     textTransform: "uppercase",
     fontSize: 15,
+    color: colors.secondaryButtonText,
+    width: "100%",
+  },
+
+  tertiaryButton: {
+    color: colors.secondaryButtonText,
+    textDecorationLine: "underline",
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "montserrat-semi-bold",
+    textTransform: "uppercase",
   },
 
   tertiaryButton: {
@@ -56,12 +72,8 @@ export const baseStylesheet = StyleSheet.create({
 
   inlineButton: {
     backgroundColor: colors.mainButton,
-    color: colors.mainButtonText,
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center",
-    textTransform: "uppercase",
-    fontFamily: "montserrat-semi-bold",
     padding: 12,
     marginTop: 4,
     marginBottom: 4,
@@ -69,6 +81,14 @@ export const baseStylesheet = StyleSheet.create({
     minWidth: 70,
     height: 44,
     borderRadius: 25,
+  },
+
+  inlineButtonText: {
+    color: colors.mainButtonText,
+    textAlign: "center",
+    textTransform: "uppercase",
+    fontFamily: "montserrat-semi-bold",
+    width: "100%",
   },
 
   inlineButtonInputItem: {
@@ -84,9 +104,12 @@ export const baseStylesheet = StyleSheet.create({
     borderBottomWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
-    shadowColor: "#000",
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
     elevation: 3,
   },
 
@@ -120,9 +143,12 @@ export const baseStylesheet = StyleSheet.create({
     borderBottomWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
-    shadowColor: "#000",
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
     elevation: 3,
   },
 

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import SwitchSelector from "react-native-switch-selector";
-import { Item, Input, Icon, Content } from "native-base";
+import { Item, Input, Icon, Content, Button } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -135,11 +135,14 @@ class RequestInviteScreen extends Component {
                   </Validation>
 
                   <View style={styles.submitButton}>
-                    <TouchableOpacity onPress={props.handleSubmit}>
-                      <Text style={baseStylesheet.mainButton}>
+                    <Button
+                      onPress={props.handleSubmit}
+                      style={baseStylesheet.mainButton}
+                    >
+                      <Text style={baseStylesheet.mainButtonText}>
                         {t("requestInviteScreen.submitButton")}
                       </Text>
-                    </TouchableOpacity>
+                    </Button>
                   </View>
                 </View>
               );

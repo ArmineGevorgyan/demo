@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { Item, Input, Icon, Content } from "native-base";
+import { Item, Input, Icon, Content, Button } from "native-base";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
@@ -94,16 +94,17 @@ class LandingScreen extends Component {
                           value={values.email}
                           onChangeText={props.handleChange("email")}
                         />
-                        <View style={styles.submitButton}>
-                          <TouchableOpacity onPress={props.handleSubmit}>
-                            <Text style={baseStylesheet.inlineButton}>
-                              <Icon
-                                style={styles.icon}
-                                name="arrow-right"
-                                type="Feather"
-                              />
-                            </Text>
-                          </TouchableOpacity>
+                        <View>
+                          <Button
+                            onPress={props.handleSubmit}
+                            style={baseStylesheet.inlineButton}
+                          >
+                            <Icon
+                              style={styles.icon}
+                              name="arrow-right"
+                              type="Feather"
+                            />
+                          </Button>
                         </View>
                       </Item>
                     </Validation>

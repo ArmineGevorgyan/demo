@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Button } from "native-base";
 import Modal from "react-native-modal";
 import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -44,15 +45,21 @@ class ResendInviteModal extends Component {
             <Email style={styles.emailImage} />
           </View>
           <Text style={baseStylesheet.mainContentText}>
-            {t("resendInviteModal.context")}
+            {t("resendInviteModal.contextLine1")}
+          </Text>
+          <Text style={baseStylesheet.mainContentText}>
+            {t("resendInviteModal.contextLine2")}
           </Text>
 
           <View style={styles.buttonView}>
-            <TouchableOpacity onPress={() => this.handleResend()}>
-              <Text style={baseStylesheet.mainButton}>
+            <Button
+              style={baseStylesheet.secondaryButton}
+              onPress={() => this.handleResend()}
+            >
+              <Text style={baseStylesheet.secondaryButtonText}>
                 {t("resendInviteModal.resendButton")}
               </Text>
-            </TouchableOpacity>
+            </Button>
           </View>
 
           <TouchableOpacity onPress={() => this.handleCancel()}>
