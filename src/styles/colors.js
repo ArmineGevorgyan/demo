@@ -11,8 +11,10 @@ export const colors = {
   secondaryButton: "white",
   mainButtonText: "white",
   secondaryButtonText: "#1A82EF", // blue, same as secondaryColor
-  disabledInput: "#EFEFEF",
-  disabledSwitch: "#DBDBDB",
+  disabledInput: "#EFEFEF", // gray
+  disabledSwitch: "#DBDBDB", // darker gray
   disabledBorder: "#EBEBEB",
-  disabledText: "#CECECE",
+  disabledText: "#CECECE", // really dark gray
+  offWhite: "#FAFBFC",
+  blueBorder: "#C7D7E6",
 };

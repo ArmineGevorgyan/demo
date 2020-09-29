@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as Linking from "expo-linking";
+import { Text } from "react-native";
 import RequestInviteScreen from "./src/screens/RequestInviteScreen";
 import LandingScreen from "./src/screens/LandingScreen";
 import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
-import * as Linking from "expo-linking";
-import { Text } from "react-native";
+import TermsAndConditionsScreen from "./src/screens/TermsAndConditionsScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -33,6 +34,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="RegistrationScreen"
             component={RegistrationScreen}
+          />
+          <Stack.Screen
+            name="TermsAndConditionsScreen"
+            component={TermsAndConditionsScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

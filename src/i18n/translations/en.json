@@ -40,6 +40,16 @@
     "context": "In case of passing the initial screening you will receive an invite link to your email within 7 days",
     "OKButton": "OK"
   },
+  "termsAndConditionsScreen": {
+    "tcHeader": "Terms & conditions",
+    "ppHeader": "Privacy Policy",
+    "acceptButton": "Accept and get started",
+    "closeButton": "Decline and cancel registration",
+    "confirmCancelHeader": "Are you sure you want to cancel the registration?",
+    "confirmCancelDescription": "All the progress you have made so far will be undone.",
+    "cancelButton": "Cancel",
+    "OKButton": "OK"
+  },
   "validator": {
     "email_invalid": "Please input a valid email address",
     "email_required": "Email is required",

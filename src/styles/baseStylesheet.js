@@ -16,7 +16,7 @@ export const baseStylesheet = StyleSheet.create({
   },
 
   paddedContent: {
-    padding: 15,
+    padding: "5%",
   },
 
   // --------------------- BUTTON STYLES-----------------------
@@ -172,7 +172,7 @@ export const baseStylesheet = StyleSheet.create({
 
   modalView: {
     backgroundColor: colors.mainColor,
-    padding: "12%",
+    padding: "10%",
     borderRadius: 20,
   },
 });
