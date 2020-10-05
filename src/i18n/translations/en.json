@@ -18,8 +18,8 @@
   "requestInviteScreen": {
     "headerText": "Request An Invitation",
     "formHeaderText": "Request Invitation",
-    "emailField": "Email",
-    "linkedinProfile": "LinkedIn Profile URL",
+    "emailField": "Email *",
+    "linkedinProfile": "LinkedIn Profile URL *",
     "angelListProfile": "AngelList Profile URL",
     "submitButton": "Request An Invite",
     "investor": "Investor",

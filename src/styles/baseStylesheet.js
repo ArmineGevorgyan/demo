@@ -152,6 +152,16 @@ export const baseStylesheet = StyleSheet.create({
     elevation: 3,
   },
 
+  disabledInputItem: {
+    marginTop: 10,
+    marginBottom: 10,
+    paddingRight: 20,
+    paddingLeft: 10,
+    width: "100%",
+    height: 50,
+    backgroundColor: colors.disabledInput,
+  },
+
   inputField: {
     fontSize: 16,
     fontFamily: "montserrat-regular",

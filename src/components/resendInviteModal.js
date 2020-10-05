@@ -75,9 +75,11 @@ class ResendInviteModal extends Component {
 
 const mapStateToProps = (state, props) => {
   const isModalOpen = state.resendInvite.isModalOpen;
+  const email = state.authentication.email;
 
   return {
     isModalOpen,
+    email,
   };
 };
 

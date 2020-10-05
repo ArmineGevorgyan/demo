@@ -4,6 +4,7 @@ import { API_URL } from "../../config";
 
 const initialState = {
   isLoading: false,
+  email: "",
   emailStatus: null,
 };
 
@@ -11,7 +12,11 @@ const authSlice = createSlice({
   name: "authentication",
   initialState,
   reducers: {
-    checkEmailStatus: (state) => ({ ...state, isLoading: true }),
+    checkEmailStatus: (state, action) => ({
+      ...state,
+      email: action.payload,
+      isLoading: true,
+    }),
     checkEmailStatusSuccess: (state, action) => ({
       ...state,
       isLoading: false,
@@ -30,7 +35,7 @@ const authReducer = authSlice.reducer;
 
 export const checkEmailStatus = (email) => {
   return (dispatch) => {
-    dispatch(authSlice.actions.checkEmailStatus());
+    dispatch(authSlice.actions.checkEmailStatus(email));
 
     axios
       .get(`${API_URL}/public/invitation-requests/${email}/status`)

@@ -41,8 +41,9 @@ class LandingScreen extends Component {
 
   onSubmit = (values) => {
     const { checkEmailStatus } = this.props;
+    const email = values.email.trim().toLowerCase();
 
-    checkEmailStatus(values.email);
+    checkEmailStatus(email);
   };
 
   render() {
@@ -75,7 +76,7 @@ class LandingScreen extends Component {
                 const values = props.values;
                 return (
                   <React.Fragment>
-                    <ResendInviteModal email={values.email} />
+                    <ResendInviteModal />
 
                     <Validation name="email" showMessage={true}>
                       <Item

@@ -1,39 +1,23 @@
 import React, { Component } from "react";
-import { compose } from "redux";
-import { withTranslation } from "react-i18next";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import RequestInviteScreen from "./src/screens/RequestInviteScreen";
 import LandingScreen from "./src/screens/LandingScreen";
-import { headerStyles } from "./src/styles/baseStylesheet";
 import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
 
 class AppNavigator extends Component {
   render() {
     const Stack = createStackNavigator();
-    const { t } = this.props;
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LandingScreen">
+        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
+          <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen
-            options={{ headerShown: false }}
-            name="LandingScreen"
-            component={LandingScreen}
-          />
-          <Stack.Screen
-            options={{
-              headerShown: false,
-              // title: t("requestInviteScreen.headerText"),
-              // ...headerStyles,
-            }}
             name="RequestAnInvite"
             component={RequestInviteScreen}
           />
           <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
             name="RequestInviteSuccess"
             component={RequestInviteSuccess}
           />
@@ -42,4 +26,4 @@ class AppNavigator extends Component {
     );
   }
 }
-export default compose(withTranslation("translations"))(AppNavigator);
+export default AppNavigator;

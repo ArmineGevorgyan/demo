@@ -32,14 +32,14 @@ class RequestInviteScreen extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, email } = this.props;
     return (
       <Content style={baseStylesheet.baseContainer}>
         <WelcomeHeader />
         <Background minHeight={constants.blueHeaderContentHeight}>
           <Formik
             initialValues={{
-              email: "",
+              email: email,
               linkedinProfile: "",
               angelListProfile: "",
               isEntrepreneur: false,
@@ -86,7 +86,7 @@ class RequestInviteScreen extends Component {
                     ]}
                   />
                   <Validation name="email" showMessage={true}>
-                    <Item rounded style={baseStylesheet.inputItem}>
+                    <Item rounded style={baseStylesheet.disabledInputItem}>
                       <Icon
                         style={baseStylesheet.icon}
                         name="mail"
@@ -97,7 +97,7 @@ class RequestInviteScreen extends Component {
                         placeholder={t("requestInviteScreen.emailField")}
                         placeholderTextColor={colors.lightText}
                         value={values.email}
-                        onChangeText={props.handleChange("email")}
+                        disabled={true}
                       />
                     </Item>
                   </Validation>
@@ -155,8 +155,9 @@ class RequestInviteScreen extends Component {
 }
 
 const mapStateToProps = (state, props) => {
+  const email = state.authentication.email;
   const request = state.requestInvite.request;
-  return { request };
+  return { email, request };
 };
 
 const mapDispatchToProps = (dispatch) => {
