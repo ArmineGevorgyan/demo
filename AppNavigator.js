@@ -4,13 +4,22 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RequestInviteScreen from "./src/screens/RequestInviteScreen";
 import LandingScreen from "./src/screens/LandingScreen";
 import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+import * as Linking from "expo-linking";
+import { Text } from "react-native";
+
+const prefix = Linking.makeUrl("/");
 
 class AppNavigator extends Component {
   render() {
     const Stack = createStackNavigator();
 
+    const linking = {
+      prefixes: [prefix],
+    };
+
     return (
-      <NavigationContainer>
+      <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
         <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen
@@ -20,6 +29,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="RequestInviteSuccess"
             component={RequestInviteSuccess}
+          />
+          <Stack.Screen
+            name="RegistrationScreen"
+            component={RegistrationScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

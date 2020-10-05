@@ -12,4 +12,7 @@ export const colors = {
   mainButtonText: "white",
   secondaryButtonText: "#1A82EF", // blue, same as secondaryColor
   disabledInput: "#EFEFEF",
+  disabledSwitch: "#DBDBDB",
+  disabledBorder: "#EBEBEB",
+  disabledText: "#CECECE",
 };

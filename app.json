@@ -2,6 +2,7 @@
   "expo": {
     "name": "DraperRhino",
     "slug": "DraperRhino",
+    "scheme": "draperrhino",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +16,30 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.draper.draperrhino",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.draper.draperrhino",
+      "versionCode": 1,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.draperrhino.com",
+              "pathPrefix": "/test"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

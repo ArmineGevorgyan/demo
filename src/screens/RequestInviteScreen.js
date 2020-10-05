@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { StyleSheet, Text, View, Image } from "react-native";
-import SwitchSelector from "react-native-switch-selector";
 import { Item, Input, Icon, Content, Button } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
+import SwitchSelector from "../components/switchSelector";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import schema from "../validation/requestInviteSchema";
@@ -62,18 +62,10 @@ class RequestInviteScreen extends Component {
                   </Text>
 
                   <SwitchSelector
-                    style={[styles.switchSelector]}
                     initial={0}
                     onPress={() =>
                       (values.isEntrepreneur = !values.isEntrepreneur)
                     }
-                    textColor={colors.darkText}
-                    selectedColor={colors.mainButtonText}
-                    buttonColor={colors.mainButton}
-                    borderColor={colors.lightBorder}
-                    height={50}
-                    fontSize={15}
-                    hasPadding
                     options={[
                       {
                         label: t("requestInviteScreen.investor"),
@@ -187,10 +179,5 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     width: "100%",
-  },
-  switchSelector: {
-    marginBottom: 25,
-    width: "100%",
-    height: 30,
   },
 });

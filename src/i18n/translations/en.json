@@ -15,6 +15,15 @@
     "contextLine1": "We’ve sent the invitation link to your email.",
     "contextLine2": "Do you want us to resend it?"
   },
+  "registrationScreen": {
+    "formHeaderText": "Registration",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "password": "Password",
+    "passwordConfirmation": "Confirm Password",
+    "emailField": "Email",
+    "submitButton": "Next   "
+  },
   "requestInviteScreen": {
     "headerText": "Request An Invitation",
     "formHeaderText": "Request Invitation",
@@ -34,6 +43,11 @@
   "validator": {
     "email_invalid": "Please input a valid email address",
     "email_required": "Email is required",
+    "password_required": "Password is required",
+    "password_match": "Passwords do not match",
+    "password_rule": "Password should contain at least 8 characters, including both letters and numbers and no accented characters",
+    "first_name_required": "First name is required",
+    "last_name_required": "Last name is required",
     "url_not_valid": "Invalid URL",
     "linkedIn_url_required": "LinkedIn URL is required",
     "linkedIn_url_not_valid": "Please enter a valid LinkedIn profile URL",

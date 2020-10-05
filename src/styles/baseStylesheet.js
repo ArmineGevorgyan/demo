@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { colors } from "./colors";
 
 export const baseStylesheet = StyleSheet.create({
+  // --------------------- CONTAINER STYLES-------------------
   baseContainer: {
     backgroundColor: colors.mainColor,
   },
@@ -18,6 +19,7 @@ export const baseStylesheet = StyleSheet.create({
     padding: 15,
   },
 
+  // --------------------- BUTTON STYLES-----------------------
   mainButton: {
     backgroundColor: colors.mainButton,
     padding: 15,
@@ -61,15 +63,6 @@ export const baseStylesheet = StyleSheet.create({
     textTransform: "uppercase",
   },
 
-  tertiaryButton: {
-    color: colors.secondaryButtonText,
-    textDecorationLine: "underline",
-    textAlign: "center",
-    fontSize: 16,
-    fontFamily: "montserrat-semi-bold",
-    textTransform: "uppercase",
-  },
-
   inlineButton: {
     backgroundColor: colors.mainButton,
     justifyContent: "center",
@@ -91,6 +84,7 @@ export const baseStylesheet = StyleSheet.create({
     width: "100%",
   },
 
+  // --------------------- INPUT STYLES----------------------
   inlineButtonInputItem: {
     marginTop: 3,
     marginBottom: 15,
@@ -111,22 +105,6 @@ export const baseStylesheet = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-  },
-
-  mainContentText: {
-    textAlign: "center",
-    fontSize: 16,
-    fontFamily: "montserrat-regular",
-    color: colors.mainText,
-    marginBottom: "8%",
-  },
-
-  largeHeadingText: {
-    textAlign: "center",
-    fontSize: 30,
-    fontFamily: "montserrat-light",
-    color: colors.mainText,
-    marginBottom: 20,
   },
 
   inputItem: {
@@ -160,6 +138,7 @@ export const baseStylesheet = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: colors.disabledInput,
+    borderColor: "transparent",
   },
 
   inputField: {
@@ -168,6 +147,24 @@ export const baseStylesheet = StyleSheet.create({
     width: 100,
   },
 
+  // --------------------- TEXT STYLES----------------------
+  mainContentText: {
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
+    color: colors.mainText,
+    marginBottom: "8%",
+  },
+
+  largeHeadingText: {
+    textAlign: "center",
+    fontSize: 30,
+    fontFamily: "montserrat-light",
+    color: colors.mainText,
+    marginBottom: 20,
+  },
+
+  // --------------------- OTHER STYLES-------------------
   icon: {
     color: colors.lightText,
     fontSize: 20,

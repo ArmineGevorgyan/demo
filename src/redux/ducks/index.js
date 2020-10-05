@@ -9,11 +9,13 @@ import { combineReducers } from "redux";
 import requestInviteSlice from "./requestInvite";
 import resendInviteSlice from "./resendInvite";
 import authSlice from "./authentication";
+import registrationSlice from "./registration";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
   resendInvite: resendInviteSlice,
   authentication: authSlice,
+  registration: registrationSlice,
 });
 
 export const rootReducer = (state, action) => {
