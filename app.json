@@ -18,7 +18,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.draper.draperrhino",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.0",
+      "scheme": "draperrhino"
     },
     "android": {
       "package": "com.draper.draperrhino",
@@ -26,18 +27,13 @@
       "intentFilters": [
         {
           "action": "VIEW",
-          "autoVerify": true,
-          "data": [
-            {
-              "scheme": "https",
-              "host": "*.draperrhino.com",
-              "pathPrefix": "/test"
-            }
-          ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
+          "data": [{
+            "scheme": "draperrhino"
+            }],
+            "category": [
+              "BROWSABLE",
+              "DEFAULT"
+            ]
         }
       ]
     },
