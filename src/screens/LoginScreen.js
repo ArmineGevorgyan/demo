@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Item, Input, Icon, Button,Content } from "native-base";
+import { Item, Input, Icon, Button, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -20,73 +20,73 @@ class LoginScreen extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.token) {
-      console.log("login success", )
-      //TODO change TODOscreen to CardScreen when ready
-      //this.props.navigation.navigate("TODOscreen"); 
+    const { token, navigation } = this.props;
+
+    if (token) {
+      navigation.navigate("Home");
     }
   }
 
   render() {
-    const { t, hidePassword } = this.props;
+    const { t } = this.props;
 
     return (
       <Background>
         <Content>
-        <WelcomeHeader />
-        <Formik
-          initialValues={{
-            password: "",
-            email: this.props.email,
-          }}
-          validationSchema={schema}
-          onSubmit={this.onSubmit}
-        >
-          {(props) => {
-            return (
-              <View style={styles.formContainer}>
-                <View style={styles.imageContainer}>
-                  <Image
-                    style={styles.logo}
-                    source={require("../../assets/logo.png")}
-                  />
+          <WelcomeHeader />
+          <Formik
+            initialValues={{
+              password: "",
+              email: this.props.email,
+            }}
+            validationSchema={schema}
+            onSubmit={this.onSubmit}
+          >
+            {(props) => {
+              return (
+                <View style={styles.formContainer}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      style={styles.logo}
+                      source={require("../../assets/logo.png")}
+                    />
+                  </View>
+                  <Text style={baseStylesheet.mainContentText}>
+                    {t("passwordScreen.formContext")}
+                  </Text>
+                  <Validation name="password" showMessage={true}>
+                    <Item rounded style={baseStylesheet.inlineButtonInputItem}>
+                      <Icon
+                        style={baseStylesheet.icon}
+                        name="lock"
+                        type="Feather"
+                      />
+                      <Input
+                        style={baseStylesheet.inputField}
+                        placeholder={t("registrationScreen.password")}
+                        placeholderTextColor={colors.lightText}
+                        value={props.values.password}
+                        onChangeText={props.handleChange("password")}
+                        secureTextEntry={true}
+                      />
+                      <View>
+                        <Button
+                          onPress={props.handleSubmit}
+                          style={baseStylesheet.inlineButton}
+                        >
+                          <Icon
+                            style={styles.icon}
+                            name="arrow-right"
+                            type="Feather"
+                          />
+                        </Button>
+                      </View>
+                    </Item>
+                  </Validation>
                 </View>
-                <Text style={baseStylesheet.mainContentText}>
-                  {t("passwordScreen.formContext")}
-                </Text>
-                <Validation name="password" showMessage={true}>
-                  <Item rounded style={baseStylesheet.inlineButtonInputItem}>
-                    <Icon
-                      style={baseStylesheet.icon}
-                      name="lock"
-                      type="Feather"
-                    />
-                    <Input
-                      style={baseStylesheet.inputField}
-                      placeholder={t("registrationScreen.password")}
-                      placeholderTextColor={colors.lightText}
-                      value={props.values.password}
-                      onChangeText={props.handleChange("password")}
-                      secureTextEntry={hidePassword}
-                    />
-                    <View>
-                      <Button
-                        onPress={props.handleSubmit}
-                        style={baseStylesheet.inlineButton}
-                      >
-                        <Icon
-                          style={styles.icon}
-                          name="arrow-right"
-                          type="Feather"
-                        />
-                      </Button>
-                    </View>
-                  </Item>
-                </Validation>
-              </View>
-            );
-          }}
-        </Formik>
+              );
+            }}
+          </Formik>
         </Content>
         <Copyright />
       </Background>
@@ -99,7 +99,7 @@ const mapStateToProps = (state, props) => {
   const token = state.authentication.token || "";
   return {
     email,
-    token
+    token,
   };
 };
 

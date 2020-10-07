@@ -37,14 +37,14 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => ({
       ...state,
       isLoading: false,
-      token: action.payload,
+      token: action.payload.token,
       error: null,
     }),
     loginFail: (state, action) => ({
       ...state,
       isLoading: false,
-      error: action.payload
-    })
+      error: action.payload,
+    }),
   },
 });
 
@@ -72,14 +72,12 @@ export const login = (data) => {
   return (dispatch) => {
     dispatch(authSlice.actions.login());
 
-    console.log(data);
-    
     axios
-    .post(`${API_URL}/authenticate`, data)
-    .then((r)=> r.data)
-    .then((data)=>dispatch(authSlice.actions.loginSuccess(data)))
-    .catch((error)=>dispatch(authSlice.actions.loginFail(error)))
-  }
-}
+      .post(`${API_URL}/authenticate`, data)
+      .then((r) => r.data)
+      .then((data) => dispatch(authSlice.actions.loginSuccess(data)))
+      .catch((error) => dispatch(authSlice.actions.loginFail(error)));
+  };
+};
 
 export default authReducer;
