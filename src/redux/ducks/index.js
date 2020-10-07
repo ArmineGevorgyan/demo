@@ -10,10 +10,12 @@ import requestInviteSlice from "./requestInvite";
 import resendInviteSlice from "./resendInvite";
 import authSlice from "./authentication";
 import registrationSlice from "./registration";
+import tcSlice from "./termsAndConditions";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
   resendInvite: resendInviteSlice,
+  termsAndConditions: tcSlice,
   authentication: authSlice,
   registration: registrationSlice,
 });

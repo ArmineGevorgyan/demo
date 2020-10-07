@@ -77,7 +77,6 @@ class LandingScreen extends Component {
                 return (
                   <React.Fragment>
                     <ResendInviteModal />
-
                     <Validation name="email" showMessage={true}>
                       <Item
                         rounded

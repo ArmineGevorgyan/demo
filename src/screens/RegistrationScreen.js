@@ -28,8 +28,14 @@ class RegistrationScreen extends Component {
     this.props.getInviteRequest(email, token);
   }
 
-  // componentDidUpdate(prevProps) {
-  // }
+  componentDidUpdate(prevProps) {
+    const { user, navigation } = this.props;
+    const { email, token } = this.props.route.params;
+
+    if (!prevProps.user && user) {
+      navigation.navigate("TermsAndConditionsScreen", { email, token });
+    }
+  }
 
   onSubmit = (values) => {
     this.props.register(values);
@@ -215,12 +221,14 @@ const mapStateToProps = (state, props) => {
   const request = state.registration.request;
   const email = request ? request.email : "";
   const isEntrepreneur = request ? (request.isEntrepreneur ? 1 : 0) : 0;
+  const user = state.registration.user;
   const hidePassword = state.registration.hidePassword;
   const hidePasswordConfirmation = state.registration.hidePasswordConfirmation;
 
   return {
     email,
     isEntrepreneur,
+    user,
     hidePassword,
     hidePasswordConfirmation,
   };

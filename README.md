@@ -56,3 +56,4 @@ Once you have Android Studio/Xcode you can create a virtual device (emulator) an
 5. [NativeBase documentation](https://docs.nativebase.io/Components.html#Components)
 6. [Formik documentation](https://formik.org/docs/overview)
 7. [Yup documentation](https://github.com/jquense/yup)
+8. [Vector Icon Directory](https://oblador.github.io/react-native-vector-icons/)
