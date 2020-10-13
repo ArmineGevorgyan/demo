@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   email: "",
   emailStatus: null,
+  token: null,
   error: null,
 };
 
@@ -29,6 +30,21 @@ const authSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    login: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    loginSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      token: action.payload,
+      error: null,
+    }),
+    loginFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload
+    })
   },
 });
 
@@ -51,5 +67,19 @@ export const checkEmailStatus = (email) => {
       );
   };
 };
+
+export const login = (data) => {
+  return (dispatch) => {
+    dispatch(authSlice.actions.login());
+
+    console.log(data);
+    
+    axios
+    .post(`${API_URL}/authenticate`, data)
+    .then((r)=> r.data)
+    .then((data)=>dispatch(authSlice.actions.loginSuccess(data)))
+    .catch((error)=>dispatch(authSlice.actions.loginFail(error)))
+  }
+}
 
 export default authReducer;

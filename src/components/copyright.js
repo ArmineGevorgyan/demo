@@ -1,22 +1,84 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View, Keyboard } from "react-native";
 import { compose } from "redux";
+import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import { colors } from "../styles/colors";
+import { hideCopyright, showCopyright } from "../redux/ducks/copyright";
 
 class Copyright extends Component {
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this._keyboardDidShow
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this._keyboardDidHide
+    );
+  }
+  componentDidUpdate(prevProps) {
+    console.log("state === ")
+    if (prevProps.show) {
+      
+    }
+  }
+
+  componentWillUnmount = () => {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow = () => {
+    this.props.hideCopyright();
+
+  }
+
+  _keyboardDidHide = () => {
+    this.props.showCopyright();
+  }
+
+
   render() {
-    const { t } = this.props;
+    const {
+      t,
+      show,
+    } = this.props;
 
     return (
-      <View style={styles.copyrightContainer}>
-        <Text style={styles.copyright}>{t("landingScreen.copyright")}</Text>
-      </View>
+      <>
+        {
+          !show ? <></> :
+            <View style={styles.copyrightContainer}>
+              <Text style={styles.copyright}>
+                {t("landingScreen.copyright")}
+              </Text>
+            </View>
+        }
+      </>
     );
   }
 }
 
-export default compose(withTranslation("translations"))(Copyright);
+const mapStateToProps = (state, props) => {
+  const show = state.copyright.show;
+
+  return {
+    show
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showCopyright: () => dispatch(showCopyright()),
+    hideCopyright: () => dispatch(hideCopyright()),
+  };
+};
+
+export default compose(
+  withTranslation("translations"),
+  connect(mapStateToProps, mapDispatchToProps)
+)(Copyright);
 
 const styles = StyleSheet.create({
   copyrightContainer: {

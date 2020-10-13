@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { Item, Input, Icon, Content, Button } from "native-base";
+import { Item, Input, Icon, Button, Content } from "native-base";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
@@ -27,8 +27,7 @@ class LandingScreen extends Component {
 
     switch (emailStatus.value) {
       case constants.emailStatus.registered:
-        // TODO: navigate to the login screen
-        break;
+        return this.props.navigation.navigate("LoginScreen");
       case constants.emailStatus.accepted:
         return openModal();
       case constants.emailStatus.requested:
@@ -50,9 +49,9 @@ class LandingScreen extends Component {
     const { t } = this.props;
 
     return (
-      <Content style={baseStylesheet.baseContainer}>
-        <WelcomeHeader />
-        <Background minHeight={constants.blueHeaderContentHeight}>
+      <Background>
+        <Content>
+          <WelcomeHeader />
           <View style={styles.imageContainer}>
             <Image
               source={require("../../assets/logo.png")}
@@ -113,9 +112,9 @@ class LandingScreen extends Component {
               }}
             </Formik>
           </View>
-          <Copyright />
-        </Background>
-      </Content>
+        </Content>
+        <Copyright />
+      </Background >
     );
   }
 }
@@ -147,7 +146,7 @@ export default compose(
 const styles = StyleSheet.create({
   imageContainer: {
     alignItems: "center",
-    marginTop: "-10%",
+    marginTop: -36,
     marginBottom: "9%",
   },
   logo: {

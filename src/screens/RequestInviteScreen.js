@@ -34,9 +34,9 @@ class RequestInviteScreen extends Component {
   render() {
     const { t, email } = this.props;
     return (
-      <Content style={baseStylesheet.baseContainer}>
-        <WelcomeHeader />
-        <Background minHeight={constants.blueHeaderContentHeight}>
+        <Background>
+          <Content>
+          <WelcomeHeader />
           <Formik
             initialValues={{
               email: email,
@@ -140,8 +140,8 @@ class RequestInviteScreen extends Component {
               );
             }}
           </Formik>
+          </Content>
         </Background>
-      </Content>
     );
   }
 }

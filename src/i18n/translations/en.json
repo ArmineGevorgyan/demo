@@ -50,6 +50,9 @@
     "cancelButton": "Cancel",
     "OKButton": "OK"
   },
+  "passwordScreen":{
+    "formContext": "Please enter your password."
+  },
   "validator": {
     "email_invalid": "Please input a valid email address",
     "email_required": "Email is required",

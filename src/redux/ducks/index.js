@@ -11,6 +11,7 @@ import resendInviteSlice from "./resendInvite";
 import authSlice from "./authentication";
 import registrationSlice from "./registration";
 import tcSlice from "./termsAndConditions";
+import copyRightSlice from "./copyright";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   termsAndConditions: tcSlice,
   authentication: authSlice,
   registration: registrationSlice,
+  copyright:copyRightSlice,
 });
 
 export const rootReducer = (state, action) => {

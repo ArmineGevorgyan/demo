@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Item, Input, Icon, Content, Button } from "native-base";
+import { Item, Input, Icon, Button, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
 import SwitchSelector from "../components/switchSelector";
@@ -54,165 +54,165 @@ class RegistrationScreen extends Component {
     const { email, token } = this.props.route.params;
 
     return (
-      <Content style={baseStylesheet.baseContainer}>
+      <Background>
+        <Content>
         <WelcomeHeader />
-        <Background minHeight={constants.blueHeaderContentHeight}>
-          <Formik
-            initialValues={{
-              password: "",
-              passwordConfirmation: "",
-              firstName: "",
-              lastName: "",
-              invitationToken: token,
-            }}
-            onSubmit={this.onSubmit}
-            validationSchema={schema}
-          >
-            {(props) => {
-              const values = props.values;
-              return (
-                <View style={styles.formContainer}>
-                  <View style={styles.imageContainer}>
-                    <Image
-                      style={styles.logo}
-                      source={require("../../assets/logo.png")}
-                    />
-                  </View>
-                  <Text style={baseStylesheet.largeHeadingText}>
-                    {t("registrationScreen.formHeaderText")}
-                  </Text>
-
-                  <SwitchSelector
-                    initial={isEntrepreneur}
-                    value={isEntrepreneur}
-                    options={[
-                      {
-                        label: t("requestInviteScreen.investor"),
-                        value: false,
-                      },
-                      {
-                        label: t("requestInviteScreen.enterpreneur"),
-                        value: true,
-                      },
-                    ]}
-                    disabled={true}
+        <Formik
+          initialValues={{
+            password: "",
+            passwordConfirmation: "",
+            firstName: "",
+            lastName: "",
+            invitationToken: token,
+          }}
+          onSubmit={this.onSubmit}
+          validationSchema={schema}
+        >
+          {(props) => {
+            const values = props.values;
+            return (
+              <View style={styles.formContainer}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    style={styles.logo}
+                    source={require("../../assets/logo.png")}
                   />
-                  <Validation name="firstName" showMessage={true}>
-                    <Item rounded style={baseStylesheet.inputItem}>
-                      <Icon
-                        style={baseStylesheet.icon}
-                        name="user"
-                        type="Feather"
-                      />
-                      <Input
-                        style={baseStylesheet.inputField}
-                        placeholder={t("registrationScreen.firstName")}
-                        placeholderTextColor={colors.lightText}
-                        value={values.firstName}
-                        onChangeText={props.handleChange("firstName")}
-                      />
-                    </Item>
-                  </Validation>
-                  <Validation name="lastName" showMessage={true}>
-                    <Item rounded style={baseStylesheet.inputItem}>
-                      <Icon
-                        style={baseStylesheet.icon}
-                        name="user"
-                        type="Feather"
-                      />
-                      <Input
-                        style={baseStylesheet.inputField}
-                        placeholder={t("registrationScreen.lastName")}
-                        placeholderTextColor={colors.lightText}
-                        value={values.lastName}
-                        onChangeText={props.handleChange("lastName")}
-                      />
-                    </Item>
-                  </Validation>
-                  <Item rounded style={baseStylesheet.disabledInputItem}>
+                </View>
+                <Text style={baseStylesheet.largeHeadingText}>
+                  {t("registrationScreen.formHeaderText")}
+                </Text>
+
+                <SwitchSelector
+                  initial={isEntrepreneur}
+                  value={isEntrepreneur}
+                  options={[
+                    {
+                      label: t("requestInviteScreen.investor"),
+                      value: false,
+                    },
+                    {
+                      label: t("requestInviteScreen.enterpreneur"),
+                      value: true,
+                    },
+                  ]}
+                  disabled={true}
+                />
+                <Validation name="firstName" showMessage={true}>
+                  <Item rounded style={baseStylesheet.inputItem}>
                     <Icon
                       style={baseStylesheet.icon}
-                      name="mail"
+                      name="user"
                       type="Feather"
                     />
                     <Input
                       style={baseStylesheet.inputField}
-                      value={email}
-                      disabled={true}
+                      placeholder={t("registrationScreen.firstName")}
+                      placeholderTextColor={colors.lightText}
+                      value={values.firstName}
+                      onChangeText={props.handleChange("firstName")}
                     />
                   </Item>
-                  <Validation name="password" showMessage={true}>
-                    <Item rounded style={baseStylesheet.inputItem}>
+                </Validation>
+                <Validation name="lastName" showMessage={true}>
+                  <Item rounded style={baseStylesheet.inputItem}>
+                    <Icon
+                      style={baseStylesheet.icon}
+                      name="user"
+                      type="Feather"
+                    />
+                    <Input
+                      style={baseStylesheet.inputField}
+                      placeholder={t("registrationScreen.lastName")}
+                      placeholderTextColor={colors.lightText}
+                      value={values.lastName}
+                      onChangeText={props.handleChange("lastName")}
+                    />
+                  </Item>
+                </Validation>
+                <Item rounded style={baseStylesheet.disabledInputItem}>
+                  <Icon
+                    style={baseStylesheet.icon}
+                    name="mail"
+                    type="Feather"
+                  />
+                  <Input
+                    style={baseStylesheet.inputField}
+                    value={email}
+                    disabled={true}
+                  />
+                </Item>
+                <Validation name="password" showMessage={true}>
+                  <Item rounded style={baseStylesheet.inputItem}>
+                    <Icon
+                      style={baseStylesheet.icon}
+                      name="lock"
+                      type="Feather"
+                    />
+                    <Input
+                      style={baseStylesheet.inputField}
+                      placeholder={t("registrationScreen.password")}
+                      placeholderTextColor={colors.lightText}
+                      value={values.password}
+                      onChangeText={props.handleChange("password")}
+                      secureTextEntry={hidePassword}
+                    />
+                    <Icon
+                      style={baseStylesheet.icon}
+                      name={hidePassword ? "eye" : "eye-off"}
+                      type="Feather"
+                      onPress={() => togglePassword()}
+                    />
+                  </Item>
+                </Validation>
+                <Validation name="passwordConfirmation" showMessage={true}>
+                  <Item rounded style={baseStylesheet.inputItem}>
+                    <Icon
+                      style={baseStylesheet.icon}
+                      name="lock"
+                      type="Feather"
+                    />
+                    <Input
+                      style={baseStylesheet.inputField}
+                      placeholder={t(
+                        "registrationScreen.passwordConfirmation"
+                      )}
+                      placeholderTextColor={colors.lightText}
+                      value={values.passwordConfirmation}
+                      onChangeText={props.handleChange(
+                        "passwordConfirmation"
+                      )}
+                      secureTextEntry={hidePasswordConfirmation}
+                    />
+                    <Icon
+                      style={baseStylesheet.icon}
+                      name={hidePasswordConfirmation ? "eye" : "eye-off"}
+                      type="Feather"
+                      onPress={() => togglePasswordConfirmation()}
+                    />
+                  </Item>
+                </Validation>
+                <View style={styles.submitButton}>
+                  <Button
+                    onPress={props.handleSubmit}
+                    style={baseStylesheet.mainButton}
+                  >
+                    <Text style={baseStylesheet.mainButtonText}>
+                      {t("registrationScreen.submitButton")}
                       <Icon
-                        style={baseStylesheet.icon}
-                        name="lock"
+                        style={styles.icon}
+                        name="arrow-right"
                         type="Feather"
                       />
-                      <Input
-                        style={baseStylesheet.inputField}
-                        placeholder={t("registrationScreen.password")}
-                        placeholderTextColor={colors.lightText}
-                        value={values.password}
-                        onChangeText={props.handleChange("password")}
-                        secureTextEntry={hidePassword}
-                      />
-                      <Icon
-                        style={baseStylesheet.icon}
-                        name={hidePassword ? "eye" : "eye-off"}
-                        type="Feather"
-                        onPress={() => togglePassword()}
-                      />
-                    </Item>
-                  </Validation>
-                  <Validation name="passwordConfirmation" showMessage={true}>
-                    <Item rounded style={baseStylesheet.inputItem}>
-                      <Icon
-                        style={baseStylesheet.icon}
-                        name="lock"
-                        type="Feather"
-                      />
-                      <Input
-                        style={baseStylesheet.inputField}
-                        placeholder={t(
-                          "registrationScreen.passwordConfirmation"
-                        )}
-                        placeholderTextColor={colors.lightText}
-                        value={values.passwordConfirmation}
-                        onChangeText={props.handleChange(
-                          "passwordConfirmation"
-                        )}
-                        secureTextEntry={hidePasswordConfirmation}
-                      />
-                      <Icon
-                        style={baseStylesheet.icon}
-                        name={hidePasswordConfirmation ? "eye" : "eye-off"}
-                        type="Feather"
-                        onPress={() => togglePasswordConfirmation()}
-                      />
-                    </Item>
-                  </Validation>
-                  <View style={styles.submitButton}>
-                    <Button
-                      onPress={props.handleSubmit}
-                      style={baseStylesheet.mainButton}
-                    >
-                      <Text style={baseStylesheet.mainButtonText}>
-                        {t("registrationScreen.submitButton")}
-                        <Icon
-                          style={styles.icon}
-                          name="arrow-right"
-                          type="Feather"
-                        />
-                      </Text>
-                    </Button>
-                  </View>
+                    </Text>
+                  </Button>
                 </View>
-              );
-            }}
-          </Formik>
-          <Copyright />
-        </Background>
-      </Content>
+              </View>
+            );
+          }}
+        </Formik>
+        </Content>
+        <Copyright />
+      </Background>
     );
   }
 }

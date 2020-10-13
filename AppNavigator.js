@@ -8,6 +8,7 @@ import LandingScreen from "./src/screens/LandingScreen";
 import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import TermsAndConditionsScreen from "./src/screens/TermsAndConditionsScreen";
+import LoginScreen from "./src/screens/LoginScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -38,6 +39,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="TermsAndConditionsScreen"
             component={TermsAndConditionsScreen}
+          />
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
