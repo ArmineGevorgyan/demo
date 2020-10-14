@@ -29,6 +29,9 @@ const constants = {
     termsAndConditionsVideo: `${API_HOST}/entrepreneur/tc-video.mp4`,
     privacyPolicyVideo: `${API_HOST}/entrepreneur/pp-video.mp4`,
   },
+  notificationTypes: {
+    ERROR: "error",
+  }
 };
 
 export default constants;
