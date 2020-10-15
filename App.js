@@ -7,6 +7,9 @@ import i18n from "./src/i18n";
 import AppNavigator from "./AppNavigator";
 import { useFonts } from "@use-expo/font";
 import { AppLoading } from "expo";
+import { YellowBox } from "react-native";
+
+YellowBox.ignoreWarnings([""]); // this will disable the yellow warning banners
 
 export default function App() {
   const [isLoaded] = useFonts({

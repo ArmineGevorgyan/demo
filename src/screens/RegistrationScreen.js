@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Alert,
+  BackHandler,
+} from "react-native";
 import { Item, Input, Icon, Button, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
@@ -12,7 +19,6 @@ import schema from "../validation/registrationSchema";
 import Validation from "../validation";
 import WelcomeHeader from "../components/welcomeHeader";
 import Background from "../components/background";
-import constants from "../constants";
 import {
   register,
   togglePassword,
@@ -22,10 +28,42 @@ import {
 import Copyright from "../components/copyright";
 
 class RegistrationScreen extends Component {
+  backAction = () => {
+    const { t, navigation } = this.props;
+
+    Alert.alert(
+      t("termsAndConditionsScreen.confirmCancelHeader"),
+      t("termsAndConditionsScreen.confirmCancelDescription"),
+      [
+        {
+          text: t("termsAndConditionsScreen.cancelButton"),
+          style: "cancel",
+        },
+        {
+          text: t("termsAndConditionsScreen.OKButton"),
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "LandingScreen" }],
+            });
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+
+    return true;
+  };
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.backAction);
+  }
+
   componentDidMount() {
     const { email, token } = this.props.route.params;
 
     this.props.getInviteRequest(email, token);
+    BackHandler.addEventListener("hardwareBackPress", this.backAction);
   }
 
   componentDidUpdate(prevProps) {
