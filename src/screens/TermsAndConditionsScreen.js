@@ -107,10 +107,10 @@ class TermsAndConditionsScreen extends Component {
           </Button>
 
           <Button
-            style={baseStylesheet.secondaryButton}
+            style={baseStylesheet.grayButton}
             onPress={() => this.handleCancel()}
           >
-            <Text style={baseStylesheet.secondaryButtonText}>
+            <Text style={baseStylesheet.grayButtonText}>
               {t("termsAndConditionsScreen.closeButton")}
             </Text>
           </Button>

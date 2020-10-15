@@ -11,7 +11,11 @@ class SwitchSelector extends Component {
       value,
       initial = 0,
       onPress,
+      large = false,
     } = this.props;
+
+    const height = large ? 50 : 32;
+    const fontSize = large ? 18 : 14;
 
     if (disabled) {
       return (
@@ -23,8 +27,8 @@ class SwitchSelector extends Component {
           selectedColor={colors.mainButtonText}
           buttonColor={colors.disabledSwitch}
           borderColor={colors.disabledBorder}
-          height={50}
-          fontSize={18}
+          height={height}
+          fontSize={fontSize}
           hasPadding
           value={value}
           options={options}
@@ -42,8 +46,8 @@ class SwitchSelector extends Component {
         selectedColor={colors.mainButtonText}
         buttonColor={colors.mainButton}
         borderColor={colors.lightBorder}
-        height={50}
-        fontSize={18}
+        height={height}
+        fontSize={fontSize}
         hasPadding
         options={options}
       />
@@ -53,9 +57,9 @@ class SwitchSelector extends Component {
 
 const styles = StyleSheet.create({
   switchSelector: {
-    marginBottom: 25,
+    marginBottom: 15,
     width: "100%",
-    height: 30,
+    backgroundColor: "white",
   },
 });
 

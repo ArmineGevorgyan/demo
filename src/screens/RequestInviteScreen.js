@@ -62,7 +62,7 @@ class RequestInviteScreen extends Component {
                   </Text>
 
                   <SwitchSelector
-                    initial={0}
+                    large
                     onPress={() =>
                       (values.isEntrepreneur = !values.isEntrepreneur)
                     }

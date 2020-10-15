@@ -1,23 +1,74 @@
 import React, { Component } from "react";
+import { Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Linking from "expo-linking";
-import { Text } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RequestInviteScreen from "./src/screens/RequestInviteScreen";
 import LandingScreen from "./src/screens/LandingScreen";
 import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import TermsAndConditionsScreen from "./src/screens/TermsAndConditionsScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import DiscoverStartups from "./src/screens/DiscoverStartups";
+import { colors } from "./src/styles/colors";
+import Explore from "./assets/explore.svg";
+import Portfolio from "./assets/portfolio.svg";
+import Star from "./assets/star.svg";
+import Timeline from "./assets/timeline.svg";
+import UserProfile from "./assets/user-profile.svg";
+import ActivePortfolio from "./assets/portfolio-active.svg";
+import ActiveStar from "./assets/star-active.svg";
+import ActiveTimeline from "./assets/timeline-active.svg";
+import ActiveUserProfile from "./assets/user-profile-active.svg";
 
 const prefix = Linking.makeUrl("/");
 
 class AppNavigator extends Component {
+  getScreenOptions(route) {
+    return {
+      tabBarIcon: ({ focused, color, size }) => {
+        switch (route.name) {
+          case "Discover":
+            return <Explore fill={focused ? colors.darkBlue : colors.darkText} />;
+          case "Pipeline":
+            return focused ? <ActiveStar /> : <Star />;
+          case "Timeline":
+            return focused ? <ActiveTimeline /> : <Timeline />;
+          case "Portfolio":
+            return focused ? <ActivePortfolio /> : <Portfolio />;
+          case "Profile":
+            return focused ? <ActiveUserProfile /> : <UserProfile />;
+        }
+      },
+    };
+  }
+
   render() {
     const Stack = createStackNavigator();
+    const Tab = createBottomTabNavigator();
 
     const linking = {
       prefixes: [prefix],
+    };
+
+    const Home = () => {
+      return (
+        <Tab.Navigator
+          screenOptions={({ route }) => this.getScreenOptions(route)}
+          tabBarOptions={{
+            activeTintColor: colors.darkBlue,
+            inactiveTintColor: "gray",
+            style: styles.navigationTab,
+          }}
+        >
+          <Tab.Screen name="Discover" component={DiscoverStartups} />
+          <Tab.Screen name="Pipeline" component={RequestInviteSuccess} />
+          <Tab.Screen name="Timeline" component={LandingScreen} />
+          <Tab.Screen name="Portfolio" component={TermsAndConditionsScreen} />
+          <Tab.Screen name="Profile" component={RequestInviteScreen} />
+        </Tab.Navigator>
+      );
     };
 
     return (
@@ -44,9 +95,19 @@ class AppNavigator extends Component {
             name="LoginScreen"
             component={LoginScreen}
           />
+          <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  navigationTab: {
+    backgroundColor: colors.offWhite,
+    paddingBottom: 5,
+    paddingTop: 5,
+  },
+});
+
 export default AppNavigator;

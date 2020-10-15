@@ -18,6 +18,14 @@ import Copyright from "../components/copyright";
 import constants from "../constants";
 
 class LandingScreen extends Component {
+  componentDidMount() {
+    const { token, navigation } = this.props;
+
+    if (token) {
+      navigation.navigate("Home");
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { emailStatus, openModal } = this.props;
 
@@ -114,7 +122,7 @@ class LandingScreen extends Component {
           </View>
         </Content>
         <Copyright />
-      </Background >
+      </Background>
     );
   }
 }
@@ -124,10 +132,12 @@ const mapStateToProps = (state, props) => {
   const emailError = state.authentication.error
     ? state.authentication.error.response
     : null;
+  const token = state.authentication.token || "";
 
   return {
     emailStatus,
     emailError,
+    token,
   };
 };
 

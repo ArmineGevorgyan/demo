@@ -5,6 +5,7 @@ export const baseStylesheet = StyleSheet.create({
   // --------------------- CONTAINER STYLES-------------------
   baseContainer: {
     backgroundColor: colors.mainColor,
+    flex: 1,
   },
 
   content: {
@@ -82,6 +83,45 @@ export const baseStylesheet = StyleSheet.create({
     textTransform: "uppercase",
     fontFamily: "montserrat-semi-bold",
     width: "100%",
+  },
+
+  iconButtonText: {
+    color: colors.mainButtonText,
+    textAlign: "center",
+    textTransform: "uppercase",
+    fontFamily: "montserrat-semi-bold",
+    fontSize: 16,
+  },
+
+  grayButton: {
+    backgroundColor: colors.secondaryButton,
+    padding: 11,
+    marginTop: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: colors.gray,
+  },
+
+  grayButtonText: {
+    textAlign: "center",
+    textTransform: "uppercase",
+    fontSize: 15,
+    color: colors.gray,
+    width: "100%",
+  },
+
+  grayFillButton: {
+    backgroundColor: colors.gray,
+    padding: 15,
+    marginTop: 10,
+    borderRadius: 6,
+  },
+
+  greenFillButton: {
+    backgroundColor: colors.green,
+    padding: 15,
+    marginTop: 10,
+    borderRadius: 6,
   },
 
   // --------------------- INPUT STYLES----------------------
