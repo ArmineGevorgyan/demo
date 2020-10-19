@@ -9,52 +9,44 @@ import { hideCopyright, showCopyright } from "../redux/ducks/copyright";
 class Copyright extends Component {
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
+      "keyboardDidShow",
       this._keyboardDidShow
     );
     this.keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
+      "keyboardDidHide",
       this._keyboardDidHide
     );
   }
   componentDidUpdate(prevProps) {
-    console.log("state === ")
     if (prevProps.show) {
-      
     }
   }
 
   componentWillUnmount = () => {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
-  }
+  };
 
   _keyboardDidShow = () => {
     this.props.hideCopyright();
-
-  }
+  };
 
   _keyboardDidHide = () => {
     this.props.showCopyright();
-  }
-
+  };
 
   render() {
-    const {
-      t,
-      show,
-    } = this.props;
+    const { t, show } = this.props;
 
     return (
       <>
-        {
-          !show ? <></> :
-            <View style={styles.copyrightContainer}>
-              <Text style={styles.copyright}>
-                {t("landingScreen.copyright")}
-              </Text>
-            </View>
-        }
+        {!show ? (
+          <></>
+        ) : (
+          <View style={styles.copyrightContainer}>
+            <Text style={styles.copyright}>{t("landingScreen.copyright")}</Text>
+          </View>
+        )}
       </>
     );
   }
@@ -64,7 +56,7 @@ const mapStateToProps = (state, props) => {
   const show = state.copyright.show;
 
   return {
-    show
+    show,
   };
 };
 

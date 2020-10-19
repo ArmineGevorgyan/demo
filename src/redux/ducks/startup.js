@@ -28,18 +28,12 @@ const startupSlice = createSlice({
 
 const startupReducer = startupSlice.reducer;
 
-export const getNewStartups = (token) => {
-  let config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
+export const getNewStartups = () => {
   return (dispatch) => {
     dispatch(startupSlice.actions.getNewStartups());
 
     axios
-      .get(`${API_URL}/startups`, config)
+      .get(`${API_URL}/startups`)
       .then((r) => {
         return r.data;
       })

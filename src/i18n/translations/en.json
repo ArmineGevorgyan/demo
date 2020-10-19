@@ -88,5 +88,8 @@
     "interestedInvestors": "Number of interested investors",
     "upcomingAMA": "Upcoming AMA",
     "commitmentDeadline": "Commitment deadline"
+  },
+  "notification": {
+    "expiredToken": "Your token has expired. Please log in again."
   }
 }

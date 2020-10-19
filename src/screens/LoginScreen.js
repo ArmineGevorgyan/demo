@@ -19,14 +19,6 @@ class LoginScreen extends Component {
     this.props.login(values);
   };
 
-  componentDidUpdate(prevProps) {
-    const { token, navigation } = this.props;
-
-    if (token) {
-      navigation.navigate("Home");
-    }
-  }
-
   render() {
     const { t } = this.props;
 
@@ -96,10 +88,8 @@ class LoginScreen extends Component {
 
 const mapStateToProps = (state, props) => {
   const email = state.authentication.email;
-  const token = state.authentication.token || "";
   return {
     email,
-    token,
   };
 };
 

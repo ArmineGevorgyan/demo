@@ -18,15 +18,7 @@ import Copyright from "../components/copyright";
 import constants from "../constants";
 
 class LandingScreen extends Component {
-  componentDidMount() {
-    const { token, navigation } = this.props;
-
-    if (token) {
-      navigation.navigate("Home");
-    }
-  }
-
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { emailStatus, openModal } = this.props;
 
     if (!emailStatus) {
@@ -132,12 +124,12 @@ const mapStateToProps = (state, props) => {
   const emailError = state.authentication.error
     ? state.authentication.error.response
     : null;
-  const token = state.authentication.token || "";
+  const isAuthenticated = state.authentication.isAuthenticated || false;
 
   return {
     emailStatus,
     emailError,
-    token,
+    isAuthenticated,
   };
 };
 

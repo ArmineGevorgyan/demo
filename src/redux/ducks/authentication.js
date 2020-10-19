@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import { getToken, setToken } from "../../helpers/auth";
 
 const initialState = {
   isLoading: false,
   email: "",
   emailStatus: null,
-  token: null,
+  isAuthenticated: false,
   error: null,
 };
 
@@ -34,21 +35,48 @@ const authSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-    loginSuccess: (state, action) => ({
+    loginSuccess: (state) => ({
       ...state,
       isLoading: false,
-      token: action.payload.token,
       error: null,
+      isAuthenticated: true,
     }),
     loginFail: (state, action) => ({
       ...state,
       isLoading: false,
       error: action.payload,
+      isAuthenticated: false,
+    }),
+    authenticate: (state) => ({
+      ...state,
+      isAuthenticated: true,
+    }),
+    clearAuthentication: (state) => ({
+      ...state,
+      isAuthenticated: false,
     }),
   },
 });
 
 const authReducer = authSlice.reducer;
+
+export const authenticate = () => {
+  return (dispatch) => {
+    getToken()
+      .then((token) => {
+        if (token) {
+          dispatch(authSlice.actions.authenticate());
+        }
+      })
+      .catch((error) => dispatch(authSlice.actions.clearAuthentication()));
+  };
+};
+
+export const clearAuthentication = () => {
+  return (dispatch) => {
+    dispatch(authSlice.actions.clearAuthentication());
+  };
+};
 
 export const checkEmailStatus = (email) => {
   return (dispatch) => {
@@ -75,7 +103,14 @@ export const login = (data) => {
     axios
       .post(`${API_URL}/authenticate`, data)
       .then((r) => r.data)
-      .then((data) => dispatch(authSlice.actions.loginSuccess(data)))
+      .then((data) => {
+        const token = data.token;
+        if (token) {
+          setToken(token);
+
+          dispatch(authSlice.actions.loginSuccess());
+        }
+      })
       .catch((error) => dispatch(authSlice.actions.loginFail(error)));
   };
 };

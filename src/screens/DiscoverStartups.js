@@ -14,9 +14,9 @@ import { colors } from "../styles/colors";
 
 class DiscoverStartups extends Component {
   componentDidMount() {
-    const { token, getNewStartups } = this.props;
+    const { getNewStartups } = this.props;
 
-    getNewStartups(token);
+    getNewStartups();
   }
 
   renderSwiper() {
@@ -80,13 +80,12 @@ class DiscoverStartups extends Component {
 const mapStateToProps = (state, props) => {
   const startups = state.startup.startups;
   const isLoading = state.startup.isLoading;
-  const token = state.authentication.token;
-  return { startups, token, isLoading };
+  return { startups, isLoading };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getNewStartups: (token) => dispatch(getNewStartups(token)),
+    getNewStartups: () => dispatch(getNewStartups()),
   };
 };
 

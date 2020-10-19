@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { Text, StyleSheet } from "react-native";
+import { Spinner } from "native-base";
+import { StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Linking from "expo-linking";
@@ -21,10 +24,15 @@ import ActivePortfolio from "./assets/portfolio-active.svg";
 import ActiveStar from "./assets/star-active.svg";
 import ActiveTimeline from "./assets/timeline-active.svg";
 import ActiveUserProfile from "./assets/user-profile-active.svg";
+import { authenticate } from "./src/redux/ducks/authentication";
 
 const prefix = Linking.makeUrl("/");
 
 class AppNavigator extends Component {
+  componentDidMount() {
+    this.props.authenticate();
+  }
+
   getScreenOptions(route) {
     return {
       tabBarIcon: ({ focused, color, size }) => {
@@ -52,6 +60,38 @@ class AppNavigator extends Component {
       prefixes: [prefix],
     };
 
+    const getStack = () => {
+      const { isAuthenticated } = this.props;
+
+      return isAuthenticated ? (
+        <Stack.Navigator initialRouteName="Home" headerMode={false}>
+        <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
+        
+          <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen
+            name="RequestAnInvite"
+            component={RequestInviteScreen}
+          />
+          <Stack.Screen
+            name="RequestInviteSuccess"
+            component={RequestInviteSuccess}
+          />
+          <Stack.Screen
+            name="RegistrationScreen"
+            component={RegistrationScreen}
+          />
+          <Stack.Screen
+            name="TermsAndConditionsScreen"
+            component={TermsAndConditionsScreen}
+          />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          </Stack.Navigator>
+      );
+    };
+
     const Home = () => {
       return (
         <Tab.Navigator
@@ -72,31 +112,8 @@ class AppNavigator extends Component {
     };
 
     return (
-      <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
-        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
-          <Stack.Screen name="LandingScreen" component={LandingScreen} />
-          <Stack.Screen
-            name="RequestAnInvite"
-            component={RequestInviteScreen}
-          />
-          <Stack.Screen
-            name="RequestInviteSuccess"
-            component={RequestInviteSuccess}
-          />
-          <Stack.Screen
-            name="RegistrationScreen"
-            component={RegistrationScreen}
-          />
-          <Stack.Screen
-            name="TermsAndConditionsScreen"
-            component={TermsAndConditionsScreen}
-          />
-          <Stack.Screen
-            name="LoginScreen"
-            component={LoginScreen}
-          />
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
+      <NavigationContainer linking={linking} fallback={<Spinner color={colors.secondaryColor} />}>
+          {getStack()}
       </NavigationContainer>
     );
   }
@@ -110,4 +127,20 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppNavigator;
+const mapStateToProps = (state, props) => {
+  const isAuthenticated = state.authentication.isAuthenticated || false;
+
+  return {
+    isAuthenticated,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authenticate: () => dispatch(authenticate()),
+  };
+};
+
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  AppNavigator
+);
