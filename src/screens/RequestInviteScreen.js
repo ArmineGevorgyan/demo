@@ -16,6 +16,12 @@ import constants from "../constants";
 import { requestInvite } from "../redux/ducks/requestInvite";
 
 class RequestInviteScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.ref_input2 = React.createRef();
+    this.ref_input3 = React.createRef();
+  }
+
   componentDidUpdate(prevProps) {
     const { request, navigation } = this.props;
 
@@ -101,11 +107,17 @@ class RequestInviteScreen extends Component {
                         type="Feather"
                       />
                       <Input
+                        returnKeyType="next"
+                        blurOnSubmit={false}
+                        ref={input => { this.ref_input2 = input }}
                         style={baseStylesheet.inputField}
                         placeholder={t("requestInviteScreen.linkedinProfile")}
                         placeholderTextColor={colors.lightText}
                         value={values.linkedinProfile}
                         onChangeText={props.handleChange("linkedinProfile")}
+                        onSubmitEditing={
+                          () => this.ref_input3._root.focus()
+                        }
                       />
                     </Item>
                   </Validation>
@@ -117,6 +129,7 @@ class RequestInviteScreen extends Component {
                         type="FontAwesome"
                       />
                       <Input
+                        ref={ref => this.ref_input3 = ref}
                         style={baseStylesheet.inputField}
                         placeholder={t("requestInviteScreen.angelListProfile")}
                         placeholderTextColor={colors.lightText}

@@ -66,6 +66,13 @@ class RegistrationScreen extends Component {
     BackHandler.addEventListener("hardwareBackPress", this.backAction);
   }
 
+  constructor(props) {
+    super(props);
+    this.ref_input2 = React.createRef();
+    this.ref_input3 = React.createRef();
+    this.ref_input4 = React.createRef();
+  }
+
   componentDidUpdate(prevProps) {
     const { user, navigation } = this.props;
     const { email, token } = this.props.route.params;
@@ -143,11 +150,16 @@ class RegistrationScreen extends Component {
                         type="Feather"
                       />
                       <Input
+                        returnKeyType="next"
+                        blurOnSubmit={false}
                         style={baseStylesheet.inputField}
                         placeholder={t("registrationScreen.firstName")}
                         placeholderTextColor={colors.lightText}
                         value={values.firstName}
                         onChangeText={props.handleChange("firstName")}
+                        onSubmitEditing={
+                          () => this.ref_input2._root.focus()
+                        }
                       />
                     </Item>
                   </Validation>
@@ -159,11 +171,17 @@ class RegistrationScreen extends Component {
                         type="Feather"
                       />
                       <Input
+                        returnKeyType="next"
+                        blurOnSubmit={false}
+                        ref={input => { this.ref_input2 = input }}
                         style={baseStylesheet.inputField}
                         placeholder={t("registrationScreen.lastName")}
                         placeholderTextColor={colors.lightText}
                         value={values.lastName}
                         onChangeText={props.handleChange("lastName")}
+                        onSubmitEditing={
+                          () => this.ref_input3._root.focus()
+                        }
                       />
                     </Item>
                   </Validation>
@@ -188,12 +206,18 @@ class RegistrationScreen extends Component {
                         type="Feather"
                       />
                       <Input
+                        returnKeyType="next"
+                        blurOnSubmit={false}
+                        ref={input => { this.ref_input3 = input }}
                         style={baseStylesheet.inputField}
                         placeholder={t("registrationScreen.password")}
                         placeholderTextColor={colors.lightText}
                         value={values.password}
                         onChangeText={props.handleChange("password")}
                         secureTextEntry={hidePassword}
+                        onSubmitEditing={
+                          () => this.ref_input4._root.focus()
+                        }
                       />
                       <Icon
                         style={baseStylesheet.icon}
@@ -211,6 +235,7 @@ class RegistrationScreen extends Component {
                         type="Feather"
                       />
                       <Input
+                        ref={input => { this.ref_input4 = input }}
                         style={baseStylesheet.inputField}
                         placeholder={t(
                           "registrationScreen.passwordConfirmation"
