@@ -23,17 +23,8 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    addStartupToParkingLot: (state, action) => ({
-      ...state,
-      isLoading: true,
-    }),
-    addStartupToParkingLotSuccess: (state, action) => ({
-      ...state,
-      isLoading: false,
-    }),
     addStartupToParkingLotFail: (state, action) => ({
       ...state,
-      isLoading: false,
       error: action.payload,
     }),
   },
@@ -61,19 +52,18 @@ export const getNewStartups = () => {
 
 export const addStartupToParkingLot = (startupId) => {
   return (dispatch) => {
-    dispatch(sturtupSlice.actions.addStartupToParkingLot());
-    console.log("startupId ======== ", startupId);
     axios
       .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`)
       .then((r) => {
         return r.data
       })
-      .then(data =>
-        dispatch(sturtupSlice.actions.addStartupToParkingLotSuccess(data)))
-      .catch((error) =>
-        dispatch(addStartupToParkingLotFail(error))
-      )
-  }
-}
+      .then(data => {
+        //TODO leaving this space to handle success response
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.addStartupToParkingLotFail(error))
+      });
+  };
+};
 
 export default startupReducer;

@@ -36,7 +36,9 @@ class DiscoverStartups extends Component {
         renderCard={(card) => {
           return <SmallStartupCard startup={card} />;
         }}
-        onSwipedLeft={(index) => {this.props.addStartupToParkingLot(index)}}
+        onSwipedLeft={
+          (index) => {this.props.addStartupToParkingLot(index)}
+        }
         onSwipedRight={() => {}}
         backgroundColor={"white"}
         stackSize={4}
@@ -89,7 +91,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getNewStartups: () => dispatch(getNewStartups()),
-    addSturtupToParkingLot: (startupId)=>dispatch(addStartupToParkingLot(startupId)),
+    addStartupToParkingLot: (startupId)=>dispatch(addStartupToParkingLot(startupId)),
   };
 };
 
