@@ -13,6 +13,7 @@ import registrationSlice from "./registration";
 import tcSlice from "./termsAndConditions";
 import copyRightSlice from "./copyright";
 import startupSlice from "./startup";
+import pipelineSlice from "./pipeline";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -22,6 +23,7 @@ const appReducer = combineReducers({
   registration: registrationSlice,
   copyright: copyRightSlice,
   startup: startupSlice,
+  pipeline: pipelineSlice,
 });
 
 export const rootReducer = (state, action) => {
