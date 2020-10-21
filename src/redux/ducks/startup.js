@@ -23,15 +23,15 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    addSturtupToParkingLot: (state, action) => ({
+    addStartupToParkingLot: (state, action) => ({
       ...state,
       isLoading: true,
     }),
-    addSturtupToParkingLotSuccess: (state, action) => ({
+    addStartupToParkingLotSuccess: (state, action) => ({
       ...state,
       isLoading: false,
     }),
-    addSturtupToParkingLotFail: (state, action) => ({
+    addStartupToParkingLotFail: (state, action) => ({
       ...state,
       isLoading: false,
       error: action.payload,
@@ -59,19 +59,19 @@ export const getNewStartups = () => {
   };
 };
 
-export const addSturtupToParkingLot = (startupId) => {
+export const addStartupToParkingLot = (startupId) => {
   return (dispatch) => {
-    dispatch(sturtupSlice.actions.addSturtupToParkingLot());
-
+    dispatch(sturtupSlice.actions.addStartupToParkingLot());
+    console.log("startupId ======== ", startupId);
     axios
       .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`)
       .then((r) => {
         return r.data
       })
-      .then(data=>
-        dispatch(sturtupSlice.actions.addSturtupToParkingLotSuccess(data)))
+      .then(data =>
+        dispatch(sturtupSlice.actions.addStartupToParkingLotSuccess(data)))
       .catch((error) =>
-        dispatch(addSturtupToParkingLotFail(error))
+        dispatch(addStartupToParkingLotFail(error))
       )
   }
 }
