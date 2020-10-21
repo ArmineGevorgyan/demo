@@ -14,6 +14,7 @@ import { withTranslation } from "react-i18next";
 import GrayHeader from "../components/grayHeader";
 import SwitchSelector from "../components/switchSelector";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { colors } from "../styles/colors";
 
 class PipelineScreen extends Component {
 
@@ -41,8 +42,8 @@ class PipelineScreen extends Component {
             style={styles.inviteButton}
           >
             <Icon
-              style={{ color: "#20C15E" }}
-              name="user"
+              style={{ color: colors.green }}
+              name="user-plus"
               type="Feather"
             />
             <Text style={styles.buttonText}>
@@ -70,7 +71,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginTop: 9,
     marginBottom:20,
-    color: "#20C15E",
     backgroundColor: "#FFFFFF",
     shadowColor: "#30537729",
     shadowOffset: {
@@ -82,8 +82,9 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   buttonText: {
-    color: "#20C15E",
+    color: colors.green,
     fontSize: 16,
+    marginLeft:9,
     fontWeight: "bold",
     textAlign: "center",
   },
