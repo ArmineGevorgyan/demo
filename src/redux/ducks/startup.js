@@ -23,6 +23,19 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    addSturtupToParkingLot: (state, action) => ({
+      ...state,
+      isLoading: true,
+    }),
+    addSturtupToParkingLotSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+    }),
+    addSturtupToParkingLotFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
   },
 });
 
@@ -45,5 +58,22 @@ export const getNewStartups = () => {
       );
   };
 };
+
+export const addSturtupToParkingLot = (startupId) => {
+  return (dispatch) => {
+    dispatch(sturtupSlice.actions.addSturtupToParkingLot());
+
+    axios
+      .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`)
+      .then((r) => {
+        return r.data
+      })
+      .then(data=>
+        dispatch(sturtupSlice.actions.addSturtupToParkingLotSuccess(data)))
+      .catch((error) =>
+        dispatch(addSturtupToParkingLotFail(error))
+      )
+  }
+}
 
 export default startupReducer;
