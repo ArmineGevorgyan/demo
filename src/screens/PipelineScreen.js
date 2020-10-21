@@ -30,7 +30,7 @@ class PipelineScreen extends Component {
                 value: false,
               },
               {
-                label: t("pipeline.commited"),
+                label: t("pipeline.committed"),
                 value: true,
               },
             ]}
