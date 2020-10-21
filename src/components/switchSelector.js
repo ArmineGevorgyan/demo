@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   switchSelector: {
     marginBottom: 15,
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "transparent",
   },
 });
 

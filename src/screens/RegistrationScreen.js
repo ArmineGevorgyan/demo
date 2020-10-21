@@ -128,6 +128,7 @@ class RegistrationScreen extends Component {
                   </Text>
 
                   <SwitchSelector
+                    large
                     initial={isEntrepreneur}
                     value={isEntrepreneur}
                     options={[

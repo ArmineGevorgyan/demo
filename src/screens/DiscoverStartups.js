@@ -6,7 +6,7 @@ import { withTranslation } from "react-i18next";
 import { Content, Spinner } from "native-base";
 import Swiper from "react-native-deck-swiper";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import StartupCard from "../components/startupCard";
+import SmallStartupCard from "../components/smallStartupCard";
 import GrayHeader from "../components/grayHeader";
 import SwitchSelector from "../components/switchSelector";
 import { getNewStartups } from "../redux/ducks/startup";
@@ -31,7 +31,7 @@ class DiscoverStartups extends Component {
         verticalSwipe={false}
         cards={startups}
         renderCard={(card) => {
-          return <StartupCard startup={card} />;
+          return <SmallStartupCard startup={card} />;
         }}
         onSwipedLeft={() => {}}
         onSwipedRight={() => {}}
@@ -67,7 +67,7 @@ class DiscoverStartups extends Component {
         <View
           style={{
             flex: 1,
-            height: 1400,
+            height: 600,
           }}
         >
           {this.renderSwiper()}

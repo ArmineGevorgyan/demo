@@ -1,37 +1,16 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Slider from "react-native-slider-custom";
-import { Icon } from "native-base";
-import { LinearGradient } from "expo-linear-gradient";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 import { colors } from "../styles/colors";
 import constants from "../constants";
 import { numberToCashFormatter } from "../helpers/numberHelper";
+import GradientSlider from "./gradientSlider";
 
 class InvestmentInfo extends Component {
   render() {
     const { t, startup } = this.props;
-
-    const gradient = (
-      <View style={styles.trackBorder}>
-        <LinearGradient
-          colors={[colors.darkGradient, colors.lightGradient]}
-          style={styles.track}
-          start={[0, 0]}
-          end={[1, 0]}
-        />
-      </View>
-    );
-
-    const thumb = (
-      <View>
-        <Icon name="triangle-down" type="Entypo" style={styles.icon} />
-        <View height={5} />
-        <Icon name="triangle-up" type="Entypo" style={styles.icon} />
-      </View>
-    );
 
     return (
       <View>
@@ -60,17 +39,11 @@ class InvestmentInfo extends Component {
           </Text>
         </View>
         <View style={[styles.separator, styles.slider]}>
-          <Slider
-            disabled={true}
-            trackStyle={styles.trackContainer}
-            customMinimumTrack={gradient}
-            customThumb={thumb}
-            minimumValue={0}
-            maximumValue={startup.investmentGoal}
-            value={startup.totalCommittedAmount}
-            minimumTrackTintColor={colors.secondaryColor}
-            maximumTrackTintColor="#E4EBF2"
-          />
+          {GradientSlider(
+            0,
+            startup.investmentGoal,
+            startup.totalCommittedAmount
+          )}
         </View>
         <View style={[styles.row, styles.separator]}>
           <Text style={[styles.info, styles.infoTitle]}>
@@ -141,24 +114,5 @@ const styles = StyleSheet.create({
   },
   slider: {
     marginTop: 5,
-  },
-  track: {
-    height: 20,
-  },
-  trackContainer: {
-    height: 20,
-    borderRadius: 10,
-    borderColor: "#C7D7E6",
-  },
-  trackBorder: {
-    height: 20,
-    borderRightWidth: 1,
-    borderColor: "white",
-    overflow: "hidden",
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-  },
-  icon: {
-    color: colors.blueBorder,
   },
 });

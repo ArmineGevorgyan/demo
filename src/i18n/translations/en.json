@@ -72,12 +72,14 @@
     "trending": "Trending"
   },
   "startupCard": {
+    "referred": "Referred: ",
     "referredBy": "Referred By: ",
     "draperRhino": "Draper Rhino",
     "learnMore": "Learn more",
     "book": "Book a call",
     "joinAMA": "Join AMA",
-    "commit": "Commit"
+    "commit": "Commit",
+    "fullProfile": "Full Profile"
   },
   "investmentInfo": {
     "goal": "Goal",

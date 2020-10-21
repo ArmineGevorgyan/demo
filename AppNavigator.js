@@ -69,7 +69,6 @@ class AppNavigator extends Component {
         </Stack.Navigator>
       ) : (
         <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
-        
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen
             name="RequestAnInvite"
@@ -88,7 +87,7 @@ class AppNavigator extends Component {
             component={TermsAndConditionsScreen}
           />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          </Stack.Navigator>
+        </Stack.Navigator>
       );
     };
 
