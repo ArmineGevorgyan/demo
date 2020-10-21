@@ -91,5 +91,11 @@
   },
   "notification": {
     "expiredToken": "Your token has expired. Please log in again."
+  },
+  "pipeline":{
+    "title":"Pipeline",
+    "interested":"Interested",
+    "commited":"Commited",
+    "inviteSurtup":"INVITE STURTUP"
   }
 }

@@ -14,6 +14,7 @@ import RegistrationScreen from "./src/screens/RegistrationScreen";
 import TermsAndConditionsScreen from "./src/screens/TermsAndConditionsScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import DiscoverStartups from "./src/screens/DiscoverStartups";
+import PipelineScreen from "./src/screens/PipelineScreen";
 import { colors } from "./src/styles/colors";
 import Explore from "./assets/explore.svg";
 import Portfolio from "./assets/portfolio.svg";
@@ -103,7 +104,7 @@ class AppNavigator extends Component {
           }}
         >
           <Tab.Screen name="Discover" component={DiscoverStartups} />
-          <Tab.Screen name="Pipeline" component={RequestInviteSuccess} />
+          <Tab.Screen name="Pipeline" component={PipelineScreen} />
           <Tab.Screen name="Timeline" component={LandingScreen} />
           <Tab.Screen name="Portfolio" component={TermsAndConditionsScreen} />
           <Tab.Screen name="Profile" component={RequestInviteScreen} />
