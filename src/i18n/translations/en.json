@@ -95,7 +95,7 @@
   "pipeline":{
     "title":"Pipeline",
     "interested":"Interested",
-    "commited":"Commited",
-    "inviteSurtup":"INVITE STURTUP"
+    "committed":"Committed",
+    "inviteStartup":"INVITE STARTUP"
   }
 }

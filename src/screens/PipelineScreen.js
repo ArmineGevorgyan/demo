@@ -46,7 +46,7 @@ class PipelineScreen extends Component {
               type="Feather"
             />
             <Text style={styles.buttonText}>
-              INVITE STURTUP
+              {t("pipeline.inviteStartup")}
             </Text>
           </TouchableOpacity>
         </Content>
