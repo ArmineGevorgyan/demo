@@ -26,6 +26,8 @@ import ActiveStar from "./assets/star-active.svg";
 import ActiveTimeline from "./assets/timeline-active.svg";
 import ActiveUserProfile from "./assets/user-profile-active.svg";
 import { authenticate } from "./src/redux/ducks/authentication";
+import ProfileScreen from "./src/screens/ProfileScreen";
+import TemporaryScreen from "./src/screens/TemporaryScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -66,30 +68,34 @@ class AppNavigator extends Component {
 
       return isAuthenticated ? (
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
-        <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="TemporaryScreen"
+            component={TemporaryScreen}
+          />
         </Stack.Navigator>
       ) : (
-        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
-          <Stack.Screen name="LandingScreen" component={LandingScreen} />
-          <Stack.Screen
-            name="RequestAnInvite"
-            component={RequestInviteScreen}
-          />
-          <Stack.Screen
-            name="RequestInviteSuccess"
-            component={RequestInviteSuccess}
-          />
-          <Stack.Screen
-            name="RegistrationScreen"
-            component={RegistrationScreen}
-          />
-          <Stack.Screen
-            name="TermsAndConditionsScreen"
-            component={TermsAndConditionsScreen}
-          />
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        </Stack.Navigator>
-      );
+          <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
+            <Stack.Screen name="LandingScreen" component={LandingScreen} />
+            <Stack.Screen
+              name="RequestAnInvite"
+              component={RequestInviteScreen}
+            />
+            <Stack.Screen
+              name="RequestInviteSuccess"
+              component={RequestInviteSuccess}
+            />
+            <Stack.Screen
+              name="RegistrationScreen"
+              component={RegistrationScreen}
+            />
+            <Stack.Screen
+              name="TermsAndConditionsScreen"
+              component={TermsAndConditionsScreen}
+            />
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          </Stack.Navigator>
+        );
     };
 
     const Home = () => {
@@ -106,14 +112,14 @@ class AppNavigator extends Component {
           <Tab.Screen name="Pipeline" component={PipelineScreen} />
           <Tab.Screen name="Timeline" component={LandingScreen} />
           <Tab.Screen name="Portfolio" component={TermsAndConditionsScreen} />
-          <Tab.Screen name="Profile" component={RequestInviteScreen} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
       );
     };
 
     return (
       <NavigationContainer linking={linking} fallback={<Spinner color={colors.secondaryColor} />}>
-          {getStack()}
+        {getStack()}
       </NavigationContainer>
     );
   }

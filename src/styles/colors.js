@@ -25,4 +25,8 @@ export const colors = {
   gray: "#676B74",
   darkGradient: "#3A3985",
   lightGradient: "#3499FF",
+  profileSection1:"#157DEA",
+  profileSection2:"#9015EA",
+  profileSection3:"#004CA1",
+  profileSection4:"#00C3EF",
 };

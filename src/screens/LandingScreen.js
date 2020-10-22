@@ -87,6 +87,7 @@ class LandingScreen extends Component {
                           type="Feather"
                         />
                         <Input
+                          keyboardType="email-address"
                           style={baseStylesheet.inputField}
                           placeholder={t("landingScreen.emailField")}
                           placeholderTextColor={colors.lightText}

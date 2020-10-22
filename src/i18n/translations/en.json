@@ -99,5 +99,19 @@
     "interested":"Interested",
     "committed":"Committed",
     "inviteStartup":"INVITE STARTUP"
+  },
+  "profileScreen":{
+    "profile":"Profile",
+    "personalDetails":"Personal Details",
+    "integration":"Integration",
+    "notification":"Notification",
+    "preferences":"Preferences",
+    "parkingLot":"Parking Lot",
+    "faq":"FAQ",
+    "contactUs":"Contact Us",
+    "legal":"Legal",
+    "resetPassword":"Reset Password",
+    "logout":"Լօgօut",
+    "deleteAccount":"Delete Account"
   }
 }
