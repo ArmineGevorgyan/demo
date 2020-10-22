@@ -26,6 +26,8 @@ import {
   getInviteRequest,
 } from "../redux/ducks/registration";
 import Copyright from "../components/copyright";
+import { checkEmailStatus } from "../redux/ducks/authentication";
+import constants from "../constants";
 
 class RegistrationScreen extends Component {
   backAction = () => {
@@ -60,9 +62,18 @@ class RegistrationScreen extends Component {
   }
 
   componentDidMount() {
-    const { email, token } = this.props.route.params;
+    const {
+      email,
+      token,
+    } = this.props.route.params;
 
-    this.props.getInviteRequest(email, token);
+    const {
+      getInviteRequest,
+      checkEmailStatus,
+    } = this.props;
+
+    checkEmailStatus(email);
+    getInviteRequest(email, token);
     BackHandler.addEventListener("hardwareBackPress", this.backAction);
   }
 
@@ -74,9 +85,20 @@ class RegistrationScreen extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { user, navigation } = this.props;
-    const { email, token } = this.props.route.params;
+    const {
+      user,
+      navigation,
+      emailStatus,
+    } = this.props;
 
+    const {
+      email,
+      token,
+    } = this.props.route.params;
+
+    if (emailStatus?.value === constants.emailStatus.registered) {
+      navigation.navigate("LoginScreen");
+    }
     if (!prevProps.user && user) {
       navigation.navigate("TermsAndConditionsScreen", { email, token });
     }
@@ -289,6 +311,7 @@ const mapStateToProps = (state, props) => {
   const user = state.registration.user;
   const hidePassword = state.registration.hidePassword;
   const hidePasswordConfirmation = state.registration.hidePasswordConfirmation;
+  const emailStatus = state.authentication.emailStatus;
 
   return {
     email,
@@ -296,6 +319,7 @@ const mapStateToProps = (state, props) => {
     user,
     hidePassword,
     hidePasswordConfirmation,
+    emailStatus,
   };
 };
 
@@ -306,6 +330,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getInviteRequest(email, invitationToken)),
     togglePassword: () => dispatch(togglePassword()),
     togglePasswordConfirmation: () => dispatch(togglePasswordConfirmation()),
+    checkEmailStatus: (email) => dispatch(checkEmailStatus(email)),
   };
 };
 
