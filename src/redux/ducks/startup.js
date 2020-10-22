@@ -57,7 +57,7 @@ export const getNewStartups = () => {
 export const addStartupToParkingLot = (startupId) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`)
+      .post(`${API_URL}/startups/parking-lot?startupId=${startupId+1}`)
       .then((r) => {
         return r.data
       })
