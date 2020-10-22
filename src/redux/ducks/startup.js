@@ -56,9 +56,6 @@ export const getNewStartups = () => {
 
 export const addStartupToParkingLot = (startupId) => {
   return (dispatch) => {
-
-    console.log("addStartupToParkingLot id === ", startupId);
-
     axios
       .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`)
       .then((r) => {
@@ -76,7 +73,7 @@ export const addStartupToParkingLot = (startupId) => {
 export const addStartupToPipeline = (startupId) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/interested?startupId=${startupId}`).then((r) => {
+      .post(`${API_URL}/startups/interested?startupId=${startupId+1}`).then((r) => {
         return r.data
       })
       .then(data => {

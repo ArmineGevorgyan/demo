@@ -95,6 +95,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getNewStartups: () => dispatch(getNewStartups()),
     addStartupToParkingLot: (startupId) => dispatch(addStartupToParkingLot(startupId)),
+    addStartupToPipeline:(startupId)=>dispatch(addStartupToPipeline(startupId)),
   };
 };
 
