@@ -46,7 +46,7 @@ export const sectionData = [
       value: "parkingLot",
       svg: <ParkingLotIcon />,
       backgroundColor: colors.profileSection2,
-      to: "TemporaryScreen",
+      to: "ParkingLotScreen",
     },
   ],
   [

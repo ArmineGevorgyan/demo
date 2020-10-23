@@ -28,6 +28,7 @@ import ActiveUserProfile from "./assets/user-profile-active.svg";
 import { authenticate } from "./src/redux/ducks/authentication";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import TemporaryScreen from "./src/screens/TemporaryScreen";
+import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -72,6 +73,10 @@ class AppNavigator extends Component {
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="TemporaryScreen" component={TemporaryScreen} />
+          <Stack.Screen
+            name="ParkingLotScreen"
+            component={ParkingLotScreen}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
