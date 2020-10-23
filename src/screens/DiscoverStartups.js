@@ -41,7 +41,10 @@ class DiscoverStartups extends Component {
           (index) => { this.props.addStartupToParkingLot(index) }
         }
         onSwipedRight={
-          (index) => { this.props.addStartupToPipeline(index) }
+          (index) => {
+            let card = startups[index];
+            this.props.addStartupToPipeline(card.id);
+          }
         }
         backgroundColor={"white"}
         stackSize={4}
@@ -95,7 +98,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getNewStartups: () => dispatch(getNewStartups()),
     addStartupToParkingLot: (startupId) => dispatch(addStartupToParkingLot(startupId)),
-    addStartupToPipeline:(startupId)=>dispatch(addStartupToPipeline(startupId)),
+    addStartupToPipeline: (startupId) => dispatch(addStartupToPipeline(startupId)),
   };
 };
 

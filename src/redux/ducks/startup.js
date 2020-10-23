@@ -73,7 +73,7 @@ export const addStartupToParkingLot = (startupId) => {
 export const addStartupToPipeline = (startupId) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/interested?startupId=${startupId+1}`).then((r) => {
+      .post(`${API_URL}/startups/interested?startupId=${startupId}`).then((r) => {
         return r.data
       })
       .then(data => {
