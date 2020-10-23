@@ -38,7 +38,10 @@ class DiscoverStartups extends Component {
           return <SmallStartupCard startup={card} />;
         }}
         onSwipedLeft={
-          (index) => { this.props.addStartupToParkingLot(index) }
+          (index) => { 
+            let card = startups[index];
+            this.props.addStartupToParkingLot(card.id);
+           }
         }
         onSwipedRight={
           (index) => {
