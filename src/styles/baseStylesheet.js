@@ -215,6 +215,28 @@ export const baseStylesheet = StyleSheet.create({
     padding: "10%",
     borderRadius: 20,
   },
+
+  elevation3: {
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+  },
+
+  elevation6: {
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+  },
 });
 
 export const headerStyles = {

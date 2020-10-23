@@ -21,7 +21,7 @@ class StartupCard extends Component {
       startup.introVideoUrl || constants.entrepreneur.termsAndConditionsVideo;
 
     return (
-      <View style={styles.cardContainer}>
+      <View style={[styles.cardContainer, baseStylesheet.elevation6]}>
         <View style={styles.imageContainer}>
           <Image source={{ uri: startup.logoUrl }} style={styles.logo} />
         </View>
@@ -109,14 +109,6 @@ export default compose(withTranslation("translations"))(StartupCard);
 
 const styles = StyleSheet.create({
   cardContainer: {
-    elevation: 6,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
     borderRadius: 6,
     backgroundColor: colors.cardBackground,
   },

@@ -98,7 +98,7 @@
     "title":"Pipeline",
     "interested":"Interested",
     "committed":"Committed",
-    "inviteStartup":"INVITE STARTUP"
+    "inviteStartup":"Invite Startup"
   },
   "profileScreen":{
     "profile":"Profile",
@@ -113,5 +113,15 @@
     "resetPassword":"Reset Password",
     "logout":"Լօgօut",
     "deleteAccount":"Delete Account"
+  },
+  "backgroundImageCard": {
+    "industry" : "Industry",
+    "goal": "Goal",
+    "runway": "Runway",
+    "months": "months",
+    "total": "Total committed amount",
+    "committedInvestors": "Committed investors",
+    "interestedInvestors": "Interested investors",
+    "deadline": "Deadline"
   }
 }

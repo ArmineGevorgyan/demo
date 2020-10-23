@@ -153,6 +153,7 @@ class RegistrationScreen extends Component {
                     large
                     initial={isEntrepreneur}
                     value={isEntrepreneur}
+                    large
                     options={[
                       {
                         label: t("requestInviteScreen.investor"),
