@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { addParkingLotCard } from "./parkingLot";
+import { addPipelineCard } from "./pipeline";
 
 const initialState = {
   isLoading: false,
@@ -12,18 +12,18 @@ const initialState = {
   nextPage: 1,
 };
 
-const pipelineSlice = createSlice({
-  name: "pipeline",
+const parkingLotSlice = createSlice({
+  name: "parkingLot",
   initialState,
   reducers: {
-    getInterestedStartups: (state) => ({ ...state, isLoading: true }),
-    getInterestedStartupsSuccess: (state, action) => ({
+    getParkingLotStartups: (state) => ({ ...state, isLoading: true }),
+    getParkingLotStartupsSuccess: (state, action) => ({
       ...state,
       isLoading: false,
       startups: action.payload,
       error: null,
     }),
-    getInterestedStartupsFail: (state, action) => ({
+    getParkingLotStartupsFail: (state, action) => ({
       ...state,
       isLoading: false,
       error: action.payload,
@@ -62,46 +62,46 @@ const pipelineSlice = createSlice({
   },
 });
 
-const pipelineReducer = pipelineSlice.reducer;
+const parkingLotReducer = parkingLotSlice.reducer;
 
-export const addPipelineCard = pipelineSlice.actions.getMoreStartupsSuccess;
-export const removePipelineCard = pipelineSlice.actions.removeCardSuccess;
+export const addParkingLotCard = parkingLotSlice.actions.getMoreStartupsSuccess;
+export const removeParkingLotCard = parkingLotSlice.actions.removeCardSuccess;
 
-export const getInterestedStartups = (page = 0, size = 10) => {
+export const getParkingLotStartups = (page = 0, size = 10) => {
   return (dispatch) => {
-    dispatch(pipelineSlice.actions.getInterestedStartups());
+    dispatch(parkingLotSlice.actions.getParkingLotStartups());
 
     axios
-      .get(`${API_URL}/startups/interested?page=${page}&size=${size}`)
+      .get(`${API_URL}/startups/parking-lot?page=${page}&size=${size}`)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
-        dispatch(pipelineSlice.actions.getInterestedStartupsSuccess(data));
+        dispatch(parkingLotSlice.actions.getParkingLotStartupsSuccess(data));
       })
       .catch((error) =>
-        dispatch(pipelineSlice.actions.getInterestedStartupsFail(error))
+        dispatch(parkingLotSlice.actions.getParkingLotStartupsFail(error))
       );
   };
 };
 
 export const getMoreStartups = (page, size = 10) => {
   return (dispatch) => {
-    dispatch(pipelineSlice.actions.getMoreStartups());
+    dispatch(parkingLotSlice.actions.getMoreStartups());
 
     axios
-      .get(`${API_URL}/startups/interested?page=${page}&size=${size}`)
+      .get(`${API_URL}/startups/parking-lot?page=${page}&size=${size}`)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
         if (data == undefined || data.length == 0) {
-          return dispatch(pipelineSlice.actions.noMoreStartups());
+          return dispatch(parkingLotSlice.actions.noMoreStartups());
         }
-        dispatch(pipelineSlice.actions.getMoreStartupsSuccess(data));
+        dispatch(parkingLotSlice.actions.getMoreStartupsSuccess(data));
       })
       .catch((error) =>
-        dispatch(pipelineSlice.actions.getMoreStartupsFail(error))
+        dispatch(parkingLotSlice.actions.getMoreStartupsFail(error))
       );
   };
 };
@@ -109,13 +109,15 @@ export const getMoreStartups = (page, size = 10) => {
 export const removeCard = (startup) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/parking-lot?startupId=${startup.id}`, {})
+      .post(`${API_URL}/startups/interested?startupId=${startup.id}`, {})
       .then(() => {
-        dispatch(pipelineSlice.actions.removeCardSuccess(startup.id));
-        dispatch(addParkingLotCard([startup]));
+        dispatch(parkingLotSlice.actions.removeCardSuccess(startup.id));
+        dispatch(addPipelineCard([startup]));
       })
-      .catch((error) => dispatch(pipelineSlice.actions.removeCardFail(error)));
+      .catch((error) =>
+        dispatch(parkingLotSlice.actions.removeCardFail(error))
+      );
   };
 };
 
-export default pipelineReducer;
+export default parkingLotReducer;
