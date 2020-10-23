@@ -9,7 +9,11 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import SmallStartupCard from "../components/smallStartupCard";
 import GrayHeader from "../components/grayHeader";
 import SwitchSelector from "../components/switchSelector";
-import { getNewStartups } from "../redux/ducks/startup";
+import {
+  getNewStartups,
+  addStartupToParkingLot,
+  addStartupToPipeline,
+} from "../redux/ducks/startup";
 import { colors } from "../styles/colors";
 
 class DiscoverStartups extends Component {
@@ -33,8 +37,15 @@ class DiscoverStartups extends Component {
         renderCard={(card) => {
           return <SmallStartupCard startup={card} />;
         }}
-        onSwipedLeft={() => {}}
-        onSwipedRight={() => {}}
+        onSwipedLeft={
+          (index) => { this.props.addStartupToParkingLot(index) }
+        }
+        onSwipedRight={
+          (index) => {
+            let card = startups[index];
+            this.props.addStartupToPipeline(card.id);
+          }
+        }
         backgroundColor={"white"}
         stackSize={4}
         stackSeparation={-25}
@@ -86,6 +97,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getNewStartups: () => dispatch(getNewStartups()),
+    addStartupToParkingLot: (startupId) => dispatch(addStartupToParkingLot(startupId)),
+    addStartupToPipeline: (startupId) => dispatch(addStartupToPipeline(startupId)),
   };
 };
 

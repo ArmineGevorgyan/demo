@@ -23,6 +23,14 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    addStartupToParkingLotFail: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
+    addStartupToPipelineFail: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
   },
 });
 
@@ -43,6 +51,37 @@ export const getNewStartups = () => {
       .catch((error) =>
         dispatch(startupSlice.actions.getNewStartupsFail(error))
       );
+  };
+};
+
+export const addStartupToParkingLot = (startupId) => {
+  return (dispatch) => {
+    axios
+      .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`)
+      .then((r) => {
+        return r.data
+      })
+      .then(data => {
+        //TODO leaving this space to handle success response
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.addStartupToParkingLotFail(error))
+      });
+  };
+};
+
+export const addStartupToPipeline = (startupId) => {
+  return (dispatch) => {
+    axios
+      .post(`${API_URL}/startups/interested?startupId=${startupId}`).then((r) => {
+        return r.data
+      })
+      .then(data => {
+        //TODO leaving this space to handle success response
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.addStartupToPipelineFail(error))
+      });
   };
 };
 
