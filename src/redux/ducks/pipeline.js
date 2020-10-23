@@ -27,6 +27,15 @@ const pipelineSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    removeCardSuccess: (state, action) => ({
+      ...state,
+      startups: state.startups.filter((s) => s.id != action.payload),
+      error: null,
+    }),
+    removeCardFail: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
     getMoreStartups: (state) => ({
       ...state,
       loadingMore: true,
@@ -90,6 +99,20 @@ export const getMoreStartups = (page, size = 10) => {
       .catch((error) =>
         dispatch(pipelineSlice.actions.getMoreStartupsFail(error))
       );
+  };
+};
+
+export const removeCard = (startupId) => {
+  return (dispatch) => {
+    axios
+      .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`, {})
+      .then((r) => {
+        return r.data;
+      })
+      .then(() => {
+        dispatch(pipelineSlice.actions.removeCardSuccess(startupId));
+      })
+      .catch((error) => dispatch(pipelineSlice.actions.removeCardFail(error)));
   };
 };
 

@@ -1,9 +1,10 @@
-import { Container, Content, Icon, Spinner } from "native-base";
+import { Icon, Spinner } from "native-base";
 import React, { Component } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
+import { SwipeRow } from "react-native-swipe-list-view";
 import GrayHeader from "../components/grayHeader";
 import SwitchSelector from "../components/switchSelector";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -12,8 +13,10 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import {
   getInterestedStartups,
   getMoreStartups,
+  removeCard,
 } from "../redux/ducks/pipeline";
 import BackgroundImageCard from "../components/backgroundImageCard";
+import constants from "../constants";
 
 class PipelineScreen extends Component {
   componentDidMount() {
@@ -21,6 +24,27 @@ class PipelineScreen extends Component {
 
     getInterestedStartups();
   }
+
+  renderItem = ({ item }) => {
+    const removeCard = () => {
+      this.props.removeCard(item.id);
+    };
+
+    return (
+      <SwipeRow
+        disableRightSwipe={true}
+        tension={10}
+        leftOpenValue={constants.windowWidth}
+        stopLeftSwipe={constants.windowWidth}
+        rightOpenValue={-constants.windowWidth}
+        swipeToOpenPercent={30}
+        onRowDidOpen={removeCard}
+      >
+        <></>
+        <BackgroundImageCard startup={item} />
+      </SwipeRow>
+    );
+  };
 
   renderCards() {
     const {
@@ -36,8 +60,6 @@ class PipelineScreen extends Component {
     if (isLoading) {
       return <Spinner color={colors.secondaryColor} />;
     }
-
-    const renderItem = ({ item }) => <BackgroundImageCard startup={item} />;
 
     const handleOnEndReached = ({ distanceFromEnd }) => {
       if (noMoreStartups) {
@@ -67,7 +89,7 @@ class PipelineScreen extends Component {
     return (
       <FlatList
         data={startups}
-        renderItem={renderItem}
+        renderItem={this.renderItem}
         onEndReachedThreshold={0.1}
         onEndReached={handleOnEndReached}
         ListHeaderComponent={getInviteButton}
@@ -114,6 +136,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getInterestedStartups: () => dispatch(getInterestedStartups()),
     getMoreStartups: (page) => dispatch(getMoreStartups(page)),
+    removeCard: (srartupId) => dispatch(removeCard(srartupId)),
   };
 };
 

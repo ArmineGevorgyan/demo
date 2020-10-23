@@ -41,7 +41,9 @@ class AppNavigator extends Component {
       tabBarIcon: ({ focused, color, size }) => {
         switch (route.name) {
           case "Discover":
-            return <Explore fill={focused ? colors.darkBlue : colors.darkText} />;
+            return (
+              <Explore fill={focused ? colors.darkBlue : colors.darkText} />
+            );
           case "Pipeline":
             return focused ? <ActiveStar /> : <Star />;
           case "Timeline":
@@ -69,33 +71,30 @@ class AppNavigator extends Component {
       return isAuthenticated ? (
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
           <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen
-            name="TemporaryScreen"
-            component={TemporaryScreen}
-          />
+          <Stack.Screen name="TemporaryScreen" component={TemporaryScreen} />
         </Stack.Navigator>
       ) : (
-          <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
-            <Stack.Screen name="LandingScreen" component={LandingScreen} />
-            <Stack.Screen
-              name="RequestAnInvite"
-              component={RequestInviteScreen}
-            />
-            <Stack.Screen
-              name="RequestInviteSuccess"
-              component={RequestInviteSuccess}
-            />
-            <Stack.Screen
-              name="RegistrationScreen"
-              component={RegistrationScreen}
-            />
-            <Stack.Screen
-              name="TermsAndConditionsScreen"
-              component={TermsAndConditionsScreen}
-            />
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          </Stack.Navigator>
-        );
+        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
+          <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen
+            name="RequestAnInvite"
+            component={RequestInviteScreen}
+          />
+          <Stack.Screen
+            name="RequestInviteSuccess"
+            component={RequestInviteSuccess}
+          />
+          <Stack.Screen
+            name="RegistrationScreen"
+            component={RegistrationScreen}
+          />
+          <Stack.Screen
+            name="TermsAndConditionsScreen"
+            component={TermsAndConditionsScreen}
+          />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        </Stack.Navigator>
+      );
     };
 
     const Home = () => {
@@ -118,7 +117,10 @@ class AppNavigator extends Component {
     };
 
     return (
-      <NavigationContainer linking={linking} fallback={<Spinner color={colors.secondaryColor} />}>
+      <NavigationContainer
+        linking={linking}
+        fallback={<Spinner color={colors.secondaryColor} />}
+      >
         {getStack()}
       </NavigationContainer>
     );
