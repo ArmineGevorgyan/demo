@@ -73,6 +73,10 @@ class AppNavigator extends Component {
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="TemporaryScreen" component={TemporaryScreen} />
+          <Stack.Screen
+            name="ParkingLotScreen"
+            component={ParkingLotScreen}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
@@ -94,10 +98,6 @@ class AppNavigator extends Component {
             component={TermsAndConditionsScreen}
           />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen
-            name="ParkingLotScreen"
-            component={ParkingLotScreen}
-          />
         </Stack.Navigator>
       );
     };
