@@ -41,11 +41,12 @@ export const getNewStartups = () => {
     dispatch(startupSlice.actions.getNewStartups());
 
     axios
-      .get(`${API_URL}/startups`)
+      .get(`${API_URL}/startups/new`)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
+        console.log("in get new Startups data ===== ", data);
         dispatch(startupSlice.actions.getNewStartupsSuccess(data));
       })
       .catch((error) =>

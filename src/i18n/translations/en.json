@@ -69,7 +69,8 @@
   "discoverStartups": {
     "headerTest": "Discover Startups",
     "new": "New",
-    "trending": "Trending"
+    "trending": "Trending",
+    "noStartup":"No Startups"
   },
   "startupCard": {
     "referred": "Referred: ",
