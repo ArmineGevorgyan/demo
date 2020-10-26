@@ -56,14 +56,16 @@ class BackgroundImageCard extends Component {
                 t("backgroundImageCard.total"),
                 numberToCashFormatter(startup.totalCommittedAmount)
               )}
-              {startupDetail(
-                t("backgroundImageCard.committedInvestors"),
-                startup.committedInvestors
-              )}
-              {startupDetail(
-                t("backgroundImageCard.interestedInvestors"),
-                startup.interestedInvestors
-              )}
+              {startup.committedInvestors > 0 ??
+                startupDetail(
+                  t("backgroundImageCard.committedInvestors"),
+                  startup.committedInvestors
+                )}
+              {startup.interestedInvestors > 0 ??
+                startupDetail(
+                  t("backgroundImageCard.interestedInvestors"),
+                  startup.interestedInvestors
+                )}
               {startupDetail(
                 t("backgroundImageCard.deadline"),
                 moment(startup.commitmentDeadline).format("ll")
@@ -117,7 +119,6 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     resizeMode: "contain",
-    tintColor: "white",
   },
   startupName: {
     fontSize: 20,

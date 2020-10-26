@@ -102,7 +102,11 @@
     "title":"Pipeline",
     "interested":"Interested",
     "committed":"Committed",
-    "inviteStartup":"Invite Startup"
+    "inviteStartup":"Invite Startup",
+    "hiddenItemText": "Move to Parking Lot"
+  },
+  "parkingLot": {
+    "hiddenItemText": "Move to Pipeline"
   },
   "profileScreen":{
     "profile":"Profile",

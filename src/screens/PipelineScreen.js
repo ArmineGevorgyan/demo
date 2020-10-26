@@ -16,6 +16,7 @@ import {
   removeCard,
 } from "../redux/ducks/pipeline";
 import BackgroundImageCard from "../components/backgroundImageCard";
+import ParkingLotIcon from "../../assets/parkingmeter";
 import constants from "../constants";
 
 class PipelineScreen extends Component {
@@ -24,6 +25,19 @@ class PipelineScreen extends Component {
 
     getInterestedStartups();
   }
+
+  renderHiddenItem = () => {
+    return (
+      <View style={styles.hiddenCardContainer}>
+        <View style={styles.hiddenCard}>
+          <ParkingLotIcon style={styles.icon} />
+          <Text style={styles.hiddenText}>
+            {this.props.t("pipeline.hiddenItemText")}
+          </Text>
+        </View>
+      </View>
+    );
+  };
 
   renderItem = ({ item }) => {
     const removeCard = () => {
@@ -38,7 +52,7 @@ class PipelineScreen extends Component {
         swipeToOpenPercent={30}
         onRowDidOpen={removeCard}
       >
-        <></>
+        {this.renderHiddenItem()}
         <BackgroundImageCard startup={item} />
       </SwipeRow>
     );
@@ -161,7 +175,32 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontSize: 16,
     marginLeft: 9,
-    fontWeight: "bold",
+    fontFamily: "montserrat-bold",
     textAlign: "center",
+  },
+  hiddenCardContainer: {
+    margin: 10,
+    marginTop: 30,
+    flex: 1,
+  },
+  hiddenCard: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    backgroundColor: colors.darkBlue,
+    paddingRight: 20,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  icon: {
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  hiddenText: {
+    width: "40%",
+    textAlign: "right",
+    color: "white",
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
   },
 });

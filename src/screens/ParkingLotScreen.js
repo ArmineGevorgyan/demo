@@ -1,6 +1,6 @@
-import { Spinner } from "native-base";
+import { Spinner, Icon } from "native-base";
 import React, { Component } from "react";
-import { View, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
@@ -23,6 +23,19 @@ class ParkingLotScreen extends Component {
     getParkingLotStartups();
   }
 
+  renderHiddenItem = () => {
+    return (
+      <View style={styles.hiddenCardContainer}>
+        <View style={styles.hiddenCard}>
+          <Icon type="Feather" name="star" style={styles.icon} />
+          <Text style={styles.hiddenText}>
+            {this.props.t("parkingLot.hiddenItemText")}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   renderItem = ({ item }) => {
     const removeCard = () => {
       this.props.removeCard(item);
@@ -36,7 +49,7 @@ class ParkingLotScreen extends Component {
         swipeToOpenPercent={30}
         onRowDidOpen={removeCard}
       >
-        <></>
+        {this.renderHiddenItem()}
         <BackgroundImageCard startup={item} />
       </SwipeRow>
     );
@@ -44,7 +57,6 @@ class ParkingLotScreen extends Component {
 
   renderCards() {
     const {
-      t,
       isLoading,
       startups,
       getMoreStartups,
@@ -123,3 +135,51 @@ export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
 )(ParkingLotScreen);
+
+const styles = StyleSheet.create({
+  inviteButton: {
+    flexDirection: "row",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 241,
+    height: 50,
+    borderRadius: 25,
+    marginTop: 9,
+    marginBottom: 20,
+    backgroundColor: "#FFFFFF",
+  },
+  buttonText: {
+    color: colors.green,
+    textTransform: "uppercase",
+    fontSize: 16,
+    marginLeft: 9,
+    fontFamily: "montserrat-bold",
+    textAlign: "center",
+  },
+  hiddenCardContainer: {
+    margin: 10,
+    marginTop: 30,
+    flex: 1,
+  },
+  hiddenCard: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    backgroundColor: colors.darkBlue,
+    paddingLeft: 20,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+  icon: {
+    marginLeft: 10,
+    marginBottom: 10,
+    color: "white",
+  },
+  hiddenText: {
+    width: "40%",
+    color: "white",
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
+  },
+});
