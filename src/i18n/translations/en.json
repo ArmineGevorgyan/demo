@@ -95,7 +95,8 @@
     "commitmentDeadline": "Commitment deadline"
   },
   "notification": {
-    "expiredToken": "Your token has expired. Please log in again."
+    "expiredToken": "Your token has expired. Please log in again.",
+    "wrongPassword": "The entered password is incorrect."
   },
   "pipeline":{
     "title":"Pipeline",
