@@ -27,15 +27,13 @@ class PipelineScreen extends Component {
 
   renderItem = ({ item }) => {
     const removeCard = () => {
-      this.props.removeCard(item.id);
+      this.props.removeCard(item);
     };
 
     return (
       <SwipeRow
         disableRightSwipe={true}
-        tension={10}
-        leftOpenValue={constants.windowWidth}
-        stopLeftSwipe={constants.windowWidth}
+        tension={40}
         rightOpenValue={-constants.windowWidth}
         swipeToOpenPercent={30}
         onRowDidOpen={removeCard}
@@ -102,7 +100,7 @@ class PipelineScreen extends Component {
     const { t } = this.props;
 
     return (
-      <View style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={baseStylesheet.baseContainer}>
         <GrayHeader title={t("pipeline.title")}>
           <SwitchSelector
             options={[
@@ -136,7 +134,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getInterestedStartups: () => dispatch(getInterestedStartups()),
     getMoreStartups: (page) => dispatch(getMoreStartups(page)),
-    removeCard: (srartupId) => dispatch(removeCard(srartupId)),
+    removeCard: (srartup) => dispatch(removeCard(srartup)),
   };
 };
 

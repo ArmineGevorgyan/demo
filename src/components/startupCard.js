@@ -17,8 +17,6 @@ class StartupCard extends Component {
     const { t, startup } = this.props;
     const videoWidth = constants.windowWidth - 64; // 64 = cardHorizontalMargin + card padding
     const videoHeight = videoWidth / constants.widescreenVideoRatio;
-    const videoUrl =
-      startup.introVideoUrl || constants.entrepreneur.termsAndConditionsVideo;
 
     return (
       <View style={[styles.cardContainer, baseStylesheet.elevation6]}>
@@ -63,16 +61,18 @@ class StartupCard extends Component {
             {startup.description}
           </Text>
 
-          <VideoPlayer
-            videoProps={{
-              shouldPlay: false,
-              resizeMode: Video.RESIZE_MODE_CONTAIN,
-              source: { uri: videoUrl },
-            }}
-            height={videoHeight}
-            width={videoWidth}
-            showFullscreenButton={false}
-          />
+          {startup.introVideoUrl && (
+            <VideoPlayer
+              videoProps={{
+                shouldPlay: false,
+                resizeMode: Video.RESIZE_MODE_CONTAIN,
+                source: { uri: startup.introVideoUrl },
+              }}
+              height={videoHeight}
+              width={videoWidth}
+              showFullscreenButton={false}
+            />
+          )}
 
           <InvestmentInfo startup={startup} />
           <View>
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 6,
     backgroundColor: colors.cardBackground,
+    overflow: "hidden",
   },
   cardHeader: {
     paddingTop: 10,

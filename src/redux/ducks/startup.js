@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import { addPipelineCard, removePipelineCard } from "./pipeline";
+import { addParkingLotCard, removeParkingLotCard } from "./parkingLot";
 
 const initialState = {
   isLoading: false,
@@ -54,33 +56,30 @@ export const getNewStartups = () => {
   };
 };
 
-export const addStartupToParkingLot = (startupId) => {
+export const addStartupToParkingLot = (startup) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`)
-      .then((r) => {
-        return r.data
-      })
-      .then(data => {
-        //TODO leaving this space to handle success response
+      .post(`${API_URL}/startups/parking-lot?startupId=${startup.id}`)
+      .then(() => {
+        dispatch(addParkingLotCard([startup]));
+        dispatch(removePipelineCard(startup.id));
       })
       .catch((error) => {
-        dispatch(startupSlice.actions.addStartupToParkingLotFail(error))
+        dispatch(startupSlice.actions.addStartupToParkingLotFail(error));
       });
   };
 };
 
-export const addStartupToPipeline = (startupId) => {
+export const addStartupToPipeline = (startup) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/interested?startupId=${startupId}`).then((r) => {
-        return r.data
-      })
-      .then(data => {
-        //TODO leaving this space to handle success response
+      .post(`${API_URL}/startups/interested?startupId=${startup.id}`)
+      .then(() => {
+        dispatch(addPipelineCard([startup]));
+        dispatch(removeParkingLotCard(startup.id));
       })
       .catch((error) => {
-        dispatch(startupSlice.actions.addStartupToPipelineFail(error))
+        dispatch(startupSlice.actions.addStartupToPipelineFail(error));
       });
   };
 };

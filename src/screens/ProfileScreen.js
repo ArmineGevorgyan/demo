@@ -1,15 +1,6 @@
 import React, { Component } from "react";
-import {
-  Text,
-  StyleSheet,
-} from "react-native";
-import {
-  Button,
-  Container,
-  Content,
-  Icon,
-  View,
-} from "native-base";
+import { Text, StyleSheet } from "react-native";
+import { Container, Content, Icon, View } from "native-base";
 import { compose } from "redux";
 import { colors } from "../styles/colors";
 import { withTranslation } from "react-i18next";
@@ -17,103 +8,99 @@ import GrayHeader from "../components/grayHeader";
 import { sectionData } from "../helpers/profileScreenHelper";
 import { getSectionBorderStyle } from "../helpers/profileScreenHelper";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { baseStylesheet } from "../styles/baseStylesheet";
 
 class ProfileScreen extends Component {
   constructor(props) {
     super(props);
-  };
+  }
 
   navigateTo = (screen) => {
     this.props.navigation.navigate(screen);
-  }
+  };
 
   render() {
     const { t } = this.props;
 
     return (
       <Container>
-        <GrayHeader
-          title={t("profileScreen.profile")}
-        />
+        <GrayHeader title={t("profileScreen.profile")} />
         <Content>
-          {
-            sectionData.map((section, index) => (
-              <View
-                style={
-                  [
-                    styles.section,
-                    {
-                      marginTop: index === 0 ? 20 : 10,
-                      marginBottom: index === sectionData.length - 1 ? 20 : 10,
-                    }
-                  ]
-                }
-              >
+          {sectionData.map((section, index) => (
+            <View
+              style={[
+                styles.section,
+
+                baseStylesheet.elevation6,
                 {
-                  section.map((item, index) => (
-                    <TouchableOpacity
-                      activeOpacity={1}
-                      onPress={() => item.to && this.navigateTo(item.to)}
+                  marginTop: index === 0 ? 20 : 10,
+                  marginBottom: index === sectionData.length - 1 ? 20 : 10,
+                },
+              ]}
+            >
+              {section.map((item, index) => (
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => item.to && this.navigateTo(item.to)}
+                >
+                  <View
+                    style={[
+                      styles.sectionListItemStyle,
+                      getSectionBorderStyle(index, section.length - 1),
+                    ]}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
                     >
                       <View
                         style={[
-                          styles.sectionListItemStyle,
-                          getSectionBorderStyle(index, section.length - 1),
+                          styles.iconContainer,
+                          { backgroundColor: item.backgroundColor },
                         ]}
                       >
-                        <View style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-
-                        }}>
-                          <View style={[
-                            styles.iconContainer,
-                            { backgroundColor: item.backgroundColor, }
-                          ]}>
-                            {item.icon ? <Icon
-                              name={item.icon}
-                              type={item.iconType}
-                              style={styles.icon}
-                            /> : item.svg}
-                          </View>
-                          <Text
-                            style={[
-                              { fontSize: 18 },
-                              item.id === 11 && { color: "#D60000" }
-                            ]}
-                          >
-                            {t(`profileScreen.${item.value}`)}
-                          </Text>
-                        </View>
-                        {
-                          item.to && <Icon
-                            name="chevron-right"
-                            type="MaterialCommunityIcons"
+                        {item.icon ? (
+                          <Icon
+                            name={item.icon}
+                            type={item.iconType}
+                            style={styles.icon}
                           />
-                        }
+                        ) : (
+                          item.svg
+                        )}
                       </View>
-                      {
-                        index !== section.length - 1 && (
-                          <View
-                            style={styles.itemSeparator}
-                          />
-                        )
-                      }
-                    </TouchableOpacity>
-                  ))
-                }
-              </View>
-            ))
-          }
+                      <Text
+                        style={[
+                          { fontSize: 18 },
+                          item.id === 11 && { color: "#D60000" },
+                        ]}
+                      >
+                        {t(`profileScreen.${item.value}`)}
+                      </Text>
+                    </View>
+                    {item.to && (
+                      <Icon
+                        name="chevron-right"
+                        type="MaterialCommunityIcons"
+                      />
+                    )}
+                  </View>
+                  {index !== section.length - 1 && (
+                    <View style={styles.itemSeparator} />
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+          ))}
         </Content>
       </Container>
-    )
+    );
   }
-};
+}
 
-export default compose(
-  withTranslation("translations")
-)(ProfileScreen);
+export default compose(withTranslation("translations"))(ProfileScreen);
 
 const styles = StyleSheet.create({
   header: {
@@ -133,21 +120,13 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     borderRadius: 10,
-    shadowColor: "#7364F81A",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.51,
-    shadowRadius: 13.16,
-    elevation: 6,
   },
   sectionListItemStyle: {
     flexDirection: "row",
     padding: 14,
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   itemSeparator: {
     alignSelf: "center",

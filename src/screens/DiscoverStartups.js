@@ -25,16 +25,14 @@ class DiscoverStartups extends Component {
   }
 
   renderSwiper() {
-    const {t, isLoading, startups } = this.props;
+    const { t, isLoading, startups } = this.props;
 
     if (!startups || isLoading) {
       return <Spinner color={colors.secondaryColor} />;
     }
 
     if (!isLoading && startups.length === 0) {
-      return <EmptyList
-        text={t("discoverStartups.noStartup")}
-      />
+      return <EmptyList text={t("discoverStartups.noStartup")} />;
     }
 
     return (
@@ -44,18 +42,14 @@ class DiscoverStartups extends Component {
         renderCard={(card) => {
           return <SmallStartupCard startup={card} />;
         }}
-        onSwipedLeft={
-          (index) => {
-            let card = startups[index];
-            this.props.addStartupToParkingLot(card.id);
-          }
-        }
-        onSwipedRight={
-          (index) => {
-            let card = startups[index];
-            this.props.addStartupToPipeline(card.id);
-          }
-        }
+        onSwipedLeft={(index) => {
+          let card = startups[index];
+          this.props.addStartupToParkingLot(card);
+        }}
+        onSwipedRight={(index) => {
+          let card = startups[index];
+          this.props.addStartupToPipeline(card);
+        }}
         backgroundColor={"white"}
         stackSize={4}
         stackSeparation={-25}
@@ -107,8 +101,9 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getNewStartups: () => dispatch(getNewStartups()),
-    addStartupToParkingLot: (startupId) => dispatch(addStartupToParkingLot(startupId)),
-    addStartupToPipeline: (startupId) => dispatch(addStartupToPipeline(startupId)),
+    addStartupToParkingLot: (startup) =>
+      dispatch(addStartupToParkingLot(startup)),
+    addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
   };
 };
 
