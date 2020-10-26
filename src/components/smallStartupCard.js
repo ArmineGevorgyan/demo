@@ -29,7 +29,7 @@ class SmallStartupCard extends Component {
               <View style={styles.startupDetailContainer}>
                 <Icon name="location" type="Octicons" style={styles.icon} />
                 <Text style={styles.startupDetail}>
-                  {startup.location.city.name}
+                  {startup.location.city.name}, {startup.location.country.name}
                 </Text>
               </View>
             )}
