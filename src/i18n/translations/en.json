@@ -80,6 +80,8 @@
     "book": "Book a call",
     "joinAMA": "Join AMA",
     "commit": "Commit",
+    "committed": "Committed",
+    "of": " of ",
     "fullProfile": "Full Profile"
   },
   "investmentInfo": {

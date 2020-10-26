@@ -9,17 +9,16 @@ import { numberToCashFormatter } from "../helpers/numberHelper";
 import { colors } from "../styles/colors";
 import GradientSlider from "./gradientSlider";
 import constants from "../constants";
+import { baseStylesheet } from "../styles/baseStylesheet";
 
 class SmallStartupCard extends Component {
   render() {
     const { t, startup } = this.props;
     const videoWidth = constants.windowWidth - 40; // 40 = cardHorizontalMargin
     const videoHeight = videoWidth / constants.widescreenVideoRatio;
-    const videoUrl =
-      startup.introVideoUrl || constants.entrepreneur.termsAndConditionsVideo;
 
     return (
-      <View style={styles.cardContainer}>
+      <View style={[styles.cardContainer, baseStylesheet.elevation6]}>
         <View style={styles.cardHeader}>
           <View style={styles.imageContainer}>
             <Image source={{ uri: startup.logoUrl }} style={styles.logo} />
@@ -55,16 +54,18 @@ class SmallStartupCard extends Component {
             )}
           </View>
         </View>
-        <VideoPlayer
-          videoProps={{
-            shouldPlay: false,
-            resizeMode: Video.RESIZE_MODE_CONTAIN,
-            source: { uri: videoUrl },
-          }}
-          height={videoHeight}
-          width={videoWidth}
-          showFullscreenButton={false}
-        />
+        {startup.introVideoUrl && (
+          <VideoPlayer
+            videoProps={{
+              shouldPlay: false,
+              resizeMode: Video.RESIZE_MODE_CONTAIN,
+              source: { uri: startup.introVideoUrl },
+            }}
+            height={videoHeight}
+            width={videoWidth}
+            showFullscreenButton={false}
+          />
+        )}
         <View style={styles.card}>
           <Text
             style={styles.description}
@@ -85,11 +86,11 @@ class SmallStartupCard extends Component {
             ellipsizeMode="tail"
             numberOfLines={5}
           >
-            <Text style={styles.text}>Commited </Text>
+            <Text style={styles.text}>{t("startupCard.committed")} </Text>
             <Text style={styles.number}>
               {numberToCashFormatter(startup.totalCommittedAmount)}
             </Text>
-            <Text style={styles.text}> of </Text>
+            <Text style={styles.text}>{t("startupCard.of")}</Text>
             <Text style={styles.number}>
               {numberToCashFormatter(startup.investmentGoal)}
             </Text>
@@ -112,16 +113,9 @@ export default compose(withTranslation("translations"))(SmallStartupCard);
 
 const styles = StyleSheet.create({
   cardContainer: {
-    elevation: 6,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
     borderRadius: 6,
     backgroundColor: colors.cardBackground,
+    overflow: "hidden",
   },
   cardHeader: {
     backgroundColor: "white",
