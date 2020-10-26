@@ -11,6 +11,7 @@ class EmptyList extends Component{
             fontSize: 30,
             marginTop: 130,
             color: colors.darkText,
+            fontFamily: "montserrat-light",
           }}
         >
           {this.props.text}

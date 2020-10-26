@@ -46,7 +46,6 @@ export const getNewStartups = () => {
         return r.data;
       })
       .then((data) => {
-        console.log("in get new Startups data ===== ", data);
         dispatch(startupSlice.actions.getNewStartupsSuccess(data));
       })
       .catch((error) =>
