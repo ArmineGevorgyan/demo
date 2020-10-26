@@ -15,6 +15,7 @@ import {
   addStartupToPipeline,
 } from "../redux/ducks/startup";
 import { colors } from "../styles/colors";
+import EmptyList from "../components/emptyList";
 
 class DiscoverStartups extends Component {
   componentDidMount() {
@@ -24,10 +25,16 @@ class DiscoverStartups extends Component {
   }
 
   renderSwiper() {
-    const { isLoading, startups } = this.props;
+    const {t, isLoading, startups } = this.props;
 
     if (!startups || isLoading) {
       return <Spinner color={colors.secondaryColor} />;
+    }
+
+    if (!isLoading && startups.length === 0) {
+      return <EmptyList
+        text={t("discoverStartups.noStartup")}
+      />
     }
 
     return (
@@ -38,10 +45,10 @@ class DiscoverStartups extends Component {
           return <SmallStartupCard startup={card} />;
         }}
         onSwipedLeft={
-          (index) => { 
+          (index) => {
             let card = startups[index];
             this.props.addStartupToParkingLot(card.id);
-           }
+          }
         }
         onSwipedRight={
           (index) => {

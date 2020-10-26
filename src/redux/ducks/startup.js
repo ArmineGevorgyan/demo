@@ -41,7 +41,7 @@ export const getNewStartups = () => {
     dispatch(startupSlice.actions.getNewStartups());
 
     axios
-      .get(`${API_URL}/startups`)
+      .get(`${API_URL}/startups/new`)
       .then((r) => {
         return r.data;
       })

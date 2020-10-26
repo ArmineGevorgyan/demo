@@ -4,6 +4,7 @@ import {
   StyleSheet,
 } from "react-native";
 import {
+  Button,
   Container,
   Content,
   Icon,
@@ -15,6 +16,7 @@ import { withTranslation } from "react-i18next";
 import GrayHeader from "../components/grayHeader";
 import { sectionData } from "../helpers/profileScreenHelper";
 import { getSectionBorderStyle } from "../helpers/profileScreenHelper";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -38,16 +40,21 @@ class ProfileScreen extends Component {
             sectionData.map((section, index) => (
               <View
                 style={
-                  [styles.section,
-                  {
-
-                    marginTop: index === 0 ? 20 : 10,
-                    marginBottom: index === sectionData.length - 1 ? 20 : 10,
-                  }]}
+                  [
+                    styles.section,
+                    {
+                      marginTop: index === 0 ? 20 : 10,
+                      marginBottom: index === sectionData.length - 1 ? 20 : 10,
+                    }
+                  ]
+                }
               >
                 {
                   section.map((item, index) => (
-                    <View>
+                    <TouchableOpacity
+                      activeOpacity={1}
+                      onPress={() => item.to && this.navigateTo(item.to)}
+                    >
                       <View
                         style={[
                           styles.sectionListItemStyle,
@@ -74,7 +81,6 @@ class ProfileScreen extends Component {
                               { fontSize: 18 },
                               item.id === 11 && { color: "#D60000" }
                             ]}
-                            onPress={() => item.to && this.navigateTo(item.to)}
                           >
                             {t(`profileScreen.${item.value}`)}
                           </Text>
@@ -83,7 +89,6 @@ class ProfileScreen extends Component {
                           item.to && <Icon
                             name="chevron-right"
                             type="MaterialCommunityIcons"
-                            onPress={() => this.navigateTo(item.to)}
                           />
                         }
                       </View>
@@ -94,7 +99,7 @@ class ProfileScreen extends Component {
                           />
                         )
                       }
-                    </View>
+                    </TouchableOpacity>
                   ))
                 }
               </View>
