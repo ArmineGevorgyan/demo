@@ -86,7 +86,10 @@ class TermsAndConditionsScreen extends Component {
         <ScrollView style={styles.buttonOffset}>
           <VideoView
             videoSource={tcVideoUri}
-            size={{ width: Dimensions.get("window").width, height: constants.widescreenVideoHeight }}
+            size={{ 
+              width: constants.windowWidth, 
+              height: constants.widescreenVideoHeight,
+             }}
           />
           <Accordion dataArray={dataArray} />
         </ScrollView>
