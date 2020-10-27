@@ -11,6 +11,10 @@ import GradientSlider from "./gradientSlider";
 class BackgroundImageCard extends Component {
   render() {
     const { t, startup } = this.props;
+    const pipelineDate = startup.investorProfileStartupInterested[0]?.createdAt;
+    const parkingLotDate =
+      startup.investorProfileStartupParkingLot[0]?.createdAt;
+    const date = pipelineDate || parkingLotDate;
 
     const startupDetail = (title, detail) => {
       return (
@@ -23,12 +27,11 @@ class BackgroundImageCard extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.dateAdded}>{moment().format("ll")}</Text>
+        <Text style={styles.dateAdded}>{moment(date).format("ll")}</Text>
         <View style={[styles.cardContainer, baseStylesheet.elevation6]}>
           <ImageBackground
             source={{
-              uri:
-                "https://www.pharmalive.com/wp-content/uploads/2020/07/Tesla-to-Build-Mobile-RNA-Microfactories-for-CureVacs-COVID-19-Vaccine-BioSpace-7-2-20-495x350.jpeg",
+              uri: startup.coverPhoto,
             }}
             style={styles.imageBackground}
             imageStyle={styles.imageStyle}
