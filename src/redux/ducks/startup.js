@@ -17,6 +17,7 @@ const startupSlice = createSlice({
     getNewStartupsSuccess: (state, action) => ({
       ...state,
       isLoading: false,
+      isEmpty: false,
       startups: action.payload,
       error: null,
     }),
@@ -33,10 +34,18 @@ const startupSlice = createSlice({
       ...state,
       error: action.payload,
     }),
+    toggleIsEmpty: (state) => ({
+      ...state,
+      isEmpty: !state.isEmpty,
+    })
   },
 });
 
 const startupReducer = startupSlice.reducer;
+
+export const toggleIsEmpty = () => {
+  return dispatch => dispatch(startupSlice.actions.toggleIsEmpty());
+};
 
 export const getNewStartups = () => {
   return (dispatch) => {
