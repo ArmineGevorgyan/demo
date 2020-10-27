@@ -6,14 +6,13 @@ import { Button } from "native-base";
 import { withTranslation } from "react-i18next";
 import HTML from "react-native-render-html";
 import { ScrollView } from "react-native-gesture-handler";
-import { Video } from "expo-av";
-import VideoPlayer from "expo-video-player";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { acceptTermsAndConditions } from "../redux/ducks/termsAndConditions";
 import DraperRhino from "../../assets/draper-rhino.svg";
 import constants from "../constants";
 import { colors } from "../styles/colors";
 import Accordion from "../components/accordion";
+import VideoView from "../components/videoView";
 
 class TermsAndConditionsScreen extends Component {
   handleAccept = () => {
@@ -83,16 +82,12 @@ class TermsAndConditionsScreen extends Component {
           <DraperRhino style={styles.draperRhinoImage} />
         </View>
         <ScrollView style={styles.buttonOffset}>
-          <VideoPlayer
-            videoProps={{
-              shouldPlay: true,
-              resizeMode: Video.RESIZE_MODE_CONTAIN,
-              source: {
-                uri: tcVideoUri,
-              },
-            }}
-            height={constants.widescreenVideoHeight}
-            showFullscreenButton={false}
+          <VideoView
+            videoSource={tcVideoUri}
+            size={{ 
+              width: constants.windowWidth, 
+              height: constants.widescreenVideoHeight,
+             }}
           />
           <Accordion dataArray={dataArray} />
         </ScrollView>
