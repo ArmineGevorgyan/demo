@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Alert, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { Button } from "native-base";
 import { withTranslation } from "react-i18next";
 import HTML from "react-native-render-html";
 import { ScrollView } from "react-native-gesture-handler";
-import { Video } from "expo-av";
-import VideoPlayer from "expo-video-player";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { acceptTermsAndConditions } from "../redux/ducks/termsAndConditions";
 import DraperRhino from "../../assets/draper-rhino.svg";
