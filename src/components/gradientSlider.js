@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   trackContainer: {
     height: 20,
     borderRadius: 10,
-    borderColor: "#C7D7E6",
+    borderColor: colors.blueBorder,
   },
   trackBorder: {
     height: 20,

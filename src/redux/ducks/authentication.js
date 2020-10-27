@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
 import { getToken, setToken } from "../../helpers/auth";
+import { showNotification } from "../../helpers/notificationHelper";
 
 const initialState = {
   isLoading: false,
@@ -111,7 +112,12 @@ export const login = (data) => {
           dispatch(authSlice.actions.loginSuccess());
         }
       })
-      .catch((error) => dispatch(authSlice.actions.loginFail(error)));
+      .catch((error) => {
+        if (error.config && error.response && error.response.status === 401) {
+          showNotification("error", "notification.wrongPassword");
+        }
+        dispatch(authSlice.actions.loginFail(error));
+      });
   };
 };
 

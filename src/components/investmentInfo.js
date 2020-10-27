@@ -45,18 +45,22 @@ class InvestmentInfo extends Component {
             startup.totalCommittedAmount
           )}
         </View>
-        <View style={[styles.row, styles.separator]}>
-          <Text style={[styles.info, styles.infoTitle]}>
-            {t("investmentInfo.committedInvestors")}
-          </Text>
-          <Text style={styles.info}>{startup.committedInvestors}</Text>
-        </View>
-        <View style={[styles.row, styles.separator]}>
-          <Text style={[styles.info, styles.infoTitle]}>
-            {t("investmentInfo.interestedInvestors")}
-          </Text>
-          <Text style={styles.info}>{startup.interestedInvestors}</Text>
-        </View>
+        {startup.committedInvestors > 0 ?? (
+          <View style={[styles.row, styles.separator]}>
+            <Text style={[styles.info, styles.infoTitle]}>
+              {t("investmentInfo.committedInvestors")}
+            </Text>
+            <Text style={styles.info}>{startup.committedInvestors}</Text>
+          </View>
+        )}
+        {startup.interestedInvestors > 0 ?? (
+          <View style={[styles.row, styles.separator]}>
+            <Text style={[styles.info, styles.infoTitle]}>
+              {t("investmentInfo.interestedInvestors")}
+            </Text>
+            <Text style={styles.info}>{startup.interestedInvestors}</Text>
+          </View>
+        )}
         <View style={[styles.row, styles.separator]}>
           <Text style={[styles.info, styles.dateInfoTitle]}>
             {t("investmentInfo.upcomingAMA")}

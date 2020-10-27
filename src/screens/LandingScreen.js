@@ -19,7 +19,8 @@ import constants from "../constants";
 
 class LandingScreen extends Component {
   componentDidUpdate() {
-    const { emailStatus, openModal } = this.props;
+    const { emailStatus, openModal, navigation } = this.props;
+    const isFocused = navigation.isFocused();
 
     if (!emailStatus) {
       return;
@@ -27,13 +28,13 @@ class LandingScreen extends Component {
 
     switch (emailStatus.value) {
       case constants.emailStatus.registered:
-        return this.props.navigation.navigate("LoginScreen");
+        return navigation.navigate("LoginScreen");
       case constants.emailStatus.accepted:
-        return openModal();
+        return isFocused && openModal();
       case constants.emailStatus.requested:
       case constants.emailStatus.rejected:
       case constants.emailStatus.notFound:
-        return this.props.navigation.navigate("RequestAnInvite");
+        return navigation.navigate("RequestAnInvite");
       default:
     }
   }

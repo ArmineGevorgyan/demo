@@ -1,7 +1,10 @@
 import { Toast } from "native-base";
 import constants from "../constants";
+import i18n from "../i18n";
 
 export const showNotification = (type, message, duration = 3000) => {
+  message = i18n.t(message);
+
   switch (type) {
     case constants.notificationTypes.ERROR: {
       return Toast.show({

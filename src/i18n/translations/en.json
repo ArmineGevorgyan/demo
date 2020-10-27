@@ -95,13 +95,18 @@
     "commitmentDeadline": "Commitment deadline"
   },
   "notification": {
-    "expiredToken": "Your token has expired. Please log in again."
+    "expiredToken": "Your token has expired. Please log in again.",
+    "wrongPassword": "The entered password is incorrect."
   },
   "pipeline":{
     "title":"Pipeline",
     "interested":"Interested",
     "committed":"Committed",
-    "inviteStartup":"Invite Startup"
+    "inviteStartup":"Invite Startup",
+    "hiddenItemText": "Move to Parking Lot"
+  },
+  "parkingLot": {
+    "hiddenItemText": "Move to Pipeline"
   },
   "profileScreen":{
     "profile":"Profile",
