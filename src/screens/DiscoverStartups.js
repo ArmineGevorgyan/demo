@@ -13,6 +13,7 @@ import {
   getNewStartups,
   addStartupToParkingLot,
   addStartupToPipeline,
+  toggleIsEmpty,
 } from "../redux/ducks/startup";
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
@@ -24,14 +25,38 @@ class DiscoverStartups extends Component {
     getNewStartups();
   }
 
+  swipeLeft = (index) => {
+    const {startups, toggleIsEmpty} = this.props;
+    let card = startups[index];
+    this.props.addStartupToParkingLot(card);
+    if (index === startups.length - 1) {
+      toggleIsEmpty();
+    }
+  };
+
+  swipeRight = (index) => {
+    const {startups, toggleIsEmpty} = this.props;
+    let card = startups[index];
+    this.props.addStartupToPipeline(card);
+    if (index === startups.length - 1) {
+      toggleIsEmpty();
+    }
+  };
+
   renderSwiper() {
-    const { t, isLoading, startups } = this.props;
+    const {
+      t,
+      isLoading,
+      isEmpty,
+      startups,
+      toggleIsEmpty,
+    } = this.props;
 
     if (!startups || isLoading) {
       return <Spinner color={colors.secondaryColor} />;
     }
 
-    if (!isLoading && startups.length === 0) {
+    if (!isLoading && (isEmpty || startups.length === 0)) {
       return <EmptyList text={t("discoverStartups.noStartup")} />;
     }
 
@@ -42,14 +67,8 @@ class DiscoverStartups extends Component {
         renderCard={(card) => {
           return <SmallStartupCard startup={card} />;
         }}
-        onSwipedLeft={(index) => {
-          let card = startups[index];
-          this.props.addStartupToParkingLot(card);
-        }}
-        onSwipedRight={(index) => {
-          let card = startups[index];
-          this.props.addStartupToPipeline(card);
-        }}
+        onSwipedLeft={this.swipeLeft}
+        onSwipedRight={this.swipeRight}
         backgroundColor={"white"}
         stackSize={4}
         stackSeparation={-25}
@@ -95,7 +114,13 @@ class DiscoverStartups extends Component {
 const mapStateToProps = (state, props) => {
   const startups = state.startup.startups;
   const isLoading = state.startup.isLoading;
-  return { startups, isLoading };
+  const isEmpty = state.startup.isEmpty;
+
+  return {
+    startups,
+    isLoading,
+    isEmpty,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -104,6 +129,7 @@ const mapDispatchToProps = (dispatch) => {
     addStartupToParkingLot: (startup) =>
       dispatch(addStartupToParkingLot(startup)),
     addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
+    toggleIsEmpty: () => dispatch(toggleIsEmpty()),
   };
 };
 
