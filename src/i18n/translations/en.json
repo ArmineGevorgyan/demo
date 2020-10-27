@@ -70,7 +70,7 @@
     "headerTest": "Discover Startups",
     "new": "New",
     "trending": "Trending",
-    "noStartup":"No Startups"
+    "noStartup":"There are no more startups to explore. You’ll get notified as soon as new opportunities are available"
   },
   "startupCard": {
     "referred": "Referred: ",
