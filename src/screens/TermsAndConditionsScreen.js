@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert, Dimensions } from "react-native";
 import { Button } from "native-base";
 import { withTranslation } from "react-i18next";
 import HTML from "react-native-render-html";
@@ -14,6 +14,7 @@ import DraperRhino from "../../assets/draper-rhino.svg";
 import constants from "../constants";
 import { colors } from "../styles/colors";
 import Accordion from "../components/accordion";
+import VideoView from "../components/videoView";
 
 class TermsAndConditionsScreen extends Component {
   handleAccept = () => {
@@ -83,16 +84,9 @@ class TermsAndConditionsScreen extends Component {
           <DraperRhino style={styles.draperRhinoImage} />
         </View>
         <ScrollView style={styles.buttonOffset}>
-          <VideoPlayer
-            videoProps={{
-              shouldPlay: true,
-              resizeMode: Video.RESIZE_MODE_CONTAIN,
-              source: {
-                uri: tcVideoUri,
-              },
-            }}
-            height={constants.widescreenVideoHeight}
-            showFullscreenButton={false}
+          <VideoView
+            videoSource={tcVideoUri}
+            size={{ width: Dimensions.get("window").width, height: constants.widescreenVideoHeight }}
           />
           <Accordion dataArray={dataArray} />
         </ScrollView>

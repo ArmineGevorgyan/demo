@@ -3,13 +3,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { Icon } from "native-base";
-import { Video } from "expo-av";
-import VideoPlayer from "expo-video-player";
 import { numberToCashFormatter } from "../helpers/numberHelper";
 import { colors } from "../styles/colors";
 import GradientSlider from "./gradientSlider";
 import constants from "../constants";
 import { baseStylesheet } from "../styles/baseStylesheet";
+import VideoView from "./videoView";
 
 class SmallStartupCard extends Component {
   render() {
@@ -55,15 +54,12 @@ class SmallStartupCard extends Component {
           </View>
         </View>
         {startup.introVideoUrl && (
-          <VideoPlayer
-            videoProps={{
-              shouldPlay: false,
-              resizeMode: Video.RESIZE_MODE_CONTAIN,
-              source: { uri: startup.introVideoUrl },
+          <VideoView
+            videoSource={startup.introVideoUrl}
+            size={{
+              width: videoWidth,
+              height: videoHeight,
             }}
-            height={videoHeight}
-            width={videoWidth}
-            showFullscreenButton={false}
           />
         )}
         <View style={styles.card}>
