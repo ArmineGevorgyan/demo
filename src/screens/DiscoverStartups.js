@@ -26,7 +26,7 @@ class DiscoverStartups extends Component {
   }
 
   swipeLeft = (index) => {
-    const {startups, toggleIsEmpty} = this.props;
+    const { startups, toggleIsEmpty } = this.props;
     let card = startups[index];
     this.props.addStartupToParkingLot(card);
     if (index === startups.length - 1) {
@@ -35,7 +35,7 @@ class DiscoverStartups extends Component {
   };
 
   swipeRight = (index) => {
-    const {startups, toggleIsEmpty} = this.props;
+    const { startups, toggleIsEmpty } = this.props;
     let card = startups[index];
     this.props.addStartupToPipeline(card);
     if (index === startups.length - 1) {
@@ -44,13 +44,7 @@ class DiscoverStartups extends Component {
   };
 
   renderSwiper() {
-    const {
-      t,
-      isLoading,
-      isEmpty,
-      startups,
-      toggleIsEmpty,
-    } = this.props;
+    const { t, isLoading, isEmpty, startups, toggleIsEmpty } = this.props;
 
     if (!startups || isLoading) {
       return <Spinner color={colors.secondaryColor} />;
@@ -75,6 +69,7 @@ class DiscoverStartups extends Component {
         stackScale={5}
         animateCardOpacity={true}
         cardVerticalMargin={30}
+        cardHorizontalMargin={30}
       />
     );
   }
