@@ -15,6 +15,7 @@ import copyRightSlice from "./copyright";
 import startupSlice from "./startup";
 import pipelineSlice from "./pipeline";
 import parkingLotSlice from "./parkingLot";
+import userSlice from "./user";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
   startup: startupSlice,
   pipeline: pipelineSlice,
   parkingLot: parkingLotSlice,
+  user: userSlice,
 });
 
 export const rootReducer = (state, action) => {

@@ -8,7 +8,11 @@ import LogoutIcon from "../../assets/log-out";
 import DeleteAccountIcon from "../../assets/delete-account";
 import {colors} from "../styles/colors";
 
-export const sectionData = [
+export const getSectionData=(userRole)=>{
+  return userRole === "ROLE_INVESTOR"? invesotrData: entrepreneurData;
+};
+
+ const invesotrData = [
   [
     {
       id: 1,
@@ -97,6 +101,10 @@ export const sectionData = [
       backgroundColor: colors.profileSection4,
     },
   ]
+]
+
+const entrepreneurData = [
+  [],
 ]
 
 export const getSectionBorderStyle = (index, sectionLength) => {
