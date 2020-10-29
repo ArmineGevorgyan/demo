@@ -18,9 +18,11 @@ import constants from "../constants";
 
 class ParkingLotScreen extends Component {
   componentDidMount() {
-    const { getParkingLotStartups } = this.props;
+    const { getParkingLotStartups, navigation } = this.props;
 
-    getParkingLotStartups();
+    navigation.addListener("focus", () => {
+      getParkingLotStartups();
+    });
   }
 
   renderHiddenItem = () => {
@@ -38,7 +40,7 @@ class ParkingLotScreen extends Component {
 
   renderItem = ({ item }) => {
     const removeCard = () => {
-      this.props.removeCard(item);
+      this.props.removeCard(item.id);
     };
 
     return (
@@ -127,7 +129,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getParkingLotStartups: () => dispatch(getParkingLotStartups()),
     getMoreStartups: (page) => dispatch(getMoreStartups(page)),
-    removeCard: (srartup) => dispatch(removeCard(srartup)),
+    removeCard: (startupId) => dispatch(removeCard(startupId)),
   };
 };
 
@@ -177,7 +179,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   hiddenText: {
-    width: "40%",
+    width: 100,
     color: "white",
     fontSize: 16,
     fontFamily: "montserrat-regular",

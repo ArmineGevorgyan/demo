@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { addPipelineCard } from "./pipeline";
 
 const initialState = {
   isLoading: false,
@@ -16,7 +15,13 @@ const parkingLotSlice = createSlice({
   name: "parkingLot",
   initialState,
   reducers: {
-    getParkingLotStartups: (state) => ({ ...state, isLoading: true }),
+    getParkingLotStartups: (state) => ({
+      ...state,
+      noMoreStartups: false,
+      page: 0,
+      nextPage: 1,
+      isLoading: true,
+    }),
     getParkingLotStartupsSuccess: (state, action) => ({
       ...state,
       isLoading: false,
@@ -64,9 +69,6 @@ const parkingLotSlice = createSlice({
 
 const parkingLotReducer = parkingLotSlice.reducer;
 
-export const addParkingLotCard = parkingLotSlice.actions.getMoreStartupsSuccess;
-export const removeParkingLotCard = parkingLotSlice.actions.removeCardSuccess;
-
 export const getParkingLotStartups = (page = 0, size = 10) => {
   return (dispatch) => {
     dispatch(parkingLotSlice.actions.getParkingLotStartups());
@@ -106,13 +108,12 @@ export const getMoreStartups = (page, size = 10) => {
   };
 };
 
-export const removeCard = (startup) => {
+export const removeCard = (startupId) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/interested?startupId=${startup.id}`, {})
+      .post(`${API_URL}/startups/interested?startupId=${startupId}`, {})
       .then(() => {
-        dispatch(parkingLotSlice.actions.removeCardSuccess(startup.id));
-        dispatch(addPipelineCard([startup]));
+        dispatch(parkingLotSlice.actions.removeCardSuccess(startupId));
       })
       .catch((error) =>
         dispatch(parkingLotSlice.actions.removeCardFail(error))

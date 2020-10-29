@@ -20,13 +20,15 @@ import EmptyList from "../components/emptyList";
 
 class DiscoverStartups extends Component {
   componentDidMount() {
-    const { getNewStartups } = this.props;
+    const { getNewStartups, navigation } = this.props;
 
-    getNewStartups();
+    navigation.addListener("focus", () => {
+      getNewStartups();
+    });
   }
 
   swipeLeft = (index) => {
-    const {startups, toggleIsEmpty} = this.props;
+    const { startups, toggleIsEmpty } = this.props;
     let card = startups[index];
     this.props.addStartupToParkingLot(card);
     if (index === startups.length - 1) {
@@ -35,7 +37,7 @@ class DiscoverStartups extends Component {
   };
 
   swipeRight = (index) => {
-    const {startups, toggleIsEmpty} = this.props;
+    const { startups, toggleIsEmpty } = this.props;
     let card = startups[index];
     this.props.addStartupToPipeline(card);
     if (index === startups.length - 1) {
@@ -44,13 +46,7 @@ class DiscoverStartups extends Component {
   };
 
   renderSwiper() {
-    const {
-      t,
-      isLoading,
-      isEmpty,
-      startups,
-      toggleIsEmpty,
-    } = this.props;
+    const { t, isLoading, isEmpty, startups, toggleIsEmpty } = this.props;
 
     if (!startups || isLoading) {
       return <Spinner color={colors.secondaryColor} />;

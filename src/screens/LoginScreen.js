@@ -12,7 +12,7 @@ import WelcomeHeader from "../components/welcomeHeader";
 import Background from "../components/background";
 import Copyright from "../components/copyright";
 import schema from "../validation/passwordSchema";
-import { login, token } from "../redux/ducks/authentication";
+import { login } from "../redux/ducks/authentication";
 
 class LoginScreen extends Component {
   onSubmit = (values) => {

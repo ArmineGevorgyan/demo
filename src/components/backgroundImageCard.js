@@ -59,12 +59,12 @@ class BackgroundImageCard extends Component {
                 t("backgroundImageCard.total"),
                 numberToCashFormatter(startup.totalCommittedAmount)
               )}
-              {startup.committedInvestors > 0 ??
+              {startup.committedInvestors > 0 &&
                 startupDetail(
                   t("backgroundImageCard.committedInvestors"),
                   startup.committedInvestors
                 )}
-              {startup.interestedInvestors > 0 ??
+              {startup.interestedInvestors > 0 &&
                 startupDetail(
                   t("backgroundImageCard.interestedInvestors"),
                   startup.interestedInvestors
