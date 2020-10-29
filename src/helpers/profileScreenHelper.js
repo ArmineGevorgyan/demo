@@ -116,9 +116,9 @@ const entrepreneurData = [
       to: "TemporaryScreen",
     },
     {
-      id: 2,
-      value: "integration",
-      svg: <CursorIcon />,
+      id: 3,
+      value: "notification",
+      svg: <NotificationIcon />,
       backgroundColor: colors.profileSection1,
       to: "TemporaryScreen",
     },
