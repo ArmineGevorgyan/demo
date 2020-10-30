@@ -1,23 +1,13 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-community/async-storage";
+import NetInfo from "@react-native-community/netinfo";
 import store from "../redux/store";
 import { clearAuthentication } from "../redux/ducks/authentication";
 import { showNotification } from "./notificationHelper";
 
 export const setToken = async (token) => {
   try {
-    axios.interceptors.request.use(
-      (config) => {
-        const header = { Authorization: `Bearer ${token}` };
-        Object.assign(config.headers, header);
-
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
-      }
-    );
-
+    setAxiosRequestInterceptor(token);
     await AsyncStorage.setItem("@token", token);
   } catch (e) {}
 };
@@ -31,20 +21,30 @@ export const removeToken = async () => {
 };
 
 getToken().then((token) => {
-  if (token) {
-    axios.interceptors.request.use(
-      (config) => {
-        const header = { Authorization: `Bearer ${token}` };
-        Object.assign(config.headers, header);
-
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
-      }
-    );
-  }
+  setAxiosRequestInterceptor(token);
 });
+
+const checkConnection = async () => {
+  const netInfo = await NetInfo.fetch();
+  if (!netInfo.isConnected) {
+    showNotification("error", "notification.offlineError");
+  }
+};
+
+const setAxiosRequestInterceptor = (token) => {
+  axios.interceptors.request.use(
+    (config) => {
+      const header = { Authorization: `Bearer ${token}` };
+      Object.assign(config.headers, header);
+      checkConnection();
+
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+};
 
 axios.interceptors.response.use(
   (response) => response,

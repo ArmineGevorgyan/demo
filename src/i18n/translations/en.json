@@ -96,7 +96,8 @@
   },
   "notification": {
     "expiredToken": "Your token has expired. Please log in again.",
-    "wrongPassword": "The entered password is incorrect."
+    "wrongPassword": "The entered password is incorrect.",
+    "offlineError": "Oh, it seems you are offline!"
   },
   "pipeline":{
     "title":"Pipeline",
