@@ -71,6 +71,7 @@ class DiscoverStartups extends Component {
         stackScale={5}
         animateCardOpacity={true}
         cardVerticalMargin={30}
+        cardHorizontalMargin={30}
       />
     );
   }

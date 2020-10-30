@@ -13,7 +13,7 @@ import VideoView from "./videoView";
 class SmallStartupCard extends Component {
   render() {
     const { t, startup } = this.props;
-    const videoWidth = constants.windowWidth - 40; // 40 = cardHorizontalMargin
+    const videoWidth = constants.windowWidth - 60; // 60 = cardHorizontalMargin
     const videoHeight = videoWidth / constants.widescreenVideoRatio;
 
     return (
@@ -63,13 +63,15 @@ class SmallStartupCard extends Component {
           />
         )}
         <View style={styles.card}>
-          <Text
-            style={styles.description}
-            ellipsizeMode="tail"
-            numberOfLines={5}
-          >
-            {startup.description}
-          </Text>
+          <View style={styles.descriptionContainer}>
+            <Text
+              style={styles.description}
+              ellipsizeMode="tail"
+              numberOfLines={5}
+            >
+              {startup.description}
+            </Text>
+          </View>
           <View style={styles.slider}>
             {GradientSlider(
               0,
@@ -116,19 +118,14 @@ const styles = StyleSheet.create({
   cardHeader: {
     backgroundColor: "white",
     flexDirection: "row",
-  },
-  headerContent: {
-    marginTop: 15,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 5,
+    paddingRight: 10,
+    paddingBottom: 5,
   },
   imageContainer: {
     width: "40%",
     justifyContent: "center",
-    marginLeft: 5,
-    marginBottom: 10,
-    marginTop: 10,
   },
   logo: {
     height: 100,
@@ -165,8 +162,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "montserrat-regular",
     color: colors.darkText,
+  },
+  descriptionContainer: {
     paddingTop: 10,
-    paddingBottom: 10,
+    height: 100,
+    justifyContent: "center",
+    alignContent: "center",
   },
   slider: {
     paddingBottom: 5,
