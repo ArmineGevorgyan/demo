@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_URL } from "../../config";
+import { API_HOST, API_URL } from "../../config";
 import { getToken, removeToken, setToken } from "../../helpers/auth";
 import { showNotification } from "../../helpers/notificationHelper";
 import { getUserData } from "./user";
@@ -48,6 +48,18 @@ const authSlice = createSlice({
       isLoading: false,
       error: action.payload,
       isAuthenticated: false,
+    }),
+    logout: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    logoutSuccess: (state) => ({
+      ...state,
+      isLoading: false,
+    }),
+    logoutFail: (state) => ({
+      ...state,
+      isLoading: false,
     }),
     authenticate: (state) => ({
       ...state,
@@ -122,6 +134,21 @@ export const login = (data) => {
         dispatch(authSlice.actions.loginFail(error));
       });
   };
+};
+
+export const logout = (navigation) => {
+  return (dispatch) => {
+    dispatch(authSlice.actions.logout());
+
+    axios
+      .get(`${API_HOST}/logout`)
+      .then((r) => { return r.data })
+      .then((data) => {
+        removeToken();
+        navigation.navigate("LandingScreen");
+      })
+      .catch((error) => { dispatch(authSlice.actions.loginFail(error)) })
+  }
 };
 
 export default authReducer;

@@ -10,20 +10,29 @@ import { getSectionData } from "../helpers/profileScreenHelper";
 import { getSectionBorderStyle } from "../helpers/profileScreenHelper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { baseStylesheet } from "../styles/baseStylesheet";
+import { logout } from "../redux/ducks/authentication";
 
 class ProfileScreen extends Component {
   constructor(props) {
     super(props);
   }
 
-  navigateTo = (screen) => {
-    this.props.navigation.navigate(screen);
+  navigateTo = (item) => {
+    if (item.to) {
+      this.props.navigation.navigate(item.to);
+    } else {
+      if (item.value === "logout") {
+        this.props.logout(this.props.navigation);
+      }
+    }
   };
 
   render() {
-    const { t,
+    const {
+      t,
       userData,
-     } = this.props;
+      isLoading,
+    } = this.props;
 
     return (
       <Container>
@@ -44,7 +53,7 @@ class ProfileScreen extends Component {
               {section.map((item, index) => (
                 <TouchableOpacity
                   activeOpacity={1}
-                  onPress={() => item.to && this.navigateTo(item.to)}
+                  onPress={() => this.navigateTo(item)}
                 >
                   <View
                     style={[
@@ -71,8 +80,8 @@ class ProfileScreen extends Component {
                             style={styles.icon}
                           />
                         ) : (
-                          item.svg
-                        )}
+                            item.svg
+                          )}
                       </View>
                       <Text
                         style={[
@@ -105,11 +114,17 @@ class ProfileScreen extends Component {
 
 const mapStateToProps = (state, props) => {
   const userData = state.user.userData;
-  return { userData };
+  const isLoading = state.authentication.isLoading;
+  return {
+    userData,
+    isLoading,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    logout: (navigation) => dispatch(logout(navigation))
+  };
 }
 
 export default compose(
