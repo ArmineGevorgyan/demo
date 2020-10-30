@@ -6,13 +6,14 @@ import ParkingLotIcon from "../../assets/parkingmeter";
 import PasswordIcon from "../../assets/password";
 import LogoutIcon from "../../assets/log-out";
 import DeleteAccountIcon from "../../assets/delete-account";
-import {colors} from "../styles/colors";
+import { colors } from "../styles/colors";
+import constants from "../constants";
 
-export const getSectionData=(userRole)=>{
-  return userRole === "ROLE_INVESTOR"? invesotrData: entrepreneurData;
+export const getSectionData = (userRole) => {
+  return userRole === constants.userRole.investor ? investorData : entrepreneurData;
 };
 
- const invesotrData = [
+const investorData = [
   [
     {
       id: 1,

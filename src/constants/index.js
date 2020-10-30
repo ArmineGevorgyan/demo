@@ -17,6 +17,10 @@ const constants = {
     rejected: "REJECTED",
     notFound: "NOT_FOUND",
   },
+  userRole: {
+    investor: "ROLE_INVESTOR",
+    entrepreneur: "ROLE_ENTREPRENEUR",
+  },
   investor: {
     termsAndConditionsUri: `${API_HOST}/investor/tc.html`,
     privacyPolicyUri: `${API_HOST}/investor/pp.html`,
