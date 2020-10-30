@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { Text, StyleSheet } from "react-native";
 import { Container, Content, Icon, View } from "native-base";
 import { compose } from "redux";
+import { connect } from "react-redux";
 import { colors } from "../styles/colors";
 import { withTranslation } from "react-i18next";
 import GrayHeader from "../components/grayHeader";
-import { sectionData } from "../helpers/profileScreenHelper";
+import { getSectionData } from "../helpers/profileScreenHelper";
 import { getSectionBorderStyle } from "../helpers/profileScreenHelper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -20,13 +21,15 @@ class ProfileScreen extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t,
+      userData,
+     } = this.props;
 
     return (
       <Container>
         <GrayHeader title={t("profileScreen.profile")} />
         <Content>
-          {sectionData.map((section, index) => (
+          {getSectionData(userData.authorities[0]).map((section, index) => (
             <View
               style={[
                 styles.section,
@@ -34,7 +37,7 @@ class ProfileScreen extends Component {
                 baseStylesheet.elevation6,
                 {
                   marginTop: index === 0 ? 20 : 10,
-                  marginBottom: index === sectionData.length - 1 ? 20 : 10,
+                  marginBottom: index === getSectionData(userData.authorities[0]).length - 1 ? 20 : 10,
                 },
               ]}
             >
@@ -100,7 +103,19 @@ class ProfileScreen extends Component {
   }
 }
 
-export default compose(withTranslation("translations"))(ProfileScreen);
+const mapStateToProps = (state, props) => {
+  const userData = state.user.userData;
+  return { userData };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+}
+
+export default compose(
+  withTranslation("translations"),
+  connect(mapStateToProps, mapDispatchToProps),
+)(ProfileScreen);
 
 const styles = StyleSheet.create({
   header: {

@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { getToken, setToken } from "../../helpers/auth";
+import { getToken, removeToken, setToken } from "../../helpers/auth";
 import { showNotification } from "../../helpers/notificationHelper";
+import { getUserData } from "./user";
 
 const initialState = {
   isLoading: false,
@@ -67,6 +68,7 @@ export const authenticate = () => {
       .then((token) => {
         if (token) {
           dispatch(authSlice.actions.authenticate());
+          dispatch(getUserData());
         }
       })
       .catch((error) => dispatch(authSlice.actions.clearAuthentication()));
@@ -109,6 +111,7 @@ export const login = (data) => {
         if (token) {
           setToken(token);
 
+          dispatch(getUserData());
           dispatch(authSlice.actions.loginSuccess());
         }
       })

@@ -6,9 +6,14 @@ import ParkingLotIcon from "../../assets/parkingmeter";
 import PasswordIcon from "../../assets/password";
 import LogoutIcon from "../../assets/log-out";
 import DeleteAccountIcon from "../../assets/delete-account";
-import {colors} from "../styles/colors";
+import { colors } from "../styles/colors";
+import constants from "../constants";
 
-export const sectionData = [
+export const getSectionData = (userRole) => {
+  return userRole === constants.userRole.investor ? investorData : entrepreneurData;
+};
+
+const investorData = [
   [
     {
       id: 1,
@@ -97,6 +102,10 @@ export const sectionData = [
       backgroundColor: colors.profileSection4,
     },
   ]
+]
+
+const entrepreneurData = [
+  [],
 ]
 
 export const getSectionBorderStyle = (index, sectionLength) => {
