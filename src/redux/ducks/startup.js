@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { addPipelineCard, removePipelineCard } from "./pipeline";
-import { addParkingLotCard, removeParkingLotCard } from "./parkingLot";
 
 const initialState = {
   isLoading: false,
@@ -37,14 +35,14 @@ const startupSlice = createSlice({
     toggleIsEmpty: (state) => ({
       ...state,
       isEmpty: !state.isEmpty,
-    })
+    }),
   },
 });
 
 const startupReducer = startupSlice.reducer;
 
 export const toggleIsEmpty = () => {
-  return dispatch => dispatch(startupSlice.actions.toggleIsEmpty());
+  return (dispatch) => dispatch(startupSlice.actions.toggleIsEmpty());
 };
 
 export const getNewStartups = () => {
@@ -69,10 +67,6 @@ export const addStartupToParkingLot = (startup) => {
   return (dispatch) => {
     axios
       .post(`${API_URL}/startups/parking-lot?startupId=${startup.id}`)
-      .then(() => {
-        dispatch(addParkingLotCard([startup]));
-        dispatch(removePipelineCard(startup.id));
-      })
       .catch((error) => {
         dispatch(startupSlice.actions.addStartupToParkingLotFail(error));
       });
@@ -83,10 +77,6 @@ export const addStartupToPipeline = (startup) => {
   return (dispatch) => {
     axios
       .post(`${API_URL}/startups/interested?startupId=${startup.id}`)
-      .then(() => {
-        dispatch(addPipelineCard([startup]));
-        dispatch(removeParkingLotCard(startup.id));
-      })
       .catch((error) => {
         dispatch(startupSlice.actions.addStartupToPipelineFail(error));
       });

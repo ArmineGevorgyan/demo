@@ -7,7 +7,7 @@ import { colors } from "../styles/colors";
 
 const GradientSlider = (min, max, value) => {
   const gradient = (
-    <View style={styles.trackBorder}>
+    <View style={{ ...styles.trackBorder, height: value > 0 ? 20 : 0 }}>
       <LinearGradient
         colors={[colors.darkGradient, colors.lightGradient]}
         style={styles.track}
@@ -17,13 +17,16 @@ const GradientSlider = (min, max, value) => {
     </View>
   );
 
-  const thumb = (
-    <View>
-      <Icon name="triangle-down" type="Entypo" style={styles.icon} />
-      <View height={5} />
-      <Icon name="triangle-up" type="Entypo" style={styles.icon} />
-    </View>
-  );
+  const thumb =
+    value > 0 ? (
+      <View>
+        <Icon name="triangle-down" type="Entypo" style={styles.icon} />
+        <View height={5} />
+        <Icon name="triangle-up" type="Entypo" style={styles.icon} />
+      </View>
+    ) : (
+      <></>
+    );
 
   return (
     <Slider
@@ -43,9 +46,6 @@ const GradientSlider = (min, max, value) => {
 export default GradientSlider;
 
 const styles = StyleSheet.create({
-  slider: {
-    marginTop: 5,
-  },
   track: {
     height: 20,
   },

@@ -21,9 +21,11 @@ import constants from "../constants";
 
 class PipelineScreen extends Component {
   componentDidMount() {
-    const { getInterestedStartups } = this.props;
+    const { getInterestedStartups, navigation } = this.props;
 
-    getInterestedStartups();
+    navigation.addListener("focus", () => {
+      getInterestedStartups();
+    });
   }
 
   renderHiddenItem = () => {
@@ -41,7 +43,7 @@ class PipelineScreen extends Component {
 
   renderItem = ({ item }) => {
     const removeCard = () => {
-      this.props.removeCard(item);
+      this.props.removeCard(item.id);
     };
 
     return (
@@ -148,7 +150,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getInterestedStartups: () => dispatch(getInterestedStartups()),
     getMoreStartups: (page) => dispatch(getMoreStartups(page)),
-    removeCard: (srartup) => dispatch(removeCard(srartup)),
+    removeCard: (startupId) => dispatch(removeCard(startupId)),
   };
 };
 
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   hiddenText: {
-    width: "40%",
+    width: 100,
     textAlign: "right",
     color: "white",
     fontSize: 16,
