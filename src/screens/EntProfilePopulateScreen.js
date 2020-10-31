@@ -9,16 +9,21 @@ import { withTranslation } from "react-i18next";
 import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { save } from "../redux/ducks/entrepreneurProfile";
+import { Container, Content } from "native-base";
+import React, { Component } from "react";
+import ProfileBlueHeader from "../components/profileBlueHeader";
+import SelectImage from "../components/selectImage";
+
 
 class EntProfilePopulateScreen extends Component {
-
   handleNext = () => {
     const { save } = this.props;
     save();
   };
 
-  handleReset = () => {
-
+  handleReset = () => { }
+  backButtonHandler = () => {
+    this.props.navigation.goBack();
   };
 
   render() {
@@ -28,10 +33,12 @@ class EntProfilePopulateScreen extends Component {
       <Container>
         <ProfileBlueHeader
           title="My Account"
-        />
+        >
+          <SelectImage />
+        </ProfileBlueHeader>
         <Content style={{
           ...baseStylesheet.paddedContent,
-          backgroundColor:colors.offWhite,
+          backgroundColor: colors.offWhite,
         }}>
           <View>
             <Button
@@ -47,6 +54,7 @@ class EntProfilePopulateScreen extends Component {
                 style={styles.rightIcon}
               />
             </Button>
+
 
             <Button
               style={{

@@ -89,7 +89,7 @@ class AppNavigator extends Component {
 
       return isAuthenticated ? (
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Home" component={ProfilePopulateScreen} />
           <Stack.Screen name="TemporaryScreen" component={TemporaryScreen} />
           <Stack.Screen name="ParkingLotScreen" component={ParkingLotScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
