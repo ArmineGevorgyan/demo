@@ -1,11 +1,12 @@
 import { Container, Content } from "native-base";
 import React, { Component } from "react";
 import ProfileBlueHeader from "../components/profileBlueHeader";
+import { removeToken } from "../helpers/auth";
 
-class ProfilePopulateScreen extends Component {
+class EntProfilePopulateScreen extends Component {
 
   backButtonHandler = () => {
-
+this.props.navigation.goBack();
   };
 
   render() {
@@ -23,4 +24,4 @@ class ProfilePopulateScreen extends Component {
   };
 };
 
-export default ProfilePopulateScreen;
+export default EntProfilePopulateScreen;

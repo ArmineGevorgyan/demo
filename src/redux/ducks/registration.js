@@ -9,6 +9,7 @@ const initialState = {
   request: null,
   user: null,
   error: null,
+  password: "",
 };
 
 const registrationSlice = createSlice({
@@ -53,6 +54,10 @@ const registrationSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    setPassword: (state, action) => ({
+      ...state,
+      password: action.payload,
+    }),
   },
 });
 
@@ -73,7 +78,7 @@ export const togglePasswordConfirmation = () => {
 export const register = (data) => {
   return (dispatch) => {
     dispatch(registrationSlice.actions.register());
-
+    dispatch(registrationSlice.actions.setPassword(data.password));
     axios
       .post(`${API_URL}/register`, data)
       .then((r) => {

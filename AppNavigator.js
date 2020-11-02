@@ -31,6 +31,7 @@ import TemporaryScreen from "./src/screens/TemporaryScreen";
 import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
+import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -99,6 +100,7 @@ class AppNavigator extends Component {
             component={TermsAndConditionsScreen}
           />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="EntProfilePopulateScreen" component={EntProfilePopulateScreen}/>
         </Stack.Navigator>
       );
     };
