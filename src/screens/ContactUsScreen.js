@@ -12,12 +12,40 @@ import GrayHeader from "../components/grayHeader";
 import Validation from "../validation";
 import schema from "../validation/contactFormSchema";
 import constants from "../constants";
+import {
+  getContactRequestTypes,
+  createContactRequest,
+  resetForm,
+} from "../redux/ducks/contact";
 
 class ContactUsScreen extends Component {
-  onSubmit = (values) => {};
+  constructor(props) {
+    super(props);
+    this.formik = React.createRef();
+  }
+
+  componentDidMount() {
+    this.props.getContactRequestTypes();
+  }
+
+  componentDidUpdate() {
+    const { request, navigation, resetForm } = this.props;
+
+    if (!request) {
+      return;
+    }
+
+    resetForm(); // reset request in the state
+    if (this.formik) {
+      this.formik.resetForm(); // reset form values
+    }
+    navigation.navigate("ContactUsSuccess");
+  }
+
+  onSubmit = (values) => this.props.createContactRequest(values);
 
   render() {
-    const { t, navigation } = this.props;
+    const { t, navigation, requestTypes } = this.props;
 
     return (
       <Content style={baseStylesheet.baseContainer}>
@@ -25,10 +53,10 @@ class ContactUsScreen extends Component {
           title={t("contactUsScreen.headerText")}
           backButtonHandler={() => navigation.goBack()}
         />
-
         <Formik
+          innerRef={(p) => (this.formik = p)}
           initialValues={{
-            subject: "bug",
+            contactRequestType: { id: 1 },
             message: "",
           }}
           validationSchema={schema}
@@ -40,7 +68,7 @@ class ContactUsScreen extends Component {
             return (
               <View style={styles.formContainer}>
                 <View style={styles.imageContainer}>
-                  <DraperRhino style={styles.draperRhinoImage} />
+                  <DraperRhino />
                 </View>
                 <View style={styles.row}>
                   <Label style={baseStylesheet.label}>
@@ -57,22 +85,13 @@ class ContactUsScreen extends Component {
                     selectedValue={props.values.subject}
                     style={{ width: "100%" }}
                     onValueChange={(itemValue, itemIndex) => {
-                      props.setFieldValue("subject", itemValue);
+                      props.setFieldValue("contactRequestType", itemValue);
                     }}
                   >
-                    <Picker.Item label={t("contactUsScreen.bug")} value="bug" />
-                    <Picker.Item
-                      label={t("contactUsScreen.complaint")}
-                      value="complaint"
-                    />
-                    <Picker.Item
-                      label={t("contactUsScreen.suggestion")}
-                      value="suggestion"
-                    />
-                    <Picker.Item
-                      label={t("contactUsScreen.other")}
-                      value="other"
-                    />
+                    {requestTypes &&
+                      requestTypes.map((type) => (
+                        <Picker.Item label={type.name} value={type} />
+                      ))}
                   </Picker>
                 </View>
                 <View style={styles.message}>
@@ -90,6 +109,7 @@ class ContactUsScreen extends Component {
                       rowSpan={7}
                       style={baseStylesheet.textarea}
                       bordered
+                      value={props.values.message || ""}
                       onChangeText={props.handleChange("message")}
                     />
                   </Validation>
@@ -112,14 +132,20 @@ class ContactUsScreen extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  const email = state.authentication.email;
+  const request = state.contactRequest.request;
+  const requestTypes = state.contactRequest.requestTypes;
   return {
-    email,
+    request,
+    requestTypes,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    resetForm: () => dispatch(resetForm()),
+    getContactRequestTypes: () => dispatch(getContactRequestTypes()),
+    createContactRequest: (data) => dispatch(createContactRequest(data)),
+  };
 };
 
 export default compose(

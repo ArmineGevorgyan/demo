@@ -30,6 +30,7 @@ import ProfileScreen from "./src/screens/ProfileScreen";
 import TemporaryScreen from "./src/screens/TemporaryScreen";
 import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
+import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 
 const prefix = Linking.makeUrl("/");
 
@@ -76,6 +77,7 @@ class AppNavigator extends Component {
           <Stack.Screen name="TemporaryScreen" component={TemporaryScreen} />
           <Stack.Screen name="ParkingLotScreen" component={ParkingLotScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
+          <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>

@@ -139,10 +139,12 @@
     "headerText":"Contact Us",
     "submitButton": "Submit",
     "subject": "Subject",
-    "message": "Message",
-    "bug": "Report a bug",
-    "complaint": "Submit a complaint",
-    "suggestion": "Make a suggestion",
-    "other": "Other"
+    "message": "Message"
+  },
+  "contactUsSuccess":{
+    "headerText":"Contact Us",
+    "OKButton": "Create New message",
+    "contextHeading": "Thank you for contacting us!",
+    "context": "See our answer in your inbox during the next 2 days."
   }
 }
