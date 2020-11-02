@@ -64,10 +64,11 @@
     "url_not_valid": "Invalid URL",
     "linkedIn_url_required": "LinkedIn URL is required",
     "linkedIn_url_not_valid": "Please enter a valid LinkedIn profile URL",
-    "angelList_url_not_valid": "Please enter a valid AngelList profile URL"
+    "angelList_url_not_valid": "Please enter a valid AngelList profile URL",
+    "message_required": "Message is required"
   },
   "discoverStartups": {
-    "headerTest": "Discover Startups",
+    "headerText": "Discover Startups",
     "new": "New",
     "trending": "Trending",
     "noStartup":"There are no more startups to explore. \n\r You’ll get notified as soon as new opportunities are available"
@@ -132,5 +133,15 @@
     "committedInvestors": "Committed investors",
     "interestedInvestors": "Interested investors",
     "deadline": "Deadline"
+  },
+  "contactUsScreen":{
+    "headerText":"Contact Us",
+    "submitButton": "Submit",
+    "subject": "Subject",
+    "message": "Message",
+    "bug": "Report a bug",
+    "complaint": "Submit a complaint",
+    "suggestion": "Make a suggestion",
+    "other": "Other"
   }
 }

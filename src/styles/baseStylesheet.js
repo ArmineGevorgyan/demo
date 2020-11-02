@@ -187,6 +187,29 @@ export const baseStylesheet = StyleSheet.create({
     width: 100,
   },
 
+  textarea: {
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 25,
+
+    borderColor: "transparent",
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    borderLeftWidth: 0,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
   // --------------------- TEXT STYLES----------------------
   mainContentText: {
     textAlign: "center",
@@ -202,6 +225,12 @@ export const baseStylesheet = StyleSheet.create({
     fontFamily: "montserrat-light",
     color: colors.mainText,
     marginBottom: 20,
+  },
+
+  label: {
+    color: colors.lightBlue,
+    fontSize: 14,
+    fontFamily: "montserrat-regular",
   },
 
   // --------------------- OTHER STYLES-------------------

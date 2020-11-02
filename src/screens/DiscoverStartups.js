@@ -81,7 +81,7 @@ class DiscoverStartups extends Component {
 
     return (
       <Content style={{ ...baseStylesheet.baseContainer, height: "100%" }}>
-        <GrayHeader title={t("discoverStartups.headerTest")}>
+        <GrayHeader title={t("discoverStartups.headerText")}>
           <SwitchSelector
             options={[
               {

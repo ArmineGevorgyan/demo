@@ -10,7 +10,9 @@ import { colors } from "../styles/colors";
 import constants from "../constants";
 
 export const getSectionData = (userRole) => {
-  return userRole === constants.userRole.investor ? investorData : entrepreneurData;
+  return userRole === constants.userRole.investor
+    ? investorData
+    : entrepreneurData;
 };
 
 const investorData = [
@@ -69,7 +71,7 @@ const investorData = [
       icon: "mail",
       iconType: "Feather",
       backgroundColor: colors.profileSection3,
-      to: "TemporaryScreen",
+      to: "ContactUsScreen",
     },
     {
       id: 8,
@@ -101,24 +103,22 @@ const investorData = [
       svg: <DeleteAccountIcon />,
       backgroundColor: colors.profileSection4,
     },
-  ]
-]
+  ],
+];
 
-const entrepreneurData = [
-  [],
-]
+const entrepreneurData = [[]];
 
 export const getSectionBorderStyle = (index, sectionLength) => {
   if (index === 0) {
     return {
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
-    }
+    };
   }
   if (index === sectionLength) {
     return {
       borderBottomLeftRadius: 10,
       borderBottomRightRadius: 10,
-    }
+    };
   }
 };

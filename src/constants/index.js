@@ -35,7 +35,8 @@ const constants = {
   },
   notificationTypes: {
     ERROR: "error",
-  }
+  },
+  contactUsMessageMaxLength: 300,
 };
 
 export default constants;

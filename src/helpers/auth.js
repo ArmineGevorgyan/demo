@@ -21,7 +21,20 @@ export const removeToken = async () => {
 };
 
 getToken().then((token) => {
-  setAxiosRequestInterceptor(token);
+  if (token) {
+    return setAxiosRequestInterceptor(token);
+  }
+
+  axios.interceptors.request.use(
+    (config) => {
+      checkConnection();
+
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
 });
 
 const checkConnection = async () => {
