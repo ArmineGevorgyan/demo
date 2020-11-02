@@ -70,22 +70,7 @@ class AppNavigator extends Component {
     };
 
     const getStack = () => {
-      const {
-        isAuthenticated,
-        photoUrl,
-      } = this.props;
-      
-      if (isAuthenticated && !photoUrl) {
-        return (<Stack.Navigator
-          initialRouteName="EntProfilePopulateScreen"
-          headerMode={false}
-        >
-          <Stack.Screen
-            name="EntProfilePopulateScreen"
-            component={EntProfilePopulateScreen}
-          />
-        </Stack.Navigator>)
-      }
+      const { isAuthenticated } = this.props;
 
       return isAuthenticated ? (
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
@@ -96,27 +81,28 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
         </Stack.Navigator>
       ) : (
-          <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
-            <Stack.Screen name="LandingScreen" component={LandingScreen} />
-            <Stack.Screen
-              name="RequestAnInvite"
-              component={RequestInviteScreen}
-            />
-            <Stack.Screen
-              name="RequestInviteSuccess"
-              component={RequestInviteSuccess}
-            />
-            <Stack.Screen
-              name="RegistrationScreen"
-              component={RegistrationScreen}
-            />
-            <Stack.Screen
-              name="TermsAndConditionsScreen"
-              component={TermsAndConditionsScreen}
-            />
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          </Stack.Navigator>
-        );
+        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
+          <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen
+            name="RequestAnInvite"
+            component={RequestInviteScreen}
+          />
+          <Stack.Screen
+            name="RequestInviteSuccess"
+            component={RequestInviteSuccess}
+          />
+          <Stack.Screen
+            name="RegistrationScreen"
+            component={RegistrationScreen}
+          />
+          <Stack.Screen
+            name="TermsAndConditionsScreen"
+            component={TermsAndConditionsScreen}
+          />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="EntProfilePopulateScreen" component={EntProfilePopulateScreen}/>
+        </Stack.Navigator>
+      );
     };
 
     const Home = () => {
@@ -159,11 +145,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, props) => {
   const isAuthenticated = state.authentication.isAuthenticated || false;
-  const photoUrl = state.entrepreneurProfile.photoUrl;
 
   return {
     isAuthenticated,
-    photoUrl,
   };
 };
 
