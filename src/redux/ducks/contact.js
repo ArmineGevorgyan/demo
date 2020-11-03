@@ -74,7 +74,7 @@ export const createContactRequest = (data) => {
     dispatch(contactSlice.actions.createContactRequest());
 
     axios
-      .post(`${API_URL}/contact-requests`, { data })
+      .post(`${API_URL}/contact-requests`, data)
       .then((r) => {
         return r.data;
       })

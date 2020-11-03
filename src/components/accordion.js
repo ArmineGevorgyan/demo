@@ -4,7 +4,7 @@ import { Accordion as NativeBaseAccordion, Icon } from "native-base";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 
-const _renderHeader = (item, expanded) => {
+const renderHeader = (item, expanded) => {
   return (
     <View style={styles.accordionHeader}>
       <Text
@@ -17,16 +17,16 @@ const _renderHeader = (item, expanded) => {
   );
 };
 
-const _renderContent = (item) => {
+const renderContent = (item) => {
   return <View style={baseStylesheet.paddedContent}>{item.content}</View>;
 };
 
 const Accordion = ({ dataArray }) => {
   return (
     <NativeBaseAccordion
-      renderHeader={_renderHeader}
+      renderHeader={renderHeader}
       dataArray={dataArray}
-      renderContent={_renderContent}
+      renderContent={renderContent}
     />
   );
 };

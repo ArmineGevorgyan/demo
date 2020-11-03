@@ -32,6 +32,7 @@ import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
+import FAQScreen from "./src/screens/FAQScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -70,21 +71,20 @@ class AppNavigator extends Component {
     };
 
     const getStack = () => {
-      const {
-        isAuthenticated,
-        photoUrl,
-      } = this.props;
-      
+      const { isAuthenticated, photoUrl } = this.props;
+
       if (isAuthenticated && !photoUrl) {
-        return (<Stack.Navigator
-          initialRouteName="EntProfilePopulateScreen"
-          headerMode={false}
-        >
-          <Stack.Screen
-            name="EntProfilePopulateScreen"
-            component={EntProfilePopulateScreen}
-          />
-        </Stack.Navigator>)
+        return (
+          <Stack.Navigator
+            initialRouteName="EntProfilePopulateScreen"
+            headerMode={false}
+          >
+            <Stack.Screen
+              name="EntProfilePopulateScreen"
+              component={EntProfilePopulateScreen}
+            />
+          </Stack.Navigator>
+        );
       }
 
       return isAuthenticated ? (
@@ -94,29 +94,30 @@ class AppNavigator extends Component {
           <Stack.Screen name="ParkingLotScreen" component={ParkingLotScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
+          <Stack.Screen name="FAQScreen" component={FAQScreen} />
         </Stack.Navigator>
       ) : (
-          <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
-            <Stack.Screen name="LandingScreen" component={LandingScreen} />
-            <Stack.Screen
-              name="RequestAnInvite"
-              component={RequestInviteScreen}
-            />
-            <Stack.Screen
-              name="RequestInviteSuccess"
-              component={RequestInviteSuccess}
-            />
-            <Stack.Screen
-              name="RegistrationScreen"
-              component={RegistrationScreen}
-            />
-            <Stack.Screen
-              name="TermsAndConditionsScreen"
-              component={TermsAndConditionsScreen}
-            />
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          </Stack.Navigator>
-        );
+        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
+          <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen
+            name="RequestAnInvite"
+            component={RequestInviteScreen}
+          />
+          <Stack.Screen
+            name="RequestInviteSuccess"
+            component={RequestInviteSuccess}
+          />
+          <Stack.Screen
+            name="RegistrationScreen"
+            component={RegistrationScreen}
+          />
+          <Stack.Screen
+            name="TermsAndConditionsScreen"
+            component={TermsAndConditionsScreen}
+          />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        </Stack.Navigator>
+      );
     };
 
     const Home = () => {
