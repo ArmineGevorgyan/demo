@@ -79,15 +79,15 @@ class TermsAndConditionsScreen extends Component {
         }}
       >
         <View style={styles.imageContainer}>
-          <DraperRhino style={styles.draperRhinoImage} />
+          <DraperRhino />
         </View>
         <ScrollView style={styles.buttonOffset}>
           <VideoView
             videoSource={tcVideoUri}
-            size={{ 
-              width: constants.windowWidth, 
+            size={{
+              width: constants.windowWidth,
               height: constants.widescreenVideoHeight,
-             }}
+            }}
           />
           <Accordion dataArray={dataArray} />
         </ScrollView>

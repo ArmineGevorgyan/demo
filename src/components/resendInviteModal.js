@@ -38,7 +38,7 @@ class ResendInviteModal extends Component {
       >
         <View style={baseStylesheet.modalView}>
           <View style={styles.imageContainer}>
-            <DraperRhino style={styles.draperRhinoImage} />
+            <DraperRhino />
           </View>
           <Text style={styles.header}>{t("resendInviteModal.header")}</Text>
           <View style={styles.imageContainer}>
