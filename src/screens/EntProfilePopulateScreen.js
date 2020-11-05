@@ -29,7 +29,10 @@ class EntProfilePopulateScreen extends Component {
         <ProfileBlueHeader
           title="My Account"
         />
-        <Content style={baseStylesheet.paddedContent}>
+        <Content style={{
+          ...baseStylesheet.paddedContent,
+          backgroundColor:colors.offWhite,
+        }}>
           <View>
             <Button
               onPress={() => this.handleNext()}
@@ -46,7 +49,10 @@ class EntProfilePopulateScreen extends Component {
             </Button>
 
             <Button
-              style={baseStylesheet.grayButton}
+              style={{
+                ...baseStylesheet.grayButton,
+                backgroundColor: colors.offWhite,
+              }}
               onPress={() => this.handleReset()}
             >
               <Text style={baseStylesheet.grayButtonText}>
