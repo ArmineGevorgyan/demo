@@ -75,6 +75,7 @@ class SelecImage extends Component {
     return (
       <>
         <Button
+          rounded
           style={{
             width: 96,
             height: 96,
@@ -84,6 +85,7 @@ class SelecImage extends Component {
             flexDirection: "column",
             justifyContent: "center",
           }}
+          rounded
           onPress={this.showModal}
         >
           {isLoading ?

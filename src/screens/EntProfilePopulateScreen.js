@@ -9,9 +9,6 @@ import { withTranslation } from "react-i18next";
 import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { save } from "../redux/ducks/entrepreneurProfile";
-import { Container, Content } from "native-base";
-import React, { Component } from "react";
-import ProfileBlueHeader from "../components/profileBlueHeader";
 import SelectImage from "../components/selectImage";
 
 
