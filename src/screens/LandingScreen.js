@@ -5,6 +5,7 @@ import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { Item, Input, Icon, Button, Content } from "native-base";
 import { Formik } from "formik";
+import NetInfo from "@react-native-community/netinfo";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import Validation from "../validation";
@@ -19,14 +20,24 @@ import constants from "../constants";
 
 class LandingScreen extends Component {
   componentDidUpdate() {
-    const { emailStatus, openModal, navigation } = this.props;
-    const isFocused = navigation.isFocused();
+    const { emailStatus } = this.props;
 
     if (!emailStatus) {
       return;
     }
 
-    switch (emailStatus.value) {
+    this.navigate(emailStatus.value);
+  }
+
+  async navigate(emailStatus) {
+    const { openModal, navigation } = this.props;
+    const netInfo = await NetInfo.fetch();
+
+    if (!netInfo.isConnected) {
+      return;
+    }
+
+    switch (emailStatus) {
       case constants.emailStatus.registered:
         return navigation.navigate("LoginScreen");
       case constants.emailStatus.accepted:

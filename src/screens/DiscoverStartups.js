@@ -17,6 +17,7 @@ import {
 } from "../redux/ducks/startup";
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
+import constants from "../constants";
 
 class DiscoverStartups extends Component {
   componentDidMount() {
@@ -78,6 +79,7 @@ class DiscoverStartups extends Component {
 
   render() {
     const { t } = this.props;
+    const height = Math.max(constants.windowHeight - 210, 580);
 
     return (
       <Content style={{ ...baseStylesheet.baseContainer, height: "100%" }}>
@@ -98,7 +100,7 @@ class DiscoverStartups extends Component {
         <View
           style={{
             flex: 1,
-            height: 600,
+            height: height,
           }}
         >
           {this.renderSwiper()}

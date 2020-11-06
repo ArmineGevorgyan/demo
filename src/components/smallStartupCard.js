@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 5,
     paddingRight: 10,
-    paddingBottom: 5,
+    paddingBottom: 10,
   },
   imageContainer: {
     width: "40%",
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     fontFamily: "montserrat-regular",
     color: colors.darkText,
     marginBottom: 2,
+    width: "70%",
   },
   startupDetailContainer: {
     flexDirection: "row",
