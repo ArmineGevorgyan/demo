@@ -17,6 +17,7 @@ import pipelineSlice from "./pipeline";
 import parkingLotSlice from "./parkingLot";
 import userSlice from "./user";
 import contactSlice from "./contact";
+import entrepreneurProfileSlice from "./entrepreneurProfile";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -30,6 +31,7 @@ const appReducer = combineReducers({
   parkingLot: parkingLotSlice,
   user: userSlice,
   contactRequest: contactSlice,
+  entrepreneurProfile:entrepreneurProfileSlice,
 });
 
 export const rootReducer = (state, action) => {
