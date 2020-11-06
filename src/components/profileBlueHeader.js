@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Icon } from "native-base";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import HeaderImage from "../../assets/blue-header.png";
+import HeaderImage from "../../assets/blue-header-rect.png";
 
 class ProfileBlueHeader extends Component {
   render() {
@@ -53,12 +53,12 @@ class ProfileBlueHeader extends Component {
           >
           </View>
         </View>
-        <View 
-        style={{
-          alignSelf:"center",
-          position: "absolute",
-          bottom: -25,
-        }}
+        <View
+          style={{
+            alignSelf: "center",
+            position: "absolute",
+            bottom: -25,
+          }}
         >
           {children}
         </View>
@@ -74,12 +74,13 @@ const styles = StyleSheet.create({
     paddingLeft: "7%",
     paddingRight: "7%",
     height: 161,
+    marginBottom: 40,
   },
   withCildren: {
-     paddingTop: 50,
+    paddingTop: 50,
   },
   withoutChildren: {
-     paddingTop: 25,
+    paddingTop: 25,
     height: 100,
     justifyContent: "center",
   },

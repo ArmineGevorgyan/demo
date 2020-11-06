@@ -69,6 +69,7 @@ class SelecImage extends Component {
 
   render() {
     const {
+      t,
       dImage,
       isLoading,
     } = this.props;
@@ -145,7 +146,7 @@ class SelecImage extends Component {
                   fontSize: 18,
                   fontFalily: "montserrat-regular",
                 }}
-              >Choose from your photos or taka a selfie</Text>
+              >{t("imageUploaderModal.modalTitle")}</Text>
               <View
                 style={{
                   padding: 40,
@@ -190,7 +191,7 @@ class SelecImage extends Component {
                     fontFamily: "montserrat-regular",
                   }}
                 >
-                  Cancel
+                  {t("imageUploaderModal.cancelButton")}
                   </Text>
               </Button>
             </View>

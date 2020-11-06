@@ -27,16 +27,13 @@ class EntProfilePopulateScreen extends Component {
     const { t, } = this.props;
 
     return (
-      <Container>
+      <Container style={{backgroundColor: colors.offWhite,}}>
         <ProfileBlueHeader
           title="My Account"
         >
           <SelectImage />
         </ProfileBlueHeader>
-        <Content style={{
-          ...baseStylesheet.paddedContent,
-          backgroundColor: colors.offWhite,
-        }}>
+        <Content style={baseStylesheet.paddedContent}>
           <View>
             <Button
               onPress={() => this.handleNext()}
@@ -52,12 +49,8 @@ class EntProfilePopulateScreen extends Component {
               />
             </Button>
 
-
             <Button
-              style={{
-                ...baseStylesheet.grayButton,
-                backgroundColor: colors.offWhite,
-              }}
+              style={baseStylesheet.grayButton}
               onPress={() => this.handleReset()}
             >
               <Text style={baseStylesheet.grayButtonText}>
