@@ -20,6 +20,7 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "password": "Password",
+    "forgotPassword": "Forgot password?",
     "passwordConfirmation": "Confirm Password",
     "emailField": "Email",
     "submitButton": "Next   "
@@ -181,5 +182,18 @@
     "passwordPlaceholder": "Enter new password",
     "passwordConfirmation": "Confirm New Password",
     "passwordConfirmationPlaceholder": "Confirm new password"
+  },
+  "forgotPasswordScreen": {
+    "forgotPassword":"Forgot Password",
+    "resetPassword":"Reset Password",
+    "submitButton": "Send",
+    "content": "Enter your email address and we’ll send you a link to reset your password",
+    "emailField": "Email"
+  },
+  "resetPasswordModal": {
+    "closeButton": "Close",
+    "failureMessage": "Mail has not been sent due to an unknown reason",
+    "contextLine1": "An email has been sent to ",
+    "contextLine2": "Follow the directions in the email to reset your password."
   }
 }

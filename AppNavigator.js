@@ -32,6 +32,7 @@ import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
+import ForgotPasswordScreen from "./src/screens/ForgotPasswordScreen";
 import FAQScreen from "./src/screens/FAQScreen";
 import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
 import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
@@ -96,6 +97,10 @@ class AppNavigator extends Component {
           <Stack.Screen name="ParkingLotScreen" component={ParkingLotScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
+          <Stack.Screen
+            name="ForgotPasswordScreen"
+            component={ForgotPasswordScreen}
+          />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen
             name="ResetPasswordSuccess"
@@ -133,6 +138,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
+          />
+          <Stack.Screen
+            name="ForgotPasswordScreen"
+            component={ForgotPasswordScreen}
           />
         </Stack.Navigator>
       );
