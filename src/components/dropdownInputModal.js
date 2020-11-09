@@ -45,9 +45,15 @@ class DropdownInputModal extends Component {
           style={{ marginRight: 10, }}
         />
         <View style={styles.listItemTextContainer}>
-          <Text>{item.country?.name + ", "}</Text>
-          <Text>{item?.name + ", "}</Text>
-          <Text>{item.region?.name}</Text>
+          <Text style={styles.itemText}>
+            {item.country?.name + ", "}
+          </Text>
+          <Text style={styles.itemText}>
+            {item?.name + ", "}
+          </Text>
+          <Text style={styles.itemText}>
+            {item.region?.name}
+          </Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -195,11 +201,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  modalTitle:{
+  modalTitle: {
     textAlign: "center",
     color: colors.darkBlue,
     fontSize: 18,
     fontFamily: "montserrat-regular",
     fontWeight: "bold",
+  },
+  itemText: {
+    fontFamily: "montserrat-regular",
   },
 });

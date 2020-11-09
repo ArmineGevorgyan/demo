@@ -45,21 +45,26 @@ class TimeZoneModal extends Component {
         alignItems: "center",
       }}>
         <Text style={{
-          paddingTop: 15,
-          paddingBottom: 15,
+          ...styles.itemText,
+          paddingTop: 10,
+           paddingBottom: 5,
         }}>
           {item?.name}
         </Text>
         <View style={{
           width: "100%",
           flexDirection: "row",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          paddingBottom:10,
         }}>
-          <Text>
+          <Text style={styles.itemText}>
             {item?.code}
           </Text>
-          <Text style={{ color: "#1CB41B" }}>
-            {item?.offset}
+          <Text style={{
+            ...styles.itemText,
+            color: "#1CB41B",
+          }}>
+            {`UTC ${item?.offset}`}
           </Text>
         </View>
       </View>
@@ -154,5 +159,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "montserrat-regular",
     fontWeight: "bold",
+  },
+  itemText: {
+    fontFamily: "montserrat-regular",
   },
 });

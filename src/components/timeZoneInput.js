@@ -21,11 +21,8 @@ class TimeZoneInput extends Component {
   render() {
     const { t } = this.props;
     return (<View>
-      <Text style={{
-        fontSize: 16,
-        color: colors.lightBlue,
-      }}>
-        Time zone
+      <Text style={baseStylesheet.label}>
+        {t("tomeZoneModal.inputTitle")}
     </Text>
       <Item
         rounded
@@ -46,7 +43,7 @@ class TimeZoneInput extends Component {
             blurOnSubmit={false}
             style={{ ...baseStylesheet.inputField, width: "100%" }}
             placeholder={t("tomeZoneModal.placeholder")}
-            placeholderTextColor={colors.lightText}
+            placeholderTextColor={colors.blueBorder}
             value={this.props.value || ""}
           />
         </TouchableOpacity>

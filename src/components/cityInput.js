@@ -24,10 +24,7 @@ class CityInput extends Component {
     const { t } = this.props;
     return (<View style={{
       width:"100%"}}>
-      <Text style={{
-        fontSize: 16,
-        color: colors.lightBlue,
-      }}>
+      <Text style={baseStylesheet.label}>
         {this.props.title}
     </Text>
       <Item
@@ -39,7 +36,6 @@ class CityInput extends Component {
             () => this.handleClick(t("dropDownInputModal.locationTitle"))
           }
           style={{
-            // width: "100%",
             flexDirection: "row",
             alignItems: "center",
           }}
@@ -54,7 +50,7 @@ class CityInput extends Component {
             blurOnSubmit={false}
             style={{ ...baseStylesheet.inputField }}
             placeholder={t("dropDownInputModal.placeholder")}
-            placeholderTextColor={colors.lightText}
+            placeholderTextColor={colors.blueBorder}
             value={this.props.value || ""}
           />
         </TouchableOpacity>
