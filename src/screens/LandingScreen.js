@@ -168,8 +168,5 @@ const styles = StyleSheet.create({
     width: 146,
     height: 150,
   },
-  submitButton: {
-    minWidth: 30,
-  },
   icon: { color: "white", fontSize: 20 },
 });

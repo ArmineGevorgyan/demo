@@ -22,6 +22,7 @@ import fileUploaderSlice from "./fileUploader";
 import dropdowninputModalSlice from "./dropdownInputModal";
 import timeZoneModalSlice from "./timeZoneModal";
 import faqSlice from "./faq";
+import resetPasswordSlice from "./resetPassword";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -40,6 +41,7 @@ const appReducer = combineReducers({
   dropdownInputModal: dropdowninputModalSlice,
   timeZoneModal: timeZoneModalSlice,
   faq: faqSlice,
+  resetPassword: resetPasswordSlice,
 });
 
 export const rootReducer = (state, action) => {

@@ -173,5 +173,13 @@
     "placeholder":"ETD - Current Location",
     "cancelButton":"CANCEL",
     "timeZoneTitle":"Choose your time zone"
+  },
+  "resetPasswordScreen": {
+    "headerText": "Reset Password",
+    "submitButton": "Reset Password",
+    "password": "New Password",
+    "passwordPlaceholder": "Enter new password",
+    "passwordConfirmation": "Confirm New Password",
+    "passwordConfirmationPlaceholder": "Confirm new password"
   }
 }

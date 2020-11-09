@@ -177,9 +177,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: "montserrat-regular",
   },
-  submitButton: {
-    width: "100%",
-  },
   pickerIcon: {
     color: colors.lightBlue,
     backgroundColor: "white",
