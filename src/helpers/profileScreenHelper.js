@@ -63,7 +63,7 @@ const investorData = [
       icon: "help",
       iconType: "MaterialCommunityIcons",
       backgroundColor: colors.profileSection3,
-      to: "TemporaryScreen",
+      to: "FAQScreen",
     },
     {
       id: 7,
@@ -130,7 +130,7 @@ const entrepreneurData = [
       icon: "help",
       iconType: "MaterialCommunityIcons",
       backgroundColor: colors.profileSection3,
-      to: "TemporaryScreen",
+      to: "FAQScreen",
     },
     {
       id: 7,
@@ -138,7 +138,7 @@ const entrepreneurData = [
       icon: "mail",
       iconType: "Feather",
       backgroundColor: colors.profileSection3,
-      to: "TemporaryScreen",
+      to: "ContactUsScreen",
     },
     {
       id: 8,
@@ -172,7 +172,7 @@ const entrepreneurData = [
       backgroundColor: colors.profileSection4,
     },
   ],
-]
+];
 
 export const getSectionBorderStyle = (index, sectionLength) => {
   if (index === 0) {
