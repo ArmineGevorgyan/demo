@@ -19,6 +19,8 @@ import userSlice from "./user";
 import contactSlice from "./contact";
 import entrepreneurProfileSlice from "./entrepreneurProfile";
 import fileUploaderSlice from "./fileUploader";
+import dropdowninputModalSlice from "./dropdownInputModal";
+import timeZoneModalSlice from "./timeZoneModal";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -34,6 +36,8 @@ const appReducer = combineReducers({
   contactRequest: contactSlice,
   entrepreneurProfile:entrepreneurProfileSlice,
   fileUploader:fileUploaderSlice,
+  dropdownInputModal: dropdowninputModalSlice,
+  timeZoneModal:timeZoneModalSlice,
 });
 
 export const rootReducer = (state, action) => {
