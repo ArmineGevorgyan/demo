@@ -119,7 +119,7 @@ class EntProfilePopulateScreen extends Component {
           </Formik>
           <View style={baseStylesheet.paddedContent}>
             <Button
-              onPress={() => this.onSubmit()}
+              onPress={() => this.handleNext()}
               style={baseStylesheet.mainButton}
             >
               <Text style={baseStylesheet.mainButtonText}>
