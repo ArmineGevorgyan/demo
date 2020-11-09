@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { Icon } from "native-base";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import { colors } from "../styles/colors";
-import HeaderImage from "../../assets/blue-header.png";
+import HeaderImage from "../../assets/blue-header-rect.png";
 
 class ProfileBlueHeader extends Component {
   render() {
     const {
       title,
       children,
-      enableSearch,
       backButtonHandler,
     } = this.props;
 
@@ -53,19 +51,17 @@ class ProfileBlueHeader extends Component {
               minWidth: 30
             }}
           >
-            {
-              enableSearch &&
-              <Icon
-                style={{
-                  color: colors.darkText,
-                }}
-                name="search"
-                type="Feather"
-              />
-            }
           </View>
         </View>
-        {children}
+        <View
+          style={{
+            alignSelf: "center",
+            position: "absolute",
+            bottom: -25,
+          }}
+        >
+          {children}
+        </View>
       </ImageBackground>
     );
   }
@@ -77,13 +73,14 @@ const styles = StyleSheet.create({
   container: {
     paddingLeft: "7%",
     paddingRight: "7%",
-    // backgroundColor: colors.offWhite,
+    height: 161,
+    marginBottom: 40,
   },
   withCildren: {
-    // paddingTop: 50,
+    paddingTop: 40,
   },
   withoutChildren: {
-    // paddingTop: 25,
+    paddingTop: 25,
     height: 100,
     justifyContent: "center",
   },

@@ -114,7 +114,7 @@
     "profile":"Profile",
     "personalDetails":"Personal Details",
     "integration":"Integration",
-    "notification":"Notification",
+    "notification":"Notifications",
     "preferences":"Preferences",
     "parkingLot":"Parking Lot",
     "faq":"FAQ",
@@ -155,5 +155,9 @@
   "entProfilePopulateScreen":{
     "nextButton":"Next",
     "resetButton":"Reset"
+  },
+  "imageUploaderModal":{
+    "cancelButton":"CANCEL",
+    "modalTitle":"Choose from your photos or take a selfie"
   }
 }

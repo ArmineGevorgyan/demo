@@ -94,7 +94,7 @@ export const baseStylesheet = StyleSheet.create({
   },
 
   grayButton: {
-    backgroundColor: colors.secondaryButton,
+    backgroundColor: colors.offWhite,
     padding: 11,
     marginTop: 10,
     borderRadius: 5,

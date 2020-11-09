@@ -18,6 +18,7 @@ import parkingLotSlice from "./parkingLot";
 import userSlice from "./user";
 import contactSlice from "./contact";
 import entrepreneurProfileSlice from "./entrepreneurProfile";
+import fileUploaderSlice from "./fileUploader";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -32,6 +33,7 @@ const appReducer = combineReducers({
   user: userSlice,
   contactRequest: contactSlice,
   entrepreneurProfile:entrepreneurProfileSlice,
+  fileUploader:fileUploaderSlice,
 });
 
 export const rootReducer = (state, action) => {
