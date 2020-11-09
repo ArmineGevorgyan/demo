@@ -159,5 +159,17 @@
   "imageUploaderModal":{
     "cancelButton":"CANCEL",
     "modalTitle":"Choose from your photos or take a selfie"
+  },
+  "dropDownInputModal":{
+    "placeholder":"Country, City, Region",
+    "cancelButton":"CANCEL",
+    "locationTitle":"Type country, city or region to choose your location",
+    "residencyTitle":"Type country, city or region to choose your residency",
+    "typeHere":"Type here..."
+  },
+  "tomeZoneModal":{
+    "placeholder":"ETD - Current Location",
+    "cancelButton":"CANCEL",
+    "timeZoneTitle":"Choose your time zone"
   }
 }
