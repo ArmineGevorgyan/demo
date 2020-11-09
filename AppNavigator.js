@@ -33,6 +33,7 @@ import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
 import FAQScreen from "./src/screens/FAQScreen";
+import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
 import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
 
 const prefix = Linking.makeUrl("/");
@@ -97,6 +98,10 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen
+            name="ResetPasswordSuccess"
+            component={ResetPasswordSuccess}
+          />
+          <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
           />
@@ -121,6 +126,10 @@ class AppNavigator extends Component {
             component={TermsAndConditionsScreen}
           />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen
+            name="ResetPasswordSuccess"
+            component={ResetPasswordSuccess}
+          />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import { clearAuthenticationAction } from "./authentication";
 
 const initialState = {
   isLoading: false,
@@ -64,6 +65,9 @@ export const resetPassword = (data) => {
       .post(`${API_URL}/account/reset-password/finish`, data)
       .then(() => {
         dispatch(resetPasswordSlice.actions.resetPasswordSuccess());
+      })
+      .then(() => {
+        dispatch(clearAuthenticationAction());
       })
       .catch((error) =>
         dispatch(resetPasswordSlice.actions.resetPasswordFail(error))

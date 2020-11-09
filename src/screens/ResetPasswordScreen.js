@@ -24,11 +24,11 @@ class ResetPasswordScreen extends Component {
     this.ref_input2 = React.createRef();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { success, navigation } = this.props;
 
-    if (success && !prevProps.sucess) {
-      navigation.navigate("ContactUsSuccess");
+    if (success) {
+      navigation.navigate("ResetPasswordSuccess");
     }
   }
 

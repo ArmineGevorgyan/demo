@@ -146,12 +146,7 @@
     "headerText":"Contact Us",
     "OKButton": "Create New message",
     "contextHeading": "Thank you for contacting us!",
-    "context": "See our answer in your inbox during the next 2 days.",
-    "message": "Message",
-    "bug": "Report a bug",
-    "complaint": "Submit a complaint",
-    "suggestion": "Make a suggestion",
-    "other": "Other"
+    "context": "See our answer in your inbox during the next 2 days."
   },
   "entProfilePopulateScreen":{
     "nextButton":"Next",
@@ -173,6 +168,11 @@
     "placeholder":"ETD - Current Location",
     "cancelButton":"CANCEL",
     "timeZoneTitle":"Choose your time zone"
+  },
+  "resetPasswordSuccess":{
+    "headerText":"Reset Password",
+    "OKButton": "Login",
+    "content": "Your password has been reset successfully."
   },
   "resetPasswordScreen": {
     "headerText": "Reset Password",
