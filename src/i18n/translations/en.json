@@ -157,7 +157,7 @@
     "resetButton":"Reset"
   },
   "imageUploaderModal":{
-    "cancelButton":"Cancel",
-    "modalTitle":"Choose from your photos or taka a selfie"
+    "cancelButton":"CANCEL",
+    "modalTitle":"Choose from your photos or take a selfie"
   }
 }

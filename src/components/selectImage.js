@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Platform, Image, Text } from "react-native";
+import { View, Platform, Image, Text, StyleSheet } from "react-native";
 import { Button, Icon, Spinner } from "native-base";
 import * as ImagePicker from "expo-image-picker";
 import { colors } from "../styles/colors";
@@ -51,10 +51,9 @@ class SelecImage extends Component {
       });
     }
 
-    this.handleClose();
-
     if (!result.cancelled) {
       this.props.uploadFile(result);
+      this.handleClose();
     }
   };
 
@@ -77,15 +76,7 @@ class SelecImage extends Component {
       <>
         <Button
           rounded
-          style={{
-            width: 96,
-            height: 96,
-            borderRadius: 50,
-            overflow: "hidden",
-            backgroundColor: "#FFF",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
+          style={styles.container}
           rounded
           onPress={this.showModal}
         >
@@ -93,13 +84,7 @@ class SelecImage extends Component {
             <Spinner color={colors.secondaryColor} /> :
             dImage ? (
               <Image
-
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 50,
-                  resizeMode: "contain",
-                }}
+                style={styles.imageContainer}
                 source={{ uri: dImage }}
               />
             ) : (
@@ -113,15 +98,7 @@ class SelecImage extends Component {
                 />
               )}
           <View
-            style={{
-              width: "100%",
-              height: 25,
-              position: "absolute",
-              bottom: 0,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "rgba(0,0,0,0.53)",
-            }}
+            style={styles.cameraIconContainer}
           >
             <Icon
               name="camera"
@@ -158,23 +135,15 @@ class SelecImage extends Component {
                   name="image"
                   type="Feather"
                   style={{
-                    color: "#FFF",
-                    padding: 10,
+                    ...styles.icon,
                     marginRight: 20,
-                    borderRadius: 10,
-                    backgroundColor: colors.darkBlue,
                   }}
                   onPress={() => this.pickImage("gallery")}
                 />
                 <Icon
                   name="camera"
                   type="Feather"
-                  style={{
-                    color: "#FFF",
-                    padding: 10,
-                    borderRadius: 10,
-                    backgroundColor: colors.darkBlue,
-                  }}
+                  style={styles.icon}
                   onPress={() => this.pickImage("camera")}
                 />
               </View>
@@ -192,7 +161,7 @@ class SelecImage extends Component {
                   }}
                 >
                   {t("imageUploaderModal.cancelButton")}
-                  </Text>
+                </Text>
               </Button>
             </View>
           </Modal>
@@ -221,3 +190,36 @@ export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
 )(SelecImage);
+
+const styles = StyleSheet.create({
+  container: {
+    width: 96,
+    height: 96,
+    borderRadius: 50,
+    overflow: "hidden",
+    backgroundColor: "#FFF",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    resizeMode: "contain",
+  },
+  cameraIconContainer: {
+    width: "100%",
+    height: 25,
+    position: "absolute",
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.53)",
+  },
+  icon: {
+    color: "#FFF",
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: colors.darkBlue,
+  },
+});
