@@ -116,7 +116,7 @@ const entrepreneurData = [
       to: "TemporaryScreen",
     },
     {
-      id: 3,
+      id: 2,
       value: "notification",
       svg: <NotificationIcon />,
       backgroundColor: colors.profileSection1,
@@ -125,7 +125,7 @@ const entrepreneurData = [
   ],
   [
     {
-      id: 6,
+      id: 3,
       value: "faq",
       icon: "help",
       iconType: "MaterialCommunityIcons",
@@ -133,7 +133,7 @@ const entrepreneurData = [
       to: "FAQScreen",
     },
     {
-      id: 7,
+      id: 4,
       value: "contactUs",
       icon: "mail",
       iconType: "Feather",
@@ -141,7 +141,7 @@ const entrepreneurData = [
       to: "ContactUsScreen",
     },
     {
-      id: 8,
+      id: 5,
       value: "legal",
       icon: "file-text",
       iconType: "Feather",
@@ -149,7 +149,7 @@ const entrepreneurData = [
       to: "TemporaryScreen",
     },
     {
-      id: 8,
+      id: 6,
       value: "helpGuide",
       icon: "life-buoy",
       iconType: "Feather",
@@ -159,14 +159,14 @@ const entrepreneurData = [
   ],
   [
     {
-      id: 9,
+      id: 7,
       value: "resetPassword",
       svg: <PasswordIcon />,
       backgroundColor: colors.profileSection4,
       to: "TemporaryScreen",
     },
     {
-      id: 10,
+      id: 8,
       value: "logout",
       svg: <LogoutIcon />,
       backgroundColor: colors.profileSection4,
