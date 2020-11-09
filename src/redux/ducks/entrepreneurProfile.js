@@ -5,11 +5,13 @@ import store from "../store";
 
 const initialState = {
   isLoading: false,
-  photoUrl: null,
   isModalOpen: false,
-  location: null,
-  timeZone: null,
-  residency: null,
+  profileData: {
+    bio: "",
+    highlights: "",
+    availableVia: "",
+    locations:[],
+  },
 };
 
 const entrepreneurProfileSlice = createSlice({
@@ -30,15 +32,71 @@ const entrepreneurProfileSlice = createSlice({
     }),
     setLocation: (state, action) => ({
       ...state,
-      location: action.payload,
+      profileData: {
+        ...state.profileData,
+        locations: [
+          {
+            cityName: action.payload.name,
+            city: {
+              id: action.payload.id,
+              name: action.payload.name,
+              countryId: action.payload.countryId,
+              regionId: action.payload.regionId,
+              country: action.payload.country,
+              region: action.payload.region
+            },
+            country: action.payload.country,
+            region: action.payload.region,
+          },
+        ],
+      },
     }),
     setTimeZone: (state, action) => ({
       ...state,
-      timeZone: action.payload,
+      profileData: {
+        ...state.profileData,
+        timeZone: action.payload,
+      },
     }),
     setResidency: (state, action) => ({
       ...state,
-      residency: action.payload,
+      profileData: {
+        ...state.profileData,
+        residency: {
+          cityName: action.payload.name,
+          city: {
+            id: action.payload.id,
+            name: action.payload.name,
+            countryId: action.payload.countryId,
+            regionId: action.payload.regionId,
+            country: action.payload.country,
+            region: action.payload.region
+          },
+          country: action.payload.country,
+          region: action.payload.region,
+        },
+      },
+    }),
+    setTextInput: (state, action) => ({
+      ...state,
+      profileData: {
+        ...state.profileData,
+        ...action.payload,
+      }
+    }),
+    getProfileData: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    getProfileDataSuccess: (state, action) => ({
+      ...state,
+      isLoading: true,
+      profileData: action.payload,
+    }),
+    getProfileDataFail: (state, action) => ({
+      ...state,
+      isLoading: true,
+      error: action.payload,
     }),
     updateProfile: (state) => ({
       ...state,
@@ -63,13 +121,31 @@ export const save = () => {
   };
 };
 
-export const updateProfile = (data) => {
+export const getProfileData = (id = -1) => {
+  return (dispatch) => {
+    dispatch(entrepreneurProfileSlice.actions.getProfileData());
+    const current = id === -1 ? "current" : id;
+    axios.
+      get(`${API_URL}/entrepreneur-profiles/${current}`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(entrepreneurProfileSlice.actions.getProfileDataSuccess(data));
+      }).catch((error) => {
+        dispatch(entrepreneurProfileSlice.actions.getProfileDataFail(error));
+      });
+  };
+};
+
+export const updateProfile = () => {
   const state = store.getState();
+
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.updateProfile());
 
     axios
-      .put(`${API_URL}/entrepreneur-profiles/${state.user.profileData.id}`, data)
+      .put(`${API_URL}/entrepreneur-profiles/current`, state.entrepreneurProfile.profileData)
       .then((r) => { return r.data })
       .then((data) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileSuccess(data))
@@ -77,6 +153,12 @@ export const updateProfile = (data) => {
       .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileFail(error));
       });
+  };
+};
+
+export const setTextInput = (object) => {
+  return (dispatch) => {
+    dispatch(entrepreneurProfileSlice.actions.setTextInput(object));
   };
 };
 

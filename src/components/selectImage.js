@@ -31,6 +31,12 @@ class SelecImage extends Component {
     })();
   }
 
+  componentDidUpdate(prevProps) {
+     if (this.props.dImage !== prevProps.dImage) {
+       this.props.setImage(this.props.dImage);
+     }
+  }
+
   pickImage = async (type) => {
     let result;
     if (type === "camera") {
@@ -82,10 +88,10 @@ class SelecImage extends Component {
         >
           {isLoading ?
             <Spinner color={colors.secondaryColor} /> :
-            dImage ? (
+            (dImage || this.props.photoUrl) ? (
               <Image
                 style={styles.imageContainer}
-                source={{ uri: dImage }}
+                source={{ uri: dImage || this.props.photoUrl }}
               />
             ) : (
                 <Icon

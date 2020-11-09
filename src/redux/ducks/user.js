@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_HOST, API_URL } from "../../config";
+import { API_URL } from "../../config";
+import { getProfileData } from "../ducks/entrepreneurProfile";
 
 initialState = {
   isLoading: false,
@@ -27,20 +28,6 @@ const userSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    getProfileData: (state) => ({
-      ...state,
-      isLoading: true,
-    }),
-    getProfileDataSuccess: (state, action) => ({
-      ...state,
-      isLoading: true,
-      profileData: action.payload,
-    }),
-    getProfileDataFail: (state, action) => ({
-      ...state,
-      isLoading: true,
-      error: action.payload,
-    }),
   }
 });
 
@@ -57,27 +44,10 @@ export const getUserData = () => {
       })
       .then((data) => {
         dispatch(userSlice.actions.getUserDataSuccess(data));
-        dispatch(getProfileData(data.id));
+        dispatch(getProfileData());
       })
       .catch((error) => {
         dispatch(userSlice.actions.getUserDataFail(error));
-      });
-  };
-};
-
-export const getProfileData = (id) => {
-  return (dispatch) => {
-    dispatch(userSlice.actions.getProfileData());
-
-    axios.
-      get(`${API_URL}/entrepreneur-profiles/${id}`)
-      .then((r) => {
-        return r.data;
-      })
-      .then((data) => {
-        dispatch(userSlice.actions.getProfileDataSuccess(data));
-      }).catch((error) => {
-        dispatch(userSlice.actions.getProfileDataFail(error));
       });
   };
 };

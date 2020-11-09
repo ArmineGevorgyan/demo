@@ -113,7 +113,10 @@ export const loadCityList = (search) => {
 
     axios
       .get(`${API_URL}/cities/search?keyword=${search}&sort=name`)
-      .then((r) => { return r.data; })
+      .then((r) => {
+        console.log("r ====================================================================================== ", r);
+        return r.data;
+      })
       .then((data) => {
         dispatch(dropdownInputModalSlice.actions.loadCityListSuccess(data));
       })
