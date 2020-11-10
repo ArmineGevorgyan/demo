@@ -88,7 +88,7 @@ const investorData = [
       value: "resetPassword",
       svg: <PasswordIcon />,
       backgroundColor: colors.profileSection4,
-      to: "TemporaryScreen",
+      to: "ForgotPasswordScreen",
     },
     {
       id: 10,
@@ -163,7 +163,7 @@ const entrepreneurData = [
       value: "resetPassword",
       svg: <PasswordIcon />,
       backgroundColor: colors.profileSection4,
-      to: "TemporaryScreen",
+      to: "ForgotPasswordScreen",
     },
     {
       id: 8,

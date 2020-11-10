@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Item, Input, Icon, Button, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
@@ -79,6 +79,15 @@ class LoginScreen extends Component {
               );
             }}
           </Formik>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate("ForgotPasswordScreen")
+            }
+          >
+            <Text style={styles.forgotPassword}>
+              {t("registrationScreen.forgotPassword")}
+            </Text>
+          </TouchableOpacity>
         </Content>
         <Copyright />
       </Background>
@@ -107,9 +116,9 @@ export default compose(
 const styles = StyleSheet.create({
   formContainer: {
     padding: 15,
+    paddingBottom: 0,
     alignItems: "center",
     width: "100%",
-    marginBottom: 50,
   },
   imageContainer: {
     alignItems: "center",
@@ -120,4 +129,12 @@ const styles = StyleSheet.create({
     height: 103,
   },
   icon: { color: "white", fontSize: 20 },
+  forgotPassword: {
+    color: colors.secondaryButtonText,
+    textAlign: "right",
+    width: "90%",
+    fontSize: 12,
+    fontFamily: "montserrat-semi-bold",
+    marginBottom: 20,
+  },
 });

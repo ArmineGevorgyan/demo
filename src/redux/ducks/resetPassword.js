@@ -8,7 +8,9 @@ const initialState = {
   hidePassword: true,
   hidePasswordConfirmation: true,
   success: false,
+  emailSent: false,
   error: null,
+  isModalOpen: false,
 };
 
 const resetPasswordSlice = createSlice({
@@ -32,6 +34,23 @@ const resetPasswordSlice = createSlice({
       error: action.payload,
       success: false,
     }),
+    getResetLink: (state) => ({
+      ...state,
+      isLoading: true,
+      emailSent: false,
+    }),
+    getResetLinkSuccess: (state) => ({
+      ...state,
+      isLoading: false,
+      emailSent: true,
+      error: null,
+    }),
+    getResetLinkFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+      emailSent: false,
+    }),
     togglePassword: (state) => ({
       ...state,
       hidePassword: !state.hidePassword,
@@ -40,10 +59,30 @@ const resetPasswordSlice = createSlice({
       ...state,
       hidePasswordConfirmation: !state.hidePasswordConfirmation,
     }),
+    openModal: (state) => ({
+      ...state,
+      isModalOpen: true,
+    }),
+    closeModal: (state) => ({
+      ...state,
+      isModalOpen: false,
+    }),
   },
 });
 
 const resetPasswordReducer = resetPasswordSlice.reducer;
+
+export const closeModal = () => {
+  return (dispatch) => {
+    dispatch(resetPasswordSlice.actions.closeModal());
+  };
+};
+
+export const openModal = () => {
+  return (dispatch) => {
+    dispatch(resetPasswordSlice.actions.openModal());
+  };
+};
 
 export const togglePassword = () => {
   return (dispatch) => {
@@ -71,6 +110,21 @@ export const resetPassword = (data) => {
       })
       .catch((error) =>
         dispatch(resetPasswordSlice.actions.resetPasswordFail(error))
+      );
+  };
+};
+
+export const getResetLink = (email) => {
+  return (dispatch) => {
+    dispatch(resetPasswordSlice.actions.getResetLink());
+
+    axios
+      .post(`${API_URL}/account/reset-password/init`, email)
+      .then(() => {
+        dispatch(resetPasswordSlice.actions.getResetLinkSuccess());
+      })
+      .catch((error) =>
+        dispatch(resetPasswordSlice.actions.getResetLinkFail(error))
       );
   };
 };

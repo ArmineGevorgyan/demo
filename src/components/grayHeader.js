@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
+    paddingLeft: 10,
+    paddingRight: 10,
     color: colors.blackBlue,
     fontSize: 30,
     fontFamily: "montserrat-light",

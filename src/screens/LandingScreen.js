@@ -11,7 +11,7 @@ import { colors } from "../styles/colors";
 import Validation from "../validation";
 import { checkEmailStatus } from "../redux/ducks/authentication";
 import { openModal } from "../redux/ducks/resendInvite";
-import schema from "../validation/authenticationSchema";
+import schema from "../validation/emailSchema";
 import WelcomeHeader from "../components/welcomeHeader";
 import ResendInviteModal from "../components/resendInviteModal";
 import Background from "../components/background";
