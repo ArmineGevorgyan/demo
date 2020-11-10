@@ -74,6 +74,8 @@ const authSlice = createSlice({
 
 const authReducer = authSlice.reducer;
 
+export const clearAuthenticationAction = authSlice.actions.clearAuthentication;
+
 export const authenticate = () => {
   return (dispatch) => {
     getToken()

@@ -124,6 +124,13 @@ export const baseStylesheet = StyleSheet.create({
     borderRadius: 6,
   },
 
+  deepGreenButton: {
+    backgroundColor: colors.deepGreen,
+    padding: 15,
+    marginTop: 10,
+    borderRadius: 6,
+  },
+
   // --------------------- INPUT STYLES----------------------
   inlineButtonInputItem: {
     marginTop: 3,
