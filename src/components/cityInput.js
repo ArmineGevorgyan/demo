@@ -51,7 +51,8 @@ class CityInput extends Component {
             style={{ ...baseStylesheet.inputField }}
             placeholder={t("dropDownInputModal.placeholder")}
             placeholderTextColor={colors.blueBorder}
-            value={this.props.value || ""}
+            value={this.props.value}
+            onChangeText={this.props.inputChange}
           />
         </TouchableOpacity>
       </Item>

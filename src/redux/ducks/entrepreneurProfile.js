@@ -6,7 +6,9 @@ import store from "../store";
 const initialState = {
   isLoading: false,
   isModalOpen: false,
-  isResetting:false,
+  isResetting: false,
+  navigation: null,
+
   profileData: {
     bio: "",
     highlights: "",
@@ -114,17 +116,21 @@ const entrepreneurProfileSlice = createSlice({
     resetProfile: (state) => ({
       ...state,
       isLoading: true,
-      isResetting:true,
+      isResetting: true,
     }),
     resetProfileSuccess: (state, action) => ({
       ...state,
       profileData: action.payload,
-      isResetting:false,
+      isResetting: false,
     }),
     resetProfileFail: (state, action) => ({
       ...state,
-      isResetting:false,
+      isResetting: false,
       error: action.payload,
+    }),
+    setNavigation: (state, action) => ({
+      ...state,
+      navigation: action.payload,
     }),
   },
 });
@@ -238,5 +244,11 @@ export const setResidency = (residency) => {
     dispatch(entrepreneurProfileSlice.actions.setResidency(residency));
   }
 };
+
+export const setNavigation = (navigation) => {
+  return (dispatch) => {
+    dispatch(entrepreneurProfileSlice.actions.setNavigation(navigation))
+  }
+}
 
 export default entrepreneurProfileReducer;

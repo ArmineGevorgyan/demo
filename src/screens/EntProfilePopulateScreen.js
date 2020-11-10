@@ -17,6 +17,7 @@ import {
   updateProfile,
   resetProfile,
   setTextInput,
+  setNavigation,
 } from "../redux/ducks/entrepreneurProfile";
 import {
   openModal,
@@ -33,6 +34,10 @@ class EntProfilePopulateScreen extends Component {
   constructor(props) {
     super(props);
     this.formik = React.createRef();
+  }
+
+  componentDidMount() {
+    this.props.setNavigation(this.props.navigation);
   }
 
   handleNext = () => {
@@ -52,6 +57,8 @@ class EntProfilePopulateScreen extends Component {
   };
 
   onSubmit = (values) => {
+    this.props.setTextInput({ completed: true });
+    this.props.updateProfile();
     console.log("values ========================================================== ", values);
   };
 
@@ -105,7 +112,7 @@ class EntProfilePopulateScreen extends Component {
           backgroundColor: colors.offWhite,
         }}>
           {
-            !this.props.isResetting || profileData.id ?
+             profileData.id ?
               <Formik
                 innerRef={(p) => (this.formik = p)}
                 initialValues={{
@@ -151,15 +158,16 @@ class EntProfilePopulateScreen extends Component {
                         </Validation>
                       </View>
 
-                      <Validation name="locations" showMessage={true}>
+                      {/* <Validation name="locations" showMessage={true}> */}
                         <CityInput
                           title="Location"
                           inputType="location"
+                          inputChange={props.handleChange("locations")}
                           flagCode={profileData.locations ? profileData.locations[0]?.country?.isoCode : "US"}
                           value={values.locations || this.locationToString()}
                           setResult={this.setResult}
                         />
-                      </Validation>
+                      {/* </Validation> */}
 
                       <TimeZoneInput
                         value={values.timeZone || this.timeZoneToString()}
@@ -281,6 +289,7 @@ const mapDispatchToProps = (dispatch) => {
     updateProfile: () => dispatch(updateProfile()),
     resetProfile: () => dispatch(resetProfile()),
     setTextInput: (data) => dispatch(setTextInput(data)),
+    setNavigation:(navigation)=>dispatch(setNavigation(navigation)),
   };
 };
 
