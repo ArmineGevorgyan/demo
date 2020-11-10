@@ -144,6 +144,7 @@ const initialPrifileData = {
   residency: null,
   locations: null,
   timeZone: null,
+  completed:null,
 };
 
 const entrepreneurProfileReducer = entrepreneurProfileSlice.reducer;

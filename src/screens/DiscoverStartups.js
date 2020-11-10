@@ -18,11 +18,9 @@ import {
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
 import constants from "../constants";
-import { removeToken } from "../helpers/auth";
 
 class DiscoverStartups extends Component {
   componentDidMount() {
-    removeToken()
     const { getNewStartups, navigation } = this.props;
 
     navigation.addListener("focus", () => {
