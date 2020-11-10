@@ -15,7 +15,9 @@ import {
   resetPassword,
   togglePassword,
   togglePasswordConfirmation,
+  checkResetToken,
 } from "../redux/ducks/resetPassword";
+import { showNotification } from "../helpers/notificationHelper";
 
 class ResetPasswordScreen extends Component {
   constructor(props) {
@@ -24,11 +26,28 @@ class ResetPasswordScreen extends Component {
     this.ref_input2 = React.createRef();
   }
 
-  componentDidUpdate() {
-    const { success, navigation } = this.props;
+  componentDidMount() {
+    this.props.checkResetToken({ value: this.props.route.params?.resetKey });
+  }
 
-    if (success) {
-      navigation.navigate("ResetPasswordSuccess");
+  componentDidUpdate(prevProps) {
+    const { success, navigation, validToken, isAuthenticated } = this.props;
+
+    if (!validToken) {
+      return;
+    }
+
+    if (!validToken.value) {
+      showNotification("error", "notification.invalidResetToken");
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: isAuthenticated ? "Home" : "LandingScreen" }],
+      });
+    }
+
+    if (success && !prevProps.success) {
+      navigation.navigate("ResetPasswordSuccess", { isAuthenticated });
     }
   }
 
@@ -53,7 +72,7 @@ class ResetPasswordScreen extends Component {
           initialValues={{
             newPassword: "",
             passwordConfirmation: "",
-            key: this.props.route.params?.key,
+            key: this.props.route.params?.resetKey,
           }}
           validationSchema={schema}
           onSubmit={this.onSubmit}
@@ -154,16 +173,21 @@ const mapStateToProps = (state, props) => {
   const hidePassword = state.resetPassword.hidePassword;
   const hidePasswordConfirmation = state.resetPassword.hidePasswordConfirmation;
   const success = state.resetPassword.success;
+  const validToken = state.resetPassword.validToken;
+  const isAuthenticated = state.authentication.isAuthenticated;
 
   return {
     hidePassword,
     hidePasswordConfirmation,
     success,
+    validToken,
+    isAuthenticated,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    checkResetToken: (token) => dispatch(checkResetToken(token)),
     resetPassword: (data) => dispatch(resetPassword(data)),
     togglePassword: () => dispatch(togglePassword()),
     togglePasswordConfirmation: () => dispatch(togglePasswordConfirmation()),

@@ -100,7 +100,8 @@
   "notification": {
     "expiredToken": "Your token has expired. Please log in again.",
     "wrongPassword": "The entered password is incorrect.",
-    "offlineError": "Oh, it seems you are offline!"
+    "offlineError": "Oh, it seems you are offline!",
+    "invalidResetToken": "Your reset link has expired. Please request a new one"
   },
   "pipeline":{
     "title":"Pipeline",
@@ -172,7 +173,8 @@
   },
   "resetPasswordSuccess":{
     "headerText":"Reset Password",
-    "OKButton": "Login",
+    "login": "Login",
+    "home": "Home",
     "content": "Your password has been reset successfully."
   },
   "resetPasswordScreen": {

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { clearAuthenticationAction } from "./authentication";
 
 const initialState = {
   isLoading: false,
@@ -9,6 +8,7 @@ const initialState = {
   hidePasswordConfirmation: true,
   success: false,
   emailSent: false,
+  validToken: null,
   error: null,
   isModalOpen: false,
 };
@@ -33,6 +33,23 @@ const resetPasswordSlice = createSlice({
       isLoading: false,
       error: action.payload,
       success: false,
+    }),
+    checkResetToken: (state) => ({
+      ...state,
+      isLoading: true,
+      validToken: null,
+    }),
+    checkResetTokenSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      validToken: action.payload,
+      error: null,
+    }),
+    checkResetTokenFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+      validToken: null,
     }),
     getResetLink: (state) => ({
       ...state,
@@ -105,9 +122,6 @@ export const resetPassword = (data) => {
       .then(() => {
         dispatch(resetPasswordSlice.actions.resetPasswordSuccess());
       })
-      .then(() => {
-        dispatch(clearAuthenticationAction());
-      })
       .catch((error) =>
         dispatch(resetPasswordSlice.actions.resetPasswordFail(error))
       );
@@ -125,6 +139,24 @@ export const getResetLink = (email) => {
       })
       .catch((error) =>
         dispatch(resetPasswordSlice.actions.getResetLinkFail(error))
+      );
+  };
+};
+
+export const checkResetToken = (token) => {
+  return (dispatch) => {
+    dispatch(resetPasswordSlice.actions.checkResetToken());
+
+    axios
+      .post(`${API_URL}/account/reset-password/token/is-valid`, token)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(resetPasswordSlice.actions.checkResetTokenSuccess(data));
+      })
+      .catch((error) =>
+        dispatch(resetPasswordSlice.actions.checkResetTokenFail(error))
       );
   };
 };

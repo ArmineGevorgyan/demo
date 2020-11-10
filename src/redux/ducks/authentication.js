@@ -74,8 +74,6 @@ const authSlice = createSlice({
 
 const authReducer = authSlice.reducer;
 
-export const clearAuthenticationAction = authSlice.actions.clearAuthentication;
-
 export const authenticate = () => {
   return (dispatch) => {
     getToken()
@@ -144,13 +142,17 @@ export const logout = (navigation) => {
 
     axios
       .get(`${API_HOST}/logout`)
-      .then((r) => { return r.data })
+      .then((r) => {
+        return r.data;
+      })
       .then((data) => {
         removeToken();
         navigation.navigate("LandingScreen");
       })
-      .catch((error) => { dispatch(authSlice.actions.loginFail(error)) })
-  }
+      .catch((error) => {
+        dispatch(authSlice.actions.loginFail(error));
+      });
+  };
 };
 
 export default authReducer;

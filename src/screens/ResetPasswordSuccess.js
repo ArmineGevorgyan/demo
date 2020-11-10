@@ -10,6 +10,7 @@ import GrayHeader from "../components/grayHeader";
 class ResetPasswordSuccess extends Component {
   render() {
     const { t, navigation } = this.props;
+    const { isAuthenticated } = this.props.route.params;
 
     return (
       <Content style={baseStylesheet.baseContainer}>
@@ -32,13 +33,15 @@ class ResetPasswordSuccess extends Component {
             onPress={() =>
               navigation.reset({
                 index: 0,
-                routes: [{ name: "LandingScreen" }],
+                routes: [{ name: isAuthenticated ? "Home" : "LandingScreen" }],
               })
             }
             style={baseStylesheet.secondaryButton}
           >
             <Text style={baseStylesheet.secondaryButtonText}>
-              {t("resetPasswordSuccess.OKButton")}
+              {isAuthenticated
+                ? t("resetPasswordSuccess.home")
+                : t("resetPasswordSuccess.login")}
             </Text>
           </TouchableOpacity>
         </View>
