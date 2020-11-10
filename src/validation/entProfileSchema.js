@@ -6,7 +6,7 @@ const entProfileSchema = Yup.object().shape({
   bio: Yup.string().
     trim().
     required(i18n.t("validator.bio_required")),
-  location: Yup.string()
+  locations: Yup.string()
     .trim()
     .required(i18n.t("validator.location_required")),
   availableVia: Yup.string()
