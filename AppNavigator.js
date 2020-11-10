@@ -38,6 +38,7 @@ import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
 import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
 import LegalScreen from "./src/screens/LegalScreen";
 import constants from "./src/constants";
+import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 
 const prefix = Linking.makeUrl("/");
 

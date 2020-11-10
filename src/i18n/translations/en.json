@@ -153,6 +153,12 @@
     "contextHeading": "Thank you for contacting us!",
     "context": "See our answer in your inbox during the next 2 days."
   },
+  "entProfileEditScreen":{
+    "fullName":"Full name",
+    "fullNamePlaceholder":"Full name",
+    "saveButton:":"SAVE",
+    "cancelButton":"CANCEL"
+  },
   "entProfilePopulateScreen":{
     "bio":"Short bio",
     "bioPlaceholder":"Short description goes here…",

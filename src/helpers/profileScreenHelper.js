@@ -113,7 +113,7 @@ const entrepreneurData = [
       icon: "user",
       iconType: "Feather",
       backgroundColor: colors.profileSection1,
-      to: "TemporaryScreen",
+      to: "EntProfileEditScreen",
     },
     {
       id: 2,
