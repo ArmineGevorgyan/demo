@@ -82,11 +82,12 @@ class ContactUsScreen extends Component {
                     style={styles.pickerIcon}
                   />
                   <Picker
-                    selectedValue={props.values.subject}
+                    selectedValue={props.values.contactRequestType}
                     style={{ width: "100%" }}
                     onValueChange={(itemValue, itemIndex) => {
                       props.setFieldValue("contactRequestType", itemValue);
                     }}
+                    value={props.values.contactRequestType}
                   >
                     {requestTypes &&
                       requestTypes.map((type) => (
