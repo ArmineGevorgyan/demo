@@ -141,11 +141,9 @@ export const logout = (navigation) => {
     dispatch(authSlice.actions.logout());
 
     axios
-      .get(`${API_HOST}/logout`)
-      .then((r) => {
-        return r.data;
-      })
-      .then((data) => {
+      .post(`${API_URL}/logout`, {})
+      .then(() => {
+        dispatch(authSlice.actions.clearAuthentication());
         removeToken();
         navigation.navigate("LandingScreen");
       })
