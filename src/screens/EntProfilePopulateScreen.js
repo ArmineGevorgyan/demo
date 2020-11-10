@@ -15,6 +15,7 @@ import {
   setTimeZone,
   setResidency,
   updateProfile,
+  resetProfile,
   setTextInput,
 } from "../redux/ducks/entrepreneurProfile";
 import {
@@ -29,12 +30,22 @@ import TimeZoneInput from "../components/timeZoneInput";
 import constants from "../constants";
 
 class EntProfilePopulateScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.formik = React.createRef();
+  }
+
   handleNext = () => {
     const { save } = this.props;
     save();
   };
 
-  handleReset = () => { }
+  handleReset = () => {
+    this.props.resetProfile();
+    this.formik.resetForm({
+      bio: "",
+    })
+  };
 
   backButtonHandler = () => {
     this.props.navigation.goBack();
@@ -60,7 +71,7 @@ class EntProfilePopulateScreen extends Component {
 
   locationToString = () => {
     const { profileData } = this.props;
-    return profileData.locations? `${profileData.locations[0]?.country?.name},${profileData.locations[0].city?.name},${profileData.locations[0]?.region?.name}`:"";
+    return profileData.locations?.length ? `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}` : "";
   };
 
   timeZoneToString = () => {
@@ -71,8 +82,8 @@ class EntProfilePopulateScreen extends Component {
   };
 
   residencyToString = () => {
-    const {profileData} = this.props
-    return `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}`;
+    const { profileData } = this.props
+    return profileData.residency ? `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}` : "";
   };
 
   render() {
@@ -93,151 +104,153 @@ class EntProfilePopulateScreen extends Component {
         <Content style={{
           backgroundColor: colors.offWhite,
         }}>
-          {profileData.id ?
-            <Formik
-              initialValues={{
-                bio: profileData.bio || "",
-                locations: this.locationToString(),
-                timeZone: this.timeZoneToString(),
-                availableVia: profileData.availableVia || "",
-                residency: this.residencyToString(),
-                highlights: profileData.highlights || "",
-              }}
-              onSubmit={this.onSubmit}
-              validationSchema={schema}
-            >
-              {(props) => {
-                const values = props.values;
-                let bioLength = values.bio?.length || profileData.bio?.length;
-                let highlightsLength = values.highlights?.length || profileData.highlights?.length;
-                return (
-                  <View style={styles.formContainer}>
-                    <View style={styles.message}>
-                      <View style={styles.row}>
-                        <Label style={baseStylesheet.label}>
-                          {t("entProfilePopulateScreen.bio")}
-                        </Label>
-                        <Text style={styles.counter}>
-                          {bioLength}/{constants.shortBioMaxLength}
-                        </Text>
+          {
+            !this.props.isResetting || profileData.id ?
+              <Formik
+                innerRef={(p) => (this.formik = p)}
+                initialValues={{
+                  bio: profileData.bio || "",
+                  locations: this.locationToString(),
+                  timeZone: this.timeZoneToString(),
+                  availableVia: profileData.availableVia || "",
+                  residency: this.residencyToString(),
+                  highlights: profileData.highlights || "",
+                }}
+                onSubmit={this.onSubmit}
+                validationSchema={schema}
+              >
+                {(props) => {
+                  const values = props.values;
+                  let bioLength = values.bio?.length || 0;
+                  let highlightsLength = values.highlights?.length || 0;
+                  return (
+                    <View style={styles.formContainer}>
+                      <View style={styles.message}>
+                        <View style={styles.row}>
+                          <Label style={baseStylesheet.label}>
+                            {t("entProfilePopulateScreen.bio")}
+                          </Label>
+                          <Text style={styles.counter}>
+                            {bioLength}/{constants.shortBioMaxLength}
+                          </Text>
+                        </View>
+                        <Validation name="bio" showMessage={true}>
+                          <Textarea
+                            bordered
+                            rowSpan={5}
+                            onBlur={() => {
+                              this.setTextInput({ bio: props.values.bio });
+                            }}
+                            maxLength={constants.shortBioMaxLength}
+                            placeholder={t("entProfilePopulateScreen.bioPlaceholder")}
+                            placeholderTextColor={colors.blueBorder}
+                            style={baseStylesheet.textarea}
+                            value={values.bio || profileData.bio}
+                            onChangeText={props.handleChange("bio")}
+                          />
+                        </Validation>
                       </View>
-                      <Validation name="bio" showMessage={true}>
-                        <Textarea
-                          bordered
-                          rowSpan={5}
-                          onBlur={() => {
-                            this.setTextInput({ bio: props.values.bio });
-                          }}
-                          maxLength={constants.shortBioMaxLength}
-                          placeholder={t("entProfilePopulateScreen.bioPlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          style={baseStylesheet.textarea}
-                          value={values.bio}
-                          onChangeText={props.handleChange("bio")}
+
+                      <Validation name="locations" showMessage={true}>
+                        <CityInput
+                          title="Location"
+                          inputType="location"
+                          flagCode={profileData.locations ? profileData.locations[0]?.country?.isoCode : "US"}
+                          value={values.locations || this.locationToString()}
+                          setResult={this.setResult}
                         />
                       </Validation>
-                    </View>
 
-                    <Validation name="locations" showMessage={true}>
+                      <TimeZoneInput
+                        value={values.timeZone || this.timeZoneToString()}
+                        setResult={(data) => this.setTextInput({ timeZone: data, })}
+                      />
+
+                      <View style={styles.message}>
+                        <View style={styles.row}>
+                          <Label style={baseStylesheet.label}>
+                            {t("entProfilePopulateScreen.availableVia")}
+                          </Label>
+                        </View>
+                        <Validation name="availableVia" showMessage={true}>
+                          <Item rounded style={baseStylesheet.inlineButtonInputItem}>
+                            <Input
+                              onBlur={() => {
+                                this.setTextInput({ availableVia: props.values.availableVia });
+                              }}
+                              style={baseStylesheet.inputField}
+                              placeholder={t("entProfilePopulateScreen.availableViaPlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.availableVia}
+                              onChangeText={props.handleChange("availableVia")}
+                            />
+                          </Item>
+                        </Validation>
+                      </View>
+
                       <CityInput
-                        title="Location"
-                        inputType="location"
-                        flagCode={profileData.locations ? profileData.locations[0]?.country?.isoCode : "US"}
-                        value={this.locationToString()}
+                        title="Residency"
+                        inputType="residency"
+                        flagCode={profileData.residency?.country?.isoCode}
+                        value={values.residency || this.residencyToString()}
                         setResult={this.setResult}
                       />
-                    </Validation>
 
-                    <TimeZoneInput
-                      value={this.timeZoneToString()}
-                      setResult={(data) => this.setTextInput({ timeZone: data, })}
-                    />
-
-                    <View style={styles.message}>
-                      <View style={styles.row}>
-                        <Label style={baseStylesheet.label}>
-                          {t("entProfilePopulateScreen.availableVia")}
-                        </Label>
-                      </View>
-                      <Validation name="availableVia" showMessage={true}>
-                        <Item rounded style={baseStylesheet.inlineButtonInputItem}>
-                          <Input
-                            onBlur={() => {
-                              this.setTextInput({ availableVia: props.values.availableVia });
-                            }}
-                            style={baseStylesheet.inputField}
-                            placeholder={t("entProfilePopulateScreen.availableViaPlaceholder")}
+                      <View style={styles.message}>
+                        <View style={styles.row}>
+                          <Label style={baseStylesheet.label}>
+                            {t("entProfilePopulateScreen.highlights")}
+                          </Label>
+                          <Text style={styles.counter}>
+                            {highlightsLength}/{constants.highlightsMaxLength}
+                          </Text>
+                        </View>
+                        <Validation name="highlights" showMessage={true}>
+                          <Textarea
+                            bordered
+                            rowSpan={5}
+                            maxLength={constants.shortBioMaxLength}
+                            placeholder={t("entProfilePopulateScreen.highlightsPlaceholder")}
                             placeholderTextColor={colors.blueBorder}
-                            value={values.availableVia}
-                            onChangeText={props.handleChange("availableVia")}
+                            style={baseStylesheet.textarea}
+                            value={values.highlights}
+                            onBlur={() => {
+                              this.setTextInput({ highlights: values.highlights });
+                            }}
+                            onChangeText={props.handleChange("highlights")}
                           />
-                        </Item>
-                      </Validation>
-                    </View>
-
-                    <CityInput
-                      title="Residency"
-                      inputType="residency"
-                      flagCode={profileData.residency?.country?.isoCode}
-                      value={this.residencyToString()}
-                      setResult={this.setResult}
-                    />
-
-                    <View style={styles.message}>
-                      <View style={styles.row}>
-                        <Label style={baseStylesheet.label}>
-                          {t("entProfilePopulateScreen.highlights")}
-                        </Label>
-                        <Text style={styles.counter}>
-                          {highlightsLength}/{constants.highlightsMaxLength}
-                        </Text>
+                        </Validation>
                       </View>
-                      <Validation name="highlights" showMessage={true}>
-                        <Textarea
-                          bordered
-                          rowSpan={5}
-                          maxLength={constants.shortBioMaxLength}
-                          placeholder={t("entProfilePopulateScreen.highlightsPlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          style={baseStylesheet.textarea}
-                          value={values.highlights}
-                          onBlur={() => {
-                            this.setTextInput({ highlights: values.highlights });
-                          }}
-                          onChangeText={props.handleChange("highlights")}
-                        />
-                      </Validation>
-                    </View>
 
-                    <View style={baseStylesheet.paddedContent}>
-                      <Button
-                        onPress={props.handleSubmit}
-                        style={baseStylesheet.mainButton}
-                      >
-                        <Text style={baseStylesheet.mainButtonText}>
-                          {t("entProfilePopulateScreen.nextButton")}
-                        </Text>
-                        <Icon
-                          name="arrow-right"
-                          type="Feather"
-                          style={styles.rightIcon}
-                        />
-                      </Button>
+                      <View style={baseStylesheet.paddedContent}>
+                        <Button
+                          onPress={props.handleSubmit}
+                          style={baseStylesheet.mainButton}
+                        >
+                          <Text style={baseStylesheet.mainButtonText}>
+                            {t("entProfilePopulateScreen.nextButton")}
+                          </Text>
+                          <Icon
+                            name="arrow-right"
+                            type="Feather"
+                            style={styles.rightIcon}
+                          />
+                        </Button>
 
-                      <Button
-                        style={baseStylesheet.grayButton}
-                        onPress={() => this.handleReset()}
-                      >
-                        <Text style={baseStylesheet.grayButtonText}>
-                          {t("entProfilePopulateScreen.resetButton")}
-                        </Text>
-                      </Button>
+                        <Button
+                          style={baseStylesheet.grayButton}
+                          onPress={this.handleReset}
+                        >
+                          <Text style={baseStylesheet.grayButtonText}>
+                            {t("entProfilePopulateScreen.resetButton")}
+                          </Text>
+                        </Button>
+                      </View>
                     </View>
-                  </View>
-                );
-              }}
-            </Formik>
-            : <Spinner color={colors.secondaryColor} />
+                  );
+                }}
+              </Formik>
+              : <Spinner color={colors.secondaryColor} />
           }
 
         </Content>
@@ -249,10 +262,11 @@ class EntProfilePopulateScreen extends Component {
 const mapStateToProps = (state, props) => {
   const isModalOpen = state.dropdownInputModal.isModalOpen;
   const profileData = state.entrepreneurProfile.profileData;
-
+  const isResetting = state.entrepreneurProfile.isResetting;
   return {
     isModalOpen,
     profileData,
+    isResetting,
   };
 };
 
@@ -265,6 +279,7 @@ const mapDispatchToProps = (dispatch) => {
     setTimeZone: (timeZone) => dispatch(setTimeZone(timeZone)),
     setResidency: (residency) => dispatch(setResidency(residency)),
     updateProfile: () => dispatch(updateProfile()),
+    resetProfile: () => dispatch(resetProfile()),
     setTextInput: (data) => dispatch(setTextInput(data)),
   };
 };

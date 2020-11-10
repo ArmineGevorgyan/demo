@@ -6,11 +6,12 @@ import store from "../store";
 const initialState = {
   isLoading: false,
   isModalOpen: false,
+  isResetting:false,
   profileData: {
     bio: "",
     highlights: "",
     availableVia: "",
-    locations:[],
+    locations: [],
   },
 };
 
@@ -109,9 +110,35 @@ const entrepreneurProfileSlice = createSlice({
     updateProfileFail: (state) => ({
       ...state,
       isLoading: false
-    })
+    }),
+    resetProfile: (state) => ({
+      ...state,
+      isLoading: true,
+      isResetting:true,
+    }),
+    resetProfileSuccess: (state, action) => ({
+      ...state,
+      profileData: action.payload,
+      isResetting:false,
+    }),
+    resetProfileFail: (state, action) => ({
+      ...state,
+      isResetting:false,
+      error: action.payload,
+    }),
   },
 });
+
+const initialPrifileData = {
+  id: null,
+  photoUrl: null,
+  bio: null,
+  availableVia: null,
+  highlights: null,
+  residency: null,
+  locations: null,
+  timeZone: null,
+};
 
 const entrepreneurProfileReducer = entrepreneurProfileSlice.reducer;
 
@@ -149,6 +176,26 @@ export const updateProfile = () => {
       .then((r) => { return r.data })
       .then((data) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileSuccess(data))
+      })
+      .catch((error) => {
+        dispatch(entrepreneurProfileSlice.actions.updateProfileFail(error));
+      });
+  };
+};
+
+export const resetProfile = () => {
+  const state = store.getState();
+  return (dispatch) => {
+    dispatch(entrepreneurProfileSlice.actions.resetProfile());
+
+    axios
+      .put(`${API_URL}/entrepreneur-profiles/current`, {
+        ...initialPrifileData,
+        id: state.entrepreneurProfile.profileData.id,
+      })
+      .then((r) => { return r.data })
+      .then((data) => {
+        dispatch(entrepreneurProfileSlice.actions.resetProfileSuccess(data))
       })
       .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileFail(error));
