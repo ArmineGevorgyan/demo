@@ -25,24 +25,25 @@ class FAQScreen extends Component {
     const { t, navigation, faqList } = this.props;
 
     return (
-      <Content style={baseStylesheet.baseContainer}>
+      <>
         <GrayHeader
           title={t("profileScreen.faq")}
           backButtonHandler={() => navigation.goBack()}
           enableSearch
         />
-        <View style={styles.contextContainer}>
+        <Content style={baseStylesheet.baseContainer}>
           <View style={styles.imageContainer}>
             <DraperRhino />
           </View>
-
-          {faqList ? (
-            <ListAccordion dataArray={faqList} />
-          ) : (
-            <Spinner color={colors.secondaryColor} />
-          )}
-        </View>
-      </Content>
+          <View style={styles.contextContainer}>
+            {faqList ? (
+              <ListAccordion dataArray={faqList} />
+            ) : (
+              <Spinner color={colors.secondaryColor} />
+            )}
+          </View>
+        </Content>
+      </>
     );
   }
 }

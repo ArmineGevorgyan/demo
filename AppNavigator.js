@@ -32,12 +32,20 @@ import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
+import ForgotPasswordScreen from "./src/screens/ForgotPasswordScreen";
+import FAQScreen from "./src/screens/FAQScreen";
+import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
+import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
+import LegalScreen from "./src/screens/LegalScreen";
 import constants from "./src/constants";
+
 const prefix = Linking.makeUrl("/");
+
 class AppNavigator extends Component {
   componentDidMount() {
     this.props.authenticate();
   }
+
   getScreenOptions(route) {
     return {
       tabBarIcon: ({ focused, color, size }) => {
@@ -58,14 +66,17 @@ class AppNavigator extends Component {
       },
     };
   }
+
   render() {
     const Stack = createStackNavigator();
     const Tab = createBottomTabNavigator();
     const linking = {
       prefixes: [prefix],
     };
+
     const getStack = () => {
       const { isAuthenticated, completed, user } = this.props;
+
       if (!isAuthenticated) {
         return (
           <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
@@ -87,9 +98,22 @@ class AppNavigator extends Component {
               component={TermsAndConditionsScreen}
             />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen
+              name="ForgotPasswordScreen"
+              component={ForgotPasswordScreen}
+            />
+            <Stack.Screen
+              name="ResetPasswordSuccess"
+              component={ResetPasswordSuccess}
+            />
+            <Stack.Screen
+              name="ResetPasswordScreen"
+              component={ResetPasswordScreen}
+            />
           </Stack.Navigator>
         );
       }
+
       if (
         user?.authorities[0] == constants.userRole.entrepreneur &&
         !completed
@@ -106,6 +130,7 @@ class AppNavigator extends Component {
           </Stack.Navigator>
         );
       }
+
       return (
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
           <Stack.Screen name="Home" component={Home} />
@@ -113,9 +138,24 @@ class AppNavigator extends Component {
           <Stack.Screen name="ParkingLotScreen" component={ParkingLotScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
+          <Stack.Screen name="FAQScreen" component={FAQScreen} />
+          <Stack.Screen name="LegalScreen" component={LegalScreen} />
+          <Stack.Screen
+            name="ForgotPasswordScreen"
+            component={ForgotPasswordScreen}
+          />
+          <Stack.Screen
+            name="ResetPasswordSuccess"
+            component={ResetPasswordSuccess}
+          />
+          <Stack.Screen
+            name="ResetPasswordScreen"
+            component={ResetPasswordScreen}
+          />
         </Stack.Navigator>
       );
     };
+
     const Home = () => {
       return (
         <Tab.Navigator
@@ -134,6 +174,7 @@ class AppNavigator extends Component {
         </Tab.Navigator>
       );
     };
+
     return (
       <NavigationContainer
         linking={linking}
@@ -144,6 +185,7 @@ class AppNavigator extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   navigationTab: {
     backgroundColor: colors.offWhite,
@@ -151,21 +193,25 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 });
+
 const mapStateToProps = (state, props) => {
   const isAuthenticated = state.authentication.isAuthenticated || false;
   const completed = state.entrepreneurProfile.profileData.completed;
   const user = state.user.userData;
+
   return {
     isAuthenticated,
     completed,
     user,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     authenticate: () => dispatch(authenticate()),
   };
 };
+
 export default compose(connect(mapStateToProps, mapDispatchToProps))(
   AppNavigator
 );

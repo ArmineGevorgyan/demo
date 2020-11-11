@@ -205,5 +205,20 @@
     "failureMessage": "Mail has not been sent due to an unknown reason",
     "contextLine1": "An email has been sent to ",
     "contextLine2": "Follow the directions in the email to reset your password."
+  },
+  "legalScreen":{
+    "headerText": "Legal",
+    "termsAndConditions": "Terms and conditions",
+    "tcDescription": "We constantly refine our rules to maintain an exceptional, trustworthy and fair investment community.",
+    "privacyPolicy": "Privacy Policy",
+    "ppDescription": "We care about the privacy of everything that happens within the DWG community.",
+    "svpCreation": "SPV creation contract",
+    "svpDescription": "We use this agreement template for each investment.",
+    "safeContract": "SAFE Contract",
+    "safeDescription": "We use this agreement template for each investment.",
+    "legalArticles": "Legal articles",
+    "legalArticlesDescription": "Articles about the legal side of investments happening within the DWG community.",
+    "legalTemplates": "Legal templates",
+    "legalTemplatesDescription": "We standardize what we mastered. Then, we strive to improve what we standardized. All the legal templates we use are here."
   }
 }

@@ -79,7 +79,7 @@ const investorData = [
       icon: "file-text",
       iconType: "Feather",
       backgroundColor: colors.profileSection3,
-      to: "TemporaryScreen",
+      to: "LegalScreen",
     },
   ],
   [
@@ -146,7 +146,7 @@ const entrepreneurData = [
       icon: "file-text",
       iconType: "Feather",
       backgroundColor: colors.profileSection3,
-      to: "TemporaryScreen",
+      to: "LegalScreen",
     },
     {
       id: 6,
