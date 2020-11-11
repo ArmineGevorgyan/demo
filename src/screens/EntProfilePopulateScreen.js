@@ -1,7 +1,7 @@
-import { Container, Content, Icon, Item } from "native-base";
+import { Container, Content, Icon, Input, Item, Spinner } from "native-base";
 import React, { Component } from "react";
 import ProfileBlueHeader from "../components/profileBlueHeader";
-import { Button } from "native-base";
+import { Button, Label, Textarea } from "native-base";
 import { StyleSheet, Text, View } from "react-native";
 import { compose } from "redux";
 import { connect } from "react-redux";
@@ -15,6 +15,8 @@ import {
   setTimeZone,
   setResidency,
   updateProfile,
+  resetProfile,
+  setTextInput,
 } from "../redux/ducks/entrepreneurProfile";
 import {
   openModal,
@@ -25,122 +27,262 @@ import { Formik } from "formik";
 import Validation from "../validation";
 import CityInput from "../components/cityInput";
 import TimeZoneInput from "../components/timeZoneInput";
-
+import constants from "../constants";
 
 class EntProfilePopulateScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.formik = React.createRef();
+  }
+
   handleNext = () => {
     const { save } = this.props;
     save();
   };
 
-  handleReset = () => { }
+  handleReset = () => {
+    this.props.resetProfile();
+    this.formik.resetForm({
+      "bio": "",
+      "locations": "",
+      "timeZone": "",
+      "availableVia": "",
+      "residency": "",
+      "highlights": "",
+    });
+  };
 
   backButtonHandler = () => {
     this.props.navigation.goBack();
   };
 
   onSubmit = (values) => {
-
+    this.props.setTextInput({ completed: true });
+    this.props.updateProfile();
   };
 
   setResult = (item, type) => {
     if (type === "location") {
       this.props.setLocation(item);
+      this.formik.setValues({
+        ...this.formik.values,
+        "locations": `${item.country?.name},${item.name},${item.region?.name}`,
+      });
     } else {
+      this.formik.setValues({
+        ...this.formik.values,
+        "residency": `${item.country?.name},${item.name},${item.region?.name}`,
+      });
       this.props.setResidency(item);
     }
-    this.props.updateProfile(item);
+    this.props.updateProfile();
   };
 
+  setTextInput = (data) => {
+    this.props.setTextInput(data);
+    this.props.updateProfile();
+  }
+
   locationToString = () => {
-    return `${this.props.location?.country?.name},${this.props.location?.name},${this.props.location?.region?.name}`;
+    const { profileData } = this.props;
+    return (profileData.locations && profileData.locations.length > 0)
+      ? `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}`
+      : "";
   };
 
   timeZoneToString = () => {
-    return this.props.timeZone
-      ? `${this.props.timeZone?.code}-${this.props.timeZone?.name}, ${this.props.timeZone?.offset}`
+    const { profileData } = this.props;
+    return profileData.timeZone
+      ? `${profileData.timeZone?.code}-${profileData.timeZone?.name}, ${profileData.timeZone?.offset}`
       : "";
   };
 
   residencyToString = () => {
-    return `${this.props.residency?.country?.name},${this.props.residency?.name},${this.props.residency?.region?.name}`;
+    const { profileData } = this.props;
+    return profileData.residency ?
+      `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}`
+      : "";
   };
 
+  getLocationFlag = () => {
+    const { profileData } = this.props;
+    return (profileData.locations && profileData.locations.length > 0)
+      ? profileData?.locations[0]?.country?.isoCode
+      : "";
+  }
+
   render() {
-    const { t, } = this.props;
+    const { t,
+      profileData,
+      isLoading,
+    } = this.props;
 
     return (
       <Container style={{ backgroundColor: colors.offWhite, }}>
         <ProfileBlueHeader
           title="My Account"
         >
-          <SelectImage />
+          <SelectImage
+            photoUrl={this.props.profileData.photoUrl}
+            setImage={
+              (image) => this.setTextInput({ photoUrl: image })
+            }
+          />
         </ProfileBlueHeader>
         <Content style={{
           backgroundColor: colors.offWhite,
         }}>
-          <Formik
-            initialValues={{
-              location: "",
-            }}
-            onSubmit={this.onSubmit}
-            validationSchema={schema}
-          >
-            {(props) => {
-              const values = props.values;
-              return (
-                <View style={styles.formContainer}>
-                  <Validation name="location" showMessage={true}>
-                    <CityInput
-                      title="Location"
-                      inputType="location"
-                      flagCode={this.props.location?.country?.isoCode}
-                      value={this.props.location ? this.locationToString() : ""}
-                      setResult={this.setResult}
-                    />
+          {
+            profileData.id ?
+              <Formik
+                innerRef={(p) => (this.formik = p)}
+                initialValues={{
+                  bio: profileData.bio || "",
+                  locations: this.locationToString(),
+                  timeZone: this.timeZoneToString(),
+                  availableVia: profileData.availableVia || "",
+                  residency: this.residencyToString(),
+                  highlights: profileData.highlights || "",
+                }}
+                onSubmit={this.onSubmit}
+                validationSchema={schema}
+              >
+                {(props) => {
+                  const values = props.values;
+                  let bioLength = values.bio?.length || 0;
+                  let highlightsLength = values.highlights?.length || 0;
+                  return (
+                    <View style={styles.formContainer}>
+                      <View style={styles.message}>
+                        <View style={styles.row}>
+                          <Label style={baseStylesheet.label}>
+                            {t("entProfilePopulateScreen.bio")}
+                          </Label>
+                          <Text style={styles.counter}>
+                            {bioLength}/{constants.shortBioMaxLength}
+                          </Text>
+                        </View>
+                        <Validation name="bio" showMessage={true}>
+                          <Textarea
+                            bordered
+                            rowSpan={5}
+                            onBlur={() => {
+                              this.setTextInput({ bio: props.values.bio });
+                            }}
+                            maxLength={constants.shortBioMaxLength}
+                            placeholder={t("entProfilePopulateScreen.bioPlaceholder")}
+                            placeholderTextColor={colors.blueBorder}
+                            style={baseStylesheet.textarea}
+                            value={values.bio}
+                            onChangeText={props.handleChange("bio")}
+                          />
+                        </Validation>
+                      </View>
 
-                    <TimeZoneInput
-                      value={this.timeZoneToString()}
-                      setResult={this.props.setTimeZone}
-                    />
+                      <Validation name="locations" showMessage={true}>
+                        <CityInput
+                          title="Location"
+                          inputType="location"
+                          flagCode={this.getLocationFlag()}
+                          value={values.locations}
+                          setResult={this.setResult}
+                        />
+                      </Validation>
 
-                    <CityInput
-                      title="Residency"
-                      inputType="residency"
-                      flagCode={this.props.residency?.country?.isoCode}
-                      value={this.props.residency ? this.residencyToString() : ""}
-                      setResult={this.setResult}
-                    />
+                      <Validation name="timeZone" showMessage={true}>
+                        <TimeZoneInput
+                          value={values.timeZone || this.timeZoneToString()}
+                          setResult={(data) => this.setTextInput({ timeZone: data, })}
+                        />
+                      </Validation>
 
-                  </Validation>
-                </View>
-              );
-            }}
-          </Formik>
-          <View style={baseStylesheet.paddedContent}>
-            <Button
-              onPress={() => this.handleNext()}
-              style={baseStylesheet.mainButton}
-            >
-              <Text style={baseStylesheet.mainButtonText}>
-                {t("entProfilePopulateScreen.nextButton")}
-              </Text>
-              <Icon
-                name="arrow-right"
-                type="Feather"
-                style={styles.rightIcon}
-              />
-            </Button>
+                      <View style={styles.message}>
+                        <View style={styles.row}>
+                          <Label style={baseStylesheet.label}>
+                            {t("entProfilePopulateScreen.availableVia")}
+                          </Label>
+                        </View>
+                        <Validation name="availableVia" showMessage={true}>
+                          <Item rounded style={baseStylesheet.inlineButtonInputItem}>
+                            <Input
+                              onBlur={() => {
+                                this.setTextInput({ availableVia: props.values.availableVia });
+                              }}
+                              style={baseStylesheet.inputField}
+                              placeholder={t("entProfilePopulateScreen.availableViaPlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.availableVia}
+                              onChangeText={props.handleChange("availableVia")}
+                            />
+                          </Item>
+                        </Validation>
+                      </View>
 
-            <Button
-              style={baseStylesheet.grayButton}
-              onPress={() => this.handleReset()}
-            >
-              <Text style={baseStylesheet.grayButtonText}>
-                {t("entProfilePopulateScreen.resetButton")}
-              </Text>
-            </Button>
-          </View>
+                      <CityInput
+                        title="Residency"
+                        inputType="residency"
+                        flagCode={profileData.residency?.country?.isoCode || ""}
+                        value={values.residency}
+                        setResult={this.setResult}
+                      />
+
+                      <View style={styles.message}>
+                        <View style={styles.row}>
+                          <Label style={baseStylesheet.label}>
+                            {t("entProfilePopulateScreen.highlights")}
+                          </Label>
+                          <Text style={styles.counter}>
+                            {highlightsLength}/{constants.highlightsMaxLength}
+                          </Text>
+                        </View>
+                        <Validation name="highlights" showMessage={true}>
+                          <Textarea
+                            bordered
+                            rowSpan={5}
+                            maxLength={constants.shortBioMaxLength}
+                            placeholder={t("entProfilePopulateScreen.highlightsPlaceholder")}
+                            placeholderTextColor={colors.blueBorder}
+                            style={baseStylesheet.textarea}
+                            value={values.highlights}
+                            onBlur={() => {
+                              this.setTextInput({ highlights: values.highlights });
+                            }}
+                            onChangeText={props.handleChange("highlights")}
+                          />
+                        </Validation>
+                      </View>
+
+                      <View>
+                        <Button
+                          onPress={props.handleSubmit}
+                          style={baseStylesheet.mainButton}
+                        >
+                          <Text style={baseStylesheet.mainButtonText}>
+                            {t("entProfilePopulateScreen.nextButton")}
+                          </Text>
+                          <Icon
+                            name="arrow-right"
+                            type="Feather"
+                            style={styles.rightIcon}
+                          />
+                        </Button>
+
+                        <Button
+                          style={baseStylesheet.grayButton}
+                          onPress={this.handleReset}
+                        >
+                          <Text style={baseStylesheet.grayButtonText}>
+                            {t("entProfilePopulateScreen.resetButton")}
+                          </Text>
+                        </Button>
+                      </View>
+                    </View>
+                  );
+                }}
+              </Formik>
+              : <Spinner color={colors.secondaryColor} />
+          }
+
         </Content>
       </Container >
     )
@@ -148,15 +290,14 @@ class EntProfilePopulateScreen extends Component {
 };
 
 const mapStateToProps = (state, props) => {
+  const isLoading = state.entrepreneurProfile.isLoading;
   const isModalOpen = state.dropdownInputModal.isModalOpen;
-  const location = state.entrepreneurProfile.location;
-  const timeZone = state.entrepreneurProfile.timeZone;
-  const residency = state.entrepreneurProfile.residency;
+  const profileData = state.entrepreneurProfile.profileData;
+  const isResetting = state.entrepreneurProfile.isResetting;
   return {
     isModalOpen,
-    location,
-    timeZone,
-    residency,
+    profileData,
+    isResetting,
   };
 };
 
@@ -168,7 +309,9 @@ const mapDispatchToProps = (dispatch) => {
     setLocation: (location) => dispatch(setLocation(location)),
     setTimeZone: (timeZone) => dispatch(setTimeZone(timeZone)),
     setResidency: (residency) => dispatch(setResidency(residency)),
-    updateProfile: (data) => (dispatch(updateProfile(data))),
+    updateProfile: () => dispatch(updateProfile()),
+    resetProfile: () => dispatch(resetProfile()),
+    setTextInput: (data) => dispatch(setTextInput(data)),
   };
 };
 
@@ -188,5 +331,17 @@ const styles = StyleSheet.create({
   rightIcon: {
     position: "absolute",
     left: "60%",
+  },
+  message: { marginBottom: 10, width: "100%" },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginTop: 20,
+  },
+  counter: {
+    color: colors.darkText,
+    fontSize: 10,
+    fontFamily: "montserrat-regular",
   },
 });

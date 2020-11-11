@@ -37,6 +37,8 @@ const constants = {
     ERROR: "error",
   },
   contactUsMessageMaxLength: 300,
+  shortBioMaxLength: 1000,
+  highlightsMaxLength:300,
 };
 
 export default constants;

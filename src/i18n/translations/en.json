@@ -67,7 +67,9 @@
     "linkedIn_url_not_valid": "Please enter a valid LinkedIn profile URL",
     "angelList_url_not_valid": "Please enter a valid AngelList profile URL",
     "message_required": "Message is required",
-    "location_reuired":"Location is required"
+    "bio_required":"Short bio is required",
+    "location_required":"Location is required",
+    "availableVia_rquired":"This field is required"
   },
   "discoverStartups": {
     "headerText": "Discover Startups",
@@ -151,6 +153,12 @@
     "context": "See our answer in your inbox during the next 2 days."
   },
   "entProfilePopulateScreen":{
+    "bio":"Short bio",
+    "bioPlaceholder":"Short description goes here…",
+    "availableVia": "Availability for calls",
+    "availableViaPlaceholder":"Calendly or Hubspot scheduling link",
+    "highlights":"Highlights",
+    "highlightsPlaceholder":"e.g. previous exits, awards etc.",
     "nextButton":"Next",
     "resetButton":"Reset"
   },

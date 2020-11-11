@@ -32,18 +32,12 @@ import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
-import ForgotPasswordScreen from "./src/screens/ForgotPasswordScreen";
-import FAQScreen from "./src/screens/FAQScreen";
-import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
-import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
-
+import constants from "./src/constants";
 const prefix = Linking.makeUrl("/");
-
 class AppNavigator extends Component {
   componentDidMount() {
     this.props.authenticate();
   }
-
   getScreenOptions(route) {
     return {
       tabBarIcon: ({ focused, color, size }) => {
@@ -64,19 +58,42 @@ class AppNavigator extends Component {
       },
     };
   }
-
   render() {
     const Stack = createStackNavigator();
     const Tab = createBottomTabNavigator();
-
     const linking = {
       prefixes: [prefix],
     };
-
     const getStack = () => {
-      const { isAuthenticated, photoUrl } = this.props;
-
-      if (isAuthenticated && !photoUrl) {
+      const { isAuthenticated, completed, user } = this.props;
+      if (!isAuthenticated) {
+        return (
+          <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
+            <Stack.Screen name="LandingScreen" component={LandingScreen} />
+            <Stack.Screen
+              name="RequestAnInvite"
+              component={RequestInviteScreen}
+            />
+            <Stack.Screen
+              name="RequestInviteSuccess"
+              component={RequestInviteSuccess}
+            />
+            <Stack.Screen
+              name="RegistrationScreen"
+              component={RegistrationScreen}
+            />
+            <Stack.Screen
+              name="TermsAndConditionsScreen"
+              component={TermsAndConditionsScreen}
+            />
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          </Stack.Navigator>
+        );
+      }
+      if (
+        user?.authorities[0] == constants.userRole.entrepreneur &&
+        !completed
+      ) {
         return (
           <Stack.Navigator
             initialRouteName="EntProfilePopulateScreen"
@@ -89,64 +106,16 @@ class AppNavigator extends Component {
           </Stack.Navigator>
         );
       }
-
-      return isAuthenticated ? (
+      return (
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="TemporaryScreen" component={TemporaryScreen} />
           <Stack.Screen name="ParkingLotScreen" component={ParkingLotScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
-          <Stack.Screen
-            name="ForgotPasswordScreen"
-            component={ForgotPasswordScreen}
-          />
-          <Stack.Screen name="FAQScreen" component={FAQScreen} />
-          <Stack.Screen
-            name="ResetPasswordSuccess"
-            component={ResetPasswordSuccess}
-          />
-          <Stack.Screen
-            name="ResetPasswordScreen"
-            component={ResetPasswordScreen}
-          />
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator initialRouteName="LandingScreen" headerMode={false}>
-          <Stack.Screen name="LandingScreen" component={LandingScreen} />
-          <Stack.Screen
-            name="RequestAnInvite"
-            component={RequestInviteScreen}
-          />
-          <Stack.Screen
-            name="RequestInviteSuccess"
-            component={RequestInviteSuccess}
-          />
-          <Stack.Screen
-            name="RegistrationScreen"
-            component={RegistrationScreen}
-          />
-          <Stack.Screen
-            name="TermsAndConditionsScreen"
-            component={TermsAndConditionsScreen}
-          />
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen
-            name="ResetPasswordSuccess"
-            component={ResetPasswordSuccess}
-          />
-          <Stack.Screen
-            name="ResetPasswordScreen"
-            component={ResetPasswordScreen}
-          />
-          <Stack.Screen
-            name="ForgotPasswordScreen"
-            component={ForgotPasswordScreen}
-          />
         </Stack.Navigator>
       );
     };
-
     const Home = () => {
       return (
         <Tab.Navigator
@@ -165,7 +134,6 @@ class AppNavigator extends Component {
         </Tab.Navigator>
       );
     };
-
     return (
       <NavigationContainer
         linking={linking}
@@ -176,7 +144,6 @@ class AppNavigator extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   navigationTab: {
     backgroundColor: colors.offWhite,
@@ -184,23 +151,21 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 });
-
 const mapStateToProps = (state, props) => {
   const isAuthenticated = state.authentication.isAuthenticated || false;
-  const photoUrl = state.entrepreneurProfile.photoUrl;
-
+  const completed = state.entrepreneurProfile.profileData.completed;
+  const user = state.user.userData;
   return {
     isAuthenticated,
-    photoUrl,
+    completed,
+    user,
   };
 };
-
 const mapDispatchToProps = (dispatch) => {
   return {
     authenticate: () => dispatch(authenticate()),
   };
 };
-
 export default compose(connect(mapStateToProps, mapDispatchToProps))(
   AppNavigator
 );

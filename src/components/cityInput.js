@@ -23,10 +23,11 @@ class CityInput extends Component {
   render() {
     const { t } = this.props;
     return (<View style={{
-      width:"100%"}}>
+      width: "100%"
+    }}>
       <Text style={baseStylesheet.label}>
         {this.props.title}
-    </Text>
+      </Text>
       <Item
         rounded
         style={baseStylesheet.inputItem}
@@ -40,18 +41,23 @@ class CityInput extends Component {
             alignItems: "center",
           }}
         >
-          <Flag
-            code={this.props.flagCode || "US"}
-            size={32}
-            style={{marginLeft:10,}}
-          />
+          {
+            this.props.flagCode!=="" && (
+              <Flag
+              code={this.props.flagCode}
+              size={32}
+              style={{ marginLeft: 10, }}
+              />
+            )
+          }
           <Input
             disabled
             blurOnSubmit={false}
             style={{ ...baseStylesheet.inputField }}
             placeholder={t("dropDownInputModal.placeholder")}
             placeholderTextColor={colors.blueBorder}
-            value={this.props.value || ""}
+            value={this.props.value}
+            onChangeText={this.props.inputChange}
           />
         </TouchableOpacity>
       </Item>
@@ -79,7 +85,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     openModal: (title) => dispatch(openModal(title)),
     closeModal: () => dispatch(closeModal()),
-    setType:(type)=>dispatch(setType(type)),
+    setType: (type) => dispatch(setType(type)),
   };
 };
 

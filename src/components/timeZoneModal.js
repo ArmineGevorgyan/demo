@@ -12,7 +12,7 @@ import { loadTimeZones } from "../redux/ducks/timeZoneModal";
 
 class TimeZoneModal extends Component {
   componentDidMount() {
-    this.props.loadTimeZones();
+    // this.props.loadTimeZones();
   }
 
   handleClose = () => {
