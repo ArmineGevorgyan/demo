@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
+import { useIsFocused } from "@react-navigation/native";
 import { Item, Input, Icon, Button, Content } from "native-base";
 import { Formik } from "formik";
 import NetInfo from "@react-native-community/netinfo";
@@ -30,7 +31,7 @@ class LandingScreen extends Component {
   }
 
   async navigate(emailStatus) {
-    const { openModal, navigation } = this.props;
+    const { openModal, navigation, isFocused } = this.props;
     const netInfo = await NetInfo.fetch();
 
     if (!netInfo.isConnected) {
@@ -156,7 +157,11 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(LandingScreen);
+)(function (props) {
+  const isFocused = useIsFocused();
+
+  return <LandingScreen {...props} isFocused={isFocused} />;
+});
 
 const styles = StyleSheet.create({
   imageContainer: {

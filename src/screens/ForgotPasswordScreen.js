@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { StyleSheet, Text, View } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import { Label, Item, Input, Button, Content, Icon } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
@@ -18,7 +19,11 @@ import constants from "../constants";
 
 class ForgotPasswordScreen extends Component {
   componentDidUpdate() {
-    const { emailSent, openModal, error } = this.props;
+    const { emailSent, openModal, error, isFocused } = this.props;
+
+    if (!isFocused) {
+      return;
+    }
 
     if (!emailSent && !error) {
       return;
@@ -127,7 +132,11 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(ForgotPasswordScreen);
+)(function (props) {
+  const isFocused = useIsFocused();
+
+  return <ForgotPasswordScreen {...props} isFocused={isFocused} />;
+});
 
 const styles = StyleSheet.create({
   formContainer: {
