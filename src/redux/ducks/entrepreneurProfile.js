@@ -7,13 +7,12 @@ const initialState = {
   isLoading: false,
   isModalOpen: false,
   isResetting: false,
-  navigation: null,
 
   profileData: {
     bio: "",
     highlights: "",
     availableVia: "",
-    locations: [],
+    locations: null,
   },
 };
 
@@ -128,10 +127,6 @@ const entrepreneurProfileSlice = createSlice({
       isResetting: false,
       error: action.payload,
     }),
-    setNavigation: (state, action) => ({
-      ...state,
-      navigation: action.payload,
-    }),
   },
 });
 
@@ -245,11 +240,5 @@ export const setResidency = (residency) => {
     dispatch(entrepreneurProfileSlice.actions.setResidency(residency));
   }
 };
-
-export const setNavigation = (navigation) => {
-  return (dispatch) => {
-    dispatch(entrepreneurProfileSlice.actions.setNavigation(navigation))
-  }
-}
 
 export default entrepreneurProfileReducer;

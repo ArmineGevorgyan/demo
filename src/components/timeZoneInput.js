@@ -10,12 +10,14 @@ import TimeZoneModal from "../components/timeZoneModal";
 import {
   openModal,
   closeModal,
+  loadTimeZones,
 } from "../redux/ducks/timeZoneModal";
 
 class TimeZoneInput extends Component {
 
   handleClick = (title) => {
     this.props.openModal(title);
+    this.props.loadTimeZones();
   }
 
   render() {
@@ -71,6 +73,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     openModal: (title) => dispatch(openModal(title)),
     closeModal: () => dispatch(closeModal()),
+    loadTimeZones: () => dispatch(loadTimeZones()),
   };
 };
 

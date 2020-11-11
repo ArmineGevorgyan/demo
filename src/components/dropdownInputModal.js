@@ -11,6 +11,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { Formik } from "formik";
 import { loadCityList, loadMoreCities } from "../redux/ducks/dropdownInputModal";
 import Flag from 'react-native-flags';
+import { isLoaded } from "expo-font";
 
 class DropdownInputModal extends Component {
   handleClose = () => {
@@ -84,7 +85,10 @@ class DropdownInputModal extends Component {
 
 
   render() {
-    const { t, isModalOpen } = this.props;
+    const { t,
+      isModalOpen,
+      isLoading,
+    } = this.props;
 
     return (
       <Modal
@@ -128,14 +132,19 @@ class DropdownInputModal extends Component {
               )
             }}
           </Formik>
-          <FlatList
-            data={this.props.cityList}
-            onEndReachedThreshold={0.1}
-            renderItem={this.renderItem}
-            onEndReached={this.handleOnEndReached}
-            ListFooterComponent={this.getLoadingMoreSpinner}
-            ItemSeparatorComponent={this.renderSeparator}
-          />
+
+          {
+            isLoading
+            ? <Spinner color={colors.secondaryColor} />
+            : <FlatList
+              data={this.props.cityList}
+              onEndReachedThreshold={0.1}
+              renderItem={this.renderItem}
+              onEndReached={this.handleOnEndReached}
+              ListFooterComponent={this.getLoadingMoreSpinner}
+              ItemSeparatorComponent={this.renderSeparator}
+            />
+          }
 
           <Button
             style={{
@@ -156,6 +165,7 @@ class DropdownInputModal extends Component {
 
 const mapStateToProps = (state, props) => {
   const title = state.dropdownInputModal.title;
+  const isLoading = state.dropdownInputModal.isLoading;
   const inputType = state.dropdownInputModal.inputType;
   const loadingMore = state.dropdownInputModal.loadingMore;
   const noMoreCities = state.dropdownInputModal.noMoreCities;
@@ -163,6 +173,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     title,
+    isLoading,
     inputType,
     loadingMore,
     noMoreCities,

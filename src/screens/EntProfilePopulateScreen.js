@@ -17,7 +17,6 @@ import {
   updateProfile,
   resetProfile,
   setTextInput,
-  setNavigation,
 } from "../redux/ducks/entrepreneurProfile";
 import {
   openModal,
@@ -36,10 +35,6 @@ class EntProfilePopulateScreen extends Component {
     this.formik = React.createRef();
   }
 
-  componentDidMount() {
-    this.props.setNavigation(this.props.navigation);
-  }
-
   handleNext = () => {
     const { save } = this.props;
     save();
@@ -48,8 +43,13 @@ class EntProfilePopulateScreen extends Component {
   handleReset = () => {
     this.props.resetProfile();
     this.formik.resetForm({
-      bio: "",
-    })
+      "bio": "",
+      "locations": "",
+      "timeZone": "",
+      "availableVia": "",
+      "residency": "",
+      "highlights": "",
+    });
   };
 
   backButtonHandler = () => {
@@ -59,13 +59,20 @@ class EntProfilePopulateScreen extends Component {
   onSubmit = (values) => {
     this.props.setTextInput({ completed: true });
     this.props.updateProfile();
-    console.log("values ========================================================== ", values);
   };
 
   setResult = (item, type) => {
     if (type === "location") {
       this.props.setLocation(item);
+      this.formik.setValues({
+        ...this.formik.values,
+        "locations": `${item.country?.name},${item.name},${item.region?.name}`,
+      });
     } else {
+      this.formik.setValues({
+        ...this.formik.values,
+        "residency": `${item.country?.name},${item.name},${item.region?.name}`,
+      });
       this.props.setResidency(item);
     }
     this.props.updateProfile();
@@ -78,7 +85,9 @@ class EntProfilePopulateScreen extends Component {
 
   locationToString = () => {
     const { profileData } = this.props;
-    return profileData.locations?.length ? `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}` : "";
+    return (profileData.locations && profileData.locations.length > 0)
+      ? `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}`
+      : "";
   };
 
   timeZoneToString = () => {
@@ -89,12 +98,24 @@ class EntProfilePopulateScreen extends Component {
   };
 
   residencyToString = () => {
-    const { profileData } = this.props
-    return profileData.residency ? `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}` : "";
+    const { profileData } = this.props;
+    return profileData.residency ?
+      `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}`
+      : "";
   };
 
+  getLocationFlag = () => {
+    const { profileData } = this.props;
+    return (profileData.locations && profileData.locations.length > 0)
+      ? profileData?.locations[0]?.country?.isoCode
+      : "";
+  }
+
   render() {
-    const { t, profileData } = this.props;
+    const { t,
+      profileData,
+      isLoading,
+    } = this.props;
 
     return (
       <Container style={{ backgroundColor: colors.offWhite, }}>
@@ -112,7 +133,7 @@ class EntProfilePopulateScreen extends Component {
           backgroundColor: colors.offWhite,
         }}>
           {
-             profileData.id ?
+            profileData.id ?
               <Formik
                 innerRef={(p) => (this.formik = p)}
                 initialValues={{
@@ -152,27 +173,28 @@ class EntProfilePopulateScreen extends Component {
                             placeholder={t("entProfilePopulateScreen.bioPlaceholder")}
                             placeholderTextColor={colors.blueBorder}
                             style={baseStylesheet.textarea}
-                            value={values.bio || profileData.bio}
+                            value={values.bio}
                             onChangeText={props.handleChange("bio")}
                           />
                         </Validation>
                       </View>
 
-                      {/* <Validation name="locations" showMessage={true}> */}
+                      <Validation name="locations" showMessage={true}>
                         <CityInput
                           title="Location"
                           inputType="location"
-                          inputChange={props.handleChange("locations")}
-                          flagCode={profileData.locations ? profileData.locations[0]?.country?.isoCode : "US"}
-                          value={values.locations || this.locationToString()}
+                          flagCode={this.getLocationFlag()}
+                          value={values.locations}
                           setResult={this.setResult}
                         />
-                      {/* </Validation> */}
+                      </Validation>
 
-                      <TimeZoneInput
-                        value={values.timeZone || this.timeZoneToString()}
-                        setResult={(data) => this.setTextInput({ timeZone: data, })}
-                      />
+                      <Validation name="timeZone" showMessage={true}>
+                        <TimeZoneInput
+                          value={values.timeZone || this.timeZoneToString()}
+                          setResult={(data) => this.setTextInput({ timeZone: data, })}
+                        />
+                      </Validation>
 
                       <View style={styles.message}>
                         <View style={styles.row}>
@@ -199,8 +221,8 @@ class EntProfilePopulateScreen extends Component {
                       <CityInput
                         title="Residency"
                         inputType="residency"
-                        flagCode={profileData.residency?.country?.isoCode}
-                        value={values.residency || this.residencyToString()}
+                        flagCode={profileData.residency?.country?.isoCode || ""}
+                        value={values.residency}
                         setResult={this.setResult}
                       />
 
@@ -230,7 +252,7 @@ class EntProfilePopulateScreen extends Component {
                         </Validation>
                       </View>
 
-                      <View style={baseStylesheet.paddedContent}>
+                      <View>
                         <Button
                           onPress={props.handleSubmit}
                           style={baseStylesheet.mainButton}
@@ -268,6 +290,7 @@ class EntProfilePopulateScreen extends Component {
 };
 
 const mapStateToProps = (state, props) => {
+  const isLoading = state.entrepreneurProfile.isLoading;
   const isModalOpen = state.dropdownInputModal.isModalOpen;
   const profileData = state.entrepreneurProfile.profileData;
   const isResetting = state.entrepreneurProfile.isResetting;
@@ -289,7 +312,6 @@ const mapDispatchToProps = (dispatch) => {
     updateProfile: () => dispatch(updateProfile()),
     resetProfile: () => dispatch(resetProfile()),
     setTextInput: (data) => dispatch(setTextInput(data)),
-    setNavigation:(navigation)=>dispatch(setNavigation(navigation)),
   };
 };
 
