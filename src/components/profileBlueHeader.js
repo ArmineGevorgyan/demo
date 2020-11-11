@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     paddingLeft: "7%",
     paddingRight: "7%",
     height: 161,
-    marginBottom: 40,
+    marginBottom: 30,
   },
   withCildren: {
     paddingTop: 40,

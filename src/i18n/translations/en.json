@@ -67,6 +67,7 @@
     "linkedIn_url_not_valid": "Please enter a valid LinkedIn profile URL",
     "angelList_url_not_valid": "Please enter a valid AngelList profile URL",
     "message_required": "Message is required",
+    "photo_required":"Photo is required",
     "bio_required":"Short bio is required",
     "location_required":"Location is required",
     "availableVia_rquired":"This field is required"
