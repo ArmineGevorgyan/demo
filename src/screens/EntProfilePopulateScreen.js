@@ -41,9 +41,7 @@ class EntProfilePopulateScreen extends Component {
 
     this.formik.handleSubmit();
 
-    const pr = this.formik.validateForm();
-
-    pr.then((value) => { return value })
+    this.formik.validateForm()
       .then((value) => {
         if (Object.keys(value).length > 0) {
           togglePhotoError(true);
@@ -56,6 +54,14 @@ class EntProfilePopulateScreen extends Component {
   handleReset = () => {
     this.props.resetProfile();
     this.formik.resetForm({
+      "bio": "",
+      "locations": "",
+      "timeZone": "",
+      "availableVia": "",
+      "residency": "",
+      "highlights": "",
+    });
+    this.formik.setValues({
       "bio": "",
       "locations": "",
       "timeZone": "",
@@ -162,8 +168,8 @@ class EntProfilePopulateScreen extends Component {
         }
         <Content
           style={{
-          backgroundColor: colors.offWhite,
-          marginTop: 20,
+            backgroundColor: colors.offWhite,
+            marginTop: 20,
           }}
         >
           {
