@@ -28,11 +28,7 @@ class ProfileScreen extends Component {
   };
 
   render() {
-    const {
-      t,
-      userData,
-      isLoading,
-    } = this.props;
+    const { t, userData } = this.props;
 
     return (
       <Container>
@@ -46,7 +42,10 @@ class ProfileScreen extends Component {
                 baseStylesheet.elevation6,
                 {
                   marginTop: index === 0 ? 20 : 10,
-                  marginBottom: index === getSectionData(userData.authorities[0]).length - 1 ? 20 : 10,
+                  marginBottom:
+                    index === getSectionData(userData.authorities[0]).length - 1
+                      ? 20
+                      : 10,
                 },
               ]}
             >
@@ -80,8 +79,8 @@ class ProfileScreen extends Component {
                             style={styles.icon}
                           />
                         ) : (
-                            item.svg
-                          )}
+                          item.svg
+                        )}
                       </View>
                       <Text
                         style={[
@@ -114,22 +113,20 @@ class ProfileScreen extends Component {
 
 const mapStateToProps = (state, props) => {
   const userData = state.user.userData;
-  const isLoading = state.authentication.isLoading;
   return {
     userData,
-    isLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: (navigation) => dispatch(logout(navigation))
+    logout: (navigation) => dispatch(logout(navigation)),
   };
-}
+};
 
 export default compose(
   withTranslation("translations"),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps)
 )(ProfileScreen);
 
 const styles = StyleSheet.create({
