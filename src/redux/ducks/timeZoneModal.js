@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   isModalOpen: false,
   timeZones: [],
+  filteredTimeZones:null,
   error: null,
 };
 
@@ -40,6 +41,10 @@ const timeZoneModalSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    setFilteredTimeZones: (state, action) => ({
+      ...state,
+      filteredTimeZones:action.payload,
+    }),
   },
 });
 
@@ -48,14 +53,20 @@ const timeZoneModalReducer = timeZoneModalSlice.reducer;
 export const openModal = (title) => {
   return (dispatch) => {
     dispatch(timeZoneModalSlice.actions.openModal({ title }));
-  }
+  };
 };
 
 export const closeModal = () => {
   return (dispatch) => {
     dispatch(timeZoneModalSlice.actions.closeModal());
-  }
-}
+  };
+};
+
+export const setFilteredTimeZones = (timeZones) => {
+  return (dispatch) => {
+    dispatch(timeZoneModalSlice.actions.setFilteredTimeZones(timeZones));
+  };
+};
 
 export const loadTimeZones = () => {
   return (dispatch) => {

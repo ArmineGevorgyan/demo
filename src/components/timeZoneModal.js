@@ -2,26 +2,30 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
-import { Button, Spinner } from "native-base";
+import { Button, Item, Input } from "native-base";
 import Modal from "react-native-modal";
 import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { FlatList } from "react-native-gesture-handler";
-import { loadTimeZones } from "../redux/ducks/timeZoneModal";
+import { loadTimeZones, setFilteredTimeZones } from "../redux/ducks/timeZoneModal";
+import { Formik } from "formik";
 
 class TimeZoneModal extends Component {
-  componentDidMount() {
-    // this.props.loadTimeZones();
-  }
 
   handleClose = () => {
     const { closeModal } = this.props;
+    this.props.setFilteredTimeZones(null);
     closeModal();
   };
 
   handleChange = (e) => {
-    this.props.loadCityList(e);
+    const filteredTimeZones = this.props.timeZones.filter((item) => {
+      return item.name.includes(e)
+        || item.code.includes(e)
+        || item.offset.includes(e);
+    });
+    this.props.setFilteredTimeZones(filteredTimeZones);
   };
 
   onSelectTimeZone = (item) => {
@@ -47,16 +51,11 @@ class TimeZoneModal extends Component {
         <Text style={{
           ...styles.itemText,
           paddingTop: 10,
-           paddingBottom: 5,
+          paddingBottom: 5,
         }}>
           {item?.name}
         </Text>
-        <View style={{
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingBottom:10,
-        }}>
+        <View style={styles.timeZoneCode}>
           <Text style={styles.itemText}>
             {item?.code}
           </Text>
@@ -81,14 +80,6 @@ class TimeZoneModal extends Component {
     )
   }
 
-  handleOnEndReached = ({ distanceFromEnd }) => {
-  };
-
-  getLoadingMoreSpinner = () => {
-    return <></>;
-  };
-
-
   render() {
     const { t, isModalOpen } = this.props;
 
@@ -107,12 +98,40 @@ class TimeZoneModal extends Component {
           <Text style={styles.modalTitle}>
             {t("tomeZoneModal.timeZoneTitle")}
           </Text>
+          <Formik
+            initialValues={{
+              input: this.props.input,
+            }}
+            onSubmit={this.onSubmit}
+          >
+            {(props) => {
+              const values = props.values;
+              return (
+                <View style={styles.formContainer}>
+                  <Item
+                    rounded
+                    style={baseStylesheet.inputItem}
+                  >
+                    <Input
+                      blurOnSubmit={false}
+                      style={baseStylesheet.inputField}
+                      placeholder={t("dropDownInputModal.typeHere")}
+                      placeholderTextColor={colors.lightText}
+                      value={values.input}
+                      onChangeText={(e) => {
+                        props.handleChange("input");
+                        this.handleChange(e);
+                      }}
+                    />
+                  </Item>
+                </View>
+              )
+            }}
+          </Formik>
           <FlatList
-            data={this.props.timeZones}
+            data={this.props.filteredTimeZones ?? this.props.timeZones}
             onEndReachedThreshold={0.1}
             renderItem={this.renderItem}
-            onEndReached={this.handleOnEndReached}
-            ListFooterComponent={this.getLoadingMoreSpinner}
             ItemSeparatorComponent={this.renderSeparator}
           />
 
@@ -135,15 +154,18 @@ class TimeZoneModal extends Component {
 
 const mapStateToProps = (state, props) => {
   const timeZones = state.timeZoneModal.timeZones;
+  const filteredTimeZones = state.timeZoneModal.filteredTimeZones;
 
   return {
     timeZones,
+    filteredTimeZones,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadTimeZones: () => dispatch(loadTimeZones()),
+    setFilteredTimeZones: (timeZones) => dispatch(setFilteredTimeZones(timeZones)),
   };
 };
 
@@ -162,5 +184,11 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontFamily: "montserrat-regular",
+  },
+  timeZoneCode: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: 10,
   },
 });
