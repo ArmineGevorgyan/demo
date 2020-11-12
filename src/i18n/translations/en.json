@@ -209,7 +209,8 @@
   },
   "legalScreen":{
     "headerText": "Legal",
-    "termsAndConditions": "Terms and conditions",
+    "sendToEmail": "Send to email",
+    "termsAndConditions": "Terms & conditions",
     "tcDescription": "We constantly refine our rules to maintain an exceptional, trustworthy and fair investment community.",
     "privacyPolicy": "Privacy Policy",
     "ppDescription": "We care about the privacy of everything that happens within the DWG community.",

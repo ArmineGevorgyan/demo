@@ -27,9 +27,9 @@ class LegalScreen extends Component {
           <View style={styles.itemContainer}>
             {getLegalItems(userData.authorities[0]).map((item) => (
               <TouchableOpacity
-              // onPress={() =>
-              //   navigation.navigate("LegalDocumentScreen", { item })
-              // }
+                onPress={() =>
+                  navigation.navigate("LegalDocumentScreen", { item })
+                }
               >
                 <View style={styles.itemRow}>
                   <View style={styles.icon}>{item.image}</View>

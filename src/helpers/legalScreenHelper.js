@@ -3,6 +3,11 @@ import { StyleSheet, Image } from "react-native";
 import constants from "../constants";
 
 const getLegalItems = (userRole) => {
+  const userConstants =
+    userRole === constants.userRole.investor
+      ? constants.investor
+      : constants.entrepreneur;
+
   const data = [
     {
       title: "termsAndConditions",
@@ -13,7 +18,7 @@ const getLegalItems = (userRole) => {
           source={require("../../assets/terms-conditions.png")}
         />
       ),
-      to: "TemporaryScreen",
+      uri: userConstants.termsAndConditionsUri,
     },
     {
       title: "privacyPolicy",
@@ -24,7 +29,7 @@ const getLegalItems = (userRole) => {
           source={require("../../assets/privacy-policy.png")}
         />
       ),
-      to: "TemporaryScreen",
+      uri: userConstants.privacyPolicyUri,
     },
     userRole === constants.userRole.investor
       ? {
@@ -36,7 +41,7 @@ const getLegalItems = (userRole) => {
               source={require("../../assets/svp-creation.png")}
             />
           ),
-          to: "TemporaryScreen",
+          uri: userConstants.svpContractUri,
         }
       : {
           title: "safeContract",
@@ -47,7 +52,7 @@ const getLegalItems = (userRole) => {
               source={require("../../assets/safe-contract.png")}
             />
           ),
-          to: "TemporaryScreen",
+          uri: userConstants.safeContractUri,
         },
     {
       title: "legalArticles",
@@ -58,7 +63,7 @@ const getLegalItems = (userRole) => {
           source={require("../../assets/legal-articles.png")}
         />
       ),
-      to: "TemporaryScreen",
+      uri: userConstants.privacyPolicyUri,
     },
     {
       title: "legalTemplates",
@@ -69,7 +74,7 @@ const getLegalItems = (userRole) => {
           source={require("../../assets/legal-templates.png")}
         />
       ),
-      to: "TemporaryScreen",
+      uri: userConstants.privacyPolicyUri,
     },
   ];
 

@@ -24,12 +24,14 @@ const constants = {
   investor: {
     termsAndConditionsUri: `${API_HOST}/investor/tc.html`,
     privacyPolicyUri: `${API_HOST}/investor/pp.html`,
+    svpContractUri: `${API_HOST}/investor/spv-contract.html`,
     termsAndConditionsVideo: `${API_HOST}/investor/tc-video.mp4`,
     privacyPolicyVideo: `${API_HOST}/investor/pp-video.mp4`,
   },
   entrepreneur: {
     termsAndConditionsUri: `${API_HOST}/entrepreneur/tc.html`,
     privacyPolicyUri: `${API_HOST}/entrepreneur/pp.html`,
+    safeContractUri: `${API_HOST}/entrepreneur/safe-contract.html`,
     termsAndConditionsVideo: `${API_HOST}/entrepreneur/tc-video.mp4`,
     privacyPolicyVideo: `${API_HOST}/entrepreneur/pp-video.mp4`,
   },
@@ -38,7 +40,7 @@ const constants = {
   },
   contactUsMessageMaxLength: 300,
   shortBioMaxLength: 1000,
-  highlightsMaxLength:300,
+  highlightsMaxLength: 300,
 };
 
 export default constants;
