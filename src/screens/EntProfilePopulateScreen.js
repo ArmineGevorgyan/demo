@@ -88,12 +88,12 @@ class EntProfilePopulateScreen extends Component {
       this.props.setLocation(item);
       this.formik.setValues({
         ...this.formik.values,
-        "locations": `${item.country?.name},${item.name},${item.region?.name}`,
+        "locations": typeof item === "string" ? item : `${item.country?.name},${item.name},${item.region?.name}`,
       });
     } else {
       this.formik.setValues({
         ...this.formik.values,
-        "residency": `${item.country?.name},${item.name},${item.region?.name}`,
+        "residency": typeof item === "string" ? item : `${item.country?.name},${item.name},${item.region?.name}`,
       });
       this.props.setResidency(item);
     }
@@ -107,9 +107,13 @@ class EntProfilePopulateScreen extends Component {
 
   locationToString = () => {
     const { profileData } = this.props;
-    return (profileData.locations && profileData.locations.length > 0)
-      ? `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}`
-      : "";
+    if (profileData.locations && profileData.locations.length > 0) {
+      if (profileData.locations[0]?.country === null ) {
+        return profileData.locations[0]?.cityName;
+      }
+      return `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}`;
+    }
+    return "";
   };
 
   timeZoneToString = () => {
@@ -121,16 +125,20 @@ class EntProfilePopulateScreen extends Component {
 
   residencyToString = () => {
     const { profileData } = this.props;
-    return profileData.residency ?
-      `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}`
-      : "";
+    if (profileData.residency) {
+      if (!profileData.residency?.city) {
+        return profileData.residency.cityName;
+      }
+      return `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}`;
+    } else return "";
   };
 
   getLocationFlag = () => {
     const { profileData } = this.props;
-    return (profileData.locations && profileData.locations.length > 0)
-      ? profileData?.locations[0]?.country?.isoCode
-      : "";
+    if (profileData.locations && profileData.locations.length > 0) {
+      if (!profileData?.locations[0]?.country) return "";
+      return profileData?.locations[0]?.country?.isoCode
+    }else return ""
   }
 
   render() {

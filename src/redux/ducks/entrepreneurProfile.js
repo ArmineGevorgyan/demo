@@ -41,19 +41,7 @@ const entrepreneurProfileSlice = createSlice({
       profileData: {
         ...state.profileData,
         locations: [
-          {
-            cityName: action.payload.name,
-            city: {
-              id: action.payload.id,
-              name: action.payload.name,
-              countryId: action.payload.countryId,
-              regionId: action.payload.regionId,
-              country: action.payload.country,
-              region: action.payload.region
-            },
-            country: action.payload.country,
-            region: action.payload.region,
-          },
+          action.payload,
         ],
       },
     }),
@@ -68,19 +56,7 @@ const entrepreneurProfileSlice = createSlice({
       ...state,
       profileData: {
         ...state.profileData,
-        residency: {
-          cityName: action.payload.name,
-          city: {
-            id: action.payload.id,
-            name: action.payload.name,
-            countryId: action.payload.countryId,
-            regionId: action.payload.regionId,
-            country: action.payload.country,
-            region: action.payload.region
-          },
-          country: action.payload.country,
-          region: action.payload.region,
-        },
+        residency: action.payload,
       },
     }),
     setTextInput: (state, action) => ({
@@ -233,9 +209,34 @@ export const togglePhotoError = (value) => {
   };
 };
 
+const getCityObject = (input) => {
+  if (typeof input === "string") {
+    return {
+      cityName: input,
+      city: null,
+      country: null,
+      region: null,
+    }
+  } else {
+    return {
+      cityName: input.name,
+      city: {
+        id: input.id,
+        name: input.name,
+        countryId: input.countryId,
+        regionId: input.regionId,
+        country: input.country,
+        region: input.region
+      },
+      country: input.country,
+      region: input.region,
+    }
+  }
+};
+
 export const setLocation = (location) => {
   return (dispatch) => {
-    dispatch(entrepreneurProfileSlice.actions.setLocation(location));
+    dispatch(entrepreneurProfileSlice.actions.setLocation(getCityObject(location)));
   };
 };
 
@@ -247,7 +248,7 @@ export const setTimeZone = (timeZone) => {
 
 export const setResidency = (residency) => {
   return (dispatch) => {
-    dispatch(entrepreneurProfileSlice.actions.setResidency(residency));
+    dispatch(entrepreneurProfileSlice.actions.setResidency(getCityObject(residency)));
   }
 };
 
