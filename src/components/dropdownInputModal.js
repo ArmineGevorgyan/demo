@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, View, TouchableHighlight, TouchableOpacity } from "react-native";
 import { Button, Spinner, Input, Item } from "native-base";
 import Modal from "react-native-modal";
 import { withTranslation } from "react-i18next";
@@ -9,18 +9,27 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { FlatList } from "react-native-gesture-handler";
 import { Formik } from "formik";
-import { loadCityList, loadMoreCities } from "../redux/ducks/dropdownInputModal";
+import {
+  loadCityList,
+  loadMoreCities,
+  setInputItem,
+} from "../redux/ducks/dropdownInputModal";
 import Flag from 'react-native-flags';
-import { isLoaded } from "expo-font";
 
 class DropdownInputModal extends Component {
+  constructor(props) {
+    super(props);
+  };
+
   handleClose = () => {
-    const { closeModal } = this.props;
+    const { closeModal, setInputItem, } = this.props;
+    setInputItem("");
     closeModal();
   };
 
   handleChange = (e) => {
     this.props.loadCityList(e);
+    this.props.setInputItem(e);
   };
 
   onSelectCity = (item) => {
@@ -88,6 +97,7 @@ class DropdownInputModal extends Component {
     const { t,
       isModalOpen,
       isLoading,
+      inputItem,
     } = this.props;
 
     return (
@@ -96,6 +106,16 @@ class DropdownInputModal extends Component {
         backdropOpacity={0.5}
         onBackButtonPress={() => this.handleClose()}
       >
+        {
+          isLoading
+          && <View style={styles.spinnerContainer}>
+            <Spinner
+              style={styles.spinner}
+              color={colors.secondaryColor}
+            />
+          </View>
+        }
+
         <View style={styles.modalContainer}>
           <Text
             style={styles.modalTitle}
@@ -133,18 +153,29 @@ class DropdownInputModal extends Component {
             }}
           </Formik>
 
-          {
-            isLoading
-            ? <Spinner color={colors.secondaryColor} />
-            : <FlatList
-              data={this.props.cityList}
-              onEndReachedThreshold={0.1}
-              renderItem={this.renderItem}
-              onEndReached={this.handleOnEndReached}
-              ListFooterComponent={this.getLoadingMoreSpinner}
-              ItemSeparatorComponent={this.renderSeparator}
-            />
-          }
+          {inputItem != "" && <TouchableOpacity
+            style={{
+              marginBottom: 10,
+            }}
+            onPress={() => this.onSelectCity(inputItem)}
+          >
+            <Text style={[
+              styles.itemText,
+              styles.inputItemText,
+            ]}>
+              {inputItem}
+            </Text>
+            {this.renderSeparator()}
+          </TouchableOpacity>}
+
+          <FlatList
+            data={this.props.cityList}
+            onEndReachedThreshold={0.1}
+            renderItem={this.renderItem}
+            onEndReached={this.handleOnEndReached}
+            ListFooterComponent={this.getLoadingMoreSpinner}
+            ItemSeparatorComponent={this.renderSeparator}
+          />
 
           <Button
             style={{
@@ -158,7 +189,7 @@ class DropdownInputModal extends Component {
             </Text>
           </Button>
         </View>
-      </Modal>
+      </Modal >
     );
   }
 }
@@ -170,6 +201,7 @@ const mapStateToProps = (state, props) => {
   const loadingMore = state.dropdownInputModal.loadingMore;
   const noMoreCities = state.dropdownInputModal.noMoreCities;
   const cityList = state.dropdownInputModal.cityList;
+  const inputItem = state.dropdownInputModal.inputItem;
 
   return {
     title,
@@ -178,6 +210,7 @@ const mapStateToProps = (state, props) => {
     loadingMore,
     noMoreCities,
     cityList,
+    inputItem,
   };
 };
 
@@ -185,6 +218,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadCityList: (search) => dispatch(loadCityList(search)),
     loadMoreCities: () => dispatch(loadMoreCities()),
+    setInputItem: (input) => dispatch(setInputItem(input)),
   };
 };
 
@@ -221,5 +255,22 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontFamily: "montserrat-regular",
+  },
+  inputItemText: {
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  spinnerContainer: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    alignSelf: "center",
+    justifyContent: "center",
+    zIndex: 10,
+  },
+  spinner: {
+    alignSelf: "center",
+    justifyContent: "center",
+    position: "relative",
   },
 });

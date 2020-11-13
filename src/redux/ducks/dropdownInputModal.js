@@ -7,7 +7,8 @@ const initialState = {
   isLoading: false,
   isModalOpen: false,
   title: "",
-  inputType:"",
+  inputType: "",
+  inputItem:"",
   loadingMore: false,
   cityList: [],
   search: "",
@@ -81,7 +82,11 @@ const dropdownInputModalSlice = createSlice({
     setType: (state, action) => ({
       ...state,
       inputType:action.payload,
-    })
+    }),
+    setInputItem: (state, action) => ({
+      ...state,
+      inputItem:action.payload,
+    }),
   },
 });
 
@@ -97,14 +102,20 @@ export const openModal = (title) => {
 export const closeModal = () => {
   return (dispatch) => {
     dispatch(dropdownInputModalSlice.actions.closeModal());
-  }
+  };
 };
 
 export const setType = (type) => {
   return (dispatch) => {
     dispatch(dropdownInputModalSlice.actions.setType(type));
-  }
-}
+  };
+};
+
+export const setInputItem = (input) => {
+  return (dispatch) => {
+    dispatch(dropdownInputModalSlice.actions.setInputItem(input));
+  };
+};
 
 export const loadCityList = (search) => {
   return (dispatch) => {
@@ -114,7 +125,6 @@ export const loadCityList = (search) => {
     axios
       .get(`${API_URL}/cities/search?keyword=${search}&sort=name`)
       .then((r) => {
-        console.log("r ====================================================================================== ", r);
         return r.data;
       })
       .then((data) => {
@@ -146,7 +156,7 @@ export const loadMoreCities = () => {
       .catch((error) => {
         dispatch(dropdownInputModalSlice.actions.loadMoreCitiesFail(error));
       });
-  }
-}
+  };
+};
 
 export default dropdownInputModalReducer;

@@ -29,6 +29,12 @@ import Validation from "../validation";
 import CityInput from "../components/cityInput";
 import TimeZoneInput from "../components/timeZoneInput";
 import constants from "../constants";
+import {
+  locationToString,
+  timeZoneToString,
+  residencyToString,
+  getLocationFlag,
+} from "../helpers/entProfileHelper";
 
 class EntProfilePopulateScreen extends Component {
   constructor(props) {
@@ -88,12 +94,12 @@ class EntProfilePopulateScreen extends Component {
       this.props.setLocation(item);
       this.formik.setValues({
         ...this.formik.values,
-        "locations": `${item.country?.name},${item.name},${item.region?.name}`,
+        "locations": typeof item === "string" ? item : `${item.country?.name},${item.name},${item.region?.name}`,
       });
     } else {
       this.formik.setValues({
         ...this.formik.values,
-        "residency": `${item.country?.name},${item.name},${item.region?.name}`,
+        "residency": typeof item === "string" ? item : `${item.country?.name},${item.name},${item.region?.name}`,
       });
       this.props.setResidency(item);
     }
@@ -104,35 +110,6 @@ class EntProfilePopulateScreen extends Component {
     this.props.setTextInput(data);
     this.props.updateProfile();
   }
-
-  locationToString = () => {
-    const { profileData } = this.props;
-    return (profileData.locations && profileData.locations.length > 0)
-      ? `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}`
-      : "";
-  };
-
-  timeZoneToString = () => {
-    const { profileData } = this.props;
-    return profileData.timeZone
-      ? `${profileData.timeZone?.code}-${profileData.timeZone?.name}, ${profileData.timeZone?.offset}`
-      : "";
-  };
-
-  residencyToString = () => {
-    const { profileData } = this.props;
-    return profileData.residency ?
-      `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}`
-      : "";
-  };
-
-  getLocationFlag = () => {
-    const { profileData } = this.props;
-    return (profileData.locations && profileData.locations.length > 0)
-      ? profileData?.locations[0]?.country?.isoCode
-      : "";
-  }
-
   render() {
     const { t,
       profileData,
@@ -178,10 +155,10 @@ class EntProfilePopulateScreen extends Component {
                 innerRef={(p) => (this.formik = p)}
                 initialValues={{
                   bio: profileData.bio || "",
-                  locations: this.locationToString(),
-                  timeZone: this.timeZoneToString(),
+                  locations: locationToString(profileData.locations),
+                  timeZone: timeZoneToString(profileData.timeZone),
                   availableVia: profileData.availableVia || "",
-                  residency: this.residencyToString(),
+                  residency: residencyToString(profileData.residency),
                   highlights: profileData.highlights || "",
                 }}
                 onSubmit={this.onSubmit}
@@ -223,7 +200,7 @@ class EntProfilePopulateScreen extends Component {
                         <CityInput
                           title="Location"
                           inputType="location"
-                          flagCode={this.getLocationFlag()}
+                          flagCode={getLocationFlag(profileData.locations)}
                           value={values.locations}
                           setResult={this.setResult}
                         />
@@ -231,7 +208,7 @@ class EntProfilePopulateScreen extends Component {
 
                       <Validation name="timeZone" showMessage={true}>
                         <TimeZoneInput
-                          value={values.timeZone || this.timeZoneToString()}
+                          value={values.timeZone || timeZoneToString(profileData.timeZone)}
                           setResult={(data) => this.setTextInput({ timeZone: data, })}
                         />
                       </Validation>
