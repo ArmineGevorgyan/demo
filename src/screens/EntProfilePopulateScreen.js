@@ -34,7 +34,7 @@ import {
   timeZoneToString,
   residencyToString,
   getLocationFlag,
-} from "../helpers/entProfileHelper";
+} from "../helpers/profileHelper";
 
 class EntProfilePopulateScreen extends Component {
   constructor(props) {
