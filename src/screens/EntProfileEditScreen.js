@@ -147,11 +147,6 @@ class EntProfileEditScreen extends Component {
               <Text style={baseStylesheet.mainButtonText}>
                 {t("entProfileEditScreen.saveButton")}
               </Text>
-              <Icon
-                name="arrow-right"
-                type="Feather"
-                style={styles.rightIcon}
-              />
             </Button>
 
             <Button
@@ -208,10 +203,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginBottom: 50,
-  },
-  rightIcon: {
-    position: "absolute",
-    left: "60%",
   },
   message: { marginBottom: 10, width: "100%" },
 });
