@@ -153,20 +153,20 @@ class DropdownInputModal extends Component {
             }}
           </Formik>
 
-          <TouchableOpacity
+          {inputItem != "" && <TouchableOpacity
             style={{
               marginBottom: 10,
             }}
             onPress={() => this.onSelectCity(inputItem)}
           >
-            <Text style={{
-              ...styles.itemText,
-
-            }}>
+            <Text style={[
+              styles.itemText,
+              styles.inputItemText,
+            ]}>
               {inputItem}
             </Text>
             {this.renderSeparator()}
-          </TouchableOpacity>
+          </TouchableOpacity>}
 
           <FlatList
             data={this.props.cityList}
@@ -259,7 +259,6 @@ const styles = StyleSheet.create({
   inputItemText: {
     paddingTop: 10,
     paddingBottom: 10,
-    marginLeft: 41,
   },
   spinnerContainer: {
     width: "100%",

@@ -29,6 +29,12 @@ import Validation from "../validation";
 import CityInput from "../components/cityInput";
 import TimeZoneInput from "../components/timeZoneInput";
 import constants from "../constants";
+import {
+  locationToString,
+  timeZoneToString,
+  residencyToString,
+  getLocationFlag,
+} from "../helpers/entProfileHelper";
 
 class EntProfilePopulateScreen extends Component {
   constructor(props) {
@@ -104,43 +110,6 @@ class EntProfilePopulateScreen extends Component {
     this.props.setTextInput(data);
     this.props.updateProfile();
   }
-
-  locationToString = () => {
-    const { profileData } = this.props;
-    if (profileData.locations && profileData.locations.length > 0) {
-      if (profileData.locations[0]?.country === null ) {
-        return profileData.locations[0]?.cityName;
-      }
-      return `${profileData.locations[0]?.country?.name},${profileData.locations[0]?.city?.name},${profileData.locations[0]?.region?.name}`;
-    }
-    return "";
-  };
-
-  timeZoneToString = () => {
-    const { profileData } = this.props;
-    return profileData.timeZone
-      ? `${profileData.timeZone?.code}-${profileData.timeZone?.name}, ${profileData.timeZone?.offset}`
-      : "";
-  };
-
-  residencyToString = () => {
-    const { profileData } = this.props;
-    if (profileData.residency) {
-      if (!profileData.residency?.city) {
-        return profileData.residency.cityName;
-      }
-      return `${profileData.residency?.country?.name},${profileData.residency?.city?.name},${profileData.residency?.region?.name}`;
-    } else return "";
-  };
-
-  getLocationFlag = () => {
-    const { profileData } = this.props;
-    if (profileData.locations && profileData.locations.length > 0) {
-      if (!profileData?.locations[0]?.country) return "";
-      return profileData?.locations[0]?.country?.isoCode
-    }else return ""
-  }
-
   render() {
     const { t,
       profileData,
@@ -186,10 +155,10 @@ class EntProfilePopulateScreen extends Component {
                 innerRef={(p) => (this.formik = p)}
                 initialValues={{
                   bio: profileData.bio || "",
-                  locations: this.locationToString(),
-                  timeZone: this.timeZoneToString(),
+                  locations: locationToString(profileData.locations),
+                  timeZone: timeZoneToString(profileData.timeZone),
                   availableVia: profileData.availableVia || "",
-                  residency: this.residencyToString(),
+                  residency: residencyToString(profileData.residency),
                   highlights: profileData.highlights || "",
                 }}
                 onSubmit={this.onSubmit}
@@ -231,7 +200,7 @@ class EntProfilePopulateScreen extends Component {
                         <CityInput
                           title="Location"
                           inputType="location"
-                          flagCode={this.getLocationFlag()}
+                          flagCode={getLocationFlag(profileData.locations)}
                           value={values.locations}
                           setResult={this.setResult}
                         />
@@ -239,7 +208,7 @@ class EntProfilePopulateScreen extends Component {
 
                       <Validation name="timeZone" showMessage={true}>
                         <TimeZoneInput
-                          value={values.timeZone || this.timeZoneToString()}
+                          value={values.timeZone || timeZoneToString(profileData.timeZone)}
                           setResult={(data) => this.setTextInput({ timeZone: data, })}
                         />
                       </Validation>
