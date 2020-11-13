@@ -17,6 +17,7 @@ import {
   updateProfile,
   resetProfile,
   setTextInput,
+  togglePhotoError,
 } from "../redux/ducks/entrepreneurProfile";
 import {
   openModal,
@@ -36,8 +37,18 @@ class EntProfilePopulateScreen extends Component {
   }
 
   handleNext = () => {
-    const { save } = this.props;
-    save();
+    const { togglePhotoError } = this.props;
+
+    this.formik.handleSubmit();
+
+    this.formik.validateForm()
+      .then((value) => {
+        if (Object.keys(value).length > 0 || !this.props.profileData.photoUrl) {
+          togglePhotoError(true);
+        } else {
+          togglePhotoError(false);
+        }
+      })
   };
 
   handleReset = () => {
@@ -50,6 +61,15 @@ class EntProfilePopulateScreen extends Component {
       "residency": "",
       "highlights": "",
     });
+    this.formik.setValues({
+      "bio": "",
+      "locations": "",
+      "timeZone": "",
+      "availableVia": "",
+      "residency": "",
+      "highlights": "",
+    });
+    this.props.togglePhotoError(false);
   };
 
   backButtonHandler = () => {
@@ -57,8 +77,10 @@ class EntProfilePopulateScreen extends Component {
   };
 
   onSubmit = (values) => {
-    this.props.setTextInput({ completed: true });
-    this.props.updateProfile();
+    if (this.props.profileData.photoUrl) {
+      this.props.setTextInput({ completed: true });
+      this.props.updateProfile();
+    }
   };
 
   setResult = (item, type) => {
@@ -129,9 +151,27 @@ class EntProfilePopulateScreen extends Component {
             }
           />
         </ProfileBlueHeader>
-        <Content style={{
-          backgroundColor: colors.offWhite,
-        }}>
+        {
+          this.props.photoError && !this.props.profileData.photoUrl &&
+          (
+            <View style={styles.errorContainer}>
+              <Icon
+                style={styles.alertIcon}
+                name="alert-triangle"
+                type="Feather"
+              />
+              <Text style={styles.error}>
+                {t("validator.photo_required")}
+              </Text>
+            </View>
+          )
+        }
+        <Content
+          style={{
+            backgroundColor: colors.offWhite,
+            marginTop: 20,
+          }}
+        >
           {
             profileData.id ?
               <Formik
@@ -254,7 +294,7 @@ class EntProfilePopulateScreen extends Component {
 
                       <View>
                         <Button
-                          onPress={props.handleSubmit}
+                          onPress={this.handleNext}
                           style={baseStylesheet.mainButton}
                         >
                           <Text style={baseStylesheet.mainButtonText}>
@@ -294,10 +334,12 @@ const mapStateToProps = (state, props) => {
   const isModalOpen = state.dropdownInputModal.isModalOpen;
   const profileData = state.entrepreneurProfile.profileData;
   const isResetting = state.entrepreneurProfile.isResetting;
+  const photoError = state.entrepreneurProfile.photoError;
   return {
     isModalOpen,
     profileData,
     isResetting,
+    photoError,
   };
 };
 
@@ -306,6 +348,7 @@ const mapDispatchToProps = (dispatch) => {
     save: () => dispatch(save()),
     openModal: (title) => dispatch(openModal(title)),
     closeModal: () => dispatch(closeModal()),
+    togglePhotoError: (value) => dispatch(togglePhotoError(value)),
     setLocation: (location) => dispatch(setLocation(location)),
     setTimeZone: (timeZone) => dispatch(setTimeZone(timeZone)),
     setResidency: (residency) => dispatch(setResidency(residency)),
@@ -343,5 +386,19 @@ const styles = StyleSheet.create({
     color: colors.darkText,
     fontSize: 10,
     fontFamily: "montserrat-regular",
+  },
+  errorContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  error: {
+    color: "red",
+    marginLeft: 5,
+    fontSize: 12,
+  },
+  alertIcon: {
+    fontSize: 15,
+    color: "red",
   },
 });

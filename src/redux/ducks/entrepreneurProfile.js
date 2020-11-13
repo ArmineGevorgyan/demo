@@ -7,7 +7,7 @@ const initialState = {
   isLoading: false,
   isModalOpen: false,
   isResetting: false,
-
+photoError:false,
   profileData: {
     bio: "",
     highlights: "",
@@ -31,6 +31,10 @@ const entrepreneurProfileSlice = createSlice({
     closeModal: (state) => ({
       ...state,
       isModalOpen: false,
+    }),
+    togglePhotoError: (state, action) => ({
+      ...state,
+      photoError:action.payload,
     }),
     setLocation: (state, action) => ({
       ...state,
@@ -220,6 +224,12 @@ export const openModal = () => {
 export const closeModal = () => {
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.closeModal());
+  };
+};
+
+export const togglePhotoError = (value) => {
+  return (dispatch) => {
+    dispatch(entrepreneurProfileSlice.actions.togglePhotoError(value));
   };
 };
 

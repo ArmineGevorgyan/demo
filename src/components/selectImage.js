@@ -88,7 +88,7 @@ class SelecImage extends Component {
         >
           {isLoading ?
             <Spinner color={colors.secondaryColor} /> :
-            (dImage || this.props.photoUrl) ? (
+            (this.props.photoUrl) ? (
               <Image
                 style={styles.imageContainer}
                 source={{ uri: dImage || this.props.photoUrl }}
