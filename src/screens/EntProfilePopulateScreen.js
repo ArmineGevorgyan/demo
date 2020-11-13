@@ -43,7 +43,7 @@ class EntProfilePopulateScreen extends Component {
 
     this.formik.validateForm()
       .then((value) => {
-        if (Object.keys(value).length > 0) {
+        if (Object.keys(value).length > 0 || !this.props.profileData.photoUrl) {
           togglePhotoError(true);
         } else {
           togglePhotoError(false);
