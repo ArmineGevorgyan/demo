@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import constants from "../constants";
 import { colors } from "./colors";
 
 export const baseStylesheet = StyleSheet.create({
@@ -250,6 +251,7 @@ export const baseStylesheet = StyleSheet.create({
     backgroundColor: colors.mainColor,
     padding: "10%",
     borderRadius: 20,
+    maxHeight: constants.windowHeight - 50,
   },
 
   elevation3: {

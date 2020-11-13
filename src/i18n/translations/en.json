@@ -72,7 +72,8 @@
     "bio_required":"Short bio is required",
     "location_required":"Location is required",
     "availableVia_required":"This field is required",
-    "availableVia_url":"Please enter a valid URL"
+    "availableVia_url":"Please enter a valid URL",
+    "reason_required":"Reason is required"
   },
   "discoverStartups": {
     "headerText": "Discover Startups",
@@ -230,5 +231,13 @@
     "legalArticlesDescription": "Articles about the legal side of investments happening within the DWG community.",
     "legalTemplates": "Legal templates",
     "legalTemplatesDescription": "We standardize what we mastered. Then, we strive to improve what we standardized. All the legal templates we use are here."
+  },
+  "deleteAccountModal":{
+    "contextHeading":"Sorry to see you decided to leave DWG.",
+    "context":"Please provide the reason for deleting your account.",
+    "submitButton":"Submit",
+    "cancelButton":"Cancel",
+    "message": "Message",
+    "selectReason": "Select Reason"
   }
 }

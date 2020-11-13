@@ -8,6 +8,8 @@ initialState = {
   error: null,
   userData: null,
   profileData: null,
+  deleteAccountModalOpen: false,
+  deleteRequestSent: false,
 };
 
 const userSlice = createSlice({
@@ -36,10 +38,64 @@ const userSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-  }
+    deleteAccountRequest: (state) => ({
+      ...state,
+      isLoading: true,
+      deleteRequestSent: false,
+    }),
+    deleteAccountRequestSuccess: (state) => ({
+      ...state,
+      isLoading: false,
+      deleteRequestSent: true,
+    }),
+    deleteAccountRequestFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      deleteRequestSent: false,
+      error: action.payload,
+    }),
+    openDeleteAccountModal: (state) => ({
+      ...state,
+      deleteRequestSent: false,
+      deleteAccountModalOpen: true,
+    }),
+    closeDeleteAccountModal: (state) => ({
+      ...state,
+      deleteAccountModalOpen: false,
+      request: null,
+    }),
+  },
 });
 
 const userReducer = userSlice.reducer;
+
+export const closeDeleteAccountModal = () => {
+  return (dispatch) => {
+    dispatch(userSlice.actions.closeDeleteAccountModal());
+  };
+};
+
+export const openDeleteAccountModal = () => {
+  return (dispatch) => {
+    dispatch(userSlice.actions.openDeleteAccountModal());
+  };
+};
+
+export const deleteAccountRequest = (data) => {
+  return (dispatch) => {
+    dispatch(userSlice.actions.deleteAccountRequest());
+
+    // TODO: change the request to delete the account
+    axios
+      .get(`${API_URL}/user/account`)
+      .then(() => {
+        dispatch(userSlice.actions.deleteAccountRequestSuccess());
+      })
+      .catch((error) => {
+        dispatch(userSlice.actions.deleteAccountRequestFail(error));
+      });
+  };
+};
 
 export const getUserData = () => {
   return (dispatch) => {
@@ -61,7 +117,6 @@ export const getUserData = () => {
 };
 
 export const updateUserData = (fullName) => {
-
   return (dispatch) => {
     dispatch(userSlice.actions.updateUserData());
 

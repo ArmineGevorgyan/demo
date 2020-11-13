@@ -41,6 +41,14 @@ const constants = {
   contactUsMessageMaxLength: 300,
   shortBioMaxLength: 1000,
   highlightsMaxLength: 300,
+  deleteAccountMessageMaxLength: 150,
+  deleteAccountReasons: {
+    service: "Poor Service",
+    features: "Lack of features",
+    tc: "Terms & Conditions",
+    pp: "Privacy policy",
+    other: "Other",
+  },
 };
 
 export default constants;
