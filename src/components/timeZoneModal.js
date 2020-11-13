@@ -9,7 +9,6 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { FlatList } from "react-native-gesture-handler";
 import { loadTimeZones, setFilteredTimeZones } from "../redux/ducks/timeZoneModal";
-import { Formik } from "formik";
 
 class TimeZoneModal extends Component {
 
@@ -20,10 +19,11 @@ class TimeZoneModal extends Component {
   };
 
   handleChange = (e) => {
+    const input = e.toLowerCase();
     const filteredTimeZones = this.props.timeZones.filter((item) => {
-      return item.name.includes(e)
-        || item.code.includes(e)
-        || item.offset.includes(e);
+      return item.name.toLowerCase().includes(input)
+        || item.code.toLowerCase().includes(input)
+        || item.offset.includes(input);
     });
     this.props.setFilteredTimeZones(filteredTimeZones);
   };
@@ -31,10 +31,6 @@ class TimeZoneModal extends Component {
   onSelectTimeZone = (item) => {
     this.props.setResult(item);
     this.handleClose();
-  };
-
-  onSubmit = () => {
-
   };
 
   renderItem = ({ item, index, separators }) => (
@@ -81,7 +77,12 @@ class TimeZoneModal extends Component {
   }
 
   render() {
-    const { t, isModalOpen } = this.props;
+    const {
+      t,
+      isModalOpen,
+      timeZones,
+      filteredTimeZones,
+    } = this.props;
 
     return (
       <Modal
@@ -98,38 +99,25 @@ class TimeZoneModal extends Component {
           <Text style={styles.modalTitle}>
             {t("tomeZoneModal.timeZoneTitle")}
           </Text>
-          <Formik
-            initialValues={{
-              input: this.props.input,
-            }}
-            onSubmit={this.onSubmit}
-          >
-            {(props) => {
-              const values = props.values;
-              return (
-                <View style={styles.formContainer}>
-                  <Item
-                    rounded
-                    style={baseStylesheet.inputItem}
-                  >
-                    <Input
-                      blurOnSubmit={false}
-                      style={baseStylesheet.inputField}
-                      placeholder={t("dropDownInputModal.typeHere")}
-                      placeholderTextColor={colors.lightText}
-                      value={values.input}
-                      onChangeText={(e) => {
-                        props.handleChange("input");
-                        this.handleChange(e);
-                      }}
-                    />
-                  </Item>
-                </View>
-              )
-            }}
-          </Formik>
+          <View style={styles.formContainer}>
+            <Item
+              rounded
+              style={baseStylesheet.inputItem}
+            >
+              <Input
+                blurOnSubmit={false}
+                style={baseStylesheet.inputField}
+                placeholder={t("dropDownInputModal.typeHere")}
+                placeholderTextColor={colors.lightText}
+                value={this.props.input}
+                onChangeText={(e) => {
+                  this.handleChange(e);
+                }}
+              />
+            </Item>
+          </View>
           <FlatList
-            data={this.props.filteredTimeZones ?? this.props.timeZones}
+            data={filteredTimeZones ?? timeZones}
             onEndReachedThreshold={0.1}
             renderItem={this.renderItem}
             ItemSeparatorComponent={this.renderSeparator}
