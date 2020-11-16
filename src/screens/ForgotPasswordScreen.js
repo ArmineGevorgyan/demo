@@ -85,6 +85,7 @@ class ForgotPasswordScreen extends Component {
                       type="Feather"
                     />
                     <Input
+                      keyboardType="email-address"
                       style={baseStylesheet.inputField}
                       placeholder={t("forgotPasswordScreen.emailField")}
                       placeholderTextColor={colors.lightText}

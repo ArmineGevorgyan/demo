@@ -40,8 +40,8 @@ class RequestInviteScreen extends Component {
   render() {
     const { t, email } = this.props;
     return (
-        <Background>
-          <Content>
+      <Background>
+        <Content>
           <WelcomeHeader />
           <Formik
             initialValues={{
@@ -91,6 +91,7 @@ class RequestInviteScreen extends Component {
                         type="Feather"
                       />
                       <Input
+                        keyboardType="email-address"
                         style={baseStylesheet.inputField}
                         placeholder={t("requestInviteScreen.emailField")}
                         placeholderTextColor={colors.lightText}
@@ -109,15 +110,15 @@ class RequestInviteScreen extends Component {
                       <Input
                         returnKeyType="next"
                         blurOnSubmit={false}
-                        ref={input => { this.ref_input2 = input }}
+                        ref={(input) => {
+                          this.ref_input2 = input;
+                        }}
                         style={baseStylesheet.inputField}
                         placeholder={t("requestInviteScreen.linkedinProfile")}
                         placeholderTextColor={colors.lightText}
                         value={values.linkedinProfile}
                         onChangeText={props.handleChange("linkedinProfile")}
-                        onSubmitEditing={
-                          () => this.ref_input3._root.focus()
-                        }
+                        onSubmitEditing={() => this.ref_input3._root.focus()}
                       />
                     </Item>
                   </Validation>
@@ -129,7 +130,7 @@ class RequestInviteScreen extends Component {
                         type="FontAwesome"
                       />
                       <Input
-                        ref={ref => this.ref_input3 = ref}
+                        ref={(ref) => (this.ref_input3 = ref)}
                         style={baseStylesheet.inputField}
                         placeholder={t("requestInviteScreen.angelListProfile")}
                         placeholderTextColor={colors.lightText}
@@ -153,8 +154,8 @@ class RequestInviteScreen extends Component {
               );
             }}
           </Formik>
-          </Content>
-        </Background>
+        </Content>
+      </Background>
     );
   }
 }
