@@ -10,9 +10,10 @@ import { getSectionData } from "../helpers/profileScreenHelper";
 import { getSectionBorderStyle } from "../helpers/profileScreenHelper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import { openDeleteAccountModal } from "../redux/ducks/user";
 import { logout } from "../redux/ducks/authentication";
+import { openDeleteAccountModal } from "../redux/ducks/deleteAccount";
 import DeleteAccountModal from "../components/deleteAccountModal";
+import constants from "../constants";
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -38,7 +39,9 @@ class ProfileScreen extends Component {
     return (
       <Container>
         <GrayHeader title={t("profileScreen.profile")} />
-        <DeleteAccountModal />
+        {userData.authorities[0] == constants.userRole.investor && (
+          <DeleteAccountModal />
+        )}
         <Content>
           {userData &&
             getSectionData(userData.authorities[0]).map((section, index) => (

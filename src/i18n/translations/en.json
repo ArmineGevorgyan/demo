@@ -239,5 +239,10 @@
     "cancelButton":"Cancel",
     "message": "Message",
     "selectReason": "Select Reason"
+  },
+  "deleteAccountSuccess":{
+    "contextHeading":"Your request has been sent successfully.",
+    "context":"We will process your request and get back to you during the next 2 days.",
+    "OKButton":"Close"
   }
 }
