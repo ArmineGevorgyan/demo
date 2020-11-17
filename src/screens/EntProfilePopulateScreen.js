@@ -2,7 +2,7 @@ import { Container, Content, Icon, Input, Item, Spinner } from "native-base";
 import React, { Component } from "react";
 import ProfileBlueHeader from "../components/profileBlueHeader";
 import { Button, Label, Textarea } from "native-base";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Keyboard } from "react-native";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
@@ -40,7 +40,20 @@ class EntProfilePopulateScreen extends Component {
   constructor(props) {
     super(props);
     this.formik = React.createRef();
+    this.inputRef = React.createRef();
+    this.inputRef2 = React.createRef();
+    this.inputRef3 = React.createRef();
   }
+
+  componentDidMount() {
+    Keyboard.addListener("keyboardDidHide", this.unBlurInputs);
+  };
+
+  unBlurInputs = () => {
+    this.inputRef?._root?.blur();
+    this.inputRef2?._root?.blur();
+    this.inputRef3?._root?.blur();
+  };
 
   handleNext = () => {
     const { togglePhotoError } = this.props;
@@ -84,7 +97,12 @@ class EntProfilePopulateScreen extends Component {
 
   onSubmit = (values) => {
     if (this.props.profileData.photoUrl) {
-      this.props.setTextInput({ completed: true });
+      this.props.setTextInput({
+        completed: true,
+        bio: values.bio,
+        availableVia: values.availableVia,
+        highlights:values.highlights,
+      });
       this.props.updateProfile();
     }
   };
@@ -109,7 +127,8 @@ class EntProfilePopulateScreen extends Component {
   setTextInput = (data) => {
     this.props.setTextInput(data);
     this.props.updateProfile();
-  }
+  };
+  
   render() {
     const { t,
       profileData,
@@ -181,6 +200,7 @@ class EntProfilePopulateScreen extends Component {
                         </View>
                         <Validation name="bio" showMessage={true}>
                           <Textarea
+                            ref={input => { this.inputRef = input }}
                             bordered
                             rowSpan={5}
                             onBlur={() => {
@@ -196,15 +216,17 @@ class EntProfilePopulateScreen extends Component {
                         </Validation>
                       </View>
 
-                      <Validation name="locations" showMessage={true}>
-                        <CityInput
-                          title="Location"
-                          inputType="location"
-                          flagCode={getLocationFlag(profileData.locations)}
-                          value={values.locations}
-                          setResult={this.setResult}
-                        />
-                      </Validation>
+                      <View style={styles.message}>
+                        <Validation name="locations" showMessage={true}>
+                          <CityInput
+                            title="Location"
+                            inputType="location"
+                            flagCode={getLocationFlag(profileData.locations)}
+                            value={values.locations}
+                            setResult={this.setResult}
+                          />
+                        </Validation>
+                      </View>
 
                       <Validation name="timeZone" showMessage={true}>
                         <TimeZoneInput
@@ -222,13 +244,14 @@ class EntProfilePopulateScreen extends Component {
                         <Validation name="availableVia" showMessage={true}>
                           <Item rounded style={baseStylesheet.inlineButtonInputItem}>
                             <Input
-                              onBlur={() => {
-                                this.setTextInput({ availableVia: props.values.availableVia });
-                              }}
+                              ref={input => { this.inputRef2 = input }}
                               style={baseStylesheet.inputField}
                               placeholder={t("entProfilePopulateScreen.availableViaPlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.availableVia}
+                              onBlur={() => {
+                                this.setTextInput({ availableVia: props.values.availableVia });
+                              }}
                               onChangeText={props.handleChange("availableVia")}
                             />
                           </Item>
@@ -256,6 +279,7 @@ class EntProfilePopulateScreen extends Component {
                           <Textarea
                             bordered
                             rowSpan={5}
+                            ref={input => { this.inputRef3 = input }}
                             maxLength={constants.shortBioMaxLength}
                             placeholder={t("entProfilePopulateScreen.highlightsPlaceholder")}
                             placeholderTextColor={colors.blueBorder}

@@ -2,7 +2,8 @@ import * as Yup from "yup";
 import i18n from "../i18n";
 import "./validators";
 
-const entProfileSchema = Yup.object().shape({
+const entProfileEditSchema = Yup.object().shape({
+  fullName:Yup.string().trim().required(i18n.t("validator.fullName_required")),
   bio: Yup.string()
     .trim()
     .required(i18n.t("validator.bio_required")),
@@ -15,4 +16,4 @@ const entProfileSchema = Yup.object().shape({
     .url(i18n.t("validator.availableVia_url")),
 });
 
-export default entProfileSchema;
+export default entProfileEditSchema;
