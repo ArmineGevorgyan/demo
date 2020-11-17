@@ -217,9 +217,6 @@ class EntProfileEditScreen extends Component {
                             placeholderTextColor={colors.blueBorder}
                             style={baseStylesheet.textarea}
                             value={values.bio}
-                            onBlur={() => {
-                              this.setTextInput({ bio: props.values.bio });
-                            }}
                             onChangeText={props.handleChange("bio")}
                           />
                         </Validation>
@@ -239,7 +236,7 @@ class EntProfileEditScreen extends Component {
 
                       <Validation name="timeZone" showMessage={true}>
                         <TimeZoneInput
-                          value={values.timeZone || timeZoneToString(profileData.timeZone)}
+                          value={timeZoneToString(profileData.timeZone)}
                           setResult={(data) => this.setTextInput({ timeZone: data, })}
                         />
                       </Validation>
@@ -258,9 +255,6 @@ class EntProfileEditScreen extends Component {
                               placeholder={t("entProfilePopulateScreen.availableViaPlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.availableVia}
-                              onBlur={() => {
-                                this.setTextInput({ availableVia: props.values.availableVia });
-                              }}
                               onChangeText={props.handleChange("availableVia")}
                             />
                           </Item>
@@ -294,9 +288,6 @@ class EntProfileEditScreen extends Component {
                             placeholderTextColor={colors.blueBorder}
                             style={baseStylesheet.textarea}
                             value={values.highlights}
-                            onBlur={() => {
-                              this.setTextInput({ highlights: values.highlights });
-                            }}
                             onChangeText={props.handleChange("highlights")}
                           />
                         </Validation>

@@ -71,8 +71,8 @@
     "fullName_required":"Full name is required",
     "bio_required":"Short bio is required",
     "location_required":"Location is required",
-    "availableVia_rquired":"This field is required",
-    "availableVia_url":"Please enter valid URL"
+    "availableVia_required":"This field is required",
+    "availableVia_url":"Please enter a valid URL"
   },
   "discoverStartups": {
     "headerText": "Discover Startups",
