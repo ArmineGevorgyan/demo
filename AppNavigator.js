@@ -141,6 +141,7 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen name="LegalScreen" component={LegalScreen} />
+          <Stack.Screen name="EntProfileEditScreen" component={EntProfileEditScreen} />
           <Stack.Screen
             name="ForgotPasswordScreen"
             component={ForgotPasswordScreen}
