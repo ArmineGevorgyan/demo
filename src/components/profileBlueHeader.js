@@ -30,6 +30,7 @@ class ProfileBlueHeader extends Component {
               <Icon
                 style={{
                   color: "#FFF",
+                  marginBottom:15,
                 }}
                 name="arrow-left"
                 type="Feather"
