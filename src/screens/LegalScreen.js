@@ -25,28 +25,29 @@ class LegalScreen extends Component {
             <DraperRhino />
           </View>
           <View style={styles.itemContainer}>
-            {getLegalItems(userData.authorities[0]).map((item) => (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("LegalDocumentScreen", { item })
-                }
-              >
-                <View style={styles.itemRow}>
-                  <View style={styles.icon}>{item.image}</View>
-                  <View style={styles.content}>
-                    <Text style={styles.title}>
-                      {t(`legalScreen.${item.title}`)}
-                    </Text>
-                    <Text style={styles.description}>
-                      {t(`legalScreen.${item.description}`)}
-                    </Text>
+            {userData &&
+              getLegalItems(userData.authorities[0]).map((item) => (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("LegalDocumentScreen", { item })
+                  }
+                >
+                  <View style={styles.itemRow}>
+                    <View style={styles.icon}>{item.image}</View>
+                    <View style={styles.content}>
+                      <Text style={styles.title}>
+                        {t(`legalScreen.${item.title}`)}
+                      </Text>
+                      <Text style={styles.description}>
+                        {t(`legalScreen.${item.description}`)}
+                      </Text>
+                    </View>
+                    <View style={styles.icon}>
+                      <Icon name={"chevron-right"} type="Feather" />
+                    </View>
                   </View>
-                  <View style={styles.icon}>
-                    <Icon name={"chevron-right"} type="Feather" />
-                  </View>
-                </View>
-              </TouchableOpacity>
-            ))}
+                </TouchableOpacity>
+              ))}
           </View>
         </Content>
       </>

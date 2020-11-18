@@ -14,10 +14,11 @@ class VideoView extends Component {
   };
 
   onFullscreenUpdate = ({ fullscreenUpdate, status }) => {
-    console.log(fullscreenUpdate, status)
     switch (fullscreenUpdate) {
       case Video.FULLSCREEN_UPDATE_PLAYER_WILL_PRESENT: {
-        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.LANDSCAPE
+        );
         break;
       }
       case Video.FULLSCREEN_UPDATE_PLAYER_WILL_DISMISS: {
@@ -38,6 +39,6 @@ class VideoView extends Component {
       />
     );
   }
-};
+}
 
 export default VideoView;
