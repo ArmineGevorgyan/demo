@@ -37,6 +37,7 @@ import FAQScreen from "./src/screens/FAQScreen";
 import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
 import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
 import LegalScreen from "./src/screens/LegalScreen";
+import LegalDocumentScreen from "./src/screens/LegalDocumentScreen";
 import constants from "./src/constants";
 
 const prefix = Linking.makeUrl("/");
@@ -140,6 +141,10 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen name="LegalScreen" component={LegalScreen} />
+          <Stack.Screen
+            name="LegalDocumentScreen"
+            component={LegalDocumentScreen}
+          />
           <Stack.Screen
             name="ForgotPasswordScreen"
             component={ForgotPasswordScreen}
