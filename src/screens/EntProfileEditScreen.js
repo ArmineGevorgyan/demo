@@ -11,6 +11,7 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import SelectImage from "../components/selectImage";
 import {
   save,
+  getProfileData,
   setLocation,
   setTimeZone,
   setResidency,
@@ -23,7 +24,7 @@ import {
   openModal,
   closeModal,
 } from "../redux/ducks/dropdownInputModal";
-import schema from "../validation/entProfileSchema";
+import schema from "../validation/entProfileEditSchema";
 import { Formik } from "formik";
 import Validation from "../validation";
 import CityInput from "../components/cityInput";
@@ -36,16 +37,18 @@ import {
   getLocationFlag,
 } from "../helpers/profileHelper";
 
-class EntProfilePopulateScreen extends Component {
+class EntProfileEditScreen extends Component {
   constructor(props) {
     super(props);
     this.formik = React.createRef();
-    this.inputRef = React.createRef();
+    this.inputRef1 = React.createRef();
     this.inputRef2 = React.createRef();
     this.inputRef3 = React.createRef();
+    this.inputRef4 = React.createRef();
   }
 
   componentDidMount() {
+    this.props.getProfileData();
     Keyboard.addListener("keyboardDidHide", this.unBlurInputs);
   };
 
@@ -53,6 +56,7 @@ class EntProfilePopulateScreen extends Component {
     this.inputRef?._root?.blur();
     this.inputRef2?._root?.blur();
     this.inputRef3?._root?.blur();
+    this.inputRef4?._root?.blur();
   };
 
   handleNext = () => {
@@ -70,24 +74,9 @@ class EntProfilePopulateScreen extends Component {
       })
   };
 
-  handleReset = () => {
-    this.props.resetProfile();
-    this.formik.resetForm({
-      "bio": "",
-      "locations": "",
-      "timeZone": "",
-      "availableVia": "",
-      "residency": "",
-      "highlights": "",
-    });
-    this.formik.setValues({
-      "bio": "",
-      "locations": "",
-      "timeZone": "",
-      "availableVia": "",
-      "residency": "",
-      "highlights": "",
-    });
+  handleCancel = () => {
+    this.formik.resetForm();
+    this.props.getProfileData();
     this.props.togglePhotoError(false);
   };
 
@@ -96,7 +85,7 @@ class EntProfilePopulateScreen extends Component {
   };
 
   onSubmit = (values) => {
-    if (this.props.profileData.photoUrl) {
+    this.props.save(values.fullName);
       this.props.setTextInput({
         completed: true,
         bio: values.bio,
@@ -104,7 +93,6 @@ class EntProfilePopulateScreen extends Component {
         highlights:values.highlights,
       });
       this.props.updateProfile();
-    }
   };
 
   setResult = (item, type) => {
@@ -121,24 +109,24 @@ class EntProfilePopulateScreen extends Component {
       });
       this.props.setResidency(item);
     }
-    this.props.updateProfile();
   };
 
   setTextInput = (data) => {
     this.props.setTextInput(data);
-    this.props.updateProfile();
   };
-  
+
   render() {
     const { t,
       profileData,
       isLoading,
+      userData,
     } = this.props;
 
     return (
       <Container style={{ backgroundColor: colors.offWhite, }}>
         <ProfileBlueHeader
           title="My Account"
+          backButtonHandler={() => this.props.navigation.goBack()}
         >
           <SelectImage
             photoUrl={this.props.profileData.photoUrl}
@@ -173,6 +161,7 @@ class EntProfilePopulateScreen extends Component {
               <Formik
                 innerRef={(p) => (this.formik = p)}
                 initialValues={{
+                  fullName: `${userData.firstName} ${userData.lastName}`,
                   bio: profileData.bio || "",
                   locations: locationToString(profileData.locations),
                   timeZone: timeZoneToString(profileData.timeZone),
@@ -192,6 +181,26 @@ class EntProfilePopulateScreen extends Component {
                       <View style={styles.message}>
                         <View style={styles.row}>
                           <Label style={baseStylesheet.label}>
+                            {t("entProfileEditScreen.fullName")}
+                          </Label>
+                        </View>
+                        <Validation name="fullName" showMessage={true}>
+                          <Item rounded style={baseStylesheet.inlineButtonInputItem}>
+                            <Input
+                              ref={input => { this.inputRef1 = input }}
+                              style={baseStylesheet.inputField}
+                              placeholder={t("entProfileEditScreen.fullNamePlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.fullName}
+                              onChangeText={props.handleChange("fullName")}
+                            />
+                          </Item>
+                        </Validation>
+                      </View>
+
+                      <View style={styles.message}>
+                        <View style={styles.row}>
+                          <Label style={baseStylesheet.label}>
                             {t("entProfilePopulateScreen.bio")}
                           </Label>
                           <Text style={styles.counter}>
@@ -200,12 +209,9 @@ class EntProfilePopulateScreen extends Component {
                         </View>
                         <Validation name="bio" showMessage={true}>
                           <Textarea
-                            ref={input => { this.inputRef = input }}
                             bordered
                             rowSpan={5}
-                            onBlur={() => {
-                              this.setTextInput({ bio: props.values.bio });
-                            }}
+                            ref={input => { this.inputRef2 = input }}
                             maxLength={constants.shortBioMaxLength}
                             placeholder={t("entProfilePopulateScreen.bioPlaceholder")}
                             placeholderTextColor={colors.blueBorder}
@@ -230,7 +236,7 @@ class EntProfilePopulateScreen extends Component {
 
                       <Validation name="timeZone" showMessage={true}>
                         <TimeZoneInput
-                          value={values.timeZone || timeZoneToString(profileData.timeZone)}
+                          value={timeZoneToString(profileData.timeZone)}
                           setResult={(data) => this.setTextInput({ timeZone: data, })}
                         />
                       </Validation>
@@ -244,14 +250,11 @@ class EntProfilePopulateScreen extends Component {
                         <Validation name="availableVia" showMessage={true}>
                           <Item rounded style={baseStylesheet.inlineButtonInputItem}>
                             <Input
-                              ref={input => { this.inputRef2 = input }}
                               style={baseStylesheet.inputField}
+                              ref={input => { this.inputRef3 = input }}
                               placeholder={t("entProfilePopulateScreen.availableViaPlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.availableVia}
-                              onBlur={() => {
-                                this.setTextInput({ availableVia: props.values.availableVia });
-                              }}
                               onChangeText={props.handleChange("availableVia")}
                             />
                           </Item>
@@ -279,15 +282,12 @@ class EntProfilePopulateScreen extends Component {
                           <Textarea
                             bordered
                             rowSpan={5}
-                            ref={input => { this.inputRef3 = input }}
+                            ref={input => { this.inputRef4 = input }}
                             maxLength={constants.shortBioMaxLength}
                             placeholder={t("entProfilePopulateScreen.highlightsPlaceholder")}
                             placeholderTextColor={colors.blueBorder}
                             style={baseStylesheet.textarea}
                             value={values.highlights}
-                            onBlur={() => {
-                              this.setTextInput({ highlights: values.highlights });
-                            }}
                             onChangeText={props.handleChange("highlights")}
                           />
                         </Validation>
@@ -295,25 +295,20 @@ class EntProfilePopulateScreen extends Component {
 
                       <View>
                         <Button
-                          onPress={this.handleNext}
+                          onPress={props.handleSubmit}
                           style={baseStylesheet.mainButton}
                         >
                           <Text style={baseStylesheet.mainButtonText}>
-                            {t("entProfilePopulateScreen.nextButton")}
+                            {t("entProfileEditScreen.saveButton")}
                           </Text>
-                          <Icon
-                            name="arrow-right"
-                            type="Feather"
-                            style={styles.rightIcon}
-                          />
                         </Button>
 
                         <Button
                           style={baseStylesheet.grayButton}
-                          onPress={this.handleReset}
+                          onPress={this.handleCancel}
                         >
                           <Text style={baseStylesheet.grayButtonText}>
-                            {t("entProfilePopulateScreen.resetButton")}
+                            {t("entProfileEditScreen.cancelButton")}
                           </Text>
                         </Button>
                       </View>
@@ -336,19 +331,23 @@ const mapStateToProps = (state, props) => {
   const profileData = state.entrepreneurProfile.profileData;
   const isResetting = state.entrepreneurProfile.isResetting;
   const photoError = state.entrepreneurProfile.photoError;
+  const userData = state.user.userData;
+
   return {
     isModalOpen,
     profileData,
     isResetting,
     photoError,
+    userData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    save: () => dispatch(save()),
+    save: (values) => dispatch(save(values)),
     openModal: (title) => dispatch(openModal(title)),
     closeModal: () => dispatch(closeModal()),
+    getProfileData: () => dispatch(getProfileData()),
     togglePhotoError: (value) => dispatch(togglePhotoError(value)),
     setLocation: (location) => dispatch(setLocation(location)),
     setTimeZone: (timeZone) => dispatch(setTimeZone(timeZone)),
@@ -362,7 +361,7 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(EntProfilePopulateScreen);
+)(EntProfileEditScreen);
 
 const styles = StyleSheet.create({
   formContainer: {
@@ -371,10 +370,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginBottom: 50,
-  },
-  rightIcon: {
-    position: "absolute",
-    left: "60%",
   },
   message: { marginBottom: 10, width: "100%" },
   row: {

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
 import store from "../store";
+import { updateUserData } from "../ducks/user";
 
 const initialState = {
   isLoading: false,
@@ -22,7 +23,7 @@ const entrepreneurProfileSlice = createSlice({
   reducers: {
     save: (state) => ({
       ...state,
-      photoUrl: "some test value to pass the screen",
+      // photoUrl: "some test value to pass the screen",
     }),
     openModal: (state) => ({
       ...state,
@@ -124,9 +125,17 @@ const initialPrifileData = {
 
 const entrepreneurProfileReducer = entrepreneurProfileSlice.reducer;
 
-export const save = () => {
+export const save = (values) => {
+  let arr = values.split(" ");
+
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.save());
+    dispatch(updateUserData({
+      firstName: arr[0],
+      lastName:arr[1],
+    }));
+
+     dispatch(updateProfile());
   };
 };
 

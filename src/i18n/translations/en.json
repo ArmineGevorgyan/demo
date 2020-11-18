@@ -68,9 +68,11 @@
     "angelList_url_not_valid": "Please enter a valid AngelList profile URL",
     "message_required": "Message is required",
     "photo_required":"Photo is required",
+    "fullName_required":"Full name is required",
     "bio_required":"Short bio is required",
     "location_required":"Location is required",
-    "availableVia_rquired":"This field is required"
+    "availableVia_required":"This field is required",
+    "availableVia_url":"Please enter a valid URL"
   },
   "discoverStartups": {
     "headerText": "Discover Startups",
@@ -152,6 +154,12 @@
     "OKButton": "Create New message",
     "contextHeading": "Thank you for contacting us!",
     "context": "See our answer in your inbox during the next 2 days."
+  },
+  "entProfileEditScreen":{
+    "fullName":"Full name",
+    "fullNamePlaceholder":"Full name",
+    "saveButton":"SAVE",
+    "cancelButton":"CANCEL"
   },
   "entProfilePopulateScreen":{
     "bio":"Short bio",

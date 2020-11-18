@@ -28,6 +28,14 @@ const userSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    updateUserData: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    updateUserData: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
   }
 });
 
@@ -39,6 +47,26 @@ export const getUserData = () => {
 
     axios
       .get(`${API_URL}/user/account`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(userSlice.actions.getUserDataSuccess(data));
+        dispatch(getProfileData());
+      })
+      .catch((error) => {
+        dispatch(userSlice.actions.getUserDataFail(error));
+      });
+  };
+};
+
+export const updateUserData = (fullName) => {
+
+  return (dispatch) => {
+    dispatch(userSlice.actions.updateUserData());
+
+    axios
+      .put(`${API_URL}/user/account`, fullName)
       .then((r) => {
         return r.data;
       })
