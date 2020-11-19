@@ -43,6 +43,7 @@ const constants = {
   },
   notificationTypes: {
     ERROR: "error",
+    SUCCESS:"success",
   },
   contactUsMessageMaxLength: 300,
   shortBioMaxLength: 1000,

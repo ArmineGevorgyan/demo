@@ -9,6 +9,7 @@ import { uploadFile } from "../redux/ducks/fileUploader";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
+import CachedImage from "react-native-expo-cached-image";
 
 class SelecImage extends Component {
   constructor(props) {
@@ -89,7 +90,7 @@ class SelecImage extends Component {
           {isLoading ?
             <Spinner color={colors.secondaryColor} /> :
             (this.props.photoUrl) ? (
-              <Image
+              <CachedImage
                 style={styles.imageContainer}
                 source={{ uri: dImage || this.props.photoUrl }}
               />

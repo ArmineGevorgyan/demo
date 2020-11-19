@@ -22,7 +22,11 @@ const dropdownInputModalSlice = createSlice({
   name: "dropdownInputModal",
   initialState,
   reducers: {
-    openModal: (state, action) => ({
+    setLoading: (state) => ({
+      ...state,
+      isLoading:true,
+    }),
+    openModal: (state,action) => ({
       ...state,
       isModalOpen: true,
       title: action.payload.title,
@@ -88,6 +92,12 @@ const dropdownInputModalSlice = createSlice({
 });
 
 const dropdownInputModalReducer = dropdownInputModalSlice.reducer;
+
+export const setLoading = () => {
+  return (dispatch) => {
+    dispatch(dropdownInputModalSlice.actions.setLoading());
+  };
+};
 
 export const openModal = (title) => {
   return (dispatch) => {

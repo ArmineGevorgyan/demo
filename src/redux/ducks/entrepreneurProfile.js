@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_URL } from "../../config";
 import store from "../store";
 import { updateUserData } from "../ducks/user";
+import { showNotification } from "../../helpers/notificationHelper";
 
 const initialState = {
   isLoading: false,
@@ -135,7 +136,7 @@ export const save = (values) => {
       lastName:arr[1],
     }));
 
-     dispatch(updateProfile());
+     dispatch(updateProfile(true));
   };
 };
 
@@ -156,7 +157,7 @@ export const getProfileData = (id = -1) => {
   };
 };
 
-export const updateProfile = () => {
+export const updateProfile = (save=false) => {
   const state = store.getState();
 
   return (dispatch) => {
@@ -167,9 +168,15 @@ export const updateProfile = () => {
       .then((r) => { return r.data })
       .then((data) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileSuccess(data))
+        if (save) {
+          showNotification("success", "Saved!");
+        }
       })
       .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileFail(error));
+        if (save) {
+          showNotification("error", "Something went wrong.");
+        }
       });
   };
 };
