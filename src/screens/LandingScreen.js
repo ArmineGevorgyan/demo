@@ -20,14 +20,12 @@ import Copyright from "../components/copyright";
 import constants from "../constants";
 
 class LandingScreen extends Component {
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { emailStatus } = this.props;
 
-    if (!emailStatus) {
-      return;
+    if (!prevProps.emailStatus && emailStatus) {
+      this.navigate(emailStatus.value);
     }
-
-    this.navigate(emailStatus.value);
   }
 
   async navigate(emailStatus) {

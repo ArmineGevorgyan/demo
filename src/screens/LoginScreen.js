@@ -20,12 +20,12 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, navigation } = this.props;
 
     return (
       <Background>
         <Content>
-          <WelcomeHeader />
+          <WelcomeHeader backButtonHandler={() => navigation.goBack()} />
           <Formik
             initialValues={{
               password: "",
