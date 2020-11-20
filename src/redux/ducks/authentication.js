@@ -21,6 +21,7 @@ const authSlice = createSlice({
     checkEmailStatus: (state, action) => ({
       ...state,
       email: action.payload,
+      emailStatus: null,
       isLoading: true,
     }),
     checkEmailStatusSuccess: (state, action) => ({

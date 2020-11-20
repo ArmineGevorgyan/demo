@@ -4,14 +4,23 @@ import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { colors } from "../styles/colors";
 import BlueHeader from "./blueHeader";
+import { Icon } from "native-base";
 
 class WelcomeHeader extends Component {
   render() {
-    const { t } = this.props;
+    const { t, backButtonHandler } = this.props;
 
     return (
       <BlueHeader>
         <View style={styles.welcomeContainer}>
+          {backButtonHandler && (
+            <Icon
+              style={styles.icon}
+              name="arrow-left"
+              type="Feather"
+              onPress={backButtonHandler}
+            />
+          )}
           <Text style={styles.weclomeText}>
             {t("landingScreen.weclomeTitle")}
           </Text>
@@ -33,7 +42,6 @@ const styles = StyleSheet.create({
   welcomeContainer: {
     justifyContent: "flex-end",
     marginTop: "20%",
-    alignItems: "center",
   },
   weclomeText: {
     textAlign: "center",
@@ -49,8 +57,14 @@ const styles = StyleSheet.create({
   },
   subtitleContainer: {
     flexDirection: "row",
+    justifyContent: "center",
   },
   boldText: {
     fontFamily: "montserrat-semi-bold",
+  },
+  icon: {
+    marginTop: "-8%",
+    color: "white",
+    marginLeft: 20,
   },
 });
