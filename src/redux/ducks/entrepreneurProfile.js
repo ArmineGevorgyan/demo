@@ -169,13 +169,13 @@ export const updateProfile = (save=false) => {
       .then((data) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileSuccess(data))
         if (save) {
-          showNotification("success", "Saved!");
+          showNotification("success", "notification.saved");
         }
       })
       .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileFail(error));
         if (save) {
-          showNotification("error", "Something went wrong.");
+          showNotification("error", "notification.somethingWentWrong");
         }
       });
   };
