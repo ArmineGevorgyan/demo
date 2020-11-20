@@ -36,10 +36,21 @@ const userSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-  }
+    clearUserData: () => ({
+      ...state,
+      userData: null,
+      profileData: null,
+    }),
+  },
 });
 
 const userReducer = userSlice.reducer;
+
+export const clearUserData = () => {
+  return (dispatch) => {
+    dispatch(userSlice.actions.clearUserData());
+  };
+};
 
 export const getUserData = () => {
   return (dispatch) => {
@@ -61,7 +72,6 @@ export const getUserData = () => {
 };
 
 export const updateUserData = (fullName) => {
-
   return (dispatch) => {
     dispatch(userSlice.actions.updateUserData());
 

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_HOST, API_URL } from "../../config";
+import { API_URL } from "../../config";
 import { getToken, removeToken, setToken } from "../../helpers/auth";
 import { showNotification } from "../../helpers/notificationHelper";
 import { getUserData } from "./user";
+import { clearUserData } from "./user";
 
 const initialState = {
   isLoading: false,
@@ -90,6 +91,7 @@ export const authenticate = () => {
 export const clearAuthentication = () => {
   return (dispatch) => {
     dispatch(authSlice.actions.clearAuthentication());
+    dispatch(clearUserData());
   };
 };
 

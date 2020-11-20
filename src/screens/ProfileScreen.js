@@ -11,6 +11,9 @@ import { getSectionBorderStyle } from "../helpers/profileScreenHelper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { logout } from "../redux/ducks/authentication";
+import { openDeleteAccountModal } from "../redux/ducks/deleteAccount";
+import DeleteAccountModal from "../components/deleteAccountModal";
+import constants from "../constants";
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -22,7 +25,10 @@ class ProfileScreen extends Component {
       this.props.navigation.navigate(item.to);
     } else {
       if (item.value === "logout") {
-        this.props.logout(this.props.navigation);
+        return this.props.logout(this.props.navigation);
+      }
+      if (item.value === "deleteAccount") {
+        return this.props.openDeleteAccountModal();
       }
     }
   };
@@ -33,78 +39,83 @@ class ProfileScreen extends Component {
     return (
       <Container>
         <GrayHeader title={t("profileScreen.profile")} />
+        {userData.authorities[0] == constants.userRole.investor && (
+          <DeleteAccountModal />
+        )}
         <Content>
-          {getSectionData(userData.authorities[0]).map((section, index) => (
-            <View
-              style={[
-                styles.section,
+          {userData &&
+            getSectionData(userData.authorities[0]).map((section, index) => (
+              <View
+                style={[
+                  styles.section,
 
-                baseStylesheet.elevation6,
-                {
-                  marginTop: index === 0 ? 20 : 10,
-                  marginBottom:
-                    index === getSectionData(userData.authorities[0]).length - 1
-                      ? 20
-                      : 10,
-                },
-              ]}
-            >
-              {section.map((item, index) => (
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={() => this.navigateTo(item)}
-                >
-                  <View
-                    style={[
-                      styles.sectionListItemStyle,
-                      getSectionBorderStyle(index, section.length - 1),
-                    ]}
+                  baseStylesheet.elevation6,
+                  {
+                    marginTop: index === 0 ? 20 : 10,
+                    marginBottom:
+                      index ===
+                      getSectionData(userData.authorities[0]).length - 1
+                        ? 20
+                        : 10,
+                  },
+                ]}
+              >
+                {section.map((item, index) => (
+                  <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => this.navigateTo(item)}
                   >
                     <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
+                      style={[
+                        styles.sectionListItemStyle,
+                        getSectionBorderStyle(index, section.length - 1),
+                      ]}
                     >
                       <View
-                        style={[
-                          styles.iconContainer,
-                          { backgroundColor: item.backgroundColor },
-                        ]}
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
                       >
-                        {item.icon ? (
-                          <Icon
-                            name={item.icon}
-                            type={item.iconType}
-                            style={styles.icon}
-                          />
-                        ) : (
-                          item.svg
-                        )}
+                        <View
+                          style={[
+                            styles.iconContainer,
+                            { backgroundColor: item.backgroundColor },
+                          ]}
+                        >
+                          {item.icon ? (
+                            <Icon
+                              name={item.icon}
+                              type={item.iconType}
+                              style={styles.icon}
+                            />
+                          ) : (
+                            item.svg
+                          )}
+                        </View>
+                        <Text
+                          style={[
+                            { fontSize: 18 },
+                            item.id === 11 && { color: "#D60000" },
+                          ]}
+                        >
+                          {t(`profileScreen.${item.value}`)}
+                        </Text>
                       </View>
-                      <Text
-                        style={[
-                          { fontSize: 18 },
-                          item.id === 11 && { color: "#D60000" },
-                        ]}
-                      >
-                        {t(`profileScreen.${item.value}`)}
-                      </Text>
+                      {item.to && (
+                        <Icon
+                          name="chevron-right"
+                          type="MaterialCommunityIcons"
+                        />
+                      )}
                     </View>
-                    {item.to && (
-                      <Icon
-                        name="chevron-right"
-                        type="MaterialCommunityIcons"
-                      />
+                    {index !== section.length - 1 && (
+                      <View style={styles.itemSeparator} />
                     )}
-                  </View>
-                  {index !== section.length - 1 && (
-                    <View style={styles.itemSeparator} />
-                  )}
-                </TouchableOpacity>
-              ))}
-            </View>
-          ))}
+                  </TouchableOpacity>
+                ))}
+              </View>
+            ))}
         </Content>
       </Container>
     );
@@ -121,6 +132,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: (navigation) => dispatch(logout(navigation)),
+    openDeleteAccountModal: () => dispatch(openDeleteAccountModal()),
   };
 };
 

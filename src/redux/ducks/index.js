@@ -24,6 +24,7 @@ import timeZoneModalSlice from "./timeZoneModal";
 import faqSlice from "./faq";
 import resetPasswordSlice from "./resetPassword";
 import legalSlice from "./legal";
+import deleteAccountSlice from "./deleteAccount";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -44,6 +45,7 @@ const appReducer = combineReducers({
   faq: faqSlice,
   resetPassword: resetPasswordSlice,
   legal: legalSlice,
+  deleteAccount: deleteAccountSlice,
 });
 
 export const rootReducer = (state, action) => {

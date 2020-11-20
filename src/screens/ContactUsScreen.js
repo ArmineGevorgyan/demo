@@ -9,6 +9,7 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import DraperRhino from "../../assets/draper-rhino.svg";
 import GrayHeader from "../components/grayHeader";
+import CustomPicker from "../components/picker";
 import Validation from "../validation";
 import schema from "../validation/contactFormSchema";
 import constants from "../constants";
@@ -75,26 +76,18 @@ class ContactUsScreen extends Component {
                     {t("contactUsScreen.subject")}
                   </Label>
                 </View>
-                <View style={[styles.picker, baseStylesheet.inputItem]}>
-                  <Icon
-                    name="chevron-down"
-                    type="Feather"
-                    style={styles.pickerIcon}
-                  />
-                  <Picker
-                    selectedValue={props.values.contactRequestType}
-                    style={{ width: "100%" }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      props.setFieldValue("contactRequestType", itemValue);
-                    }}
-                    value={props.values.contactRequestType}
-                  >
-                    {requestTypes &&
-                      requestTypes.map((type) => (
-                        <Picker.Item label={type.name} value={type} />
-                      ))}
-                  </Picker>
-                </View>
+                <CustomPicker
+                  selectedValue={props.values.contactRequestType}
+                  onValueChange={(itemValue) =>
+                    props.setFieldValue("contactRequestType", itemValue)
+                  }
+                  value={props.values.contactRequestType}
+                >
+                  {requestTypes &&
+                    requestTypes.map((type) => (
+                      <Picker.Item label={type.name} value={type} />
+                    ))}
+                </CustomPicker>
                 <View style={styles.message}>
                   <View style={styles.row}>
                     <Label style={baseStylesheet.label}>
@@ -165,7 +158,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
   },
-  picker: { width: "100%", borderRadius: 25, overflow: "hidden" },
   message: { marginBottom: 10, width: "100%" },
   row: {
     flexDirection: "row",
@@ -177,14 +169,5 @@ const styles = StyleSheet.create({
     color: colors.darkText,
     fontSize: 10,
     fontFamily: "montserrat-regular",
-  },
-  pickerIcon: {
-    color: colors.lightBlue,
-    backgroundColor: "white",
-    zIndex: 1,
-    position: "absolute",
-    bottom: 12,
-    right: 25,
-    fontSize: 25,
   },
 });
