@@ -8,7 +8,7 @@ const initialState = {
   isModalOpen: false,
   title: "",
   inputType: "",
-  inputItem:"",
+  inputItem: "",
   loadingMore: false,
   cityList: [],
   search: "",
@@ -22,16 +22,16 @@ const dropdownInputModalSlice = createSlice({
   name: "dropdownInputModal",
   initialState,
   reducers: {
-    openModal: (state,action) => ({
+    openModal: (state, action) => ({
       ...state,
       isModalOpen: true,
-      title:action.payload.title,
+      title: action.payload.title,
     }),
-    closeModal: (state,action) => ({
+    closeModal: (state, action) => ({
       ...state,
       isModalOpen: false,
       title: "",
-      cityList:[],
+      cityList: [],
     }),
     loadCityList: (state) => ({
       ...state,
@@ -44,7 +44,7 @@ const dropdownInputModalSlice = createSlice({
       ...state,
       isLoading: false,
       cityList: action.payload,
-      page:state.page+1,
+      page: state.page + 1,
     }),
     loadCityListFail: (state, action) => ({
       ...state,
@@ -68,10 +68,7 @@ const dropdownInputModalSlice = createSlice({
     loadMoreCitiesSuccess: (state, action) => ({
       ...state,
       loadingMore: false,
-      cityList: [
-        ...state.cityList,
-        ...action.payload
-      ],
+      cityList: [...state.cityList, ...action.payload],
       error: null,
     }),
     loadMoreCitiesFail: (state, action) => ({
@@ -81,22 +78,21 @@ const dropdownInputModalSlice = createSlice({
     }),
     setType: (state, action) => ({
       ...state,
-      inputType:action.payload,
+      inputType: action.payload,
     }),
     setInputItem: (state, action) => ({
       ...state,
-      inputItem:action.payload,
+      inputItem: action.payload,
     }),
   },
 });
 
 const dropdownInputModalReducer = dropdownInputModalSlice.reducer;
 
-
 export const openModal = (title) => {
   return (dispatch) => {
     dispatch(dropdownInputModalSlice.actions.openModal({ title }));
-  }
+  };
 };
 
 export const closeModal = () => {
@@ -143,7 +139,9 @@ export const loadMoreCities = () => {
     dispatch(dropdownInputModalSlice.actions.loadMoreCities());
 
     axios
-      .get(`${API_URL}/cities/search?keyword=${dropdownState.search}&page=${dropdownState.page}&size=20&sort=name`)
+      .get(
+        `${API_URL}/cities/search?keyword=${dropdownState.search}&page=${dropdownState.page}&size=20&sort=name`
+      )
       .then((r) => {
         return r.data;
       })

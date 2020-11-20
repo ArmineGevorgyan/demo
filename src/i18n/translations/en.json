@@ -218,6 +218,7 @@
   "legalScreen":{
     "headerText": "Legal",
     "sendToEmail": "Send to email",
+    "download": "Download",
     "termsAndConditions": "Terms & conditions",
     "tcDescription": "We constantly refine our rules to maintain an exceptional, trustworthy and fair investment community.",
     "privacyPolicy": "Privacy Policy",

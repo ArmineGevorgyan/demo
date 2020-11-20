@@ -27,6 +27,9 @@ const constants = {
     svpContractUri: `${API_HOST}/investor/spv-contract.html`,
     termsAndConditionsVideo: `${API_HOST}/investor/tc-video.mp4`,
     privacyPolicyVideo: `${API_HOST}/investor/pp-video.mp4`,
+    termsAndConditionsPDF: `${API_HOST}/investor/tc.pdf`,
+    privacyPolicyPDF: `${API_HOST}/investor/pp.pdf`,
+    svpContractPDF: `${API_HOST}/investor/spv-contract.pdf`,
   },
   entrepreneur: {
     termsAndConditionsUri: `${API_HOST}/entrepreneur/tc.html`,
@@ -34,6 +37,9 @@ const constants = {
     safeContractUri: `${API_HOST}/entrepreneur/safe-contract.html`,
     termsAndConditionsVideo: `${API_HOST}/entrepreneur/tc-video.mp4`,
     privacyPolicyVideo: `${API_HOST}/entrepreneur/pp-video.mp4`,
+    termsAndConditionsPDF: `${API_HOST}/entrepreneur/tc.pdf`,
+    privacyPolicyPDF: `${API_HOST}/entrepreneur/pp.pdf`,
+    safeContractPDF: `${API_HOST}/entrepreneur/safe-contract.pdf`,
   },
   notificationTypes: {
     ERROR: "error",

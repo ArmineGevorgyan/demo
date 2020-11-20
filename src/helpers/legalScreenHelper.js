@@ -19,6 +19,7 @@ const getLegalItems = (userRole) => {
         />
       ),
       uri: userConstants.termsAndConditionsUri,
+      pdf: userConstants.termsAndConditionsPDF,
     },
     {
       title: "privacyPolicy",
@@ -30,6 +31,7 @@ const getLegalItems = (userRole) => {
         />
       ),
       uri: userConstants.privacyPolicyUri,
+      pdf: userConstants.privacyPolicyPDF,
     },
     userRole === constants.userRole.investor
       ? {
@@ -42,6 +44,7 @@ const getLegalItems = (userRole) => {
             />
           ),
           uri: userConstants.svpContractUri,
+          pdf: userConstants.svpContractPDF,
         }
       : {
           title: "safeContract",
@@ -53,6 +56,7 @@ const getLegalItems = (userRole) => {
             />
           ),
           uri: userConstants.safeContractUri,
+          pdf: userConstants.safeContractPDF,
         },
     {
       title: "legalArticles",
@@ -64,6 +68,7 @@ const getLegalItems = (userRole) => {
         />
       ),
       uri: userConstants.privacyPolicyUri,
+      pdf: userConstants.privacyPolicyPDF,
     },
     {
       title: "legalTemplates",
@@ -75,6 +80,7 @@ const getLegalItems = (userRole) => {
         />
       ),
       uri: userConstants.privacyPolicyUri,
+      pdf: userConstants.privacyPolicyPDF,
     },
   ];
 
