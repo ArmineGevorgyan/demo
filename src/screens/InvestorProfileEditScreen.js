@@ -10,7 +10,9 @@ import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import SelectImage from "../components/selectImage";
 import {
-  save,
+  updateProfile,
+  getProfileData,
+  handleInput,
 } from "../redux/ducks/investorProfile";
 import schema from "../validation/investorprofileEditSchema";
 import { Formik } from "formik";
@@ -26,7 +28,12 @@ class InvestorProfileEditScreen extends Component {
     this.formik = React.createRef();
   };
 
+  componentDidMount() {
+    this.props.getProfileData();
+  };
+
   onSubmit = (values) => {
+    this.props.updateProfile(values);
     console.log("values ===================================   ", values);
   };
 
@@ -46,7 +53,7 @@ class InvestorProfileEditScreen extends Component {
           <SelectImage
             photoUrl={this.props.profileData?.photoUrl}
             setImage={
-              (image) => this.setTextInput({ photoUrl: image })
+              (image) => this.props.handleInput({ photoUrl: image })
             }
           />
         </ProfileBlueHeader>
@@ -71,191 +78,195 @@ class InvestorProfileEditScreen extends Component {
             marginTop: 20,
           }}
         >
-          <Formik
-            innerRef={(p) => (this.formik = p)}
-            initialValues={{
-              fullName: `${userData.firstName} ${userData.lastName}`,
-              companyName: profileData.companyName || "",
-              position: profileData.position || "",
-              bio: profileData.bio || "",
-              linkedIn: profileData.linkedIn || "",
-              crunchbase: profileData.crunchbase || "",
-              angelList: profileData.angelList || "",
-            }}
-            onSubmit={this.onSubmit}
-            validationSchema={schema}
-          >
-            {(props) => {
-              const values = props.values;
-              let bioLength = values.bio?.length || 0;
+          {
+            profileData.id ?
+              <Formik
+                innerRef={(p) => (this.formik = p)}
+                initialValues={{
+                  fullName: `${userData.firstName} ${userData.lastName}`,
+                  companyName: profileData.companyName || "",
+                  position: profileData.position || "",
+                  bio: profileData.bio || "",
+                  linkedinProfile: profileData.linkedinProfile || "",
+                  crunchbaseProfile: profileData.crunchbaseProfile || "",
+                  angelListProfile: profileData.angelListProfile || "",
+                }}
+                onSubmit={this.onSubmit}
+                validationSchema={schema}
+              >
+                {(props) => {
+                  const values = props.values;
+                  let bioLength = values.bio?.length || 0;
 
-              return (
-                <View style={styles.formContainer}>
+                  return (
+                    <View style={styles.formContainer}>
 
-                  <ValidationInputWrapper
-                    title={t("investorEditScreen.fullName")}
-                  >
-                    <Validation name="fullName" showMessage={true}>
-                      <Item
-                        rounded
-                        style={{
-                          ...baseStylesheet.inlineButtonInputItem,
-                          marginBottom: 5,
-                        }}
+                      <ValidationInputWrapper
+                        title={t("investorEditScreen.fullName")}
                       >
-                        <Input
-                          style={baseStylesheet.inputField}
-                          placeholder={t("investorEditScreen.fullNamePlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          value={values.fullName}
-                          onChangeText={props.handleChange("fullName")}
-                        />
-                      </Item>
-                    </Validation>
-                  </ValidationInputWrapper>
+                        <Validation name="fullName" showMessage={true}>
+                          <Item
+                            rounded
+                            style={{
+                              ...baseStylesheet.inlineButtonInputItem,
+                              marginBottom: 5,
+                            }}
+                          >
+                            <Input
+                              style={baseStylesheet.inputField}
+                              placeholder={t("investorEditScreen.fullNamePlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.fullName}
+                              onChangeText={props.handleChange("fullName")}
+                            />
+                          </Item>
+                        </Validation>
+                      </ValidationInputWrapper>
 
-                  <ValidationInputWrapper
-                    title={t("investorEditScreen.companyName")}
-                  >
-                    <Validation name="companyName" showMessage={true}>
-                      <Item
-                        rounded
-                        style={{
-                          ...baseStylesheet.inlineButtonInputItem,
-                          marginBottom: 5,
-                        }}
+                      <ValidationInputWrapper
+                        title={t("investorEditScreen.companyName")}
                       >
-                        <Input
-                          style={baseStylesheet.inputField}
-                          placeholder={t("investorEditScreen.companyNamePlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          value={values.companyName}
-                          onChangeText={props.handleChange("companyName")}
-                        />
-                      </Item>
-                    </Validation>
-                  </ValidationInputWrapper>
+                        <Validation name="companyName" showMessage={true}>
+                          <Item
+                            rounded
+                            style={{
+                              ...baseStylesheet.inlineButtonInputItem,
+                              marginBottom: 5,
+                            }}
+                          >
+                            <Input
+                              style={baseStylesheet.inputField}
+                              placeholder={t("investorEditScreen.companyNamePlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.companyName}
+                              onChangeText={props.handleChange("companyName")}
+                            />
+                          </Item>
+                        </Validation>
+                      </ValidationInputWrapper>
 
-                  <ValidationInputWrapper
-                    title={t("investorEditScreen.position")}
-                  >
-                    <Validation name="position" showMessage={true}>
-                      <Item
-                        rounded
-                        style={{
-                          ...baseStylesheet.inlineButtonInputItem,
-                          marginBottom: 5,
-                        }}
+                      <ValidationInputWrapper
+                        title={t("investorEditScreen.position")}
                       >
-                        <Input
-                          style={baseStylesheet.inputField}
-                          placeholder={t("investorEditScreen.positionPlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          value={values.position}
-                          onChangeText={props.handleChange("position")}
-                        />
-                      </Item>
-                    </Validation>
-                  </ValidationInputWrapper>
+                        <Validation name="position" showMessage={true}>
+                          <Item
+                            rounded
+                            style={{
+                              ...baseStylesheet.inlineButtonInputItem,
+                              marginBottom: 5,
+                            }}
+                          >
+                            <Input
+                              style={baseStylesheet.inputField}
+                              placeholder={t("investorEditScreen.positionPlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.position}
+                              onChangeText={props.handleChange("position")}
+                            />
+                          </Item>
+                        </Validation>
+                      </ValidationInputWrapper>
 
-                  <ValidationInputWrapper
-                    title={t("investorEditScreen.bio")}
-                    length={bioLength}
-                    maxLength={constants.investorProfileBioMaxLength}
-                  >
-                    <Validation name="bio" showMessage={true}>
-                      <Textarea
-                        bordered
-                        rowSpan={5}
+                      <ValidationInputWrapper
+                        title={t("investorEditScreen.bio")}
+                        length={bioLength}
                         maxLength={constants.investorProfileBioMaxLength}
-                        placeholder={t("investorEditScreen.bioPlaceholder")}
-                        placeholderTextColor={colors.blueBorder}
-                        style={{
-                          ...baseStylesheet.textarea,
-                          marginTop: 3,
-                          marginBottom: 5,
-                        }}
-                        value={values.bio}
-                        onChangeText={props.handleChange("bio")}
-                      />
-                    </Validation>
-                  </ValidationInputWrapper>
-
-                  <View style={styles.urlInputContainer}>
-                    <Validation name="linkedIn" showMessage={true}>
-                      <Item rounded style={{
-                        ...baseStylesheet.inputItem,
-                        marginTop: 5,
-                        marginBottom: 5,
-                        paddingLeft: 20,
-                      }}
                       >
-                        <LinkedIn />
-                        <Input
-                          style={baseStylesheet.inputField}
-                          placeholder={t("investorEditScreen.linkedInPlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          value={values.linkedIn}
-                          onChangeText={props.handleChange("linkedIn")}
-                        />
-                      </Item>
-                    </Validation>
-                  </View>
+                        <Validation name="bio" showMessage={true}>
+                          <Textarea
+                            bordered
+                            rowSpan={5}
+                            maxLength={constants.investorProfileBioMaxLength}
+                            placeholder={t("investorEditScreen.bioPlaceholder")}
+                            placeholderTextColor={colors.blueBorder}
+                            style={{
+                              ...baseStylesheet.textarea,
+                              marginTop: 3,
+                              marginBottom: 5,
+                            }}
+                            value={values.bio}
+                            onChangeText={props.handleChange("bio")}
+                          />
+                        </Validation>
+                      </ValidationInputWrapper>
 
-                  <View style={styles.urlInputContainer}>
-                    <Validation name="crunchbase" showMessage={true}>
-                      <Item rounded style={{
-                        ...baseStylesheet.inputItem,
-                        marginTop: 5,
-                        marginBottom: 5,
-                        paddingLeft: 20,
-                      }}
+                      <View style={styles.urlInputContainer}>
+                        <Validation name="linkedinProfile" showMessage={true}>
+                          <Item rounded style={{
+                            ...baseStylesheet.inputItem,
+                            marginTop: 5,
+                            marginBottom: 5,
+                            paddingLeft: 20,
+                          }}
+                          >
+                            <LinkedIn />
+                            <Input
+                              style={baseStylesheet.inputField}
+                              placeholder={t("investorEditScreen.linkedInPlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.linkedinProfile}
+                              onChangeText={props.handleChange("linkedinProfile")}
+                            />
+                          </Item>
+                        </Validation>
+                      </View>
+
+                      <View style={styles.urlInputContainer}>
+                        <Validation name="crunchbaseProfile" showMessage={true}>
+                          <Item rounded style={{
+                            ...baseStylesheet.inputItem,
+                            marginTop: 5,
+                            marginBottom: 5,
+                            paddingLeft: 20,
+                          }}
+                          >
+                            <Crunchbase />
+                            <Input
+                              style={baseStylesheet.inputField}
+                              placeholder={t("investorEditScreen.crunchbasePlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.crunchbaseProfile}
+                              onChangeText={props.handleChange("crunchbaseProfile")}
+                            />
+                          </Item>
+                        </Validation>
+                      </View>
+
+                      <View style={styles.urlInputContainer}>
+                        <Validation name="angelListProfile" showMessage={true}>
+                          <Item rounded style={{
+                            ...baseStylesheet.inputItem,
+                            marginTop: 5,
+                            marginBottom: 5,
+                            paddingLeft: 20,
+                          }}
+                          >
+                            <AngelList />
+                            <Input
+                              style={baseStylesheet.inputField}
+                              placeholder={t("investorEditScreen.angelListPlaceholder")}
+                              placeholderTextColor={colors.blueBorder}
+                              value={values.angelListProfile}
+                              onChangeText={props.handleChange("angelListProfile")}
+                            />
+                          </Item>
+                        </Validation>
+                      </View>
+
+                      <Button
+                        onPress={props.handleSubmit}
+                        style={baseStylesheet.mainButton}
                       >
-                        <Crunchbase />
-                        <Input
-                          style={baseStylesheet.inputField}
-                          placeholder={t("investorEditScreen.crunchbasePlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          value={values.crunchbase}
-                          onChangeText={props.handleChange("crunchbase")}
-                        />
-                      </Item>
-                    </Validation>
-                  </View>
-
-                  <View style={styles.urlInputContainer}>
-                    <Validation name="angelList" showMessage={true}>
-                      <Item rounded style={{
-                        ...baseStylesheet.inputItem,
-                        marginTop: 5,
-                        marginBottom: 5,
-                        paddingLeft: 20,
-                      }}
-                      >
-                        <AngelList />
-                        <Input
-                          style={baseStylesheet.inputField}
-                          placeholder={t("investorEditScreen.angelListPlaceholder")}
-                          placeholderTextColor={colors.blueBorder}
-                          value={values.angelList}
-                          onChangeText={props.handleChange("angelList")}
-                        />
-                      </Item>
-                    </Validation>
-                  </View>
-
-                  <Button
-                    onPress={props.handleSubmit}
-                    style={baseStylesheet.mainButton}
-                  >
-                    <Text style={baseStylesheet.mainButtonText}>
-                      {t("investorEditScreen.saveButton")}
-                    </Text>
-                  </Button>
-                </View>
-              )
-            }}
-          </Formik>
+                        <Text style={baseStylesheet.mainButtonText}>
+                          {t("investorEditScreen.saveButton")}
+                        </Text>
+                      </Button>
+                    </View>
+                  )
+                }}
+              </Formik>
+              : <Spinner color={colors.secondaryColor} />
+          }
         </Content>
       </Container>
     )
@@ -264,7 +275,7 @@ class InvestorProfileEditScreen extends Component {
 
 const mapStateToProps = (state, props) => {
   const userData = state.user.userData;
-  const profileData = state.entrepreneurProfile.profileData;
+  const profileData = state.investorProfile.profileData;
   return {
     userData,
     profileData,
@@ -273,7 +284,9 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    save: (values) => dispatch(save(values)),
+    updateProfile: (values) => dispatch(updateProfile(values)),
+    getProfileData: () => dispatch(getProfileData()),
+    handleInput: (input) => dispatch(handleInput(input)),
   };
 };
 

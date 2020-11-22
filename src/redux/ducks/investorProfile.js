@@ -14,9 +14,6 @@ const investorProfileSlice = createSlice({
   name: "investorProfile",
   initialState,
   reducers: {
-    save: (state) => ({
-      ...state,
-    }),
     togglePhotoError: (state, action) => ({
       ...state,
       photoError: action.payload,
@@ -30,7 +27,7 @@ const investorProfileSlice = createSlice({
         ],
       },
     }),
-    setTextInput: (state, action) => ({
+    handleInput: (state, action) => ({
       ...state,
       profileData: {
         ...state.profileData,
@@ -81,25 +78,7 @@ const investorProfileSlice = createSlice({
   },
 });
 
-const initialPrifileData = {
-  id: null,
-  photoUrl: null,
-  bio: null,
-  availableVia: null,
-  highlights: null,
-  residency: null,
-  locations: null,
-  timeZone: null,
-  completed: null,
-};
-
 const investorProfileReducer = investorProfileSlice.reducer;
-
-export const save = () => {
-  return (dispatch) => {
-    dispatch(investorProfileSlice.actions.save());
-  };
-};
 
 export const getProfileData = (id = -1) => {
   return (dispatch) => {
@@ -118,14 +97,17 @@ export const getProfileData = (id = -1) => {
   };
 };
 
-export const updateProfile = () => {
+export const updateProfile = (profileData) => {
   const state = store.getState();
 
   return (dispatch) => {
     dispatch(investorProfileSlice.actions.updateProfile());
 
     axios
-      .put(`${API_URL}/investor-profiles/current`, state.investorProfile.profileData)
+      .put(`${API_URL}/investor-profiles/current`, {
+        ...state.investorProfile.profileData,
+        ...profileData,
+      })
       .then((r) => { return r.data })
       .then((data) => {
         dispatch(investorProfileSlice.actions.updateProfileSuccess(data))
@@ -156,9 +138,9 @@ export const resetProfile = () => {
   };
 };
 
-export const setTextInput = (object) => {
+export const handleInput = (object) => {
   return (dispatch) => {
-    dispatch(investorProfileSlice.actions.setTextInput(object));
+    dispatch(investorProfileSlice.actions.handleInput(object));
   };
 };
 
@@ -178,49 +160,6 @@ export const togglePhotoError = (value) => {
   return (dispatch) => {
     dispatch(investorProfileSlice.actions.togglePhotoError(value));
   };
-};
-
-const getCityObject = (input) => {
-  if (typeof input === "string") {
-    return {
-      cityName: input,
-      city: null,
-      country: null,
-      region: null,
-    }
-  } else {
-    return {
-      cityName: input.name,
-      city: {
-        id: input.id,
-        name: input.name,
-        countryId: input.countryId,
-        regionId: input.regionId,
-        country: input.country,
-        region: input.region
-      },
-      country: input.country,
-      region: input.region,
-    }
-  }
-};
-
-export const setLocation = (location) => {
-  return (dispatch) => {
-    dispatch(investorProfileSlice.actions.setLocation(getCityObject(location)));
-  };
-};
-
-export const setTimeZone = (timeZone) => {
-  return (dispatch) => {
-    dispatch(investorProfileSlice.actions.setTimeZone(timeZone));
-  };
-};
-
-export const setResidency = (residency) => {
-  return (dispatch) => {
-    dispatch(investorProfileSlice.actions.setResidency(getCityObject(residency)));
-  }
 };
 
 export default investorProfileReducer;
