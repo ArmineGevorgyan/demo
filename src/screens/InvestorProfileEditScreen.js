@@ -26,6 +26,12 @@ class InvestorProfileEditScreen extends Component {
   constructor(props) {
     super(props);
     this.formik = React.createRef();
+    this.ref_input2 = React.createRef();
+    this.ref_input3 = React.createRef();
+    this.ref_input4 = React.createRef();
+    this.ref_input5 = React.createRef();
+    this.ref_input6 = React.createRef();
+    this.ref_input7 = React.createRef();
   };
 
   componentDidMount() {
@@ -34,7 +40,6 @@ class InvestorProfileEditScreen extends Component {
 
   onSubmit = (values) => {
     this.props.updateProfile(values);
-    console.log("values ===================================   ", values);
   };
 
   render() {
@@ -113,11 +118,16 @@ class InvestorProfileEditScreen extends Component {
                             }}
                           >
                             <Input
+                              returnKeyType="next"
+                              blurOnSubmit={false}
                               style={baseStylesheet.inputField}
                               placeholder={t("investorEditScreen.fullNamePlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.fullName}
                               onChangeText={props.handleChange("fullName")}
+                              onSubmitEditing={
+                                () => this.ref_input2._root.focus()
+                              }
                             />
                           </Item>
                         </Validation>
@@ -135,11 +145,17 @@ class InvestorProfileEditScreen extends Component {
                             }}
                           >
                             <Input
+                              returnKeyType="next"
+                              blurOnSubmit={false}
+                              ref={input => { this.ref_input2 = input }}
                               style={baseStylesheet.inputField}
                               placeholder={t("investorEditScreen.companyNamePlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.companyName}
                               onChangeText={props.handleChange("companyName")}
+                              onSubmitEditing={
+                                () => this.ref_input3._root.focus()
+                              }
                             />
                           </Item>
                         </Validation>
@@ -157,11 +173,17 @@ class InvestorProfileEditScreen extends Component {
                             }}
                           >
                             <Input
+                              returnKeyType="next"
+                              blurOnSubmit={false}
+                              ref={input => { this.ref_input3 = input }}
                               style={baseStylesheet.inputField}
                               placeholder={t("investorEditScreen.positionPlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.position}
                               onChangeText={props.handleChange("position")}
+                              onSubmitEditing={
+                                () => this.ref_input4._root.focus()
+                              }
                             />
                           </Item>
                         </Validation>
@@ -176,6 +198,9 @@ class InvestorProfileEditScreen extends Component {
                           <Textarea
                             bordered
                             rowSpan={5}
+                            returnKeyType="next"
+                              blurOnSubmit={false}
+                              ref={input => { this.ref_input4 = input }}
                             maxLength={constants.investorProfileBioMaxLength}
                             placeholder={t("investorEditScreen.bioPlaceholder")}
                             placeholderTextColor={colors.blueBorder}
@@ -186,6 +211,9 @@ class InvestorProfileEditScreen extends Component {
                             }}
                             value={values.bio}
                             onChangeText={props.handleChange("bio")}
+                            onSubmitEditing={
+                              () => this.ref_input5._root.focus()
+                            }
                           />
                         </Validation>
                       </ValidationInputWrapper>
@@ -201,11 +229,17 @@ class InvestorProfileEditScreen extends Component {
                           >
                             <LinkedIn />
                             <Input
+                              returnKeyType="next"
+                              blurOnSubmit={false}
+                              ref={input => { this.ref_input5 = input }}
                               style={baseStylesheet.inputField}
                               placeholder={t("investorEditScreen.linkedInPlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.linkedinProfile}
                               onChangeText={props.handleChange("linkedinProfile")}
+                              onSubmitEditing={
+                                () => this.ref_input6._root.focus()
+                              }
                             />
                           </Item>
                         </Validation>
@@ -222,11 +256,17 @@ class InvestorProfileEditScreen extends Component {
                           >
                             <Crunchbase />
                             <Input
+                              returnKeyType="next"
+                              blurOnSubmit={false}
+                              ref={input => { this.ref_input6 = input }}
                               style={baseStylesheet.inputField}
                               placeholder={t("investorEditScreen.crunchbasePlaceholder")}
                               placeholderTextColor={colors.blueBorder}
                               value={values.crunchbaseProfile}
                               onChangeText={props.handleChange("crunchbaseProfile")}
+                              onSubmitEditing={
+                                () => this.ref_input7._root.focus()
+                              }
                             />
                           </Item>
                         </Validation>
@@ -243,6 +283,7 @@ class InvestorProfileEditScreen extends Component {
                           >
                             <AngelList />
                             <Input
+                              ref={input => { this.ref_input7 = input }}
                               style={baseStylesheet.inputField}
                               placeholder={t("investorEditScreen.angelListPlaceholder")}
                               placeholderTextColor={colors.blueBorder}

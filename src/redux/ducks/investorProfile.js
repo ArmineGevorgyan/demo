@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
 import store from "../store";
+import { showNotification } from "../../helpers/notificationHelper";
 
 const initialState = {
   isLoading: false,
@@ -111,9 +112,11 @@ export const updateProfile = (profileData) => {
       .then((r) => { return r.data })
       .then((data) => {
         dispatch(investorProfileSlice.actions.updateProfileSuccess(data))
+        showNotification("success", "notification.saved");
       })
       .catch((error) => {
         dispatch(investorProfileSlice.actions.updateProfileFail(error));
+        showNotification("error", "notification.somethingWentWrong");
       });
   };
 };
