@@ -10,15 +10,17 @@ import { colors } from "../styles/colors";
 import { FlatList } from "react-native-gesture-handler";
 import { Formik } from "formik";
 import {
+  setLoading,
   loadCityList,
   loadMoreCities,
   setInputItem,
 } from "../redux/ducks/dropdownInputModal";
-import Flag from 'react-native-flags';
+import Flag from "react-native-flags";
 
 class DropdownInputModal extends Component {
   constructor(props) {
     super(props);
+    this.timerId;
   };
 
   handleClose = () => {
@@ -28,17 +30,31 @@ class DropdownInputModal extends Component {
   };
 
   handleChange = (e) => {
-    this.props.loadCityList(e);
-    this.props.setInputItem(e);
+    const {
+      isLoading,
+      setLoading,
+      setInputItem,
+      loadCityList,
+    } = this.props;
+
+    setInputItem(e);
+
+    if (!isLoading) {
+      setLoading();
+    }
+
+    if (this.timerId) {
+      clearTimeout(this.timerId)
+    }
+
+    this.timerId = setTimeout(() => {
+      loadCityList(e);
+    }, 300);
   };
 
   onSelectCity = (item) => {
     this.props.setResult(item, this.props.inputType);
     this.handleClose();
-  };
-
-  onSubmit = () => {
-
   };
 
   renderItem = ({ item, index, separators }) => (
@@ -126,7 +142,6 @@ class DropdownInputModal extends Component {
             initialValues={{
               input: this.props.input,
             }}
-            onSubmit={this.onSubmit}
           >
             {(props) => {
               const values = props.values;
@@ -216,6 +231,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setLoading: () => dispatch(setLoading()),
     loadCityList: (search) => dispatch(loadCityList(search)),
     loadMoreCities: () => dispatch(loadMoreCities()),
     setInputItem: (input) => dispatch(setInputItem(input)),

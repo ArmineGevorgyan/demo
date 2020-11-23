@@ -74,12 +74,6 @@ class EntProfileEditScreen extends Component {
       })
   };
 
-  handleCancel = () => {
-    this.formik.resetForm();
-    this.props.getProfileData();
-    this.props.togglePhotoError(false);
-  };
-
   backButtonHandler = () => {
     this.props.navigation.goBack();
   };
@@ -300,15 +294,6 @@ class EntProfileEditScreen extends Component {
                         >
                           <Text style={baseStylesheet.mainButtonText}>
                             {t("entProfileEditScreen.saveButton")}
-                          </Text>
-                        </Button>
-
-                        <Button
-                          style={baseStylesheet.grayButton}
-                          onPress={this.handleCancel}
-                        >
-                          <Text style={baseStylesheet.grayButtonText}>
-                            {t("entProfileEditScreen.cancelButton")}
                           </Text>
                         </Button>
                       </View>
