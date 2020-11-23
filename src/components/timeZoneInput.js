@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Item, Input } from "native-base";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
@@ -25,35 +25,40 @@ class TimeZoneInput extends Component {
     return (<View>
       <Text style={baseStylesheet.label}>
         {t("tomeZoneModal.inputTitle")}
-    </Text>
+      </Text>
       <Item
         rounded
         style={baseStylesheet.inputItem}
       >
         <TouchableOpacity
+          style={styles.touchableItem}
           onPress={
             () => this.handleClick(t("dropDownInputModal.locationTitle"))
           }
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
         >
-          <Input
-            disabled
-            blurOnSubmit={false}
-            style={{ ...baseStylesheet.inputField, width: "100%" }}
-            placeholder={t("tomeZoneModal.placeholder")}
-            placeholderTextColor={colors.blueBorder}
-            value={this.props.value || ""}
-          />
+          {
+            this.props.value ?
+              <Text
+                style={styles.text}
+              >
+                {this.props.value}
+              </Text>
+              :
+              <Text
+                style={[
+                  styles.text,
+                  styles.placeholder,
+                ]}
+              >
+                {t("dropDownInputModal.placeholder")}
+              </Text>
+          }
         </TouchableOpacity>
       </Item>
       <TimeZoneModal
         isModalOpen={this.props.isModalOpen}
-         closeModal={this.props.closeModal}
-         setResult={this.props.setResult}
+        closeModal={this.props.closeModal}
+        setResult={this.props.setResult}
       />
     </View>
     )
@@ -81,3 +86,25 @@ export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
 )(TimeZoneInput);
+
+const styles = StyleSheet.create({
+  touchableItem: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  flag: {
+    marginLeft: 0,
+    marginRight: 5,
+  },
+  text: {
+    width: "100%",
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
+    marginLeft: 10,
+  },
+  placeholder: {
+    marginLeft: 10,
+    color: colors.blueBorder,
+  },
+});

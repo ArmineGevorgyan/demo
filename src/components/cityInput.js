@@ -1,6 +1,11 @@
 import React, { Component } from "react";
-import { Item, Input } from "native-base";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Item } from "native-base";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
@@ -22,52 +27,60 @@ class CityInput extends Component {
 
   render() {
     const { t } = this.props;
-    return (<View style={{
-      width: "100%"
-    }}>
-      <Text style={baseStylesheet.label}>
-        {this.props.title}
-      </Text>
-      <Item
-        rounded
-        style={baseStylesheet.inputItem}
+    return (
+      <View
+        style={{
+          width: "100%"
+        }}
       >
-        <TouchableOpacity
-          onPress={
-            () => this.handleClick(t("dropDownInputModal.locationTitle"))
-          }
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
+        <Text style={baseStylesheet.label}>
+          {this.props.title}
+        </Text>
+        <Item
+          rounded
+          style={baseStylesheet.inputItem}
         >
-          {
-            this.props.flagCode!=="" && (
-              <Flag
-              code={this.props.flagCode}
-              size={32}
-              style={{ marginLeft: 10, }}
-              />
-            )
-          }
-          <Input
-            disabled
-            blurOnSubmit={false}
-            style={{ ...baseStylesheet.inputField }}
-            placeholder={t("dropDownInputModal.placeholder")}
-            placeholderTextColor={colors.blueBorder}
-            value={this.props.value}
-            onChangeText={this.props.inputChange}
-          />
-        </TouchableOpacity>
-      </Item>
-      <DropdownInputModal
-        isModalOpen={this.props.isModalOpen}
-        closeModal={this.props.closeModal}
-        setResult={this.props.setResult}
-        inputType={this.props.inputType}
-      />
-    </View>
+          <TouchableOpacity
+            onPress={
+              () => this.handleClick(t("dropDownInputModal.locationTitle"))
+            }
+            style={styles.touchableItem}
+          >
+            {
+              this.props.flagCode !== "" && (
+                <Flag
+                  code={this.props.flagCode}
+                  size={32}
+                  style={styles.flag}
+                />
+              )
+            }
+            {
+              this.props.value ?
+                <Text
+                  style={styles.text}
+                >
+                  {this.props.value}
+                </Text>
+                :
+                <Text
+                  style={[
+                    styles.text,
+                    styles.placeholder,
+                  ]}
+                >
+                  {t("dropDownInputModal.placeholder")}
+                </Text>
+            }
+          </TouchableOpacity>
+        </Item>
+        <DropdownInputModal
+          isModalOpen={this.props.isModalOpen}
+          closeModal={this.props.closeModal}
+          setResult={this.props.setResult}
+          inputType={this.props.inputType}
+        />
+      </View>
     )
   };
 };
@@ -93,3 +106,24 @@ export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
 )(CityInput);
+
+const styles = StyleSheet.create({
+  touchableItem: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  flag: {
+    marginLeft: 10,
+    marginRight: 5,
+  },
+  text: {
+     flex: 1,
+    fontSize: 16,
+    fontFamily: "montserrat-regular",
+    
+  },
+  placeholder: {
+    marginLeft: 10,
+    color: colors.blueBorder,
+  },
+});
