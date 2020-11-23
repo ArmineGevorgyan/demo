@@ -161,8 +161,7 @@
   "entProfileEditScreen":{
     "fullName":"Full name",
     "fullNamePlaceholder":"Full name",
-    "saveButton":"SAVE",
-    "cancelButton":"CANCEL"
+    "saveButton":"SAVE"
   },
   "entProfilePopulateScreen":{
     "bio":"Short bio",
