@@ -3,7 +3,7 @@ export const locationToString = (locations) => {
     if (locations[0]?.country === null ) {
       return locations[0]?.cityName;
     }
-    return `${locations[0]?.country?.name},${locations[0]?.city?.name},${locations[0]?.region?.name}`;
+    return `${locations[0]?.country?.name}, ${locations[0]?.city?.name}, ${locations[0]?.region?.name}`;
   }
   return "";
 };
@@ -19,7 +19,7 @@ export const residencyToString = (residency) => {
     if (!residency?.city) {
       return residency.cityName;
     }
-    return `${residency?.country?.name},${residency?.city?.name},${residency?.region?.name}`;
+    return `${residency?.country?.name}, ${residency?.city?.name}, ${residency?.region?.name}`;
   } else return "";
 };
 

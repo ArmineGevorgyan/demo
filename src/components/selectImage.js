@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Platform, Image, Text, StyleSheet } from "react-native";
 import { Button, Icon, Spinner } from "native-base";
 import * as ImagePicker from "expo-image-picker";
+import * as Permissions from 'expo-permissions';
 import { colors } from "../styles/colors";
 import Modal from "react-native-modal";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -32,25 +33,37 @@ class SelecImage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-     if (this.props.dImage !== prevProps.dImage) {
-       this.props.setImage(this.props.dImage);
-     }
+    if (this.props.dImage !== prevProps.dImage) {
+      this.props.setImage(this.props.dImage);
+    }
   }
 
   pickImage = async (type) => {
     let result;
+    let granted;
     if (type === "camera") {
-      result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      const permission = await Permissions.getAsync(Permissions.CAMERA);
+      if (permission.status !== 'granted') {
+        const newPermission = await Permissions.askAsync(Permissions.CAMERA);
+        if (newPermission.status === 'granted') {
+          granted = true;
+        }
+      } else {
+        granted = true;
+      }
 
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
+      if (granted) {
+        result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+      }
+
     } else {
       result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
