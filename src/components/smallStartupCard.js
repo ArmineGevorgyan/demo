@@ -15,6 +15,9 @@ class SmallStartupCard extends Component {
     const { t, startup, navigation } = this.props;
     const videoWidth = constants.windowWidth - 60; // 60 = cardHorizontalMargin
     const videoHeight = videoWidth / constants.widescreenVideoRatio;
+    const fullName = startup.referredByUser
+      ? `${startup.referredByUser.firstName} ${startup.referredByUser.lastName}`
+      : null;
 
     return (
       <View style={[styles.cardContainer, baseStylesheet.elevation6]}>
@@ -34,23 +37,23 @@ class SmallStartupCard extends Component {
             )}
             <View style={styles.startupDetailContainer}>
               <Icon name="user" type="AntDesign" style={styles.icon} />
-              {startup.referredBy ? (
+              {fullName ? (
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("InvestorProfileScreen", {
-                      investorId: this.referredBy.id,
+                      investorId: startup.referredByUser.id,
                     })
                   }
                 >
                   <Text style={[styles.startupDetail, styles.link]}>
                     {t("startupCard.referred")}
-                    {startup.referredBy || t("startupCard.draperRhino")}
+                    {fullName}
                   </Text>
                 </TouchableOpacity>
               ) : (
                 <Text style={styles.startupDetail}>
                   {t("startupCard.referred")}
-                  {startup.referredBy || t("startupCard.draperRhino")}
+                  {t("startupCard.draperRhino")}
                 </Text>
               )}
             </View>
