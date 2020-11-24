@@ -53,9 +53,10 @@ const investorProfileSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-    updateProfileSuccess: (state) => ({
+    updateProfileSuccess: (state, action) => ({
       ...state,
       isLoading: false,
+      profileData: action.payload,
     }),
     updateProfileFail: (state) => ({
       ...state,
@@ -111,7 +112,7 @@ export const updateProfile = (profileData) => {
       })
       .then((r) => { return r.data })
       .then((data) => {
-        dispatch(investorProfileSlice.actions.updateProfileSuccess(data))
+        dispatch(investorProfileSlice.actions.updateProfileSuccess(data));
         showNotification("success", "notification.saved");
       })
       .catch((error) => {
