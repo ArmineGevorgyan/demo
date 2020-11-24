@@ -9,7 +9,7 @@ const initialState = {
   isLoading: false,
   isModalOpen: false,
   isResetting: false,
-photoError:false,
+  photoError: false,
   profileData: {
     bio: "",
     highlights: "",
@@ -24,7 +24,6 @@ const entrepreneurProfileSlice = createSlice({
   reducers: {
     save: (state) => ({
       ...state,
-      // photoUrl: "some test value to pass the screen",
     }),
     openModal: (state) => ({
       ...state,
@@ -36,15 +35,13 @@ const entrepreneurProfileSlice = createSlice({
     }),
     togglePhotoError: (state, action) => ({
       ...state,
-      photoError:action.payload,
+      photoError: action.payload,
     }),
     setLocation: (state, action) => ({
       ...state,
       profileData: {
         ...state.profileData,
-        locations: [
-          action.payload,
-        ],
+        locations: [action.payload],
       },
     }),
     setTimeZone: (state, action) => ({
@@ -66,7 +63,7 @@ const entrepreneurProfileSlice = createSlice({
       profileData: {
         ...state.profileData,
         ...action.payload,
-      }
+      },
     }),
     getProfileData: (state) => ({
       ...state,
@@ -92,7 +89,7 @@ const entrepreneurProfileSlice = createSlice({
     }),
     updateProfileFail: (state) => ({
       ...state,
-      isLoading: false
+      isLoading: false,
     }),
     resetProfile: (state) => ({
       ...state,
@@ -121,7 +118,7 @@ const initialPrifileData = {
   residency: null,
   locations: null,
   timeZone: null,
-  completed:null,
+  completed: null,
 };
 
 const entrepreneurProfileReducer = entrepreneurProfileSlice.reducer;
@@ -131,43 +128,50 @@ export const save = (values) => {
 
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.save());
-    dispatch(updateUserData({
-      firstName: arr[0],
-      lastName:arr[1],
-    }));
+    dispatch(
+      updateUserData({
+        firstName: arr[0],
+        lastName: arr[1],
+      })
+    );
 
-     dispatch(updateProfile(true));
+    dispatch(updateProfile(true));
   };
 };
 
-export const getProfileData = (id = -1) => {
+export const getProfileData = (id = "current") => {
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.getProfileData());
-    const current = id === -1 ? "current" : id;
-    axios.
-      get(`${API_URL}/entrepreneur-profiles/${current}`)
+    axios
+      .get(`${API_URL}/entrepreneur-profiles/${id}`)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
         dispatch(entrepreneurProfileSlice.actions.getProfileDataSuccess(data));
-      }).catch((error) => {
+      })
+      .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.getProfileDataFail(error));
       });
   };
 };
 
-export const updateProfile = (save=false) => {
+export const updateProfile = (save = false) => {
   const state = store.getState();
 
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.updateProfile());
 
     axios
-      .put(`${API_URL}/entrepreneur-profiles/current`, state.entrepreneurProfile.profileData)
-      .then((r) => { return r.data })
+      .put(
+        `${API_URL}/entrepreneur-profiles/current`,
+        state.entrepreneurProfile.profileData
+      )
+      .then((r) => {
+        return r.data;
+      })
       .then((data) => {
-        dispatch(entrepreneurProfileSlice.actions.updateProfileSuccess(data))
+        dispatch(entrepreneurProfileSlice.actions.updateProfileSuccess(data));
         if (save) {
           showNotification("success", "notification.saved");
         }
@@ -191,9 +195,11 @@ export const resetProfile = () => {
         ...initialPrifileData,
         id: state.entrepreneurProfile.profileData.id,
       })
-      .then((r) => { return r.data })
+      .then((r) => {
+        return r.data;
+      })
       .then((data) => {
-        dispatch(entrepreneurProfileSlice.actions.resetProfileSuccess(data))
+        dispatch(entrepreneurProfileSlice.actions.resetProfileSuccess(data));
       })
       .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileFail(error));
@@ -232,7 +238,7 @@ const getCityObject = (input) => {
       city: null,
       country: null,
       region: null,
-    }
+    };
   } else {
     return {
       cityName: input.name,
@@ -242,17 +248,19 @@ const getCityObject = (input) => {
         countryId: input.countryId,
         regionId: input.regionId,
         country: input.country,
-        region: input.region
+        region: input.region,
       },
       country: input.country,
       region: input.region,
-    }
+    };
   }
 };
 
 export const setLocation = (location) => {
   return (dispatch) => {
-    dispatch(entrepreneurProfileSlice.actions.setLocation(getCityObject(location)));
+    dispatch(
+      entrepreneurProfileSlice.actions.setLocation(getCityObject(location))
+    );
   };
 };
 
@@ -264,8 +272,10 @@ export const setTimeZone = (timeZone) => {
 
 export const setResidency = (residency) => {
   return (dispatch) => {
-    dispatch(entrepreneurProfileSlice.actions.setResidency(getCityObject(residency)));
-  }
+    dispatch(
+      entrepreneurProfileSlice.actions.setResidency(getCityObject(residency))
+    );
+  };
 };
 
 export default entrepreneurProfileReducer;

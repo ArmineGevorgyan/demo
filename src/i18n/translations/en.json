@@ -264,5 +264,11 @@
     "contextHeading":"Your request has been sent successfully.",
     "context":"We will process your request and get back to you during the next 2 days.",
     "OKButton":"Close"
+  },
+  "investorProfileScreen" : {
+    "sendMessage": "Send Message",
+    "linkedinProfile": "LinkedIn Profile",
+    "angelListProfile": "AngelList Profile",
+    "crunchbaseProfile": "Crunchbase Profile"
   }
 }

@@ -3,56 +3,40 @@ import { Icon } from "native-base";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import HeaderImage from "../../assets/blue-header-rect.png";
 
-class ProfileBlueHeader extends Component {
+class EditProfileHeader extends Component {
   render() {
-    const {
-      title,
-      children,
-      backButtonHandler,
-    } = this.props;
+    const { title, children, backButtonHandler } = this.props;
 
     return (
       <ImageBackground
         source={HeaderImage}
         style={[
           styles.container,
-          children ? styles.withCildren : styles.withoutChildren
+          children ? styles.withCildren : styles.withoutChildren,
         ]}
       >
-        <View
-          style={styles.textRowContainer}
-        >
-          <View
-            style={{ minWidth: 30 }}
-          >
-            {
-              backButtonHandler &&
+        <View style={styles.textRowContainer}>
+          <View style={{ minWidth: 30 }}>
+            {backButtonHandler && (
               <Icon
                 style={{
                   color: "#FFF",
-                  marginBottom:15,
+                  marginBottom: 15,
                 }}
                 name="arrow-left"
                 type="Feather"
                 onPress={backButtonHandler}
               />
-            }
+            )}
           </View>
-          <Text
-            style={[
-              styles.headerText,
-              children && { marginBottom: 15, }
-            ]
-            }
-          >
+          <Text style={[styles.headerText, children && { marginBottom: 15 }]}>
             {title}
           </Text>
           <View
             style={{
-              minWidth: 30
+              minWidth: 30,
             }}
-          >
-          </View>
+          ></View>
         </View>
         <View
           style={{
@@ -66,9 +50,9 @@ class ProfileBlueHeader extends Component {
       </ImageBackground>
     );
   }
-};
+}
 
-export default ProfileBlueHeader;
+export default EditProfileHeader;
 
 const styles = StyleSheet.create({
   container: {
@@ -88,7 +72,7 @@ const styles = StyleSheet.create({
   textRowContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   headerText: {
     color: "#FFF",

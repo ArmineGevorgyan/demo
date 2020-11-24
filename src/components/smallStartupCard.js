@@ -12,7 +12,7 @@ import VideoView from "./videoView";
 
 class SmallStartupCard extends Component {
   render() {
-    const { t, startup } = this.props;
+    const { t, startup, navigation } = this.props;
     const videoWidth = constants.windowWidth - 60; // 60 = cardHorizontalMargin
     const videoHeight = videoWidth / constants.widescreenVideoRatio;
 
@@ -34,10 +34,25 @@ class SmallStartupCard extends Component {
             )}
             <View style={styles.startupDetailContainer}>
               <Icon name="user" type="AntDesign" style={styles.icon} />
-              <Text style={styles.startupDetail}>
-                {t("startupCard.referred")}
-                {startup.referredBy || t("startupCard.draperRhino")}
-              </Text>
+              {startup.referredBy ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("InvestorProfileScreen", {
+                      investorId: this.referredBy.id,
+                    })
+                  }
+                >
+                  <Text style={[styles.startupDetail, styles.link]}>
+                    {t("startupCard.referred")}
+                    {startup.referredBy || t("startupCard.draperRhino")}
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <Text style={styles.startupDetail}>
+                  {t("startupCard.referred")}
+                  {startup.referredBy || t("startupCard.draperRhino")}
+                </Text>
+              )}
             </View>
             {startup.industry && (
               <View style={styles.startupDetailContainer}>
@@ -206,5 +221,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "montserrat-regular",
     textTransform: "uppercase",
+  },
+  link: {
+    color: colors.lightBlue,
   },
 });

@@ -47,7 +47,7 @@ class DiscoverStartups extends Component {
   };
 
   renderSwiper() {
-    const { t, isLoading, isEmpty, startups, toggleIsEmpty } = this.props;
+    const { t, isLoading, isEmpty, startups, navigation } = this.props;
 
     if (!startups || isLoading) {
       return <Spinner color={colors.secondaryColor} />;
@@ -62,7 +62,7 @@ class DiscoverStartups extends Component {
         verticalSwipe={false}
         cards={startups}
         renderCard={(card) => {
-          return <SmallStartupCard startup={card} />;
+          return <SmallStartupCard startup={card} navigation={navigation} />;
         }}
         onSwipedLeft={this.swipeLeft}
         onSwipedRight={this.swipeRight}

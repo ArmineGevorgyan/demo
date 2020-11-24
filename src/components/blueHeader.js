@@ -7,7 +7,11 @@ import constants from "../constants";
 class BlueHeader extends Component {
   render() {
     return (
-      <ImageBackground source={HeaderImage} style={styles.blueHeader}>
+      <ImageBackground
+        source={HeaderImage}
+        style={[styles.blueHeader, this.props.style]}
+        imageStyle={[styles.imageStyle, this.props.imageStyle]}
+      >
         <StatusBar
           barStyle="light-content"
           hidden={false}
@@ -27,4 +31,5 @@ const styles = StyleSheet.create({
     width: "100%",
     height: constants.blueHeaderHeight,
   },
+  imageStyle: { resizeMode: "stretch" },
 });

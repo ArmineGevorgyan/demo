@@ -7,8 +7,7 @@ import { showNotification } from "../../helpers/notificationHelper";
 const initialState = {
   isLoading: false,
   photoError: false,
-  profileData: {
-  },
+  profileData: {},
 };
 
 const investorProfileSlice = createSlice({
@@ -23,9 +22,7 @@ const investorProfileSlice = createSlice({
       ...state,
       profileData: {
         ...state.profileData,
-        locations: [
-          action.payload,
-        ],
+        locations: [action.payload],
       },
     }),
     handleInput: (state, action) => ({
@@ -33,20 +30,21 @@ const investorProfileSlice = createSlice({
       profileData: {
         ...state.profileData,
         ...action.payload,
-      }
+      },
     }),
     getProfileData: (state) => ({
       ...state,
+      profileData: null,
       isLoading: true,
     }),
     getProfileDataSuccess: (state, action) => ({
       ...state,
-      isLoading: true,
+      isLoading: false,
       profileData: action.payload,
     }),
     getProfileDataFail: (state, action) => ({
       ...state,
-      isLoading: true,
+      isLoading: false,
       error: action.payload,
     }),
     updateProfile: (state) => ({
@@ -60,7 +58,7 @@ const investorProfileSlice = createSlice({
     }),
     updateProfileFail: (state) => ({
       ...state,
-      isLoading: false
+      isLoading: false,
     }),
     resetProfile: (state) => ({
       ...state,
@@ -75,6 +73,21 @@ const investorProfileSlice = createSlice({
     resetProfileFail: (state, action) => ({
       ...state,
       isResetting: false,
+      isLoading: false,
+      error: action.payload,
+    }),
+    getUserData: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    getUserDataSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      profileData: { ...state.profileData, ...action.payload },
+    }),
+    getUserDataFail: (state, action) => ({
+      ...state,
+      isLoading: false,
       error: action.payload,
     }),
   },
@@ -82,18 +95,21 @@ const investorProfileSlice = createSlice({
 
 const investorProfileReducer = investorProfileSlice.reducer;
 
-export const getProfileData = (id = -1) => {
+export const getProfileData = (id = "current") => {
   return (dispatch) => {
     dispatch(investorProfileSlice.actions.getProfileData());
-    const current = id === -1 ? "current" : id;
-    axios.
-      get(`${API_URL}/investor-profiles/${current}`)
+    axios
+      .get(`${API_URL}/investor-profiles/${id}`)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
         dispatch(investorProfileSlice.actions.getProfileDataSuccess(data));
-      }).catch((error) => {
+      })
+      .then(() => {
+        if (id != "current") dispatch(getUserData(id));
+      })
+      .catch((error) => {
         dispatch(investorProfileSlice.actions.getProfileDataFail(error));
       });
   };
@@ -110,7 +126,9 @@ export const updateProfile = (profileData) => {
         ...state.investorProfile.profileData,
         ...profileData,
       })
-      .then((r) => { return r.data })
+      .then((r) => {
+        return r.data;
+      })
       .then((data) => {
         dispatch(investorProfileSlice.actions.updateProfileSuccess(data));
         showNotification("success", "notification.saved");
@@ -132,12 +150,31 @@ export const resetProfile = () => {
         ...initialPrifileData,
         id: state.investorProfile.profileData.id,
       })
-      .then((r) => { return r.data })
+      .then((r) => {
+        return r.data;
+      })
       .then((data) => {
-        dispatch(investorProfileSlice.actions.resetProfileSuccess(data))
+        dispatch(investorProfileSlice.actions.resetProfileSuccess(data));
       })
       .catch((error) => {
         dispatch(investorProfileSlice.actions.updateProfileFail(error));
+      });
+  };
+};
+
+const getUserData = (id) => {
+  return (dispatch) => {
+    dispatch(investorProfileSlice.actions.getUserData());
+    axios
+      .get(`${API_URL}/user/${id}`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(investorProfileSlice.actions.getUserDataSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(investorProfileSlice.actions.getUserDataFail(error));
       });
   };
 };

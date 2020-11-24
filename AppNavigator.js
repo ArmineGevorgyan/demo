@@ -39,6 +39,7 @@ import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
 import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
 import LegalScreen from "./src/screens/LegalScreen";
 import LegalDocumentScreen from "./src/screens/LegalDocumentScreen";
+import InvestorProfileScreen from "./src/screens/InvestorProfileScreen";
 import constants from "./src/constants";
 import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 
@@ -143,12 +144,19 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen name="LegalScreen" component={LegalScreen} />
-          <Stack.Screen name="EntProfileEditScreen" component={EntProfileEditScreen} />
+          <Stack.Screen
+            name="EntProfileEditScreen"
+            component={EntProfileEditScreen}
+          />
           <Stack.Screen
             name="LegalDocumentScreen"
             component={LegalDocumentScreen}
           />
           <Stack.Screen name="InvestorProfileEditScreen" component={InvestorProfileEditScreen} />
+          <Stack.Screen
+            name="InvestorProfileScreen"
+            component={InvestorProfileScreen}
+          />
           <Stack.Screen
             name="ForgotPasswordScreen"
             component={ForgotPasswordScreen}
@@ -221,6 +229,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
-)(AppNavigator);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  AppNavigator
+);

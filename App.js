@@ -16,6 +16,7 @@ export default function App() {
     "montserrat-bold": require("./assets/fonts/Montserrat-Bold.ttf"),
     "montserrat-extra-bold": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
     "montserrat-light": require("./assets/fonts/Montserrat-Light.ttf"),
+    "montserrat-medium": require("./assets/fonts/Montserrat-Medium.ttf"),
     "montserrat-regular": require("./assets/fonts/Montserrat-Regular.ttf"),
     "montserrat-semi-bold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
     "montserrat-extra-light": require("./assets/fonts/Montserrat-ExtraLight.ttf"),
