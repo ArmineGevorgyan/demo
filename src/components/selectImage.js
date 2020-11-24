@@ -10,7 +10,6 @@ import { uploadFile, resetImage } from "../redux/ducks/fileUploader";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import CachedImage from "react-native-expo-cached-image";
 
 class SelecImage extends Component {
   constructor(props) {
