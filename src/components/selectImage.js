@@ -6,7 +6,7 @@ import * as Permissions from 'expo-permissions';
 import { colors } from "../styles/colors";
 import Modal from "react-native-modal";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import { uploadFile } from "../redux/ducks/fileUploader";
+import { uploadFile, resetImage } from "../redux/ducks/fileUploader";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
@@ -37,6 +37,10 @@ class SelecImage extends Component {
     if (this.props.dImage !== prevProps.dImage) {
       this.props.setImage(this.props.dImage);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetImage();
   }
 
   pickImage = async (type) => {
@@ -97,15 +101,17 @@ class SelecImage extends Component {
         <Button
           rounded
           style={styles.container}
-          rounded
           onPress={this.showModal}
         >
           {isLoading ?
             <Spinner color={colors.secondaryColor} /> :
             (this.props.photoUrl) ? (
-              <CachedImage
+              <Image
                 style={styles.imageContainer}
-                source={{ uri: dImage || this.props.photoUrl }}
+                source={{
+                  uri: dImage || this.props.photoUrl,
+                  cache: "force-cache",
+                }}
               />
             ) : (
                 <Icon
@@ -114,6 +120,7 @@ class SelecImage extends Component {
                   style={{
                     color: colors.blueBorder,
                     fontSize: 40,
+                    alignItems: "center",
                   }}
                 />
               )}
@@ -203,6 +210,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     uploadFile: (file) => dispatch(uploadFile(file)),
+    resetImage: () => dispatch(resetImage()),
   };
 };
 
@@ -213,8 +221,8 @@ export default compose(
 
 const styles = StyleSheet.create({
   container: {
-    width: 96,
-    height: 96,
+    width: 100,
+    height: 100,
     borderRadius: 50,
     overflow: "hidden",
     backgroundColor: "#FFF",

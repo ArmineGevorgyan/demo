@@ -36,10 +36,20 @@ const fileUploaderSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    resetImage: (state) => ({
+      ...state,
+      image:null,
+    }),
   },
 });
 
 const fileUploaderReducer = fileUploaderSlice.reducer;
+
+export const resetImage = () => {
+  return (dispatch) => {
+    dispatch(fileUploaderSlice.actions.resetImage());
+  }
+}
 
 export const uploadFile = (photo) => {
   return (dispatch) => {
