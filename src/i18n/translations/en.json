@@ -86,7 +86,7 @@
   },
   "startupCard": {
     "referred": "Referred: ",
-    "referredBy": "Referred By: ",
+    "referredByUser": "Referred By: ",
     "draperRhino": "Draper Rhino",
     "learnMore": "Learn more",
     "book": "Book a call",

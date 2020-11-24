@@ -36,8 +36,8 @@ class StartupCard extends Component {
           <View style={styles.startupDetailContainer}>
             <Icon name="user" type="AntDesign" style={styles.icon} />
             <Text style={styles.startupDetail}>
-              {t("startupCard.referredBy")}
-              {startup.referredBy || t("startupCard.draperRhino")}
+              {t("startupCard.referredByUser")}
+              {startup.referredByUser || t("startupCard.draperRhino")}
             </Text>
           </View>
           {startup.industry && (

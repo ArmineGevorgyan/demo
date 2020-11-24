@@ -39,7 +39,7 @@ class ProfileScreen extends Component {
     return (
       <Container>
         <GrayHeader title={t("profileScreen.profile")} />
-        {userData.authorities[0] == constants.userRole.investor && (
+        {userData && userData.authorities[0] == constants.userRole.investor && (
           <DeleteAccountModal />
         )}
         <Content>
