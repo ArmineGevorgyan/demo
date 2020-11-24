@@ -64,8 +64,9 @@
     "last_name_required": "Last name is required",
     "url_not_valid": "Invalid URL",
     "linkedIn_url_required": "LinkedIn URL is required",
-    "linkedIn_url_not_valid": "Please enter a valid LinkedIn profile URL",
-    "angelList_url_not_valid": "Please enter a valid AngelList profile URL",
+    "linkedIn_url_not_valid": "Invalid LinkedIn profile URL",
+    "angelList_url_not_valid": "Invalid AngelList profile URL",
+    "crunchbase_url_not_valid":"Invalid Crunchbase profile URL",
     "message_required": "Message is required",
     "photo_required":"Photo is required",
     "fullName_required":"Full name is required",
@@ -73,7 +74,9 @@
     "location_required":"Location is required",
     "availableVia_required":"This field is required",
     "availableVia_url":"Please enter a valid URL",
-    "reason_required":"Reason is required"
+    "reason_required":"Reason is required",
+    "position_required":"Position is required",
+    "companyName_required":"Position is required"
   },
   "discoverStartups": {
     "headerText": "Discover Startups",
@@ -161,6 +164,21 @@
   "entProfileEditScreen":{
     "fullName":"Full name",
     "fullNamePlaceholder":"Full name",
+    "saveButton":"SAVE"
+  },
+  "investorEditScreen":{
+    "myProfile":"My Profile",
+    "fullName":"Full name",
+    "fullNamePlaceholder":"Full name",
+    "position":"Position",
+    "positionPlaceholder":"Partner",
+    "companyName":"Company name",
+    "companyNamePlaceholder":"Draper Associates",
+    "bio":"Short bio",
+    "bioPlaceholder":"Short description goes here…",
+    "linkedInPlaceholder":"Link to Linkedin profile",
+    "crunchbasePlaceholder":"Link to Crunchbase portfolio",
+    "angelListPlaceholder":"Link to AngelList portfolio",
     "saveButton":"SAVE"
   },
   "entProfilePopulateScreen":{

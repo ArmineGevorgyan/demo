@@ -32,6 +32,7 @@ import ParkingLotScreen from "./src/screens/ParkingLotScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
+import InvestorProfileEditScreen from "./src/screens/InvestorProfileEditScreen";
 import ForgotPasswordScreen from "./src/screens/ForgotPasswordScreen";
 import FAQScreen from "./src/screens/FAQScreen";
 import ResetPasswordSuccess from "./src/screens/ResetPasswordSuccess";
@@ -147,6 +148,7 @@ class AppNavigator extends Component {
             name="LegalDocumentScreen"
             component={LegalDocumentScreen}
           />
+          <Stack.Screen name="InvestorProfileEditScreen" component={InvestorProfileEditScreen} />
           <Stack.Screen
             name="ForgotPasswordScreen"
             component={ForgotPasswordScreen}

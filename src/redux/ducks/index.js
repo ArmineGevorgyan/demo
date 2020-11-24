@@ -18,6 +18,7 @@ import parkingLotSlice from "./parkingLot";
 import userSlice from "./user";
 import contactSlice from "./contact";
 import entrepreneurProfileSlice from "./entrepreneurProfile";
+import investorProfileSlice from "./investorProfile";
 import fileUploaderSlice from "./fileUploader";
 import dropdowninputModalSlice from "./dropdownInputModal";
 import timeZoneModalSlice from "./timeZoneModal";
@@ -39,6 +40,7 @@ const appReducer = combineReducers({
   user: userSlice,
   contactRequest: contactSlice,
   entrepreneurProfile: entrepreneurProfileSlice,
+  investorProfile: investorProfileSlice,
   fileUploader: fileUploaderSlice,
   dropdownInputModal: dropdowninputModalSlice,
   timeZoneModal: timeZoneModalSlice,
