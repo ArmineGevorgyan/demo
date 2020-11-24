@@ -84,7 +84,7 @@ class DeleteAccountModal extends Component {
 
               <Formik
                 initialValues={{
-                  reason: "",
+                  profileDeleteRequestReason: "",
                   message: "",
                 }}
                 validationSchema={schema}
@@ -95,13 +95,21 @@ class DeleteAccountModal extends Component {
 
                   return (
                     <View style={styles.formContainer}>
-                      <Validation name="reason" showMessage={true}>
+                      <Validation
+                        name="profileDeleteRequestReason"
+                        showMessage={true}
+                      >
                         <CustomPicker
-                          selectedValue={props.values.reason}
-                          onValueChange={(itemValue) =>
-                            props.setFieldValue("reason", itemValue)
+                          selectedValue={
+                            props.values.profileDeleteRequestReason
                           }
-                          value={props.values.reason}
+                          onValueChange={(itemValue) =>
+                            props.setFieldValue(
+                              "profileDeleteRequestReason",
+                              itemValue
+                            )
+                          }
+                          value={props.values.profileDeleteRequestReason}
                         >
                           <Picker.Item
                             value=""
@@ -118,7 +126,7 @@ class DeleteAccountModal extends Component {
                             ))}
                         </CustomPicker>
                       </Validation>
-                      {props.values.reason?.name ==
+                      {props.values.profileDeleteRequestReason?.name ==
                         constants.deleteAccountReasons.other && (
                         <View style={styles.message}>
                           <View style={styles.row}>
@@ -187,7 +195,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     closeDeleteAccountModal: () => dispatch(closeDeleteAccountModal()),
     openDeleteAccountSuccess: () => dispatch(openDeleteAccountSuccess()),
-    deleteAccountRequest: () => dispatch(deleteAccountRequest()),
+    deleteAccountRequest: (data) => dispatch(deleteAccountRequest(data)),
     getDeleteAccountReasons: () => dispatch(getDeleteAccountReasons()),
   };
 };

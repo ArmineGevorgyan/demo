@@ -3,7 +3,9 @@ import constants from "../constants";
 import i18n from "../i18n";
 
 const deleteAccountSchema = Yup.object().shape({
-  reason: Yup.object().required(i18n.t("validator.reason_required")),
+  profileDeleteRequestReason: Yup.object().required(
+    i18n.t("validator.reason_required")
+  ),
   message: Yup.string()
     .trim()
     .when("reason", {

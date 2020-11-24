@@ -94,12 +94,12 @@ export const openDeleteAccountModal = () => {
   };
 };
 
-export const deleteAccountRequest = () => {
+export const deleteAccountRequest = (data) => {
   return (dispatch) => {
     dispatch(deleteAccountSlice.actions.deleteAccountRequest());
 
     axios
-      .post(`${API_URL}/profile-delete-requests`, {})
+      .post(`${API_URL}/profile-delete-requests`, data)
       .then(() => {
         dispatch(deleteAccountSlice.actions.deleteAccountRequestSuccess());
       })
