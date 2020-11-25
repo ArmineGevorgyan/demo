@@ -19,7 +19,7 @@ const investorprofileEditSchema = Yup.object().shape({
     .trim()
     .required(i18n.t("validator.linkedIn_url_required"))
     .matches(constants.validURLRegExp, i18n.t("validator.linkedIn_url_not_valid")),
-  crunchbaseProfile: Yup.string()
+  crunchBaseProfile: Yup.string()
     .trim()
     .matches(constants.validURLRegExp, i18n.t("validator.crunchbase_url_not_valid")),
     angelListProfile: Yup.string()
