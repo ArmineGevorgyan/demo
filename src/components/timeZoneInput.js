@@ -24,7 +24,7 @@ class TimeZoneInput extends Component {
     const { t } = this.props;
     return (<View>
       <Text style={baseStylesheet.label}>
-        {t("tomeZoneModal.inputTitle")}
+        {t("timeZoneModal.inputTitle")}
       </Text>
       <Item
         rounded
@@ -33,7 +33,7 @@ class TimeZoneInput extends Component {
         <TouchableOpacity
           style={styles.touchableItem}
           onPress={
-            () => this.handleClick(t("dropDownInputModal.locationTitle"))
+            () => this.handleClick(t("timeZoneModal.timeZoneTitle"))
           }
         >
           {
@@ -50,7 +50,7 @@ class TimeZoneInput extends Component {
                   styles.placeholder,
                 ]}
               >
-                {t("dropDownInputModal.placeholder")}
+                {t("timeZoneModal.placeholder")}
               </Text>
           }
         </TouchableOpacity>

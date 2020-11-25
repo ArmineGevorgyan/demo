@@ -20,10 +20,18 @@ import {
 } from "../redux/ducks/dropdownInputModal";
 
 class CityInput extends Component {
-  handleClick = (title) => {
-    this.props.openModal(title);
+  handleClick = () => {
+    this.props.openModal(this.getTitle());
     this.props.setType(this.props.inputType);
   }
+
+  getTitle = () => {
+    const { t } = this.props;
+    
+    return this.props.inputType === "location" ?
+      t("dropDownInputModal.locationTitle") :
+      t("dropDownInputModal.residencyTitle");
+  };
 
   render() {
     const { t } = this.props;
@@ -42,7 +50,7 @@ class CityInput extends Component {
         >
           <TouchableOpacity
             onPress={
-              () => this.handleClick(t("dropDownInputModal.locationTitle"))
+              () => this.handleClick()
             }
             style={styles.touchableItem}
           >
@@ -117,10 +125,10 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   text: {
-     flex: 1,
+    flex: 1,
     fontSize: 16,
     fontFamily: "montserrat-regular",
-    
+
   },
   placeholder: {
     marginLeft: 10,

@@ -85,7 +85,7 @@ class InvestorProfileEditScreen extends Component {
                 position: profileData.position || "",
                 bio: profileData.bio || "",
                 linkedinProfile: profileData.linkedinProfile || "",
-                crunchbaseProfile: profileData.crunchbaseProfile || "",
+                crunchBaseProfile: profileData.crunchBaseProfile || "",
                 angelListProfile: profileData.angelListProfile || "",
               }}
               onSubmit={this.onSubmit}
@@ -253,7 +253,7 @@ class InvestorProfileEditScreen extends Component {
                     </View>
 
                     <View style={styles.urlInputContainer}>
-                      <Validation name="crunchbaseProfile" showMessage={true}>
+                      <Validation name="crunchBaseProfile" showMessage={true}>
                         <Item
                           rounded
                           style={{
@@ -272,12 +272,12 @@ class InvestorProfileEditScreen extends Component {
                             }}
                             style={baseStylesheet.inputField}
                             placeholder={t(
-                              "investorEditScreen.crunchbasePlaceholder"
+                              "investorEditScreen.crunchBasePlaceholder"
                             )}
                             placeholderTextColor={colors.blueBorder}
-                            value={values.crunchbaseProfile}
+                            value={values.crunchBaseProfile}
                             onChangeText={props.handleChange(
-                              "crunchbaseProfile"
+                              "crunchBaseProfile"
                             )}
                             onSubmitEditing={() =>
                               this.ref_input7._root.focus()

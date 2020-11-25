@@ -202,7 +202,7 @@
     "residencyTitle":"Type country, city or region to choose your residency",
     "typeHere":"Type here..."
   },
-  "tomeZoneModal":{
+  "timeZoneModal":{
     "inputTitle":"Time zone",
     "placeholder":"ETD - Current Location",
     "cancelButton":"CANCEL",

@@ -97,7 +97,7 @@ class TimeZoneModal extends Component {
           borderRadius: 20,
         }}>
           <Text style={styles.modalTitle}>
-            {t("tomeZoneModal.timeZoneTitle")}
+            {t("timeZoneModal.timeZoneTitle")}
           </Text>
           <View style={styles.formContainer}>
             <Item
@@ -131,7 +131,7 @@ class TimeZoneModal extends Component {
             onPress={() => this.handleClose()}
           >
             <Text style={baseStylesheet.grayButtonText}>
-              {t("tomeZoneModal.cancelButton")}
+              {t("timeZoneModal.cancelButton")}
             </Text>
           </Button>
         </View>
