@@ -3,8 +3,7 @@ import axios from "axios";
 import { API_URL } from "../../config";
 import { getToken, removeToken, setToken } from "../../helpers/auth";
 import { showNotification } from "../../helpers/notificationHelper";
-import { getUserData } from "./user";
-import { clearUserData } from "./user";
+import { getUserData, clearUserData } from "./user";
 
 const initialState = {
   isLoading: false,
@@ -85,11 +84,13 @@ export const authenticate = () => {
           dispatch(getUserData());
         }
       })
-      .catch((error) => dispatch(authSlice.actions.clearAuthentication()));
+      .catch((error) => dispatch(clearAuthentication()));
   };
 };
 
 export const clearAuthentication = () => {
+  removeToken();
+
   return (dispatch) => {
     dispatch(authSlice.actions.clearAuthentication());
     dispatch(clearUserData());
@@ -146,8 +147,7 @@ export const logout = (navigation) => {
     axios
       .post(`${API_URL}/logout`, {})
       .then(() => {
-        dispatch(authSlice.actions.clearAuthentication());
-        removeToken();
+        dispatch(clearAuthentication());
         navigation.navigate("LandingScreen");
       })
       .catch((error) => {

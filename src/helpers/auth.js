@@ -7,7 +7,7 @@ import { showNotification } from "./notificationHelper";
 
 export const setToken = async (token) => {
   try {
-    setAxiosRequestInterceptor(token);
+    setAxiosRequestInterceptor();
     await AsyncStorage.setItem("@token", token);
   } catch (e) {}
 };
@@ -16,6 +16,7 @@ export const getToken = () => AsyncStorage.getItem("@token");
 
 export const removeToken = async () => {
   try {
+    removeAxiosRequestInterceptor();
     await AsyncStorage.removeItem("@token");
   } catch (e) {}
 };
@@ -44,19 +45,21 @@ const checkConnection = async () => {
   }
 };
 
-const setAxiosRequestInterceptor = (token) => {
-  axios.interceptors.request.use(
-    (config) => {
-      const header = { Authorization: `Bearer ${token}` };
-      Object.assign(config.headers, header);
-      checkConnection();
+const authInterceptor = async (config) => {
+  let token = await getToken();
+  const header = { Authorization: `Bearer ${token}` };
+  Object.assign(config.headers, header);
+  checkConnection();
 
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  return config;
+};
+
+const setAxiosRequestInterceptor = () => {
+  axios.interceptors.request.use(authInterceptor);
+};
+
+const removeAxiosRequestInterceptor = async () => {
+  axios.interceptors.request.eject(authInterceptor);
 };
 
 axios.interceptors.response.use(
@@ -69,13 +72,8 @@ axios.interceptors.response.use(
       error.response.status === 401 &&
       token
     ) {
-      removeToken()
-        .then(() => {
-          store.dispatch(clearAuthentication());
-        })
-        .then(() => {
-          showNotification("error", "notification.expiredToken");
-        });
+      store.dispatch(clearAuthentication());
+      showNotification("error", "notification.expiredToken");
     }
 
     return Promise.reject(error);
