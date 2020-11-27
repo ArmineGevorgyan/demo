@@ -42,6 +42,7 @@ import LegalDocumentScreen from "./src/screens/LegalDocumentScreen";
 import InvestorProfileScreen from "./src/screens/InvestorProfileScreen";
 import constants from "./src/constants";
 import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
+import StartupScreen from "./src/screens/StartupScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -152,7 +153,14 @@ class AppNavigator extends Component {
             name="LegalDocumentScreen"
             component={LegalDocumentScreen}
           />
-          <Stack.Screen name="InvestorProfileEditScreen" component={InvestorProfileEditScreen} />
+          <Stack.Screen
+            name="StartupScreen"
+            component={StartupScreen}
+          />
+          <Stack.Screen
+            name="InvestorProfileEditScreen"
+            component={InvestorProfileEditScreen}
+          />
           <Stack.Screen
             name="InvestorProfileScreen"
             component={InvestorProfileScreen}

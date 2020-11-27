@@ -32,7 +32,9 @@ class VideoView extends Component {
       <Video
         ref={(ref) => (this.videoRef = ref)}
         source={{ uri: this.props.videoSource }}
+        posterSource={{uri:this.props.posterSource}}
         resizeMode="cover"
+        usePoster
         useNativeControls
         onFullscreenUpdate={this.onFullscreenUpdate}
         style={this.props.size}
