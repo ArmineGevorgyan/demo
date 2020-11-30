@@ -96,6 +96,15 @@
     "of": " of ",
     "fullProfile": "Full Profile"
   },
+  "startupTab":{
+    "overview": "OVERVIEW",
+    "product": "PRODUCT" ,
+    "market": "MARKET" ,
+    "team": "TEAM" ,
+    "discussions": "DISCUSSIONS" ,
+    "faq": "FAQ" ,
+    "videos": "VIDEOS"
+  },
   "investmentInfo": {
     "goal": "Goal",
     "runway": "Runway",

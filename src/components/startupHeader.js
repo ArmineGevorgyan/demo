@@ -72,12 +72,7 @@ class StartupHeader extends Component {
             />
           </View>
         </View>
-        <Text style={{
-          paddingLeft: 110,
-          fontSize: 20,
-          color: "#262F3E",
-          fontFamily: "montserrat-medium",
-        }}>
+        <Text style={styles.startupTitle }>
           {startup?.name}
         </Text>
       </View>
@@ -116,5 +111,11 @@ const styles = StyleSheet.create({
     height: 87,
     borderRadius: 50,
     backgroundColor: "#FFF",
+  },
+  startupTitle: {
+    paddingLeft: 110,
+    fontSize: 20,
+    color: "#262F3E",
+    fontFamily: "montserrat-medium",
   },
 });
