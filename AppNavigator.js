@@ -45,6 +45,7 @@ import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
+import Notifications from "./src/screens/NotificationsScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -183,6 +184,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
+          />
+          <Stack.Screen
+            name="NotificationsScreen"
+            component={Notifications}
           />
         </Stack.Navigator>
       );
