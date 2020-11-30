@@ -10,6 +10,7 @@ import StartupHeader from "../components/startupHeader";
 import { addStartupToPipeline, } from "../redux/ducks/startup";
 import { renderScene } from "../helpers/startupHelper";
 import constants from "../constants";
+import { colors } from "../styles/colors";
 
 const renderHeader = (startup, goBack) => (
   <StartupHeader
@@ -64,18 +65,12 @@ const StartupScreen = (
         scrollEnabled: true,
         activeColor: "#2C8EF4",
         inactiveColor: "#000",
-        style: {
-          backgroundColor: "#FFF",
-          shadowColor: "#FFF",
-          elevation: 0,
-          borderBottomWidth: 1,
-          borderBottomColor: "#C7D7E6",
-        },
+        style: styles.tabBarStyle,
         tabStyle: {
           width: "auto",
         },
         labelStyle: {
-          fontFamily: "montserrat-light",
+          fontFamily: "montserrat-medium",
         },
         indicatorStyle: {
           backgroundColor: "#2C8EF4",
@@ -108,5 +103,12 @@ const styles = StyleSheet.create({
   headerText: {
     color: 'white',
     fontSize: 24,
+  },
+  tabBarStyle: {
+    backgroundColor: "#FFF",
+    shadowColor: "#FFF",
+    elevation: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.blueBorder,
   },
 });

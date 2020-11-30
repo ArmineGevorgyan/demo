@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Animated } from "react-native";
 import { useCollapsibleScene } from "react-native-collapsible-tab-view";
-import { SceneMap } from "react-native-tab-view"; 
+import { SceneMap } from "react-native-tab-view";
 
 const StartupRoute = ({
   routeKey,
@@ -22,13 +22,13 @@ const StartupRoute = ({
   );
 };
 
-const OverviewScene = () => <StartupRoute routeKey="overview"></StartupRoute>;
-const ProductScene = () => <StartupRoute routeKey="product"></StartupRoute>;
-const MarketScene = () => <StartupRoute routeKey="market"></StartupRoute>;
-const TeamScene = () => <StartupRoute routeKey="team"></StartupRoute>;
-const DiscussionsScene = () => <StartupRoute routeKey="discussions"></StartupRoute>;
-const FaqScene = () => <StartupRoute routeKey="faq"></StartupRoute>;
-const VideosScene = () => <StartupRoute routeKey="videos"></StartupRoute>;
+const OverviewScene = () => (<StartupRoute routeKey="overview" color="white"></StartupRoute>);
+const ProductScene = () => (<StartupRoute routeKey="product" color="white"></StartupRoute>);
+const MarketScene = () => (<StartupRoute routeKey="market" color="white"></StartupRoute>);
+const TeamScene = () => (<StartupRoute routeKey="team" color="white"></StartupRoute>);
+const DiscussionsScene = () => (<StartupRoute routeKey="discussions" color="white"></StartupRoute>);
+const FaqScene = () => (<StartupRoute routeKey="faq" color="white"></StartupRoute>);
+const VideosScene = () => (<StartupRoute routeKey="videos" color="white"></StartupRoute>);
 
 export const renderScene = SceneMap({
   overview: OverviewScene,

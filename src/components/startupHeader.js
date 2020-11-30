@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Icon, } from "native-base";
 import { TouchableOpacity, StyleSheet, Image, Text, } from "react-native";
 import VideoView from "./videoView";
+import constants from "../constants";
 
 class StartupHeader extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class StartupHeader extends Component {
     return (
       <View
         style={{
-          height: 310,
+          height: constants.startupHeaderHeight,
         }}
       >
         <VideoView
