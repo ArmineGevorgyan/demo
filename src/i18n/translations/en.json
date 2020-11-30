@@ -283,5 +283,11 @@
   "startupFaq":{
     "noFaqTitle":"No info sessions held yet.",
     "noFaqDescription":"You’ll find transcripts of held info sessions here."
+  },
+  "discussionsScreen" : {
+    "createNewButton": "Create new discussion",
+    "reply": "Reply",
+    "answeredBy": "Answered by ",
+    "answers": "Answers"
   }
 }
