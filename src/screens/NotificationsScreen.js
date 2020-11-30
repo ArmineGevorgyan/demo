@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { getNotifications } from "../redux/ducks/notifications";
-import { Spinner, View } from "native-base";
+import { Spinner, View, Text, } from "native-base";
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
 

@@ -33,7 +33,7 @@ const notificationsReduser = notificationsSlice.reducer;
 
 export const getNotifications = () => {
   return (dispatch) => {
-    // dispatch(notificationsSlice.actions.getNotifications());
+    dispatch(notificationsSlice.actions.getNotifications());
 
     //TODO implement get notifications request
   };
