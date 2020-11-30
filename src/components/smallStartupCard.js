@@ -114,7 +114,12 @@ class SmallStartupCard extends Component {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={
+              () => { this.props.navigation.navigate("StartupScreen", { startup }) }
+            }
+          >
             <Text style={styles.buttonText}>
               {t("startupCard.fullProfile")}
             </Text>
