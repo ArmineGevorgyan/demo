@@ -55,7 +55,7 @@ export const getDiscussions = (startupId) => {
     uri = startupId ? `?startupId=${startupId}` : "/all";
 
     axios
-      .get(`${API_URL}/discussion${uri}`)
+      .get(`${API_URL}/discussions${uri}`)
       .then((r) => {
         return r.data;
       })

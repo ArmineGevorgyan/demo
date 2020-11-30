@@ -17,39 +17,40 @@ const StartupRoute = ({ routeKey, color, children }) => {
     </Animated.ScrollView>
   );
 };
+export const renderScene = (startup) => {
+  const OverviewScene = () => (
+    <StartupRoute routeKey="overview" color="white"></StartupRoute>
+  );
+  const ProductScene = () => (
+    <StartupRoute routeKey="product" color="white"></StartupRoute>
+  );
+  const MarketScene = () => (
+    <StartupRoute routeKey="market" color="white"></StartupRoute>
+  );
+  const TeamScene = () => (
+    <StartupRoute routeKey="team" color="white"></StartupRoute>
+  );
+  const DiscussionsScene = () => (
+    <StartupRoute routeKey="discussions" color="white">
+      <DiscussionsScreen startup={startup} />
+    </StartupRoute>
+  );
+  const FaqScene = () => (
+    <StartupRoute routeKey="faq" color="white">
+      <StartupFaqScreen />
+    </StartupRoute>
+  );
+  const VideosScene = () => (
+    <StartupRoute routeKey="videos" color="white"></StartupRoute>
+  );
 
-const OverviewScene = () => (
-  <StartupRoute routeKey="overview" color="white"></StartupRoute>
-);
-const ProductScene = () => (
-  <StartupRoute routeKey="product" color="white"></StartupRoute>
-);
-const MarketScene = () => (
-  <StartupRoute routeKey="market" color="white"></StartupRoute>
-);
-const TeamScene = () => (
-  <StartupRoute routeKey="team" color="white"></StartupRoute>
-);
-const DiscussionsScene = () => (
-  <StartupRoute routeKey="discussions" color="white">
-    <DiscussionsScreen />
-  </StartupRoute>
-);
-const FaqScene = () => (
-  <StartupRoute routeKey="faq" color="white">
-    <StartupFaqScreen />
-  </StartupRoute>
-);
-const VideosScene = () => (
-  <StartupRoute routeKey="videos" color="white"></StartupRoute>
-);
-
-export const renderScene = SceneMap({
-  overview: OverviewScene,
-  product: ProductScene,
-  market: MarketScene,
-  team: TeamScene,
-  discussions: DiscussionsScene,
-  faq: FaqScene,
-  videos: VideosScene,
-});
+  return SceneMap({
+    overview: OverviewScene,
+    product: ProductScene,
+    market: MarketScene,
+    team: TeamScene,
+    discussions: DiscussionsScene,
+    faq: FaqScene,
+    videos: VideosScene,
+  });
+};

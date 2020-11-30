@@ -7,14 +7,15 @@ import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { getDiscussions } from "../redux/ducks/discussion";
+import DiscussionItem from "../components/discussionItem";
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
-    this.props.getDiscussions();
+    this.props.getDiscussions(this.props.startup.id);
   }
 
   render() {
-    const { t, navigation, isLoading, discussionList } = this.props;
+    const { t, navigation, startup, isLoading, discussionList } = this.props;
 
     if (isLoading || !discussionList) {
       return <Spinner color={colors.lightBlue} />;
@@ -32,6 +33,14 @@ class DiscussionsScreen extends Component {
               {t("discussionsScreen.createNewButton")}
             </Text>
           </Button>
+        </View>
+        <View style={styles.list}>
+          {discussionList
+            .slice()
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((item) => (
+              <DiscussionItem item={item} startup={startup} />
+            ))}
         </View>
       </Content>
     );
@@ -62,8 +71,8 @@ const styles = StyleSheet.create({
   buttonView: {
     marginTop: 5,
     marginBottom: 15,
-    marginLeft: 30,
-    marginRight: 30,
+    marginLeft: 25,
+    marginRight: 25,
   },
   buttonText: {
     color: colors.lightBlue,
@@ -74,6 +83,10 @@ const styles = StyleSheet.create({
     color: colors.lightBlue,
     fontSize: 18,
     marginLeft: 0,
+    marginRight: 10,
+  },
+  list: {
+    marginLeft: 10,
     marginRight: 10,
   },
 });

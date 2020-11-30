@@ -3,52 +3,43 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import {
-  CollapsibleTabView,
-} from "react-native-collapsible-tab-view";
+import { CollapsibleTabView } from "react-native-collapsible-tab-view";
 import StartupHeader from "../components/startupHeader";
-import { addStartupToPipeline, } from "../redux/ducks/startup";
+import { addStartupToPipeline } from "../redux/ducks/startup";
 import { renderScene } from "../helpers/startupHelper";
 import constants from "../constants";
 import { colors } from "../styles/colors";
 
 const renderHeader = (startup, goBack) => (
-  <StartupHeader
-    startup={startup}
-    goBack={goBack}
-  />
-
+  <StartupHeader startup={startup} goBack={goBack} />
 );
 
-const StartupScreen = (
-  {
-    t,
-    route,
-    navigation,
-    startups,
-    addStartupToPipeline,
-  }
-) => {
-
+const StartupScreen = ({
+  t,
+  route,
+  navigation,
+  startups,
+  addStartupToPipeline,
+}) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'overview', title: t("startupTab.overview") },
-    { key: 'product', title: t("startupTab.product") },
-    { key: 'market', title: t("startupTab.market") },
-    { key: 'team', title: t("startupTab.team")},
-    { key: 'discussions', title: t("startupTab.discussions") },
-    { key: 'faq', title: t("startupTab.faq")},
-    { key: 'videos', title: t("startupTab.videos") },
+    { key: "overview", title: t("startupTab.overview") },
+    { key: "product", title: t("startupTab.product") },
+    { key: "market", title: t("startupTab.market") },
+    { key: "team", title: t("startupTab.team") },
+    { key: "discussions", title: t("startupTab.discussions") },
+    { key: "faq", title: t("startupTab.faq") },
+    { key: "videos", title: t("startupTab.videos") },
   ]);
 
   const goBack = (isFavorite) => {
     if (isFavorite) {
-      addStartupToPipeline(startups[route?.params?.startup.id - 1])
+      addStartupToPipeline(startups[route?.params?.startup.id - 1]);
       navigation.navigate("Pipeline");
     } else {
       navigation.goBack();
     }
-  }
+  };
 
   const handleIndexChange = (index) => {
     setIndex(index);
@@ -57,7 +48,7 @@ const StartupScreen = (
   return (
     <CollapsibleTabView
       navigationState={{ index, routes }}
-      renderScene={renderScene}
+      renderScene={renderScene(route?.params?.startup)}
       onIndexChange={handleIndexChange}
       renderHeader={() => renderHeader(route?.params?.startup, goBack)}
       headerHeight={constants.startupHeaderHeight}
@@ -101,7 +92,7 @@ export default compose(
 
 const styles = StyleSheet.create({
   headerText: {
-    color: 'white',
+    color: "white",
     fontSize: 24,
   },
   tabBarStyle: {

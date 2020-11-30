@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import { View, Icon, } from "native-base";
-import { TouchableOpacity, StyleSheet, Image, Text, } from "react-native";
+import { View, Icon } from "native-base";
+import { TouchableOpacity, StyleSheet, Image, Text } from "react-native";
 import VideoView from "./videoView";
 import constants from "../constants";
 
 class StartupHeader extends Component {
   constructor(props) {
     super(props);
-    this.state = { isFavorite: false, }
+    this.state = { isFavorite: false };
   }
 
   addToFavouritesHandler = () => {
-    this.setState({ isFavorite: !this.state.isFavorite })
+    this.setState({ isFavorite: !this.state.isFavorite });
   };
 
   backHandler = () => {
@@ -19,8 +19,7 @@ class StartupHeader extends Component {
   };
 
   render() {
-    const {
-      startup, } = this.props;
+    const { startup } = this.props;
 
     return (
       <View
@@ -36,50 +35,32 @@ class StartupHeader extends Component {
             height: 250,
           }}
         />
-        <View
-          style={styles.iconContainer}>
-          <TouchableOpacity
-            onPress={this.backHandler}
-          >
-            <Icon
-              name="arrow-left"
-              type="Feather"
-              style={styles.icon}
-            />
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={this.backHandler}>
+            <Icon name="arrow-left" type="Feather" style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.addToFavouritesHandler}
-          >
-            {!this.state.isFavorite ?
-              <Icon
-                name="star"
-                type="Feather"
-                style={styles.icon}
-              />
-              :
+          <TouchableOpacity onPress={this.addToFavouritesHandler}>
+            {!this.state.isFavorite ? (
+              <Icon name="star" type="Feather" style={styles.icon} />
+            ) : (
               <Icon
                 name="star"
                 type="MaterialCommunityIcons"
                 style={{
                   color: "#FFFF00",
                 }}
-              />}
-
+              />
+            )}
           </TouchableOpacity>
           <View style={styles.logoContainer}>
-            <Image
-              source={{ uri: startup?.logoUrl }}
-              style={styles.logo}
-            />
+            <Image source={{ uri: startup?.logoUrl }} style={styles.logo} />
           </View>
         </View>
-        <Text style={styles.startupTitle }>
-          {startup?.name}
-        </Text>
+        <Text style={styles.startupTitle}>{startup?.name}</Text>
       </View>
-    )
-  };
-};
+    );
+  }
+}
 
 export default StartupHeader;
 
@@ -114,6 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   startupTitle: {
+    paddingTop: 5,
     paddingLeft: 110,
     fontSize: 20,
     color: "#262F3E",

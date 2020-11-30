@@ -288,6 +288,7 @@
     "createNewButton": "Create new discussion",
     "reply": "Reply",
     "answeredBy": "Answered by ",
-    "answers": "Answers"
+    "answers": "Answers",
+    "me": "Me"
   }
 }
