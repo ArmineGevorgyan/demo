@@ -2,6 +2,7 @@ import React from "react";
 import { View, Animated } from "react-native";
 import { useCollapsibleScene } from "react-native-collapsible-tab-view";
 import { SceneMap } from "react-native-tab-view";
+import StartupFaqScreen from "../screens/StartupFaqScreen";
 
 const StartupRoute = ({
   routeKey,
@@ -27,7 +28,7 @@ const ProductScene = () => (<StartupRoute routeKey="product" color="white"></Sta
 const MarketScene = () => (<StartupRoute routeKey="market" color="white"></StartupRoute>);
 const TeamScene = () => (<StartupRoute routeKey="team" color="white"></StartupRoute>);
 const DiscussionsScene = () => (<StartupRoute routeKey="discussions" color="white"></StartupRoute>);
-const FaqScene = () => (<StartupRoute routeKey="faq" color="white"></StartupRoute>);
+const FaqScene = () => (<StartupRoute routeKey="faq" color="white"><StartupFaqScreen/></StartupRoute>);
 const VideosScene = () => (<StartupRoute routeKey="videos" color="white"></StartupRoute>);
 
 export const renderScene = SceneMap({
