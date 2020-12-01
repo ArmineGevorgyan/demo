@@ -272,7 +272,7 @@ class InvestorProfileEditScreen extends Component {
                             }}
                             style={baseStylesheet.inputField}
                             placeholder={t(
-                              "investorEditScreen.crunchBasePlaceholder"
+                              "investorEditScreen.crunchbasePlaceholder"
                             )}
                             placeholderTextColor={colors.blueBorder}
                             value={values.crunchBaseProfile}
