@@ -279,5 +279,9 @@
     "linkedinProfile": "LinkedIn Profile",
     "angelListProfile": "AngelList Profile",
     "crunchbaseProfile": "Crunchbase Profile"
+  },
+  "startupFaq":{
+    "noFaqTitle":"No info sessions held yet.",
+    "noFaqDescription":"You’ll find transcripts of held info sessions here."
   }
 }
