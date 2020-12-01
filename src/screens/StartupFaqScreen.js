@@ -4,6 +4,7 @@ import { Text } from "native-base";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
+import NoFaqIcon from "../../assets/noFaq.svg";
 
 class StartupFaqScreen extends Component {
   render() {
@@ -12,7 +13,9 @@ class StartupFaqScreen extends Component {
     return (
       <View style={{
         paddingTop: 70,
+        alignItems:"center",
       }}>
+        <NoFaqIcon/>
         <Text style={styles.noFaqTitle}>
           {t("startupFaq.noFaqTitle")}
         </Text>
