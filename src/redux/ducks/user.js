@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
-import { getProfileData } from "../ducks/entrepreneurProfile";
+import constants from "../../constants";
+import { getProfileData as getEntrepreneurData } from "../ducks/entrepreneurProfile";
+import { getProfileData as getInvestorData } from "../ducks/investorProfile";
+import store from "../store";
 
 initialState = {
   isLoading: false,
@@ -36,7 +39,7 @@ const userSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-    clearUserData: () => ({
+    clearUserData: (state) => ({
       ...state,
       userData: null,
       profileData: null,
@@ -87,6 +90,17 @@ export const updateUserData = (fullName) => {
       .catch((error) => {
         dispatch(userSlice.actions.getUserDataFail(error));
       });
+  };
+};
+
+const getProfileData = () => {
+  const state = store.getState();
+  const userRole = state.user?.userData?.authorities[0];
+
+  return (dispatch) => {
+    userRole == constants.userRole.investor
+      ? dispatch(getInvestorData())
+      : dispatch(getEntrepreneurData());
   };
 };
 
