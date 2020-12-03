@@ -25,8 +25,8 @@ const StartupScreen = ({
   const [routes] = React.useState([
     { key: "overview", title: t("startupTab.overview") },
     { key: "product", title: t("startupTab.product") },
-    { key: "market", title: t("startupTab.market") },
     { key: "team", title: t("startupTab.team") },
+    { key: "company", title: t("startupTab.company") },
     { key: "discussions", title: t("startupTab.discussions") },
     { key: "faq", title: t("startupTab.faq") },
     { key: "videos", title: t("startupTab.videos") },
