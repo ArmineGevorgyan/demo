@@ -24,11 +24,11 @@ export const renderScene = (startup) => {
   const ProductScene = () => (
     <StartupRoute routeKey="product" color="white"></StartupRoute>
   );
-  const MarketScene = () => (
-    <StartupRoute routeKey="market" color="white"></StartupRoute>
-  );
   const TeamScene = () => (
     <StartupRoute routeKey="team" color="white"></StartupRoute>
+  );
+  const CompanyScene = () => (
+    <StartupRoute routeKey="company" color="white"></StartupRoute>
   );
   const DiscussionsScene = () => (
     <StartupRoute routeKey="discussions" color="white">
@@ -47,8 +47,8 @@ export const renderScene = (startup) => {
   return SceneMap({
     overview: OverviewScene,
     product: ProductScene,
-    market: MarketScene,
     team: TeamScene,
+    company: CompanyScene,
     discussions: DiscussionsScene,
     faq: FaqScene,
     videos: VideosScene,

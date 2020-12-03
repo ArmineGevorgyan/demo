@@ -15,6 +15,12 @@ class VideoView extends Component {
     }
   };
 
+  componentDidUpdate() {
+    if (this.props.stopVideo) {
+      this.videoRef.stopAsync();
+    };
+  };
+
   handlePlay = () => {
     if (this.videoRef !== null) {
       this.videoRef.playAsync();
