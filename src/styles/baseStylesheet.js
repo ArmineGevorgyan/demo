@@ -132,6 +132,25 @@ export const baseStylesheet = StyleSheet.create({
     borderRadius: 6,
   },
 
+  whiteButton: {
+    backgroundColor: "#FFF",
+    padding: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginTop: 10,
+    borderRadius: 25,
+    width: "100%",
+    justifyContent: "flex-start",
+
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+
   // --------------------- INPUT STYLES----------------------
   inlineButtonInputItem: {
     marginTop: 3,
