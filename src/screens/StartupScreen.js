@@ -48,7 +48,7 @@ const StartupScreen = ({
   return (
     <CollapsibleTabView
       navigationState={{ index, routes }}
-      renderScene={renderScene(route?.params?.startup)}
+      renderScene={renderScene(route?.params?.startup, navigation)}
       onIndexChange={handleIndexChange}
       renderHeader={() => renderHeader(route?.params?.startup, goBack)}
       headerHeight={constants.startupHeaderHeight}
