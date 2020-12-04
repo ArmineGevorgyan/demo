@@ -64,10 +64,8 @@ export const getDiscussions = (startupId) => {
   return (dispatch) => {
     dispatch(discussionSlice.actions.getDiscussions());
 
-    uri = startupId ? `?startupId=${startupId}` : "/all";
-
     axios
-      .get(`${API_URL}/discussions${uri}`)
+      .get(`${API_URL}/startups/${startupId}/discussions`)
       .then((r) => {
         return r.data;
       })
