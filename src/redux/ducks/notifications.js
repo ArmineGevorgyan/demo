@@ -18,10 +18,12 @@ const notificationsSlice = createSlice({
     }),
     getNotificationsSuccess: (state, action) => ({
       ...state,
+      isLoading:false,
       notifications: action.payload,
     }),
     getNotificationsFail: (state, action) => ({
       ...state,
+      isLoading:false,
       error: action.payload,
     }),
   }
@@ -31,7 +33,7 @@ const notificationsReduser = notificationsSlice.reducer;
 
 export const getNotifications = () => {
   return (dispatch) => {
-    dispatch(notificationsSlice.actions.getNotifications());
+    // dispatch(notificationsSlice.actions.getNotifications());
 
     //TODO implement get notifications request
   };

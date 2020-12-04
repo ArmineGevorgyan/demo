@@ -5,6 +5,7 @@ import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { getNotifications } from "../redux/ducks/notifications";
 import { Spinner, Text } from "native-base";
+import { colors } from "../styles/colors";
 
 class Notifications extends Component {
   componentDidMount() {
@@ -22,11 +23,18 @@ class Notifications extends Component {
           enableSearch
         />
         {
-          isLoading ? <Spinner /> : (
+          isLoading ? <Spinner color={colors.secondaryColor} /> : (
             <>
               {
                 notifications ? <></> :
-                  <Text>You have not any notification</Text>
+                  <Text style={{
+                    marginTop: 150,
+                    textAlign: "center",
+                    fontFamily:"montserrat-medium",
+                  }}
+                  >
+                    {t("notificationsScreen.emptyScreen")}
+                  </Text>
               }
             </>
           )
