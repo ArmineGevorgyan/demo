@@ -295,6 +295,6 @@
     "post":"POST"
   },
   "notificationsScreen":{
-    "emptyScreen":"You have not any notification."
+    "emptyScreen":"You don't have any notifications."
   }
 }

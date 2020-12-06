@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { getNotifications } from "../redux/ducks/notifications";
-import { Spinner, Text } from "native-base";
+import { Spinner, View } from "native-base";
 import { colors } from "../styles/colors";
+import EmptyList from "../components/emptyList";
 
 class Notifications extends Component {
   componentDidMount() {
@@ -24,19 +25,15 @@ class Notifications extends Component {
         />
         {
           isLoading ? <Spinner color={colors.secondaryColor} /> : (
-            <>
+            <View style={{
+              flex:1,
+              backgroundColor: "#FFF",
+            }}>
               {
                 notifications ? <></> :
-                  <Text style={{
-                    marginTop: 150,
-                    textAlign: "center",
-                    fontFamily:"montserrat-medium",
-                  }}
-                  >
-                    {t("notificationsScreen.emptyScreen")}
-                  </Text>
+                  <EmptyList text={t("notificationsScreen.emptyScreen")}/>
               }
-            </>
+            </View>
           )
         }
       </>
