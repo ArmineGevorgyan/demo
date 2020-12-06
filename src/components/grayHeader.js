@@ -19,7 +19,7 @@ class GrayHeader extends Component {
             {backButtonHandler && (
               <Icon
                 style={{
-                  color: "#1179E6",
+                  color: colors.backIconBlue,
                 }}
                 name="arrow-left"
                 type="Feather"

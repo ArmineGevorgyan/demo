@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Content, Icon, Textarea } from "native-base";
+import { Container, Content, Icon, Textarea } from "native-base";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { colors } from "../styles/colors";
 import constants from "../constants";
-import { baseStylesheet } from "../styles/baseStylesheet";
 import { createDiscussion, setInput, } from "../redux/ducks/discussion";
 
 class NewDiscussionScreen extends Component {
@@ -21,46 +20,50 @@ class NewDiscussionScreen extends Component {
   render() {
     const { t } = this.props;
     return (
-      <Content style={{ backgroundColor: "#FFF" }}>
-        <View style={styles.container}>
-          <View style={styles.textRowContainer}>
-            <Icon
-              style={{
-                color: "#1179E6",
-                marginTop:3,
-              }}
-              name="arrow-left"
-              type="Feather"
-              onPress={this.props.navigation.goBack}
-            />
-            <Text style={styles.headerText}>
-            {t("discussionsScreen.newDiscussion")}
-          </Text>
-            <TouchableOpacity
-              onPress={this.createDiscussion}
-              style={{
-                height:20,
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={styles.postText}
+      <Container>
+        <View style={{ backgroundColor: "#FFF", flex: 1 }}>
+          <View style={styles.container}>
+            <View style={styles.textRowContainer}>
+              <Icon
+                style={{
+                  color: colors.backIconBlue,
+                  marginTop: 3,
+                }}
+                name="arrow-left"
+                type="Feather"
+                onPress={this.props.navigation.goBack}
+              />
+              <Text style={styles.headerText}>
+                {t("discussionsScreen.newDiscussion")}
+              </Text>
+              <TouchableOpacity
+                onPress={this.createDiscussion}
+                style={{
+                  height: 20,
+                  alignItems: "center",
+                }}
               >
-                {t("discussionsScreen.post")}
-            </Text>
-            </TouchableOpacity>
+                <Text style={styles.postText}>
+                  {t("discussionsScreen.post")}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
+
+          <Content enableAutomaticScroll={false}>
+            <Textarea
+              rowSpan={20}
+              maxLength={constants.discussionMaxLength}
+              placeholder={t("discussionsScreen.inputPlaceholder")}
+              placeholderTextColor={colors.blueBorder}
+              style={styles.textarea}
+              value={this.props.input}
+              onChangeText={(e) => this.props.setInput(e)}
+            />
+          </Content>
+
         </View>
-        <Textarea
-          rowSpan={35}
-          maxLength={constants.discussionMaxLength}
-          placeholder={t("discussionsScreen.inputPlaceholder")}
-          placeholderTextColor={colors.blueBorder}
-          style={styles.textarea}
-          value={this.props.input}
-          onChangeText={(e) => this.props.setInput(e)}
-        />
-      </Content>
+      </Container>
     )
   };
 };
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingTop: 25,
     height: 100,
-    alignItems:"center",
+    alignItems: "center",
     justifyContent: "center",
   },
   textRowContainer: {
@@ -104,24 +107,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     color: colors.blackBlue,
     fontSize: 30,
     fontFamily: "montserrat-light",
     textAlign: "center",
   },
-  textarea:{
-    padding: 16,
+  textarea: {
+    padding:16,
     marginLeft: 10,
     marginRight: 10,
-    flex:1,
+    flex: 1,
     fontFamily: "montserrat-medium",
-    backgroundColor:"#FFF",
+    backgroundColor: "#FFF",
   },
-  postText:{
-    color: "#1179E6",
+  postText: {
+    color: colors.backIconBlue,
     fontSize: 18,
-    fontFamily:"montserrat-medium"
+    fontFamily: "montserrat-medium"
   }
 });
