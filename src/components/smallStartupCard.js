@@ -11,17 +11,6 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import VideoView from "./videoView";
 
 class SmallStartupCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { stopVideo: false, }
-  }
-
-  showStartupProfile = () => {
-    this.setState({ stopVideo: true });
-    this.props.navigation.navigate("StartupScreen", { startup: this.props.startup, });
-  };
-
   render() {
     const { t, startup, navigation } = this.props;
     const videoWidth = constants.windowWidth - 60; // 60 = cardHorizontalMargin
@@ -85,7 +74,7 @@ class SmallStartupCard extends Component {
         {startup.introVideoUrl && (
           <VideoView
             videoSource={startup.introVideoUrl}
-            stopVideo={this.state.stopVideo}
+            navigation={this.props.navigation}
             size={{
               width: videoWidth,
               height: videoHeight,
@@ -128,7 +117,9 @@ class SmallStartupCard extends Component {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={this.showStartupProfile}
+            onPress={
+              () => { this.props.navigation.navigate("StartupScreen", { startup }) }
+            }
           >
             <Text style={styles.buttonText}>
               {t("startupCard.fullProfile")}
