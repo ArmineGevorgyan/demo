@@ -21,6 +21,7 @@ export const colors = {
   darkBlue: "#004E9B",
   blackBlue: "#262F3E", // blue so dark it's almost black
   blueText: "#13305F", // deep blue
+  backIconBlue:"#1179E6",
   cardBackground: "#F5F7F9", //gray
   green: "#20C15E",
   deepGreen: "#1CB400",
