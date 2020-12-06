@@ -10,8 +10,12 @@ import { renderScene } from "../helpers/startupHelper";
 import constants from "../constants";
 import { colors } from "../styles/colors";
 
-const renderHeader = (startup, goBack) => (
-  <StartupHeader startup={startup} goBack={goBack} />
+const renderHeader = (startup, navigation, goBack) => (
+  <StartupHeader
+    startup={startup}
+    navigation={navigation}
+    goBack={goBack}
+  />
 );
 
 const StartupScreen = ({
@@ -50,7 +54,7 @@ const StartupScreen = ({
       navigationState={{ index, routes }}
       renderScene={renderScene(route?.params?.startup)}
       onIndexChange={handleIndexChange}
-      renderHeader={() => renderHeader(route?.params?.startup, goBack)}
+      renderHeader={() => renderHeader(route?.params?.startup, navigation, goBack)}
       headerHeight={constants.startupHeaderHeight}
       tabBarProps={{
         scrollEnabled: true,

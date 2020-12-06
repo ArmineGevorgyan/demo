@@ -9,6 +9,9 @@ class StartupHeader extends Component {
     super(props);
     this.state = { isFavorite: false };
   }
+  componentDidMount() {
+    console.log("navigation  ======================================================================= ", this.props);
+  }
 
   addToFavouritesHandler = () => {
     this.setState({ isFavorite: !this.state.isFavorite });
@@ -30,6 +33,7 @@ class StartupHeader extends Component {
         <VideoView
           videoSource={startup?.demoVideoUrl}
           posterSource={startup?.coverPhoto}
+          navigation={this.props.navigation}
           size={{
             width: "100%",
             height: 250,
