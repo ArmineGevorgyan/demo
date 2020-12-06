@@ -9,10 +9,7 @@ class StartupHeader extends Component {
     super(props);
     this.state = { isFavorite: false };
   }
-  componentDidMount() {
-    console.log("navigation  ======================================================================= ", this.props);
-  }
-
+  
   addToFavouritesHandler = () => {
     this.setState({ isFavorite: !this.state.isFavorite });
   };
