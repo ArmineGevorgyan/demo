@@ -1,16 +1,41 @@
-import { Image, Text, View } from "native-base";
+import { Card, Image, Text, View } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
+import constants from "../constants";
+import moment from "moment";
 
 class NotificationItem extends Component {
 
+  getTime(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const datetimeHours = new Date(dateString).getHours();
+    const hours = new Date().getHours();
+
+    const rightNowUTC = moment.utc().valueOf();
+    let duration = moment.utc(dateString).valueOf();
+    // let remainingTimeInMls = duration.asMilliseconds();
+
+
+    const today = moment().endOf('day')
+    
+    const yesterday = moment().subtract(1, 'day').endOf('day')
+    if (moment(dateString) < today) return moment.utc(dateString).format("LT")
+    if (moment(dateString) < yesterday) return 'Yesterday'
+
+    return moment(dateString).format("LT");
+  }
+
   render() {
 
-    const { title, time, content, } = this.props;
+    const { data } = this.props;
 
     return (
-      <View
-        style={styles.container}
+      <Card
+        style={{
+          ...styles.container,
+          backgroundCololr: !data.seen ? "#EFEFEF" : "#FFF"
+        }}
       >
         <View style={{
           width: 48,
@@ -26,12 +51,27 @@ class NotificationItem extends Component {
           }}
         >
           <View style={styles.textContainer}>
-            <Text>{title}</Text>
-            <Text>{time}</Text>
+            <Text
+              style={{
+                fontFamily: data.seen ? "montserrat-regular" : "montserrat-semi-bold"
+              }}
+            >
+              {data.title}
+            </Text>
+            <Text>
+              {this.getTime(data.createdAt)}
+            </Text>
           </View>
-          <Text>{content}</Text>
+          <Text
+            style={{
+              fontFamily: "montserrat-regular",
+              color: data.seen ? "#707070" : "#1E87F4"
+            }}
+          >
+            {data.body}
+          </Text>
         </View>
-      </View>
+      </Card>
     )
   };
 };
@@ -42,10 +82,10 @@ export default NotificationItem;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    width: "100%",
     height: 100,
     padding: 10,
     marginBottom: 10,
+    borderRadius: 6,
   },
   textContainer: {
     flexDirection: "row",
