@@ -1,46 +1,73 @@
 import React, { Component } from "react";
 import { View, StyleSheet, } from "react-native";
-import { Text } from "native-base";
+import { Text, Spinner, List, } from "native-base";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { colors } from "../styles/colors";
 import { withTranslation } from "react-i18next";
 import NoFaqIcon from "../../assets/noFaq.svg";
+import { getStartupFaqList } from "../redux/ducks/startup";
+import ListAccordion from "../components/listAccordion";
+import moment from "moment";
 
 class StartupFaqScreen extends Component {
+  componentDidMount() {
+    this.props.getStartupFaqList(this.props.startup.id);
+  };
+
   render() {
-    const { t } = this.props;
+    const { t, isLoading, faqList, } = this.props;
 
     return (
-      <View style={{
-        paddingTop: 70,
-        alignItems:"center",
-      }}>
-        <NoFaqIcon/>
-        <Text style={styles.noFaqTitle}>
-          {t("startupFaq.noFaqTitle")}
-        </Text>
-        <Text
-          style={{
-            textAlign: "center",
-            fontFamily: "montserrat-regular",
-          }}>
-          {t("startupFaq.noFaqDescription")}
-        </Text>
+      <View>
+        {isLoading ?
+          <Spinner color={colors.secondaryColor} />
+          :
+          <>
+            {faqList ?
+              faqList.map(item => (
+                <>
+                  <Text style={styles.listHeader}>
+                    {`${t("startupFaq.listTitle")} ${moment(item.heldOn).format('D.M.YYYY')}`}
+                  </Text>
+                  <ListAccordion
+                    dataArray={item.infoSessionFAQs}
+                    hideNumber={true}
+                  />
+                </>
+              ))
+              :
+              <>
+                <NoFaqIcon />
+                <Text style={styles.noFaqTitle}>
+                  {t("startupFaq.noFaqTitle")}
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "montserrat-regular",
+                  }}>
+                  {t("startupFaq.noFaqDescription")}
+                </Text>
+              </>}
+          </>}
       </View>
     )
   };
 };
 
 const mapStateToProps = (state, props) => {
-
+  const isLoading = state.startup.isLoading;
+  const faqList = state.startup.faqList;
   return {
-
+    isLoading,
+    faqList,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    getStartupFaqList: (id) => dispatch(getStartupFaqList(id)),
   };
 };
 
@@ -50,6 +77,13 @@ export default compose(
 )(StartupFaqScreen);
 
 const styles = StyleSheet.create({
+  listHeader: {
+    marginLeft: "3%",
+    marginTop: 19,
+    marginBottom: 10,
+    fontFamily: "montserrat-semi-bold",
+    fontSize: 12,
+  },
   noFaqTitle: {
     textAlign: "center",
     fontWeight: "bold",

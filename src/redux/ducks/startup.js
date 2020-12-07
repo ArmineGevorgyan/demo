@@ -5,6 +5,8 @@ import { API_URL } from "../../config";
 const initialState = {
   isLoading: false,
   startups: null,
+  faqList: null,
+  error: null,
 };
 
 const startupSlice = createSlice({
@@ -35,6 +37,20 @@ const startupSlice = createSlice({
     toggleIsEmpty: (state) => ({
       ...state,
       isEmpty: !state.isEmpty,
+    }),
+    getStartupFaqList: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    getStartupFaqListSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      faqList: action.payload,
+    }),
+    getStartupFaqListFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
     }),
   },
 });
@@ -79,6 +95,23 @@ export const addStartupToPipeline = (startup) => {
       .post(`${API_URL}/startups/interested?startupId=${startup.id}`)
       .catch((error) => {
         dispatch(startupSlice.actions.addStartupToPipelineFail(error));
+      });
+  };
+};
+
+export const getStartupFaqList = (id) => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.getStartupFaqList());
+
+    axios.get(`${API_URL}/startups/${id}/info-session`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(startupSlice.actions.getStartupFaqListSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.getStartupFaqListFail(error));
       });
   };
 };
