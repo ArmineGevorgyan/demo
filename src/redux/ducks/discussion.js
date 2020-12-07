@@ -7,12 +7,17 @@ initialState = {
   error: null,
   result: null,
   discussionList: [],
+  draft:"",
 };
 
 const discussionSlice = createSlice({
   name: "discussion",
   initialState,
   reducers: {
+    setInput: (state, action) => ({
+      ...state,
+      input:action.payload,
+    }),
     getDiscussions: (state) => ({
       ...state,
       discussionList: [],
@@ -36,6 +41,7 @@ const discussionSlice = createSlice({
     createDiscussionSuccess: (state, action) => ({
       ...state,
       isLoading: false,
+      input:"",
       result: action.payload,
     }),
     createDiscussionFail: (state, action) => ({
@@ -47,6 +53,12 @@ const discussionSlice = createSlice({
 });
 
 const discussionReducer = discussionSlice.reducer;
+
+export const setInput = (input) => {
+  return (dispatch) => {
+    dispatch(discussionSlice.actions.setInput(input));
+  };
+};
 
 export const getDiscussions = (startupId) => {
   return (dispatch) => {
@@ -68,17 +80,19 @@ export const getDiscussions = (startupId) => {
   };
 };
 
-export const createDiscussion = (data) => {
+export const createDiscussion = (data, navigation) => {
   return (dispatch) => {
     dispatch(discussionSlice.actions.createDiscussion());
 
     axios
-      .post(`${API_URL}/discussion`, data)
+      .post(`${API_URL}/discussions`, data)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
         dispatch(discussionSlice.actions.createDiscussionSuccess(data));
+        dispatch(getDiscussions(data.startup.id));
+        navigation.goBack();
       })
       .catch((error) => {
         dispatch(discussionSlice.actions.createDiscussionFail(error));

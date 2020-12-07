@@ -17,7 +17,7 @@ const StartupRoute = ({ routeKey, color, children }) => {
     </Animated.ScrollView>
   );
 };
-export const renderScene = (startup) => {
+export const renderScene = (startup, navigation) => {
   const OverviewScene = () => (
     <StartupRoute routeKey="overview" color="white"></StartupRoute>
   );
@@ -32,7 +32,10 @@ export const renderScene = (startup) => {
   );
   const DiscussionsScene = () => (
     <StartupRoute routeKey="discussions" color="white">
-      <DiscussionsScreen startup={startup} />
+      <DiscussionsScreen
+        startup={startup}
+        navigation={navigation}
+      />
     </StartupRoute>
   );
   const FaqScene = () => (

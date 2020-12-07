@@ -289,6 +289,9 @@
     "reply": "Reply",
     "answeredBy": "Answered by ",
     "answers": "Answers",
-    "me": "Me"
+    "me": "Me",
+    "newDiscussion":"New Discussion",
+    "inputPlaceholder":" Type here...",
+    "post":"POST"
   }
 }

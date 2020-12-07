@@ -44,6 +44,7 @@ import constants from "./src/constants";
 import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
+import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -149,6 +150,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="DiscussionsScreen"
             component={DiscussionsScreen}
+          />
+          <Stack.Screen
+            name="NewDiscussionScreen"
+            component={NewDiscussionScreen}
           />
           <Stack.Screen
             name="EntProfileEditScreen"

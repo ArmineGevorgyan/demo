@@ -26,7 +26,9 @@ class DiscussionsScreen extends Component {
         <View style={styles.buttonView}>
           <Button
             style={baseStylesheet.whiteButton}
-            // onPress={navigation.navigate('CreateDiscussionScreen')}
+            onPress={() => navigation.navigate('NewDiscussionScreen', {
+              id: startup.id,
+            })}
           >
             <Icon style={styles.icon} name="plus" type="Feather" />
             <Text style={styles.buttonText}>
@@ -58,6 +60,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    createDiscussion: (data) => dispatch(createDiscussion(data)),
     getDiscussions: (data) => dispatch(getDiscussions(data)),
   };
 };
