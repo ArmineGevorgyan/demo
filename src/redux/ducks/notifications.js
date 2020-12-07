@@ -19,11 +19,15 @@ const notificationsSlice = createSlice({
     getNotifications: (state) => ({
       ...state,
       isLoading: true,
+      noMoreNotifications: false,
+      page: 0,
+      error: null,
     }),
     getNotificationsSuccess: (state, action) => ({
       ...state,
       isLoading: false,
       notifications: action.payload,
+      page: state.page + 1,
     }),
     getNotificationsFail: (state, action) => ({
       ...state,
@@ -33,6 +37,7 @@ const notificationsSlice = createSlice({
     loadMoreNotifications: (state) => ({
       ...state,
       loadingMore: true,
+      page: state.page + 1,
     }),
     noMoreNotifications: (state) => ({
       ...state,
@@ -41,12 +46,13 @@ const notificationsSlice = createSlice({
     }),
     loadMoreNotificationsSuccess: (state, action) => ({
       ...state,
-      page: state.page + 1,
-      notifications: [...state.notifications, ...action.payload]
+      loadingMore: false,
+      notifications: [...state.notifications, ...action.payload],
+      error:null,
     }),
     loadMoreNotificationsFail: (state, action) => ({
       ...state,
-      loadingMore:false,
+      loadingMore: false,
       error: action.payload,
     }),
   }
@@ -59,7 +65,7 @@ export const getNotifications = () => {
     dispatch(notificationsSlice.actions.getNotifications());
 
     axios
-      .get(`${API_URL}/notification-messages/current?page=0&size=5`)
+      .get(`${API_URL}/notification-messages/current?page=0&size=10`)
       .then((r) => {
         return r.data;
       })
@@ -84,6 +90,9 @@ export const loadMoreNotifications = () => {
         return r.data;
       })
       .then((data) => {
+        if (data == undefined || data.length == 0) {
+          return dispatch(notificationsSlice.actions.noMoreNotifications());
+        }
         dispatch(notificationsSlice.actions.loadMoreNotificationsSuccess(data));
       })
       .catch((error) => {
