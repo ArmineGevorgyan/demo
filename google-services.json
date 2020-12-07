@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "830200855577",
+    "project_id": "draper-walled-garden",
+    "storage_bucket": "draper-walled-garden.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830200855577:android:4b0b92b957ffa8ca287e88",
+        "android_client_info": {
+          "package_name": "com.draper.draperrhino"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "830200855577-2539ikd0ji58tio6snrm757tkreu392j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF3Dz6tXqPxdB2gUriV8FICN3_3omQf7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "830200855577-2539ikd0ji58tio6snrm757tkreu392j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
