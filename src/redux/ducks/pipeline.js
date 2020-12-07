@@ -111,7 +111,7 @@ export const getMoreStartups = (page, size = 10) => {
 export const removeCard = (startupId) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/parking-lot?startupId=${startupId}`, {})
+      .post(`${API_URL}/startups/${startupId}/parking-lot`, {})
       .then(() => {
         dispatch(pipelineSlice.actions.removeCardSuccess(startupId));
       })

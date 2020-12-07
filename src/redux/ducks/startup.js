@@ -66,7 +66,7 @@ export const getNewStartups = () => {
 export const addStartupToParkingLot = (startup) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/parking-lot?startupId=${startup.id}`)
+      .post(`${API_URL}/startups/${startup.id}/parking-lot`)
       .catch((error) => {
         dispatch(startupSlice.actions.addStartupToParkingLotFail(error));
       });
@@ -76,7 +76,7 @@ export const addStartupToParkingLot = (startup) => {
 export const addStartupToPipeline = (startup) => {
   return (dispatch) => {
     axios
-      .post(`${API_URL}/startups/interested?startupId=${startup.id}`)
+      .post(`${API_URL}/startups/${startup.id}/interested`)
       .catch((error) => {
         dispatch(startupSlice.actions.addStartupToPipelineFail(error));
       });
