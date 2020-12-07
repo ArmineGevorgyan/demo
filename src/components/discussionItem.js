@@ -13,7 +13,7 @@ class DiscussionItem extends Component {
     const { item, currentUser, t } = this.props;
     const user = item.user;
 
-    return currentUser.id == user.id
+    return currentUser?.id == user.id
       ? t("discussionsScreen.me")
       : `${user.firstName} ${user.lastName}`;
   }
@@ -66,7 +66,7 @@ class DiscussionItem extends Component {
               type="AntDesign"
             />
             <Text style={styles.time}>{this.getTime(item.createdAt)}</Text>
-            {currentUser.id == user.id && (
+            {currentUser?.id == user.id && (
               <TouchableOpacity>
                 <Icon
                   style={styles.ellipsis}

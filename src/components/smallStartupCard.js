@@ -51,11 +51,11 @@ class SmallStartupCard extends Component {
                   </Text>
                 </TouchableOpacity>
               ) : (
-                <Text style={styles.startupDetail}>
-                  {t("startupCard.referred")}
-                  {t("startupCard.draperRhino")}
-                </Text>
-              )}
+                  <Text style={styles.startupDetail}>
+                    {t("startupCard.referred")}
+                    {t("startupCard.draperRhino")}
+                  </Text>
+                )}
             </View>
             {startup.industry && (
               <View style={styles.startupDetailContainer}>
@@ -74,6 +74,7 @@ class SmallStartupCard extends Component {
         {startup.introVideoUrl && (
           <VideoView
             videoSource={startup.introVideoUrl}
+            navigation={this.props.navigation}
             size={{
               width: videoWidth,
               height: videoHeight,

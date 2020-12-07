@@ -15,6 +15,20 @@ class VideoView extends Component {
     }
   };
 
+  componentDidMount() {
+    this.props.navigation.addListener("blur", this.willBlurAction);
+  };
+
+  componentWillUnmount() {
+    this.props.navigation.removeListener("blur");
+  };
+
+  willBlurAction = (payload) => {
+    if (this.videoRef !== null) {
+      this.videoRef.stopAsync();
+    }
+  };
+
   handlePlay = () => {
     if (this.videoRef !== null) {
       this.videoRef.playAsync();

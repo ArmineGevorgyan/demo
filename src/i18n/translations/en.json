@@ -99,8 +99,8 @@
   "startupTab":{
     "overview": "OVERVIEW",
     "product": "PRODUCT" ,
-    "market": "MARKET" ,
     "team": "TEAM" ,
+    "company": "COMPANY" ,
     "discussions": "DISCUSSIONS" ,
     "faq": "FAQ" ,
     "videos": "VIDEOS"
