@@ -37,7 +37,7 @@ const investorData = [
       value: "notification",
       svg: <NotificationIcon />,
       backgroundColor: colors.profileSection1,
-      to: "TemporaryScreen",
+      to: "NotificationsScreen",
     },
   ],
   [
@@ -120,7 +120,7 @@ const entrepreneurData = [
       value: "notification",
       svg: <NotificationIcon />,
       backgroundColor: colors.profileSection1,
-      to: "TemporaryScreen",
+      to: "NotificationsScreen",
     },
   ],
   [

@@ -8,7 +8,7 @@ class EmptyList extends Component {
       <View
         style={{
           height: "100%",
-          paddingTop: "30%",
+           paddingTop: "50%",
           paddingLeft: "5%",
           paddingRight: "5%",
         }}

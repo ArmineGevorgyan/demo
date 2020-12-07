@@ -293,5 +293,8 @@
     "newDiscussion":"New Discussion",
     "inputPlaceholder":" Type here...",
     "post":"POST"
+  },
+  "notificationsScreen":{
+    "emptyScreen":"You don't have any notifications."
   }
 }
