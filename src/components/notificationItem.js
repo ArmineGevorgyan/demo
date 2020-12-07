@@ -19,11 +19,11 @@ class NotificationItem extends Component {
 
     const today = moment().endOf('day')
     
-    const yesterday = moment().subtract(1, 'day').endOf('day')
-    if (moment(dateString) < today) return moment.utc(dateString).format("LT")
-    if (moment(dateString) < yesterday) return 'Yesterday'
+    // const yesterday = moment().subtract(1, 'day').endOf('day')
+    // if (moment(dateString) < today) return moment.utc(dateString).format("LT")
+    // if (moment(dateString) < yesterday) return 'Yesterday'
 
-    return moment(dateString).format("LT");
+    return moment(dateString).format("dd/mm/yyyy");
   }
 
   render() {

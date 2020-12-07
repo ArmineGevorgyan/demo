@@ -3,7 +3,7 @@ import GrayHeader from "../components/grayHeader";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { Spinner, View, Text, } from "native-base";
+import { Spinner, View, Container, Content, } from "native-base";
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
 import { getNotifications, loadMoreNotifications, } from "../redux/ducks/notifications";
@@ -39,33 +39,34 @@ class Notifications extends Component {
     const { t, navigation, isLoading, notifications } = this.props;
 
     return (
-      <>
+      <Container>
         <GrayHeader
           title={t("profileScreen.notification")}
           backButtonHandler={() => navigation.goBack()}
           enableSearch
         />
-        {
-          isLoading ? <Spinner /> : (
-            <View style={{
-              padding: "3%",
-            }}>
-              {
-                notifications ?
-                  (<FlatList
+        <Content>
+          {
+            isLoading ? <Spinner color={colors.secondaryColor} /> : (
+              <View style={{
+                margin: "3%",
+              }}>
+                {notifications ?
+                  <FlatList
                     data={notifications}
                     onEndReachedThreshold={0.1}
                     renderItem={this.renderItem}
                     onEndReached={this.handleOnEndReached}
                     ListFooterComponent={this.getLoadingMoreSpinner}
-                  />)
+                  />
                   :
-                  <Text>You have not any notification</Text>
-              }
-            </View>
-          )
-        }
-      </>
+                  <EmptyList text={t("notificationsScreen.emptyScreen")} />
+                }
+              </View>
+            )
+          }
+        </Content>
+      </Container>
 
     )
   };
@@ -88,7 +89,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getNotifications: () => dispatch(getNotifications()),
-    loadMoreNotifications:()=>dispatch(loadMoreNotifications()),
+    loadMoreNotifications: () => dispatch(loadMoreNotifications()),
   };
 };
 
