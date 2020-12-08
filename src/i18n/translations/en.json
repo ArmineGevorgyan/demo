@@ -281,6 +281,7 @@
     "crunchbaseProfile": "Crunchbase Profile"
   },
   "startupFaq":{
+    "listTitle":"Info Session held on",
     "noFaqTitle":"No info sessions held yet.",
     "noFaqDescription":"You’ll find transcripts of held info sessions here."
   },

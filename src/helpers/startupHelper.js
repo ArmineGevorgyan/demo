@@ -40,7 +40,9 @@ export const renderScene = (startup, navigation) => {
   );
   const FaqScene = () => (
     <StartupRoute routeKey="faq" color="white">
-      <StartupFaqScreen />
+      <StartupFaqScreen
+        startup={startup}
+      />
     </StartupRoute>
   );
   const VideosScene = () => (

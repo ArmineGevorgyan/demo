@@ -16,11 +16,15 @@ class VideoView extends Component {
   };
 
   componentDidMount() {
-    this.props.navigation.addListener("blur", this.willBlurAction);
+    if (this.props.navigation) {
+      this.props.navigation.addListener("blur", this.willBlurAction);
+    }
   };
 
   componentWillUnmount() {
-    this.props.navigation.removeListener("blur");
+    if (this.props.navigation) {
+      this.props.navigation.removeListener("blur");
+    }
   };
 
   willBlurAction = (payload) => {
@@ -76,7 +80,7 @@ class VideoView extends Component {
           source={{ uri: this.props.videoSource }}
           posterSource={{ uri: this.props.posterSource }}
           posterStyle={{
-            resizeMode:"contain"
+            resizeMode: "contain"
           }}
           useNativeControls={this.state.isPlaying}
           onFullscreenUpdate={this.onFullscreenUpdate}
@@ -131,6 +135,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
-    opacity:0.71,
+    opacity: 0.71,
   },
 });
