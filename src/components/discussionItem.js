@@ -39,7 +39,7 @@ class DiscussionItem extends Component {
     const { t, item, currentUser } = this.props;
     const user = item.user;
 
-    if (!item) {
+    if (!item || !user) {
       return <Spinner color={colors.lightBlue} />;
     }
 
@@ -50,7 +50,7 @@ class DiscussionItem extends Component {
             <Thumbnail
               style={styles.authorPhoto}
               small
-              source={{ uri: user.investorProfile.photoUrl }}
+              source={{ uri: user.investorProfile?.photoUrl }}
             />
             <View>
               <Text style={styles.authorName}>{this.getUserName()}</Text>
