@@ -8,6 +8,7 @@ import { withTranslation } from "react-i18next";
 import LogoImage from "../../assets/whiteLogo.svg";
 import { setNotificationSeen } from "../redux/ducks/notifications";
 import { date } from "yup";
+import { colors } from "../styles/colors";
 
 class NotificationItem extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class NotificationItem extends Component {
         <Card
           style={{
             ...styles.container,
-            backgroundColor: this.state.isSeen ? "#EFEFEF" : "#FFF"
+            backgroundColor: this.state.isSeen ? colors.disabledInput : "#FFF"
           }}
         >
           {
