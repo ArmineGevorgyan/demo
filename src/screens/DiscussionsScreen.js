@@ -8,6 +8,7 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { getDiscussions } from "../redux/ducks/discussion";
 import DiscussionItem from "../components/discussionItem";
+import constants from "../constants";
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
@@ -15,7 +16,14 @@ class DiscussionsScreen extends Component {
   }
 
   render() {
-    const { t, navigation, startup, isLoading, discussionList } = this.props;
+    const {
+      t,
+      navigation,
+      startup,
+      isLoading,
+      discussionList,
+      user,
+    } = this.props;
 
     if (isLoading || !discussionList) {
       return <Spinner color={colors.lightBlue} />;
@@ -23,19 +31,23 @@ class DiscussionsScreen extends Component {
 
     return (
       <Content style={baseStylesheet.baseContainer}>
-        <View style={styles.buttonView}>
-          <Button
-            style={baseStylesheet.whiteButton}
-            onPress={() => navigation.navigate('NewDiscussionScreen', {
-              id: startup.id,
-            })}
-          >
-            <Icon style={styles.icon} name="plus" type="Feather" />
-            <Text style={styles.buttonText}>
-              {t("discussionsScreen.createNewButton")}
-            </Text>
-          </Button>
-        </View>
+        {user?.authorities[0] == constants.userRole.investor && (
+          <View style={styles.buttonView}>
+            <Button
+              style={baseStylesheet.whiteButton}
+              onPress={() =>
+                navigation.navigate("NewDiscussionScreen", {
+                  id: startup.id,
+                })
+              }
+            >
+              <Icon style={styles.icon} name="plus" type="Feather" />
+              <Text style={styles.buttonText}>
+                {t("discussionsScreen.createNewButton")}
+              </Text>
+            </Button>
+          </View>
+        )}
         <View style={styles.list}>
           {discussionList
             .slice()
@@ -52,9 +64,12 @@ class DiscussionsScreen extends Component {
 const mapStateToProps = (state, props) => {
   const discussionList = state.discussion.discussionList;
   const isLoading = state.discussion.isLoading;
+  const user = state.user.userData;
+
   return {
     discussionList,
     isLoading,
+    user,
   };
 };
 
