@@ -16,7 +16,7 @@ import {
   removeCard,
 } from "../redux/ducks/pipeline";
 import BackgroundImageCard from "../components/backgroundImageCard";
-import ParkingLotIcon from "../../assets/parkingmeter";
+import ParkingLotIcon from "../../assets/parkingmeter.svg";
 import constants from "../constants";
 
 class PipelineScreen extends Component {

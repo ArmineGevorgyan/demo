@@ -1,11 +1,11 @@
 import React from "react";
-import CursorIcon from "../../assets/cursor";
-import NotificationIcon from "../../assets/notification";
-import PreferencesIcon from "../../assets/preferences";
-import ParkingLotIcon from "../../assets/parkingmeter";
-import PasswordIcon from "../../assets/password";
-import LogoutIcon from "../../assets/log-out";
-import DeleteAccountIcon from "../../assets/delete-account";
+import CursorIcon from "../../assets/cursor.svg";
+import NotificationIcon from "../../assets/notification.svg";
+import PreferencesIcon from "../../assets/preferences.svg";
+import ParkingLotIcon from "../../assets/parkingmeter.svg";
+import PasswordIcon from "../../assets/password.svg";
+import LogoutIcon from "../../assets/log-out.svg";
+import DeleteAccountIcon from "../../assets/delete-account.svg";
 import { colors } from "../styles/colors";
 import constants from "../constants";
 
