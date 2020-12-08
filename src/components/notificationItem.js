@@ -1,33 +1,39 @@
-import { Card, Image, Text, View } from "native-base";
+import { Card, Text, View } from "native-base";
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
-import constants from "../constants";
+import { StyleSheet, Image, } from "react-native";
 import moment from "moment";
+import { compose } from "redux";
+import { withTranslation } from "react-i18next";
+import LogoImage from "../../assets/whiteLogo.svg";
 
 class NotificationItem extends Component {
 
   getTime(dateString) {
-    const date = new Date(dateString);
-    const now = new Date();
-    const datetimeHours = new Date(dateString).getHours();
-    const hours = new Date().getHours();
+    const format = "DD/MM/YYYY";
+    const startDate = moment(moment(), format);
+    const endDate = moment(moment().subtract(7, "day"), format);
+    const targetDate = moment(moment.utc(dateString), format);
 
-    const rightNowUTC = moment.utc().valueOf();
-    let duration = moment.utc(dateString).valueOf();
-    // let remainingTimeInMls = duration.asMilliseconds();
+    //check if today
+    if (moment(dateString).isSame(moment(), "day")) {
+      return moment.utc(dateString).format("LT");
+    }
 
+    //check if yesterday
+    if (moment(dateString).isSame(moment().subtract(1, "day"), "day")) {
+      return this.props.t("notificationsScreen.yesterday");
+    }
 
-    const today = moment().endOf('day')
-    
-    // const yesterday = moment().subtract(1, 'day').endOf('day')
-    // if (moment(dateString) < today) return moment.utc(dateString).format("LT")
-    // if (moment(dateString) < yesterday) return 'Yesterday'
+    //check if within week
+    if (targetDate.isBetween(endDate, startDate, "days", true)) {
+      let dt = moment(dateString, "YYYY-MM-DD HH:mm:ss")
+      return dt.format("dddd");
+    }
 
-    return moment(dateString).format("dd/mm/yyyy");
-  }
+    return moment(dateString).format(format);
+  };
 
   render() {
-
     const { data } = this.props;
 
     return (
@@ -37,14 +43,20 @@ class NotificationItem extends Component {
           backgroundCololr: !data.seen ? "#EFEFEF" : "#FFF"
         }}
       >
-        <View style={{
-          width: 48,
-          height: 48,
-          marginRight: 5,
-          borderRadius: 50,
-        }}>
-          {/* <Image source={{ uri: "" }} /> */}
-        </View>
+        {
+          data.uri ?
+            <Image
+              style={styles.imageContainer}
+              source={{ uri: data.uri }}
+            />
+            :
+            <View style={[
+              styles.imageContainer,
+              styles.logo,
+            ]}>
+              <LogoImage />
+            </View>
+        }
         <View
           style={{
             flex: 1,
@@ -77,7 +89,9 @@ class NotificationItem extends Component {
 };
 
 
-export default NotificationItem;
+export default compose(
+  withTranslation("translations")
+)(NotificationItem);
 
 const styles = StyleSheet.create({
   container: {
@@ -90,5 +104,16 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-  }
+  },
+  imageContainer: {
+    width: 48,
+    height: 48,
+    marginRight: 5,
+    borderRadius: 50,
+  },
+  logo: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1E87F4",
+  },
 });
