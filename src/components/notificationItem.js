@@ -60,7 +60,7 @@ class NotificationItem extends Component {
         <Card
           style={{
             ...styles.container,
-            backgroundCololr: !this.state.isSeen ? "#EFEFEF" : "#FFF"
+            backgroundColor: this.state.isSeen ? "#EFEFEF" : "#FFF"
           }}
         >
           {
