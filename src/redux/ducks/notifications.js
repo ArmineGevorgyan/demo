@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
 import store from "../store";
+import moment from "moment";
 
 const initialState = {
   isLoading: false,
@@ -100,5 +101,18 @@ export const loadMoreNotifications = () => {
       });
   }
 }
+
+export const setNotificationSeen = (id, setSeen) => {
+  return (dispatch) => {
+    axios.post(`${API_URL}/notification-messages/${id}/seen`).then((r) => {
+      return r.data;
+    })
+      .then((data) => {
+        setSeen();
+    })
+    .catch((error) => {
+    });
+  }
+};
 
 export default notificationsReduser;
