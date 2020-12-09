@@ -13,7 +13,7 @@ const StartupRoute = ({ routeKey, color, children }) => {
       style={{ backgroundColor: color }}
       {...scrollPropsAndRef}
     >
-      <View style={{ height: 1500 }}>{children}</View>
+      <View>{children}</View>
     </Animated.ScrollView>
   );
 };
@@ -32,15 +32,12 @@ export const renderScene = (startup, navigation) => {
   );
   const DiscussionsScene = () => (
     <StartupRoute routeKey="discussions" color="white">
-      <DiscussionsScreen
-        startup={startup}
-        navigation={navigation}
-      />
+      <DiscussionsScreen startup={startup} navigation={navigation} />
     </StartupRoute>
   );
   const FaqScene = () => (
     <StartupRoute routeKey="faq" color="white">
-      <StartupFaqScreen />
+      <StartupFaqScreen startup={startup} />
     </StartupRoute>
   );
   const VideosScene = () => (

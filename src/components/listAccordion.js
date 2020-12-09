@@ -1,18 +1,19 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Accordion as NativeBaseAccordion, Icon } from "native-base";
+import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import constants from "../constants";
 
-const ListAccordion = ({ dataArray }) => {
+const ListAccordion = ({ dataArray, hideNumber }) => {
   const renderHeader = (item, expanded) => {
     return (
       <View style={expanded ? styles.activeHeader : styles.inactiveHeader}>
-        <View style={styles.listNumber}>
+        {!hideNumber && <View style={styles.listNumber}>
           <Text style={styles.number}>
             {dataArray.findIndex((e) => e.id === item.id) + 1}
           </Text>
-        </View>
+        </View>}
         <Text style={styles.headerText}>{item.question}</Text>
         <Icon
           name={expanded ? "chevron-down" : "chevron-right"}
@@ -31,12 +32,14 @@ const ListAccordion = ({ dataArray }) => {
   };
 
   return (
-    <NativeBaseAccordion
-      renderHeader={renderHeader}
-      dataArray={dataArray}
-      renderContent={renderContent}
-      style={styles.borderBottom}
-    />
+    <View style={styles.listContainer}>
+      <NativeBaseAccordion
+        renderHeader={renderHeader}
+        dataArray={dataArray}
+        renderContent={renderContent}
+        style={styles.borderBottom}
+      />
+    </View>
   );
 };
 
@@ -93,5 +96,9 @@ const styles = StyleSheet.create({
     color: colors.darkText,
     fontSize: 14,
     fontFamily: "montserrat-regular",
+  },
+  listContainer: {
+    backgroundColor: "#FFF",
+    ...baseStylesheet.elevation6,
   },
 });

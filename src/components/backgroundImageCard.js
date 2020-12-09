@@ -7,6 +7,7 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { numberToCashFormatter } from "../helpers/numberHelper";
 import { colors } from "../styles/colors";
 import GradientSlider from "./gradientSlider";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 class BackgroundImageCard extends Component {
   render() {
@@ -28,7 +29,12 @@ class BackgroundImageCard extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.dateAdded}>{moment(date).format("ll")}</Text>
-        <View style={[styles.cardContainer, baseStylesheet.elevation6]}>
+        <TouchableHighlight
+          style={[styles.cardContainer, baseStylesheet.elevation6]}
+          onPress={() => {
+            this.props.navigation.navigate("StartupScreen", { startup });
+          }}
+        >
           <ImageBackground
             source={{
               uri: startup.coverPhoto,
@@ -82,7 +88,7 @@ class BackgroundImageCard extends Component {
               </View>
             </View>
           </ImageBackground>
-        </View>
+        </TouchableHighlight>
       </View>
     );
   }

@@ -31,6 +31,19 @@ const userSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    setUserPushToken: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    setUserPushTokenSuccess: (state) => ({
+      ...state,
+      isLoading: false,
+    }),
+    setUserPushTokenFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
     updateUserData: (state) => ({
       ...state,
       isLoading: true,
@@ -89,6 +102,21 @@ export const updateUserData = (fullName) => {
       })
       .catch((error) => {
         dispatch(userSlice.actions.getUserDataFail(error));
+      });
+  };
+};
+
+export const setUserPushToken = (token) => {
+  return (dispatch) => {
+    dispatch(userSlice.actions.setUserPushToken());
+
+    axios
+      .post(`${API_URL}/account/notification-tokens`, { value: token })
+      .then(() => {
+        dispatch(userSlice.actions.setUserPushTokenSuccess());
+      })
+      .catch((error) => {
+        dispatch(userSlice.actions.setUserPushTokenFail(error));
       });
   };
 };
