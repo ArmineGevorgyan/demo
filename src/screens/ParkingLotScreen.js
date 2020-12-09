@@ -15,6 +15,7 @@ import {
 } from "../redux/ducks/parkingLot";
 import BackgroundImageCard from "../components/backgroundImageCard";
 import constants from "../constants";
+import { isEnterpreneur } from '../util/userTypeCheck';
 
 class ParkingLotScreen extends Component {
   componentDidMount() {
@@ -106,11 +107,14 @@ class ParkingLotScreen extends Component {
   };
 
   render() {
+    const { user } = this.props;
+
     return (
       <View style={baseStylesheet.baseContainer}>
         <GrayHeader
           title="Parking Lot"
           enableSearch
+          enableBell={isEnterpreneur(user?.authorities[0])}
           backButtonHandler={this.backButtonHandler}
         />
         {this.renderCards()}
@@ -125,7 +129,9 @@ const mapStateToProps = (state, props) => {
   const loadingMore = state.parkingLot.loadingMore;
   const nextPage = state.parkingLot.nextPage;
   const noMoreStartups = state.parkingLot.noMoreStartups;
-  return { startups, isLoading, loadingMore, nextPage, noMoreStartups };
+  const user = state.user.userData;
+
+  return { startups, isLoading, loadingMore, nextPage, noMoreStartups, user };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,11 +1,27 @@
 import React, { Component } from "react";
 import { Icon } from "native-base";
 import { StyleSheet, Text, View } from "react-native";
+
 import { colors } from "../styles/colors";
+
+const BellIcon = ({ hasUnread }) => (
+  <View style={styles.bellIconContainer}>
+    <Icon
+      type="Feather"
+      name="bell"
+      style={styles.bellIcon}
+    />
+    {hasUnread && <Text
+      style={styles.bellRedDot}
+    >
+      {'\u2B24'}
+    </Text>}
+  </View>
+);
 
 class GrayHeader extends Component {
   render() {
-    const { title, children, enableSearch, backButtonHandler } = this.props;
+    const { title, children, enableSearch, enableBell, backButtonHandler } = this.props;
 
     return (
       <View
@@ -33,6 +49,8 @@ class GrayHeader extends Component {
           <View
             style={{
               minWidth: 30,
+              flexDirection: "row",
+              marginBottom: !enableSearch ? 15 : 0
             }}
           >
             {enableSearch && (
@@ -44,6 +62,7 @@ class GrayHeader extends Component {
                 type="Feather"
               />
             )}
+            {enableBell && <BellIcon hasUnread />}
           </View>
         </View>
         {children}
@@ -82,5 +101,30 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: "montserrat-light",
     textAlign: "center",
+  },
+  bellIconContainer: {
+    marginLeft: 10,
+    maxHeight: 28,
+  },
+  bellIcon: {
+    color: colors.darkText,
+    width: "100%",
+    height: "100%",
+  },
+  bellRedDot: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    color: colors.lightRed,
+    alignItems: 'center',
+    borderColor: colors.offWhite,
+    borderWidth: 3,
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    lineHeight: 14,
+    width: 11,
+    height: 12
   },
 });

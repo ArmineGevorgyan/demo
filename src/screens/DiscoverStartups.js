@@ -18,6 +18,7 @@ import {
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
 import constants from "../constants";
+import { isEnterpreneur } from '../util/userTypeCheck';
 
 class DiscoverStartups extends Component {
   componentDidMount() {
@@ -78,12 +79,12 @@ class DiscoverStartups extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, user } = this.props;
     const height = Math.max(constants.windowHeight - 210, 580);
 
     return (
       <Content style={{ ...baseStylesheet.baseContainer, height: "100%" }}>
-        <GrayHeader title={t("discoverStartups.headerText")}>
+        <GrayHeader title={t("discoverStartups.headerText")} enableBell={isEnterpreneur(user?.authorities[0])}>
           <SwitchSelector
             options={[
               {
@@ -114,11 +115,14 @@ const mapStateToProps = (state, props) => {
   const startups = state.startup.startups;
   const isLoading = state.startup.isLoading;
   const isEmpty = state.startup.isEmpty;
+  const user = state.user.userData;
+
 
   return {
     startups,
     isLoading,
     isEmpty,
+    user
   };
 };
 
