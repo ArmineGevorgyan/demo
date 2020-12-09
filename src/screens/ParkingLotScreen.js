@@ -52,7 +52,10 @@ class ParkingLotScreen extends Component {
         onRowDidOpen={removeCard}
       >
         {this.renderHiddenItem()}
-        <BackgroundImageCard startup={item} />
+        <BackgroundImageCard
+          startup={item}
+          navigation={this.props.navigation}
+        />
       </SwipeRow>
     );
   };

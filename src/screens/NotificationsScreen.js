@@ -3,21 +3,22 @@ import GrayHeader from "../components/grayHeader";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
-import { Spinner, View, Container, Content, } from "native-base";
+import { Spinner, View, Container, Content } from "native-base";
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
-import { getNotifications, loadMoreNotifications, } from "../redux/ducks/notifications";
+import {
+  getNotifications,
+  loadMoreNotifications,
+} from "../redux/ducks/notifications";
 import { FlatList } from "react-native-gesture-handler";
 import NotificationItem from "../components/notificationItem";
 
 class Notifications extends Component {
   componentDidMount() {
     this.props.getNotifications();
-  };
+  }
 
-  renderItem = ({ item, index, }) => (
-    <NotificationItem data={item} />
-  );
+  renderItem = ({ item, index }) => <NotificationItem data={item} />;
 
   handleOnEndReached = ({ distanceFromEnd }) => {
     if (this.props.noMoreNotifications) {
@@ -34,7 +35,6 @@ class Notifications extends Component {
     return <></>;
   };
 
-
   render() {
     const { t, navigation, isLoading, notifications } = this.props;
 
@@ -46,31 +46,36 @@ class Notifications extends Component {
           enableSearch
         />
         <Content>
-          {
-            isLoading ? <Spinner color={colors.secondaryColor} /> : (
-              <View style={{
+          {isLoading ? (
+            <Spinner color={colors.secondaryColor} />
+          ) : (
+            <View
+              style={{
                 margin: "3%",
-              }}>
-                {notifications ?
-                  <FlatList
-                    data={notifications}
-                    onEndReachedThreshold={0.1}
-                    renderItem={this.renderItem}
-                    onEndReached={this.handleOnEndReached}
-                    ListFooterComponent={this.getLoadingMoreSpinner}
-                  />
-                  :
-                  <EmptyList text={t("notificationsScreen.emptyScreen")} />
-                }
-              </View>
-            )
-          }
+              }}
+            >
+              {notifications ? (
+                <FlatList
+                  data={notifications
+                    .slice()
+                    .sort(
+                      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                    )}
+                  onEndReachedThreshold={0.1}
+                  renderItem={this.renderItem}
+                  onEndReached={this.handleOnEndReached}
+                  ListFooterComponent={this.getLoadingMoreSpinner}
+                />
+              ) : (
+                <EmptyList text={t("notificationsScreen.emptyScreen")} />
+              )}
+            </View>
+          )}
         </Content>
       </Container>
-
-    )
-  };
-};
+    );
+  }
+}
 
 const mapStateToProps = (state, props) => {
   const isLoading = state.notifications.isLoading;
