@@ -1,25 +1,40 @@
 import { Card, Text, View } from "native-base";
 import React, { Component } from "react";
-import { StyleSheet, Image, TouchableOpacity, } from "react-native";
+import { StyleSheet, Image, TouchableOpacity } from "react-native";
 import moment from "moment";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import LogoImage from "../../assets/whiteLogo.svg";
 import { setNotificationSeen } from "../redux/ducks/notifications";
-import { date } from "yup";
 import { colors } from "../styles/colors";
+import * as Navigation from "../helpers/navigationHelper";
 
 class NotificationItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isSeen: false,
-    }
+    };
   }
 
   componentDidMount() {
-    this.setState({ isSeen: this.props.data.seen })
+    this.setState({ isSeen: this.props.data.seen });
+  }
+
+  handleNotificationPress() {
+    const {
+      data: { data },
+      setNotificationSeen,
+    } = this.props;
+
+    setNotificationSeen(data.id, this.setToSeen);
+
+    if (!data.path) {
+      return;
+    }
+
+    Navigation.notificationNavigate(data);
   }
 
   getTime(dateString) {
@@ -40,16 +55,16 @@ class NotificationItem extends Component {
 
     //check if within week
     if (targetDate.isBetween(endDate, startDate, "days", true)) {
-      let dt = moment(dateString, "YYYY-MM-DD HH:mm:ss")
+      let dt = moment(dateString, "YYYY-MM-DD HH:mm:ss");
       return dt.format("dddd");
     }
 
     return moment(dateString).format(format);
-  };
+  }
 
   setToSeen = () => {
     this.setState({ isSeen: true });
-  }
+  };
 
   render() {
     const { data } = this.props;
@@ -57,27 +72,24 @@ class NotificationItem extends Component {
     return (
       <TouchableOpacity
         activeOpacity={1}
-        onPress={() => this.props.setNotificationSeen(data.id, this.setToSeen)}>
+        onPress={() => this.handleNotificationPress()}
+      >
         <Card
           style={{
             ...styles.container,
-            backgroundColor: this.state.isSeen ? colors.disabledInput : "#FFF"
+            backgroundColor: this.state.isSeen ? colors.disabledInput : "#FFF",
           }}
         >
-          {
-            data.data.image ?
-              <Image
-                style={styles.imageContainer}
-                source={{ uri: data.data.image }}
-              />
-              :
-              <View style={[
-                styles.imageContainer,
-                styles.logo,
-              ]}>
-                <LogoImage />
-              </View>
-          }
+          {data.data.image ? (
+            <Image
+              style={styles.imageContainer}
+              source={{ uri: data.data.image }}
+            />
+          ) : (
+            <View style={[styles.imageContainer, styles.logo]}>
+              <LogoImage />
+            </View>
+          )}
           <View
             style={{
               flex: 1,
@@ -86,20 +98,20 @@ class NotificationItem extends Component {
             <View style={styles.textContainer}>
               <Text
                 style={{
-                  fontFamily: this.state.isSeen ? "montserrat-regular" : "montserrat-semi-bold"
+                  fontFamily: this.state.isSeen
+                    ? "montserrat-regular"
+                    : "montserrat-semi-bold",
                 }}
               >
                 {data.title}
               </Text>
-              <Text>
-                {this.getTime(data.createdAt)}
-              </Text>
+              <Text>{this.getTime(data.createdAt)}</Text>
             </View>
             <Text
               numberOfLines={3}
               style={{
                 fontFamily: "montserrat-regular",
-                color: this.state.isSeen ? "#707070" : "#1E87F4"
+                color: this.state.isSeen ? "#707070" : "#1E87F4",
               }}
             >
               {data.body}
@@ -107,20 +119,18 @@ class NotificationItem extends Component {
           </View>
         </Card>
       </TouchableOpacity>
-    )
-  };
-};
-
+    );
+  }
+}
 
 const mapStateToProps = (state, props) => {
-
-  return {
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setNotificationSeen: (id, setSeen) => dispatch(setNotificationSeen(id, setSeen)),
+    setNotificationSeen: (id, setSeen) =>
+      dispatch(setNotificationSeen(id, setSeen)),
   };
 };
 
