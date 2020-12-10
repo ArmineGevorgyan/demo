@@ -1,27 +1,41 @@
 import React, { Component } from "react";
 import { Icon } from "native-base";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { withTranslation } from "react-i18next";
+import { compose } from "redux";
+import { connect } from 'react-redux';
 
+import { getUnreadNotificationCount } from  "../redux/ducks/notifications";
 import { colors } from "../styles/colors";
 
-const BellIcon = ({ hasUnread }) => (
-  <View style={styles.bellIconContainer}>
-    <Icon
-      type="Feather"
-      name="bell"
-      style={styles.bellIcon}
-    />
-    {hasUnread && <Text
-      style={styles.bellRedDot}
+const BellIcon = ({ hasUnread }) => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => navigation.navigate("NotificationsScreen")}
     >
-      {'\u2B24'}
-    </Text>}
-  </View>
-);
+      <View style={styles.bellIconContainer}>
+        <Icon
+          type="Feather"
+          name="bell"
+          style={styles.bellIcon}
+        />
+        {hasUnread && <Text
+          style={styles.bellRedDot}
+        >
+          {'\u2B24'}
+        </Text>}
+      </View>
+    </TouchableOpacity>
+  );
+}
 
 class GrayHeader extends Component {
   render() {
-    const { title, children, enableSearch, enableBell, backButtonHandler } = this.props;
+    const { title, children, enableSearch, enableBell, backButtonHandler, unreadNotificationCount } = this.props;
 
     return (
       <View
@@ -62,7 +76,7 @@ class GrayHeader extends Component {
                 type="Feather"
               />
             )}
-            {enableBell && <BellIcon hasUnread />}
+            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
           </View>
         </View>
         {children}
@@ -70,8 +84,6 @@ class GrayHeader extends Component {
     );
   }
 }
-
-export default GrayHeader;
 
 const styles = StyleSheet.create({
   container: {
@@ -128,3 +140,22 @@ const styles = StyleSheet.create({
     height: 12
   },
 });
+
+const mapStateToProps = (state, props) => {
+  const { unreadNotificationCount } = state;
+
+  return {
+    unreadNotificationCount
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUnreadNotificationCount: () => dispatch(getUnreadNotificationCount())
+  };
+};
+
+export default compose(
+  withTranslation("translations"),
+  connect(mapStateToProps, mapDispatchToProps)
+)(GrayHeader);
