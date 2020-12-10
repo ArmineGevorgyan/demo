@@ -34,6 +34,11 @@ const BellIcon = ({ hasUnread }) => {
 }
 
 class GrayHeader extends Component {
+
+  componentDidMount(){
+    this.props.getUnreadNotificationCount();
+  }
+
   render() {
     const { title, children, enableSearch, enableBell, backButtonHandler, unreadNotificationCount } = this.props;
 
