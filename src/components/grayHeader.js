@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, props) => {
-  const { unreadNotificationCount } = state;
+  const { unreadNotificationCount } = state.notifications;
 
   return {
     unreadNotificationCount
