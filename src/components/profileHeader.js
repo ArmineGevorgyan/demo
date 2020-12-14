@@ -17,8 +17,10 @@ class ProfileHeader extends Component {
 
     return (
       <>
-        <BlueHeader style={styles.blueHeader}>
-          <View style={subtitle ? styles.headerContainer : styles.headerRow}>
+        <BlueHeader
+          style={subtitle ? styles.blueHeaderWithSubtitle : styles.blueHeader}
+        >
+          <View style={subtitle ? "" : styles.headerRow}>
             <View style={styles.backButton}>
               {backButtonHandler && (
                 <Icon
@@ -64,9 +66,6 @@ const styles = StyleSheet.create({
     fontFamily: "montserrat-regular",
     marginBottom: 5,
   },
-  headerContainer: {
-    marginTop: "10%",
-  },
   headerRow: {
     marginTop: "12%",
     flexDirection: "row",
@@ -96,5 +95,9 @@ const styles = StyleSheet.create({
   },
   blueHeader: {
     height: constants.blueHeaderHeight - 40,
+  },
+  blueHeaderWithSubtitle: {
+    paddingTop: "10%",
+    height: constants.blueHeaderHeight,
   },
 });

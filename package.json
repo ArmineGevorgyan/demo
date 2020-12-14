@@ -38,6 +38,7 @@
     "i18next-http-backend": "^1.0.21",
     "install": "^0.13.0",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
     "native-base": "2.13.8",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",

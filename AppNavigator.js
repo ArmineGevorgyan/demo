@@ -48,6 +48,7 @@ import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import TeamScreen from "./src/screens/TeamScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import Notifications from "./src/screens/NotificationsScreen";
+import CEOProfileScreen from "./src/screens/CEOProfileScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -150,10 +151,7 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen name="LegalScreen" component={LegalScreen} />
-          <Stack.Screen
-            name="TeamScreen"
-            component={TeamScreen}
-          />
+          <Stack.Screen name="TeamScreen" component={TeamScreen} />
           <Stack.Screen
             name="DiscussionsScreen"
             component={DiscussionsScreen}
@@ -192,6 +190,7 @@ class AppNavigator extends Component {
             component={ResetPasswordScreen}
           />
           <Stack.Screen name="NotificationsScreen" component={Notifications} />
+          <Stack.Screen name="CEOProfileScreen" component={CEOProfileScreen} />
         </Stack.Navigator>
       );
     };
@@ -237,7 +236,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, props) => {
   const isAuthenticated = state.authentication.isAuthenticated || false;
-  const completed = state.entrepreneurProfile.profileData.completed;
+  const completed = state.entrepreneurProfile.profileData?.completed;
   const user = state.user.userData;
 
   return {
