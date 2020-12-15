@@ -12,6 +12,7 @@ import store from "./src/redux/store";
 import i18n from "./src/i18n";
 import AppNavigator from "./AppNavigator";
 import { setUserPushToken } from "./src/redux/ducks/user";
+import * as Sentry from 'sentry-expo';
 
 YellowBox.ignoreWarnings([""]); // this will disable the yellow warning banners
 
@@ -22,6 +23,12 @@ Notifications.setNotificationHandler({
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
+});
+
+Sentry.init({
+  dsn: 'https://a086c47001234067a40b7f2b08ce0782@o489477.ingest.sentry.io/5551769',
+  enableInExpoDevelopment: true,
+  debug: true, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
 });
 
 export default function App() {
