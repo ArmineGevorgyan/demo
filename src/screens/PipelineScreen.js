@@ -18,7 +18,7 @@ import {
 import BackgroundImageCard from "../components/backgroundImageCard";
 import ParkingLotIcon from "../../assets/parkingmeter.svg";
 import constants from "../constants";
-import { isEnterpreneur } from '../util/userTypeCheck';
+import { isInvestor } from '../helpers/userTypeHelper';
 
 class PipelineScreen extends Component {
   componentDidMount() {
@@ -121,7 +121,7 @@ class PipelineScreen extends Component {
 
     return (
       <View style={baseStylesheet.baseContainer}>
-        <GrayHeader title={t("pipeline.title")} enableBell={isEnterpreneur(user?.authorities[0])}>
+        <GrayHeader title={t("pipeline.title")} enableBell={isInvestor(user?.authorities[0])}>
           <SwitchSelector
             options={[
               {

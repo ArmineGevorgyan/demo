@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { getUnreadNotificationCount } from  "../redux/ducks/notifications";
 import { colors } from "../styles/colors";
 
-const BellIcon = ({ hasUnread }) => {
+const BellIcon = ({ hasUnread, hasBottomMargin }) => {
   const navigation = useNavigation();
 
   return (
@@ -17,7 +17,7 @@ const BellIcon = ({ hasUnread }) => {
       activeOpacity={1}
       onPress={() => navigation.navigate("NotificationsScreen")}
     >
-      <View style={styles.bellIconContainer}>
+      <View style={{ ...styles.bellIconContainer, marginBottom: hasBottomMargin ? 10 : 0 }}>
         <Icon
           type="Feather"
           name="bell"
@@ -65,6 +65,7 @@ class GrayHeader extends Component {
           <Text style={[styles.headerText, children && { marginBottom: 15 }]}>
             {title}
           </Text>
+          {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} hasBottomMargin={!enableSearch} />}
           <View
             style={{
               minWidth: 30,
@@ -81,7 +82,6 @@ class GrayHeader extends Component {
                 type="Feather"
               />
             )}
-            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
           </View>
         </View>
         {children}

@@ -15,7 +15,7 @@ import {
 } from "../redux/ducks/parkingLot";
 import BackgroundImageCard from "../components/backgroundImageCard";
 import constants from "../constants";
-import { isEnterpreneur } from '../util/userTypeCheck';
+import { isInvestor } from '../helpers/userTypeHelper';
 
 class ParkingLotScreen extends Component {
   componentDidMount() {
@@ -114,7 +114,7 @@ class ParkingLotScreen extends Component {
         <GrayHeader
           title="Parking Lot"
           enableSearch
-          enableBell={isEnterpreneur(user?.authorities[0])}
+          enableBell={isInvestor(user?.authorities[0])}
           backButtonHandler={this.backButtonHandler}
         />
         {this.renderCards()}

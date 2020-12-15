@@ -8,7 +8,7 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { getDiscussions } from "../redux/ducks/discussion";
 import DiscussionItem from "../components/discussionItem";
-import constants from "../constants";
+import { isInvestor } from '../helpers/userTypeHelper';
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
@@ -31,7 +31,7 @@ class DiscussionsScreen extends Component {
 
     return (
       <Content style={baseStylesheet.baseContainer}>
-        {user?.authorities[0] == constants.userRole.investor && (
+        {isInvestor(user?.authorities[0]) && (
           <View style={styles.buttonView}>
             <Button
               style={baseStylesheet.whiteButton}

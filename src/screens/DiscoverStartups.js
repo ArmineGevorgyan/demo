@@ -18,7 +18,7 @@ import {
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
 import constants from "../constants";
-import { isEnterpreneur } from '../util/userTypeCheck';
+import { isInvestor } from '../helpers/userTypeHelper';
 
 class DiscoverStartups extends Component {
   componentDidMount() {
@@ -84,7 +84,7 @@ class DiscoverStartups extends Component {
 
     return (
       <Content style={{ ...baseStylesheet.baseContainer, height: "100%" }}>
-        <GrayHeader title={t("discoverStartups.headerText")} enableBell={isEnterpreneur(user?.authorities[0])}>
+        <GrayHeader title={t("discoverStartups.headerText")} enableBell={isInvestor(user?.authorities[0])}>
           <SwitchSelector
             options={[
               {

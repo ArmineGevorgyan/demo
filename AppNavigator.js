@@ -40,12 +40,12 @@ import ResetPasswordScreen from "./src/screens/ResetPasswordScreen";
 import LegalScreen from "./src/screens/LegalScreen";
 import LegalDocumentScreen from "./src/screens/LegalDocumentScreen";
 import InvestorProfileScreen from "./src/screens/InvestorProfileScreen";
-import constants from "./src/constants";
 import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import Notifications from "./src/screens/NotificationsScreen";
+import { isEntrepreneur } from './src/helpers/userTypeHelper';
 
 const prefix = Linking.makeUrl("/");
 
@@ -123,7 +123,7 @@ class AppNavigator extends Component {
       }
 
       if (
-        user?.authorities[0] == constants.userRole.entrepreneur &&
+        isEntrepreneur(user?.authorities[0]) &&
         !completed
       ) {
         return (
