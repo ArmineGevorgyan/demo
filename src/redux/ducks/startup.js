@@ -52,6 +52,20 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    getStartupTeamMembers: state => ({
+      ...state,
+      isLoading: true
+    }),
+    getStartupTeamMembersSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      currentStartupTeamMembers: action.payload
+    }),
+    getStartupTeamMembersFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload
+    })
   },
 });
 
@@ -115,5 +129,18 @@ export const getStartupFaqList = (id) => {
       });
   };
 };
+
+export const getStartupTeamMembers = id => dispatch => {
+  dispatch(startupSlice.actions.getStartupTeamMembers());
+
+  axios.get(`${API_URL}/startups/${id}/team-members`)
+    .then(res => res.data)
+    .then(data => {
+      dispatch(startupSlice.actions.getStartupTeamMembersSuccess(data));
+    })
+    .catch(error => {
+      dispatch(startupSlice.actions.getStartupTeamMembersFail(error))
+    })
+}
 
 export default startupReducer;
