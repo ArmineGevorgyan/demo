@@ -4,6 +4,7 @@ import { useCollapsibleScene } from "react-native-collapsible-tab-view";
 import { SceneMap } from "react-native-tab-view";
 import StartupFaqScreen from "../screens/StartupFaqScreen";
 import DiscussionsScreen from "../screens/DiscussionsScreen";
+import TeamScreen from "../screens/TeamScreen";
 
 const StartupRoute = ({ routeKey, color, children }) => {
   const scrollPropsAndRef = useCollapsibleScene(routeKey);
@@ -25,7 +26,9 @@ export const renderScene = (startup, navigation) => {
     <StartupRoute routeKey="product" color="white"></StartupRoute>
   );
   const TeamScene = () => (
-    <StartupRoute routeKey="team" color="white"></StartupRoute>
+    <StartupRoute routeKey="team" color="white">
+      <TeamScreen startup={startup} navigation={navigation} />
+    </StartupRoute>
   );
   const CompanyScene = () => (
     <StartupRoute routeKey="company" color="white"></StartupRoute>
