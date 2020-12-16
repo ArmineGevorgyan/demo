@@ -12,7 +12,9 @@ import constants from "../constants";
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
-    this.props.getDiscussions(this.props.startup.id);
+    if (!this.props.discussionList) {
+      this.props.getDiscussions(this.props.startup?.id);
+    }
   }
 
   render() {

@@ -6,7 +6,7 @@ initialState = {
   isLoading: false,
   error: null,
   result: null,
-  discussionList: [],
+  discussionList: null,
   draft:"",
 };
 
@@ -20,7 +20,6 @@ const discussionSlice = createSlice({
     }),
     getDiscussions: (state) => ({
       ...state,
-      discussionList: [],
       isLoading: true,
     }),
     getDiscussionsSuccess: (state, action) => ({
