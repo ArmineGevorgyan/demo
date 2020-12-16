@@ -27,7 +27,6 @@
     "expo-font": "~8.2.1",
     "expo-image-picker": "^9.1.1",
     "expo-linear-gradient": "~8.2.1",
-    "expo-notifications": "~0.3.3",
     "expo-permissions": "~9.0.1",
     "expo-screen-orientation": "^2.0.0",
     "expo-status-bar": "^1.0.2",
@@ -64,6 +63,7 @@
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
+    "sentry-expo": "^3.0.4",
     "yup": "^0.29.3"
   },
   "devDependencies": {

@@ -26,6 +26,7 @@ import ActiveStar from "./assets/star-active.svg";
 import ActiveTimeline from "./assets/timeline-active.svg";
 import ActiveUserProfile from "./assets/user-profile-active.svg";
 import { authenticate } from "./src/redux/ducks/authentication";
+import { navigationRef } from "./src/helpers/navigationHelper";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import TemporaryScreen from "./src/screens/TemporaryScreen";
 import ParkingLotScreen from "./src/screens/ParkingLotScreen";
@@ -190,10 +191,7 @@ class AppNavigator extends Component {
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
           />
-          <Stack.Screen
-            name="NotificationsScreen"
-            component={Notifications}
-          />
+          <Stack.Screen name="NotificationsScreen" component={Notifications} />
         </Stack.Navigator>
       );
     };
@@ -220,6 +218,7 @@ class AppNavigator extends Component {
     return (
       <NavigationContainer
         linking={linking}
+        ref={navigationRef}
         fallback={<Spinner color={colors.secondaryColor} />}
       >
         {getStack()}

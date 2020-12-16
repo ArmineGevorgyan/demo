@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "DraperRhino",
+    "name": "Draper Walled Garden",
     "slug": "DraperRhino",
     "scheme": "draperrhino",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -15,11 +15,23 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "aobyte",
+            "project": "draperrhino",
+            "authToken": "8c3b129e49a4487eb1bc5b7640f87c6fd96e578e1d114108b5a647dd06fc86bc",
+            "setCommits":true
+          }
+        }
+      ]
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.draper.draperrhino",
-      "buildNumber": "1.0.0",
-      "scheme": "draperrhino"
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.draper.draperrhino",

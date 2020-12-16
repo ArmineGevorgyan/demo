@@ -1,7 +1,7 @@
-import * as Notifications from "expo-notifications";
+import { Notifications } from "expo";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
-import React from "react";
+import React, { useEffect } from "react";
 import { YellowBox, Platform } from "react-native";
 import { Root } from "native-base";
 import { Provider } from "react-redux";
@@ -12,19 +12,29 @@ import store from "./src/redux/store";
 import i18n from "./src/i18n";
 import AppNavigator from "./AppNavigator";
 import { setUserPushToken } from "./src/redux/ducks/user";
+import * as Navigation from "./src/helpers/navigationHelper";
+import * as Sentry from "sentry-expo";
 
 YellowBox.ignoreWarnings([""]); // this will disable the yellow warning banners
 
-//how to handle notifications when the app is foregrounded
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
+Sentry.init({
+  dsn:
+    "https://a086c47001234067a40b7f2b08ce0782@o489477.ingest.sentry.io/5551769",
+  enableInExpoDevelopment: true,
+  debug: true, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
 });
 
 export default function App() {
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      store.dispatch(setUserPushToken(token))
+    );
+
+    this.onResponseReceivedListener = Notifications.addListener(
+      onResponseReceived
+    );
+  });
+
   const [isLoaded] = useFonts({
     "montserrat-bold": require("./assets/fonts/Montserrat-Bold.ttf"),
     "montserrat-extra-bold": require("./assets/fonts/Montserrat-ExtraBold.ttf"),
@@ -37,18 +47,26 @@ export default function App() {
 
   if (!isLoaded) {
     return <AppLoading />;
-  } else {
-    return (
-      <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <Root>
-            <AppNavigator />
-          </Root>
-        </I18nextProvider>
-      </Provider>
-    );
   }
+
+  return (
+    <Provider store={store}>
+      <I18nextProvider i18n={i18n}>
+        <Root>
+          <AppNavigator />
+        </Root>
+      </I18nextProvider>
+    </Provider>
+  );
 }
+
+onResponseReceived = async (response) => {
+  const status = response.origin;
+
+  if (status == "selected") {
+    Navigation.notificationNavigate(response.data);
+  }
+};
 
 registerForPushNotificationsAsync = async () => {
   if (Constants.isDevice) {
@@ -67,23 +85,19 @@ registerForPushNotificationsAsync = async () => {
       return;
     }
 
-    const token = (await Notifications.getExpoPushTokenAsync()).data;
-
-    return token;
+    token = await Notifications.getExpoPushTokenAsync();
   } else {
     alert("Must use physical device for Push Notifications");
   }
 
   if (Platform.OS === "android") {
-    Notifications.setNotificationChannelAsync("default", {
+    Notifications.createChannelAndroidAsync("default", {
       name: "default",
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#FF231F7C",
+      sound: true,
+      priority: "max",
+      vibrate: [0, 250, 250, 250],
     });
   }
-};
 
-registerForPushNotificationsAsync().then((token) =>
-  store.dispatch(setUserPushToken(token))
-);
+  return token;
+};
