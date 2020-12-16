@@ -7,7 +7,7 @@ const EmptyContainer = ({ children, }) => {
   return (
     <View style={{
       width: "100%",
-      height: 1500,
+      minHeight: 1500,
       backgroundColor: "#FFF",
     }}>
       {children}
