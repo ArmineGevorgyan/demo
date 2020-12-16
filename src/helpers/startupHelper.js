@@ -15,34 +15,6 @@ const EmptyContainer = ({ children, }) => {
     </View>
   )
 };
-export const renderScene = (startup, navigation) => {
-  const OverviewScene = () => (
-    <StartupRoute routeKey="overview" color="white"></StartupRoute>
-  );
-  const ProductScene = () => (
-    <StartupRoute routeKey="product" color="white"></StartupRoute>
-  );
-  const TeamScene = () => (
-    <StartupRoute routeKey="team" color="white">
-      <TeamScreen startup={startup} navigation={navigation} />
-    </StartupRoute>
-  );
-  const CompanyScene = () => (
-    <StartupRoute routeKey="company" color="white"></StartupRoute>
-  );
-  const DiscussionsScene = () => (
-    <StartupRoute routeKey="discussions" color="white">
-      <DiscussionsScreen startup={startup} navigation={navigation} />
-    </StartupRoute>
-  );
-  const FaqScene = () => (
-    <StartupRoute routeKey="faq" color="white">
-      <StartupFaqScreen startup={startup} />
-    </StartupRoute>
-  );
-  const VideosScene = () => (
-    <StartupRoute routeKey="videos" color="white"></StartupRoute>
-  );
 
 export const getTabComponent = (key, startup, navigation, index) => {
   switch (key) {
@@ -68,7 +40,7 @@ export const getTabComponent = (key, startup, navigation, index) => {
       return <EmptyContainer>
         {
           index === 2 ?
-            <></> : <></>
+          <TeamScreen startup={startup} navigation={navigation} /> : <></>
         }
       </EmptyContainer>
     }
