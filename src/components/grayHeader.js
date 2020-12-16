@@ -50,18 +50,18 @@ class GrayHeader extends Component {
         ]}
       >
         <View style={styles.textRowContainer}>
-          <View style={{ minWidth: 30 }}>
-            {backButtonHandler && (
-              <Icon
-                style={{
-                  color: colors.backIconBlue,
-                }}
-                name="arrow-left"
-                type="Feather"
-                onPress={backButtonHandler}
-              />
-            )}
-          </View>
+          {backButtonHandler && (
+            <View style={{ minWidth: 30 }}>
+                <Icon
+                  style={{
+                    color: colors.backIconBlue,
+                  }}
+                  name="arrow-left"
+                  type="Feather"
+                  onPress={backButtonHandler}
+                />
+            </View>
+          )}
           <Text style={[styles.headerText, children && { marginBottom: 15 }]}>
             {title}
           </Text>
