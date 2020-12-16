@@ -5,6 +5,7 @@ import { API_URL } from "../../config";
 const initialState = {
   isLoading: false,
   startups: null,
+  singleStartup: null,
   faqList: null,
   error: null,
 };
@@ -48,6 +49,21 @@ const startupSlice = createSlice({
       faqList: action.payload,
     }),
     getStartupFaqListFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
+    getStartupById: (state) => ({
+      ...state,
+      isLoading: true,
+      singleStartup: null,
+    }),
+    getStartupByIdSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      singleStartup: action.payload,
+    }),
+    getStartupByIdFail: (state, action) => ({
       ...state,
       isLoading: false,
       error: action.payload,
@@ -103,7 +119,8 @@ export const getStartupFaqList = (id) => {
   return (dispatch) => {
     dispatch(startupSlice.actions.getStartupFaqList());
 
-    axios.get(`${API_URL}/startups/${id}/info-session`)
+    axios
+      .get(`${API_URL}/startups/${id}/info-session`)
       .then((r) => {
         return r.data;
       })
@@ -112,6 +129,24 @@ export const getStartupFaqList = (id) => {
       })
       .catch((error) => {
         dispatch(startupSlice.actions.getStartupFaqListFail(error));
+      });
+  };
+};
+
+export const getStartupById = (id) => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.getStartupById());
+
+    axios
+      .get(`${API_URL}/startups/${id}`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(startupSlice.actions.getStartupByIdSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.getStartupByIdFail(error));
       });
   };
 };

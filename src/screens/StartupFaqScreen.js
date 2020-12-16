@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { View, StyleSheet, } from "react-native";
-import { Text, Spinner, List, } from "native-base";
+import { View, StyleSheet } from "react-native";
+import { Text, Spinner, List } from "native-base";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { colors } from "../styles/colors";
@@ -13,22 +13,24 @@ import moment from "moment";
 class StartupFaqScreen extends Component {
   componentDidMount() {
     this.props.getStartupFaqList(this.props.startup.id);
-  };
+  }
 
   render() {
-    const { t, isLoading, faqList, } = this.props;
+    const { t, isLoading, faqList } = this.props;
 
     return (
       <View>
-        {isLoading ?
+        {isLoading ? (
           <Spinner color={colors.secondaryColor} />
-          :
+        ) : (
           <>
-            {faqList ?
-              faqList.map(item => (
+            {faqList && faqList.length > 0 ? (
+              faqList.map((item) => (
                 <>
                   <Text style={styles.listHeader}>
-                    {`${t("startupFaq.listTitle")} ${moment(item.heldOn).format('D.M.YYYY')}`}
+                    {`${t("startupFaq.listTitle")} ${moment(item.heldOn).format(
+                      "D.M.YYYY"
+                    )}`}
                   </Text>
                   <ListAccordion
                     dataArray={item.infoSessionFAQs}
@@ -36,9 +38,9 @@ class StartupFaqScreen extends Component {
                   />
                 </>
               ))
-              :
+            ) : (
               <>
-                <NoFaqIcon />
+                <NoFaqIcon style={styles.icon} />
                 <Text style={styles.noFaqTitle}>
                   {t("startupFaq.noFaqTitle")}
                 </Text>
@@ -46,15 +48,18 @@ class StartupFaqScreen extends Component {
                   style={{
                     textAlign: "center",
                     fontFamily: "montserrat-regular",
-                  }}>
+                  }}
+                >
                   {t("startupFaq.noFaqDescription")}
                 </Text>
-              </>}
-          </>}
+              </>
+            )}
+          </>
+        )}
       </View>
-    )
-  };
-};
+    );
+  }
+}
 
 const mapStateToProps = (state, props) => {
   const isLoading = state.startup.isLoading;
@@ -87,8 +92,12 @@ const styles = StyleSheet.create({
   noFaqTitle: {
     textAlign: "center",
     fontWeight: "bold",
-    paddingTop: 22,
+    paddingTop: 10,
     paddingBottom: 22,
     fontFamily: "montserrat-medium",
+  },
+  icon: {
+    marginTop: 22,
+    alignSelf: "center",
   },
 });

@@ -11,11 +11,7 @@ import constants from "../constants";
 import { colors } from "../styles/colors";
 
 const renderHeader = (startup, navigation, goBack) => (
-  <StartupHeader
-    startup={startup}
-    navigation={navigation}
-    goBack={goBack}
-  />
+  <StartupHeader startup={startup} navigation={navigation} goBack={goBack} />
 );
 
 const StartupScreen = ({
@@ -25,7 +21,7 @@ const StartupScreen = ({
   startups,
   addStartupToPipeline,
 }) => {
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(route?.params?.initialIndex || 0);
   const [routes] = React.useState([
     { key: "overview", title: t("startupTab.overview") },
     { key: "product", title: t("startupTab.product") },
@@ -54,7 +50,9 @@ const StartupScreen = ({
       navigationState={{ index, routes }}
       renderScene={renderScene(route?.params?.startup, navigation)}
       onIndexChange={handleIndexChange}
-      renderHeader={() => renderHeader(route?.params?.startup, navigation, goBack)}
+      renderHeader={() =>
+        renderHeader(route?.params?.startup, navigation, goBack)
+      }
       headerHeight={constants.startupHeaderHeight}
       tabBarProps={{
         scrollEnabled: true,
