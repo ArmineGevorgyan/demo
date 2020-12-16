@@ -19,8 +19,10 @@ class TeamScreen extends Component {
   render() {
     const {
       isLoading,
-      teamMembers
+      teamMembers,
+      t
     } = this.props;
+    const { teamTabHorizontalPadding, teamMembersPerRow } = constants;
 
     const sortedTeamMembers = teamMembers && teamMembers.slice().sort(teamMember1 => teamMember1.position === "CEO" ? -1 : 0); //slice is for not mutating teamMembers
 
@@ -29,9 +31,9 @@ class TeamScreen extends Component {
     }
 
     return (
-      <Content style={{...baseStylesheet.baseContainer, paddingHorizontal: constants.teamTabHorizontalPadding, paddingTop: 20 }}>
+      <Content style={{...baseStylesheet.baseContainer, paddingHorizontal: teamTabHorizontalPadding, paddingTop: 20 }}>
         <Text style={styles.titleText}>
-          About team
+          {t("teamScreen.aboutTeam")}
         </Text>
         <Text style={styles.mainText}>
           {/* Temporary placeholder, description field is missing */}
@@ -39,20 +41,20 @@ class TeamScreen extends Component {
         </Text>
         <DividerLine />
         <Text style={styles.titleText}>
-          Founders
+          {t("teamScreen.founders")}
         </Text>
         <View>
           <FlatList
             data={sortedTeamMembers}
             keyExtractor={item => item.id} 
-            renderItem={({ item, index }) => <FounderCard imageSrc={item.photoUrl} name={item.fullName} position={item.position} isLastOnLine={((index+1)%3)} />}
+            renderItem={({ item, index }) => <FounderCard imageSrc={item.photoUrl} name={item.fullName} position={item.position} isLastOnLine={((index+1)%teamMembersPerRow)} />}
             numColumns={3}
-            columnWrapperStyle={{ marginBottom: sortedTeamMembers.length > 3 ? 20 : 15 }}
+            columnWrapperStyle={{ marginBottom: sortedTeamMembers.length > teamMembersPerRow ? 20 : 15 }}
           />
         </View>
         <DividerLine />
         <Text style={styles.noteText}>
-          <Text style={{ fontFamily: "montserrat-semi-bold" }}>Capital at risk:</Text> Diversify to spread your risk. Approved as a financial promotion by Draper Walled Garden (FCA No.650209).
+          <Text style={{ fontFamily: "montserrat-semi-bold" }}>{t("teamScreen.capitalAtRisk")}</Text> {t("teamScreen.diversifyRisk")}
         </Text>
       </Content>
     );
