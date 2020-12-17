@@ -52,9 +52,9 @@ class GrayHeader extends Component {
           children ? styles.withCildren : styles.withoutChildren,
         ]}
       >
-        <View style={styles.textRowContainer}>
-          {backButtonHandler && (
+        <View style={{ ...styles.textRowContainer, paddingRight: !enableSearch ? 15 : 0 }}>
             <View style={{ minWidth: 30 }}>
+              {backButtonHandler && (
                 <Icon
                   style={{
                     color: colors.backIconBlue,
@@ -63,8 +63,8 @@ class GrayHeader extends Component {
                   type="Feather"
                   onPress={backButtonHandler}
                 />
+              )}
             </View>
-          )}
           <Text style={[styles.headerText, children && { marginBottom: 15 }]}>
             {title}
           </Text>
@@ -75,6 +75,7 @@ class GrayHeader extends Component {
               marginBottom: !enableSearch ? 15 : 0
             }}
             >
+            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
             {enableSearch && (
               <Icon
               style={{
@@ -84,7 +85,6 @@ class GrayHeader extends Component {
                 type="Feather"
               />
             )}
-            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
           </View>
         </View>
         {children}
@@ -95,8 +95,8 @@ class GrayHeader extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: windowWidth < 355 ? "4%" : "7%",
-    paddingRight: windowWidth < 355 ? "4%" : "7%",
+    paddingLeft: windowWidth < 355 ? "2%" : "7%",
+    paddingRight: windowWidth < 355 ? "2%" : "7%",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   bellIconContainer: {
-    marginLeft: windowWidth < 355 ? 0 : 10,
+    marginRight: 10,
     maxHeight: 28,
   },
   bellIcon: {
