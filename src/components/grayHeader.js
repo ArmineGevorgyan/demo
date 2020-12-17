@@ -6,8 +6,11 @@ import { withTranslation } from "react-i18next";
 import { compose } from "redux";
 import { connect } from 'react-redux';
 
+import constants from '../constants';
 import { getUnreadNotificationCount } from  "../redux/ducks/notifications";
 import { colors } from "../styles/colors";
+
+const { windowWidth } = constants;
 
 const BellIcon = ({ hasUnread, hasBottomMargin }) => {
   const navigation = useNavigation();
@@ -92,8 +95,8 @@ class GrayHeader extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: "7%",
-    paddingRight: "7%",
+    paddingLeft: windowWidth < 355 ? "5%" : "7%",
+    paddingRight: windowWidth < 355 ? "5" : "7%",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   bellIconContainer: {
-    marginLeft: 10,
+    marginLeft: windowWidth < 355 ? 0 : 10,
     maxHeight: 28,
   },
   bellIcon: {
