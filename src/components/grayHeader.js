@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 20,
     top: 0,
-    right: windowWidth < 355 ? 3 : 0,
+    right: windowWidth < 355 ? 4 : 0,
     color: colors.lightRed,
     borderColor: colors.offWhite,
     borderWidth: 3,
@@ -143,9 +143,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    lineHeight: 14,
-    width: 11,
-    height: 12
+    lineHeight: windowWidth < 355 ? 16 : 14,
+    width: windowWidth < 355 ? 13 : 11,
+    height: windowWidth < 355 ? 14 : 12
   },
 });
 
