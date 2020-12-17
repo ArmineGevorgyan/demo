@@ -76,20 +76,6 @@ const investorProfileSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    getUserData: (state) => ({
-      ...state,
-      isLoading: true,
-    }),
-    getUserDataSuccess: (state, action) => ({
-      ...state,
-      isLoading: false,
-      profileData: { ...state.profileData, ...action.payload },
-    }),
-    getUserDataFail: (state, action) => ({
-      ...state,
-      isLoading: false,
-      error: action.payload,
-    }),
   },
 });
 
@@ -105,9 +91,6 @@ export const getProfileData = (id = "current") => {
       })
       .then((data) => {
         dispatch(investorProfileSlice.actions.getProfileDataSuccess(data));
-      })
-      .then(() => {
-        if (id != "current") dispatch(getUserData(id));
       })
       .catch((error) => {
         dispatch(investorProfileSlice.actions.getProfileDataFail(error));
@@ -158,23 +141,6 @@ export const resetProfile = () => {
       })
       .catch((error) => {
         dispatch(investorProfileSlice.actions.updateProfileFail(error));
-      });
-  };
-};
-
-const getUserData = (id) => {
-  return (dispatch) => {
-    dispatch(investorProfileSlice.actions.getUserData());
-    axios
-      .get(`${API_URL}/user/${id}`)
-      .then((r) => {
-        return r.data;
-      })
-      .then((data) => {
-        dispatch(investorProfileSlice.actions.getUserDataSuccess(data));
-      })
-      .catch((error) => {
-        dispatch(investorProfileSlice.actions.getUserDataFail(error));
       });
   };
 };

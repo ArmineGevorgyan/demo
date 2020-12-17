@@ -41,7 +41,7 @@ class TeamScreen extends Component {
     const {
       isLoading,
       teamMembers,
-      startup: { entrepreneur },
+      startup: { entrepreneur, aboutTeam },
       t,
     } = this.props;
     const { teamTabHorizontalPadding, teamMembersPerRow } = constants;
@@ -50,7 +50,7 @@ class TeamScreen extends Component {
     teamMembersWithCEO?.unshift({
       id: entrepreneur.id,
       photoUrl: entrepreneur.photoUrl,
-      fullName: "placeholder",
+      fullName: `${entrepreneur.firstName} ${entrepreneur.lastName}`,
       position: t("teamScreen.ceo"),
       isCEO: true,
     }); //adding the CEO as the first item
@@ -67,18 +67,13 @@ class TeamScreen extends Component {
           paddingTop: 20,
         }}
       >
-        <Text style={styles.titleText}>{t("teamScreen.aboutTeam")}</Text>
-        <Text style={styles.mainText}>
-          {/* Temporary placeholder, description field is missing */}
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur
-          sunt blanditiis in, quaerat saepe laboriosam odit quisquam ad, labore
-          veritatis ea unde inventore suscipit minima maiores! Voluptatem
-          voluptatibus quam repellendus.Esse, architecto sunt. Tempore alias est
-          aliquid labore consectetur debitis, corporis voluptates et sapiente
-          sed officiis repellat delectus facere animi modi minus sit ipsam
-          itaque deserunt quas eligendi! Officia, quos?
-        </Text>
-        <DividerLine />
+        {!!aboutTeam && (
+          <>
+            <Text style={styles.titleText}>{t("teamScreen.aboutTeam")}</Text>
+            <Text style={styles.mainText}>{aboutTeam}</Text>
+            <DividerLine />
+          </>
+        )}
         <Text style={styles.titleText}>{t("teamScreen.founders")}</Text>
         <View>
           <FlatList
