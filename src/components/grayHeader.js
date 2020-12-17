@@ -52,7 +52,7 @@ class GrayHeader extends Component {
           children ? styles.withCildren : styles.withoutChildren,
         ]}
       >
-        <View style={{ ...styles.textRowContainer, paddingRight: !enableSearch ? 15 : 0 }}>
+        <View style={styles.textRowContainer}>
             <View style={{ minWidth: 30 }}>
               {backButtonHandler && (
                 <Icon
@@ -75,7 +75,7 @@ class GrayHeader extends Component {
               marginBottom: !enableSearch ? 15 : 0
             }}
             >
-            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
+            {enableBell && <BellIcon hasUnread={!unreadNotificationCount} />}
             {enableSearch && (
               <Icon
               style={{
@@ -96,7 +96,7 @@ class GrayHeader extends Component {
 const styles = StyleSheet.create({
   container: {
     paddingLeft: windowWidth < 355 ? "2%" : "7%",
-    paddingRight: windowWidth < 355 ? "2%" : "7%",
+    paddingRight: windowWidth < 355 ? "4%" : "7%",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
@@ -133,11 +133,10 @@ const styles = StyleSheet.create({
   },
   bellRedDot: {
     position: "absolute",
-    zIndex: 2,
+    zIndex: 20,
     top: 0,
-    right: 0,
+    right: windowWidth < 355 ? 3 : 0,
     color: colors.lightRed,
-    alignItems: 'center',
     borderColor: colors.offWhite,
     borderWidth: 3,
     borderRadius: 100,
