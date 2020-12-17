@@ -12,7 +12,7 @@ import { colors } from "../styles/colors";
 
 const { windowWidth } = constants;
 
-const BellIcon = ({ hasUnread, hasBottomMargin }) => {
+const BellIcon = ({ hasUnread }) => {
   const navigation = useNavigation();
 
   return (
@@ -20,7 +20,7 @@ const BellIcon = ({ hasUnread, hasBottomMargin }) => {
       activeOpacity={1}
       onPress={() => navigation.navigate("NotificationsScreen")}
     >
-      <View style={{ ...styles.bellIconContainer, marginBottom: hasBottomMargin ? 10 : 0 }}>
+      <View style={styles.bellIconContainer}>
         <Icon
           type="Feather"
           name="bell"
@@ -68,23 +68,23 @@ class GrayHeader extends Component {
           <Text style={[styles.headerText, children && { marginBottom: 15 }]}>
             {title}
           </Text>
-          {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} hasBottomMargin={!enableSearch} />}
           <View
             style={{
               minWidth: 30,
               flexDirection: "row",
               marginBottom: !enableSearch ? 15 : 0
             }}
-          >
+            >
             {enableSearch && (
               <Icon
-                style={{
+              style={{
                   color: colors.darkText,
                 }}
                 name="search"
                 type="Feather"
               />
             )}
+            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
           </View>
         </View>
         {children}
@@ -95,8 +95,8 @@ class GrayHeader extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: windowWidth < 355 ? "1%" : "7%",
-    paddingRight: windowWidth < 355 ? 0 : "7%",
+    paddingLeft: windowWidth < 355 ? "4%" : "7%",
+    paddingRight: windowWidth < 355 ? "4%" : "7%",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     color: colors.blackBlue,
-    fontSize: 30,
+    fontSize: windowWidth < 355 ? 24 : 30,
     fontFamily: "montserrat-light",
     textAlign: "center",
   },
