@@ -10,6 +10,9 @@ const constants = {
   windowWidth: Dimensions.get("window").width,
   widescreenVideoRatio: 16 / 9,
   widescreenVideoHeight: (Dimensions.get("window").width * 9) / 16,
+  teamTabHorizontalPadding: 25,
+  teamMembersPerRow: 3,
+  teamMembersWithMargin: 2,
   emailStatus: {
     registered: "REGISTERED",
     accepted: "ACCEPTED",

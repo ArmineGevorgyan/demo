@@ -2,6 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import StartupFaqScreen from "../screens/StartupFaqScreen";
 import DiscussionsScreen from "../screens/DiscussionsScreen";
+import TeamScreen from "../screens/TeamScreen";
 
 const EmptyContainer = ({ children, }) => {
   return (
@@ -39,7 +40,7 @@ export const getTabComponent = (key, startup, navigation, index) => {
       return <EmptyContainer>
         {
           index === 2 ?
-            <></> : <></>
+          <TeamScreen startup={startup} navigation={navigation} /> : <></>
         }
       </EmptyContainer>
     }

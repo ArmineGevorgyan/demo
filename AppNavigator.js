@@ -45,6 +45,7 @@ import constants from "./src/constants";
 import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
+import TeamScreen from "./src/screens/TeamScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import Notifications from "./src/screens/NotificationsScreen";
 
@@ -149,6 +150,10 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen name="LegalScreen" component={LegalScreen} />
+          <Stack.Screen
+            name="TeamScreen"
+            component={TeamScreen}
+          />
           <Stack.Screen
             name="DiscussionsScreen"
             component={DiscussionsScreen}
