@@ -20,11 +20,17 @@ class TeamScreen extends Component {
     const {
       isLoading,
       teamMembers,
+      startup: { entrepreneur },
       t
     } = this.props;
     const { teamTabHorizontalPadding, teamMembersPerRow } = constants;
 
-    const sortedTeamMembers = teamMembers && teamMembers.slice().sort(teamMember1 => teamMember1.position === "CEO" ? -1 : 0); //slice is for not mutating teamMembers
+    const teamMembersWithCEO = teamMembers && [...teamMembers];
+    teamMembersWithCEO?.unshift({
+      photoUrl: entrepreneur.photoUrl,
+      fullName: "placeholder",
+      position: t("teamScreen.ceo")
+    }); //adding the CEO as the first item
 
     if (!teamMembers || isLoading) {
       return <Spinner color={colors.secondaryColor} />;
@@ -45,11 +51,12 @@ class TeamScreen extends Component {
         </Text>
         <View>
           <FlatList
-            data={sortedTeamMembers}
+            data={teamMembersWithCEO}
             keyExtractor={item => item.id} 
-            renderItem={({ item, index }) => <FounderCard imageSrc={item.photoUrl} name={item.fullName} position={item.position} isLastOnLine={((index+1)%teamMembersPerRow)} />}
+            renderItem={({ item, index }) => <FounderCard imageSrc={item.photoUrl} name={item.fullName} position={item.position} isLastOnLine={((index+1)%teamMembersPerRow)} />
+          }
             numColumns={3}
-            columnWrapperStyle={{ marginBottom: sortedTeamMembers.length > teamMembersPerRow ? 20 : 15 }}
+            columnWrapperStyle={{ marginBottom: teamMembersWithCEO.length > teamMembersPerRow ? 20 : 15 }}
           />
         </View>
         <DividerLine />
@@ -66,7 +73,7 @@ const mapStateToProps = (state, props) => ({
   teamMembers: state.startup.currentStartupTeamMembers
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   getStartupTeamMembers: id => dispatch(getStartupTeamMembers(id))
 });
 
