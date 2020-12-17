@@ -95,8 +95,8 @@ class GrayHeader extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: windowWidth < 355 ? "3%" : "7%",
-    paddingRight: windowWidth < 355 ? "3%" : "7%",
+    paddingLeft: windowWidth < 355 ? "1%" : "7%",
+    paddingRight: windowWidth < 355 ? 0 : "7%",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
