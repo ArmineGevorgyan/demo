@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
   },
   bellRedDot: {
     position: "absolute",
+    zIndex: 2,
     top: 0,
     right: 0,
     color: colors.lightRed,
