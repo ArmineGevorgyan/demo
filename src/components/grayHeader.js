@@ -75,7 +75,7 @@ class GrayHeader extends Component {
               marginBottom: !enableSearch ? 15 : 0
             }}
             >
-            {enableBell && <BellIcon hasUnread={!unreadNotificationCount} />}
+            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
             {enableSearch && (
               <Icon
               style={{
