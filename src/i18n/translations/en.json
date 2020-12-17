@@ -293,9 +293,10 @@
     "answeredBy": "Answered by ",
     "answers": "Answers",
     "me": "Me",
-    "newDiscussion":"New Discussion",
-    "inputPlaceholder":" Type here...",
-    "post":"POST"
+    "newDiscussion": "New Discussion",
+    "newComment":"New Comment",
+    "inputPlaceholder": " Type here...",
+    "post": "POST"
   },
   "teamScreen": {
     "aboutTeam": "About team",
