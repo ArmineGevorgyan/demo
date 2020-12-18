@@ -312,15 +312,27 @@
     "pricing": "Pricing",
     "similarProducts": "Similar products"
   },
-  "notificationsScreen": {
-    "emptyScreen": "You don't have any notifications.",
-    "yesterday": "Yesterday"
+  "notificationsScreen":{
+    "emptyScreen":"You don't have any notifications.",
+    "yesterday":"Yesterday"
   },
-  "ceoProfileScreen": {
-    "bio": "Bio",
-    "locations": "Locations",
-    "timezone": "Timezone",
-    "residency": "Residency",
+  "օverviewScreen": {
+    "infoSession": "Info Session"
+  },
+  "infoSessionModal": {
+    "infoSession": "Info Session",
+    "date": "Info session date",
+    "zoom": "The Info session will be held on Zoom",
+    "tapToJoin": "Tap Join and get an invitation with the meeting link to your calendar.",
+    "join": "Join",
+    "cancelButton": "Cancel",
+    "joined": "Joined"
+  },
+  "ceoProfileScreen":{
+    "bio": "Bio",    
+    "locations": "Locations",    
+    "timezone": "Timezone",    
+    "residency": "Residency",    
     "highlights": "Relevant highlights",
     "ceoAt": "CEO at",
     "utc": "UTC"

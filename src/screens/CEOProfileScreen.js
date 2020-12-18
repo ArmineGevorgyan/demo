@@ -12,7 +12,6 @@ import { colors } from "../styles/colors";
 import { getProfileData } from "../redux/ducks/entrepreneurProfile";
 import { linkedin, angellist, crunchbase } from "../components/socialLinks";
 import ContentField from "../components/contentField";
-import constants from "../constants";
 
 class CEOProfileScreen extends Component {
   componentDidMount() {

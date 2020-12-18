@@ -11,7 +11,7 @@ import {
   closeModal,
   resendInvite,
 } from "../redux/ducks/resendInvite";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import Email from "../../assets/email.svg";
 
 class ResendInviteModal extends Component {
@@ -38,7 +38,7 @@ class ResendInviteModal extends Component {
       >
         <View style={baseStylesheet.modalView}>
           <View style={styles.imageContainer}>
-            <DraperRhino />
+            <DWG />
           </View>
           <Text style={styles.header}>{t("resendInviteModal.header")}</Text>
           <View style={styles.imageContainer}>

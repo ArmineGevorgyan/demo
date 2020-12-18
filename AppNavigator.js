@@ -47,6 +47,7 @@ import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import TeamScreen from "./src/screens/TeamScreen";
 import ProductScreen from "./src/screens/ProductScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
+import OverviewScreen from "./src/screens/OverviewScreen";
 import Notifications from "./src/screens/NotificationsScreen";
 import { isEntrepreneur } from './src/helpers/userTypeHelper';
 import CEOProfileScreen from "./src/screens/CEOProfileScreen";
@@ -196,6 +197,7 @@ class AppNavigator extends Component {
           />
           <Stack.Screen name="NotificationsScreen" component={Notifications} />
           <Stack.Screen name="CEOProfileScreen" component={CEOProfileScreen} />
+          <Stack.Screen name="OverviewScreen" component={OverviewScreen} />
         </Stack.Navigator>
       );
     };
