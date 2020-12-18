@@ -26,6 +26,7 @@ import ActiveStar from "./assets/star-active.svg";
 import ActiveTimeline from "./assets/timeline-active.svg";
 import ActiveUserProfile from "./assets/user-profile-active.svg";
 import { authenticate } from "./src/redux/ducks/authentication";
+import { navigationRef } from "./src/helpers/navigationHelper";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import TemporaryScreen from "./src/screens/TemporaryScreen";
 import ParkingLotScreen from "./src/screens/ParkingLotScreen";
@@ -43,9 +44,11 @@ import InvestorProfileScreen from "./src/screens/InvestorProfileScreen";
 import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
+import TeamScreen from "./src/screens/TeamScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import Notifications from "./src/screens/NotificationsScreen";
 import { isEntrepreneur } from './src/helpers/userTypeHelper';
+import CEOProfileScreen from "./src/screens/CEOProfileScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -148,6 +151,7 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen name="LegalScreen" component={LegalScreen} />
+          <Stack.Screen name="TeamScreen" component={TeamScreen} />
           <Stack.Screen
             name="DiscussionsScreen"
             component={DiscussionsScreen}
@@ -185,10 +189,8 @@ class AppNavigator extends Component {
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
           />
-          <Stack.Screen
-            name="NotificationsScreen"
-            component={Notifications}
-          />
+          <Stack.Screen name="NotificationsScreen" component={Notifications} />
+          <Stack.Screen name="CEOProfileScreen" component={CEOProfileScreen} />
         </Stack.Navigator>
       );
     };
@@ -215,6 +217,7 @@ class AppNavigator extends Component {
     return (
       <NavigationContainer
         linking={linking}
+        ref={navigationRef}
         fallback={<Spinner color={colors.secondaryColor} />}
       >
         {getStack()}
@@ -233,7 +236,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, props) => {
   const isAuthenticated = state.authentication.isAuthenticated || false;
-  const completed = state.entrepreneurProfile.profileData.completed;
+  const completed = state.entrepreneurProfile.profileData?.completed;
   const user = state.user.userData;
 
   return {

@@ -12,8 +12,10 @@ import { isInvestor } from '../helpers/userTypeHelper';
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
-    this.props.getDiscussions(this.props.startup.id);
-  }
+    if (!this.props.discussionList) {
+      this.props.getDiscussions(this.props.startup.id);
+    }
+  };
 
   render() {
     const {
@@ -53,7 +55,7 @@ class DiscussionsScreen extends Component {
             .slice()
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((item) => (
-              <DiscussionItem item={item} startup={startup} />
+              <DiscussionItem item={item} startup={startup} navigation={navigation} />
             ))}
         </View>
       </Content>

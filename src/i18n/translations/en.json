@@ -51,7 +51,7 @@
     "cancelButton": "Cancel",
     "OKButton": "OK"
   },
-  "passwordScreen":{
+  "passwordScreen": {
     "formContext": "Please enter your password."
   },
   "validator": {
@@ -66,23 +66,23 @@
     "linkedIn_url_required": "LinkedIn URL is required",
     "linkedIn_url_not_valid": "Invalid LinkedIn profile URL",
     "angelList_url_not_valid": "Invalid AngelList profile URL",
-    "crunchbase_url_not_valid":"Invalid Crunchbase profile URL",
+    "crunchbase_url_not_valid": "Invalid Crunchbase profile URL",
     "message_required": "Message is required",
-    "photo_required":"Photo is required",
-    "fullName_required":"Full name is required",
-    "bio_required":"Short bio is required",
-    "location_required":"Location is required",
-    "availableVia_required":"This field is required",
-    "availableVia_url":"Please enter a valid URL",
-    "reason_required":"Reason is required",
-    "position_required":"Position is required",
-    "companyName_required":"Position is required"
+    "photo_required": "Photo is required",
+    "fullName_required": "Full name is required",
+    "bio_required": "Short bio is required",
+    "location_required": "Location is required",
+    "availableVia_required": "This field is required",
+    "availableVia_url": "Please enter a valid URL",
+    "reason_required": "Reason is required",
+    "position_required": "Position is required",
+    "companyName_required": "Position is required"
   },
   "discoverStartups": {
     "headerText": "Discover Startups",
     "new": "New",
     "trending": "Trending",
-    "noStartup":"There are no more startups to explore. \n\r You’ll get notified as soon as new opportunities are available"
+    "noStartup": "There are no more startups to explore. \n\r You’ll get notified as soon as new opportunities are available"
   },
   "startupCard": {
     "referred": "Referred: ",
@@ -96,13 +96,13 @@
     "of": " of ",
     "fullProfile": "Full Profile"
   },
-  "startupTab":{
+  "startupTab": {
     "overview": "OVERVIEW",
-    "product": "PRODUCT" ,
-    "team": "TEAM" ,
-    "company": "COMPANY" ,
-    "discussions": "DISCUSSIONS" ,
-    "faq": "FAQ" ,
+    "product": "PRODUCT",
+    "team": "TEAM",
+    "company": "COMPANY",
+    "discussions": "DISCUSSIONS",
+    "faq": "FAQ",
     "videos": "VIDEOS"
   },
   "investmentInfo": {
@@ -120,36 +120,36 @@
     "wrongPassword": "The entered password is incorrect.",
     "offlineError": "Oh, it seems you are offline!",
     "invalidResetToken": "Your reset link has expired. Please request a new one",
-    "saved":"Saved!",
-    "somethingWentWrong":"Something went wrong."
+    "saved": "Saved!",
+    "somethingWentWrong": "Something went wrong."
   },
-  "pipeline":{
-    "title":"Pipeline",
-    "interested":"Interested",
-    "committed":"Committed",
-    "inviteStartup":"Invite Startup",
+  "pipeline": {
+    "title": "Pipeline",
+    "interested": "Interested",
+    "committed": "Committed",
+    "inviteStartup": "Invite Startup",
     "hiddenItemText": "Move to Parking Lot"
   },
   "parkingLot": {
     "hiddenItemText": "Move to Pipeline"
   },
-  "profileScreen":{
-    "profile":"Profile",
-    "personalDetails":"Personal Details",
-    "integration":"Integration",
-    "notification":"Notifications",
-    "preferences":"Preferences",
-    "parkingLot":"Parking Lot",
-    "faq":"FAQ",
-    "contactUs":"Contact Us",
-    "legal":"Legal",
-    "helpGuide":"Help Guide",
-    "resetPassword":"Reset Password",
-    "logout":"Լօgօut",
-    "deleteAccount":"Delete Account"
+  "profileScreen": {
+    "profile": "Profile",
+    "personalDetails": "Personal Details",
+    "integration": "Integration",
+    "notification": "Notifications",
+    "preferences": "Preferences",
+    "parkingLot": "Parking Lot",
+    "faq": "FAQ",
+    "contactUs": "Contact Us",
+    "legal": "Legal",
+    "helpGuide": "Help Guide",
+    "resetPassword": "Reset Password",
+    "logout": "Լօgօut",
+    "deleteAccount": "Delete Account"
   },
   "backgroundImageCard": {
-    "industry" : "Industry",
+    "industry": "Industry",
     "goal": "Goal",
     "runway": "Runway",
     "months": "months",
@@ -158,67 +158,67 @@
     "interestedInvestors": "Interested investors",
     "deadline": "Deadline"
   },
-  "contactUsScreen":{
-    "headerText":"Contact Us",
+  "contactUsScreen": {
+    "headerText": "Contact Us",
     "submitButton": "Submit",
     "subject": "Subject",
     "message": "Message"
   },
-  "contactUsSuccess":{
-    "headerText":"Contact Us",
+  "contactUsSuccess": {
+    "headerText": "Contact Us",
     "OKButton": "Create New message",
     "contextHeading": "Thank you for contacting us!",
     "context": "See our answer in your inbox during the next 2 days."
   },
-  "entProfileEditScreen":{
-    "fullName":"Full name",
-    "fullNamePlaceholder":"Full name",
-    "saveButton":"SAVE"
+  "entProfileEditScreen": {
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Full name",
+    "saveButton": "SAVE"
   },
-  "investorEditScreen":{
-    "myProfile":"My Profile",
-    "fullName":"Full name",
-    "fullNamePlaceholder":"Full name",
-    "position":"Position",
-    "positionPlaceholder":"Partner",
-    "companyName":"Company name",
-    "companyNamePlaceholder":"Draper Associates",
-    "bio":"Short bio",
-    "bioPlaceholder":"Short description goes here…",
-    "linkedInPlaceholder":"Link to Linkedin profile",
-    "crunchbasePlaceholder":"Link to Crunchbase portfolio",
-    "angelListPlaceholder":"Link to AngelList portfolio",
-    "saveButton":"SAVE"
+  "investorEditScreen": {
+    "myProfile": "My Profile",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Full name",
+    "position": "Position",
+    "positionPlaceholder": "Partner",
+    "companyName": "Company name",
+    "companyNamePlaceholder": "Draper Associates",
+    "bio": "Short bio",
+    "bioPlaceholder": "Short description goes here…",
+    "linkedInPlaceholder": "Link to Linkedin profile",
+    "crunchbasePlaceholder": "Link to Crunchbase portfolio",
+    "angelListPlaceholder": "Link to AngelList portfolio",
+    "saveButton": "SAVE"
   },
-  "entProfilePopulateScreen":{
-    "bio":"Short bio",
-    "bioPlaceholder":"Short description goes here…",
+  "entProfilePopulateScreen": {
+    "bio": "Short bio",
+    "bioPlaceholder": "Short description goes here…",
     "availableVia": "Availability for calls",
-    "availableViaPlaceholder":"Calendly or Hubspot scheduling link",
-    "highlights":"Highlights",
-    "highlightsPlaceholder":"e.g. previous exits, awards etc.",
-    "nextButton":"Next",
-    "resetButton":"Reset"
+    "availableViaPlaceholder": "Calendly or Hubspot scheduling link",
+    "highlights": "Highlights",
+    "highlightsPlaceholder": "e.g. previous exits, awards etc.",
+    "nextButton": "Next",
+    "resetButton": "Reset"
   },
-  "imageUploaderModal":{
-    "cancelButton":"CANCEL",
-    "modalTitle":"Choose from your photos or take a selfie"
+  "imageUploaderModal": {
+    "cancelButton": "CANCEL",
+    "modalTitle": "Choose from your photos or take a selfie"
   },
-  "dropDownInputModal":{
-    "placeholder":"Country, City, Region",
-    "cancelButton":"CANCEL",
-    "locationTitle":"Type country, city or region to choose your location",
-    "residencyTitle":"Type country, city or region to choose your residency",
-    "typeHere":"Type here..."
+  "dropDownInputModal": {
+    "placeholder": "Country, City, Region",
+    "cancelButton": "CANCEL",
+    "locationTitle": "Type country, city or region to choose your location",
+    "residencyTitle": "Type country, city or region to choose your residency",
+    "typeHere": "Type here..."
   },
-  "timeZoneModal":{
-    "inputTitle":"Time zone",
-    "placeholder":"ETD - Current Location",
-    "cancelButton":"CANCEL",
-    "timeZoneTitle":"Choose your time zone"
+  "timeZoneModal": {
+    "inputTitle": "Time zone",
+    "placeholder": "ETD - Current Location",
+    "cancelButton": "CANCEL",
+    "timeZoneTitle": "Choose your time zone"
   },
-  "resetPasswordSuccess":{
-    "headerText":"Reset Password",
+  "resetPasswordSuccess": {
+    "headerText": "Reset Password",
     "login": "Login",
     "home": "Home",
     "content": "Your password has been reset successfully."
@@ -232,8 +232,8 @@
     "passwordConfirmationPlaceholder": "Confirm new password"
   },
   "forgotPasswordScreen": {
-    "forgotPassword":"Forgot Password",
-    "resetPassword":"Reset Password",
+    "forgotPassword": "Forgot Password",
+    "resetPassword": "Reset Password",
     "submitButton": "Send",
     "content": "Enter your email address and we’ll send you a link to reset your password",
     "emailField": "Email"
@@ -244,7 +244,7 @@
     "contextLine1": "An email has been sent to ",
     "contextLine2": "Follow the directions in the email to reset your password."
   },
-  "legalScreen":{
+  "legalScreen": {
     "headerText": "Legal",
     "sendToEmail": "Send to email",
     "download": "Download",
@@ -261,42 +261,61 @@
     "legalTemplates": "Legal templates",
     "legalTemplatesDescription": "We standardize what we mastered. Then, we strive to improve what we standardized. All the legal templates we use are here."
   },
-  "deleteAccountModal":{
-    "contextHeading":"Sorry to see you decided to leave DWG.",
-    "context":"Please provide the reason for deleting your account.",
-    "submitButton":"Submit",
-    "cancelButton":"Cancel",
+  "deleteAccountModal": {
+    "contextHeading": "Sorry to see you decided to leave DWG.",
+    "context": "Please provide the reason for deleting your account.",
+    "submitButton": "Submit",
+    "cancelButton": "Cancel",
     "message": "Message",
     "selectReason": "Select Reason"
   },
-  "deleteAccountSuccess":{
-    "contextHeading":"Your request has been sent successfully.",
-    "context":"We will process your request and get back to you during the next 2 days.",
-    "OKButton":"Close"
+  "deleteAccountSuccess": {
+    "contextHeading": "Your request has been sent successfully.",
+    "context": "We will process your request and get back to you during the next 2 days.",
+    "OKButton": "Close"
   },
   "investorProfileScreen" : {
-    "sendMessage": "Send Message",
+    "sendMessage": "Send Message"
+  },
+  "socialLinks" : {
     "linkedinProfile": "LinkedIn Profile",
     "angelListProfile": "AngelList Profile",
     "crunchbaseProfile": "Crunchbase Profile"
   },
-  "startupFaq":{
-    "listTitle":"Info Session held on",
-    "noFaqTitle":"No info sessions held yet.",
-    "noFaqDescription":"You’ll find transcripts of held info sessions here."
+  "startupFaq": {
+    "listTitle": "Info Session held on",
+    "noFaqTitle": "No info sessions held yet.",
+    "noFaqDescription": "You’ll find transcripts of held info sessions here."
   },
-  "discussionsScreen" : {
+  "discussionsScreen": {
     "createNewButton": "Create new discussion",
     "reply": "Reply",
     "answeredBy": "Answered by ",
     "answers": "Answers",
     "me": "Me",
-    "newDiscussion":"New Discussion",
-    "inputPlaceholder":" Type here...",
-    "post":"POST"
+    "newDiscussion": "New Discussion",
+    "newComment":"New Comment",
+    "inputPlaceholder": " Type here...",
+    "post": "POST"
+  },
+  "teamScreen": {
+    "aboutTeam": "About team",
+    "founders": "Founders",
+    "ceo": "CEO",
+    "capitalAtRisk": "Capital at risk:",
+    "diversifyRisk": "Diversify to spread your risk. Approved as a financial promotion by Draper Walled Garden (FCA No.650209)."
   },
   "notificationsScreen":{
     "emptyScreen":"You don't have any notifications.",
     "yesterday":"Yesterday"
+  },
+  "ceoProfileScreen":{
+    "bio": "Bio",    
+    "locations": "Locations",    
+    "timezone": "Timezone",    
+    "residency": "Residency",    
+    "highlights": "Relevant highlights",
+    "ceoAt": "CEO at",
+    "utc": "UTC"
   }
 }

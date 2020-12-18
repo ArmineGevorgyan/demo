@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import store from "../store";
 
 initialState = {
   isLoading: false,
   error: null,
   result: null,
-  discussionList: [],
-  draft:"",
+  discussionList: null,
+  input: "",
+  draft: "",
+  comment: "",
 };
 
 const discussionSlice = createSlice({
@@ -16,11 +19,14 @@ const discussionSlice = createSlice({
   reducers: {
     setInput: (state, action) => ({
       ...state,
-      input:action.payload,
+      input: action.payload,
+    }),
+    setComment: (state, action) => ({
+      ...state,
+      comment: action.payload,
     }),
     getDiscussions: (state) => ({
       ...state,
-      discussionList: [],
       isLoading: true,
     }),
     getDiscussionsSuccess: (state, action) => ({
@@ -41,10 +47,23 @@ const discussionSlice = createSlice({
     createDiscussionSuccess: (state, action) => ({
       ...state,
       isLoading: false,
-      input:"",
+      input: "",
       result: action.payload,
     }),
     createDiscussionFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
+    addComment: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    addCommentSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+    }),
+    addCommentFail: (state, action) => ({
       ...state,
       isLoading: false,
       error: action.payload,
@@ -57,6 +76,12 @@ const discussionReducer = discussionSlice.reducer;
 export const setInput = (input) => {
   return (dispatch) => {
     dispatch(discussionSlice.actions.setInput(input));
+  };
+};
+
+export const setComment = (input) => {
+  return (dispatch) => {
+    dispatch(discussionSlice.actions.setComment(input));
   };
 };
 
@@ -96,6 +121,54 @@ export const createDiscussion = (data, navigation) => {
         dispatch(discussionSlice.actions.createDiscussionFail(error));
       });
   };
+};
+
+export const addComment = (info) => {
+  return (dispatch) => {
+    dispatch(discussionSlice.actions.addComment());
+
+    axios
+      .post(`${API_URL}/discussions/${info.id}/replies`, {
+        content: info.content,
+      })
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(discussionSlice.actions.addCommentSuccess(data));
+        dispatch(getDiscussionById(info.id, info.navigation));
+      })
+      .catch((error) => {
+        dispatch(discussionSlice.actions.addCommentFail(error));
+      });
+  };
+};
+
+export const getDiscussionById = (id, navigation) => {
+  const state = store.getState();
+  const discussinState = state.discussion;
+
+  return (dispatch) => {
+    axios
+      .get(`${API_URL}/discussions/${id}`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        const updatedDiscussions = discussinState.discussionList.map(discussion => {
+          if (discussion.id == id) {
+            discussion = data;
+          }
+          return discussion;
+        });
+        navigation.goBack();
+        dispatch(discussionSlice.actions.getDiscussionsSuccess(updatedDiscussions));
+        dispatch(discussionSlice.actions.setComment(""));
+      })
+      .catch((error) => {
+         dispatch(discussionSlice.actions.addCommentFail(error));
+      });
+  }
 };
 
 export default discussionReducer;

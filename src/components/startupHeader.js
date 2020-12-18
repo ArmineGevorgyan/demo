@@ -11,11 +11,11 @@ class StartupHeader extends Component {
   }
   
   addToFavouritesHandler = () => {
-    this.setState({ isFavorite: !this.state.isFavorite });
+    this.props.setIsFavorite(!this.props.isFavorite);
   };
 
   backHandler = () => {
-    this.props.goBack(this.state.isFavorite);
+    this.props.goBack();
   };
 
   render() {
@@ -41,7 +41,7 @@ class StartupHeader extends Component {
             <Icon name="arrow-left" type="Feather" style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.addToFavouritesHandler}>
-            {!this.state.isFavorite ? (
+            {!this.props.isFavorite ? (
               <Icon name="star" type="Feather" style={styles.icon} />
             ) : (
               <Icon

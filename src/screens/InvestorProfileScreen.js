@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { Button, Content, Spinner } from "native-base";
-import * as WebBrowser from "expo-web-browser";
 import ProfileHeader from "../components/profileHeader";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
-import Linkedin from "../../assets/linkedin.svg";
-import Angellist from "../../assets/angellist.svg";
-import Crunchbase from "../../assets/crunchbase.svg";
+import { linkedin, angellist, crunchbase } from "../components/socialLinks";
 import { getProfileData } from "../redux/ducks/investorProfile";
 
 class InvestorProfileScreen extends Component {
@@ -18,10 +15,6 @@ class InvestorProfileScreen extends Component {
     const { investorId } = this.props.route.params;
     this.props.getProfileData(investorId);
   }
-
-  openBrowser = async (profileUrl) => {
-    await WebBrowser.openBrowserAsync(profileUrl);
-  };
 
   render() {
     const { t, isLoading, profile } = this.props;
@@ -45,37 +38,10 @@ class InvestorProfileScreen extends Component {
             <Text style={styles.position}>{profile.position}</Text>
           )}
           {!!profile.bio && <Text style={styles.bio}>{profile.bio}</Text>}
-          <TouchableOpacity
-            style={styles.social}
-            onPress={() => this.openBrowser(profile.linkedinProfile)}
-          >
-            <Linkedin />
-            <Text style={styles.link}>
-              {t("investorProfileScreen.linkedinProfile")}
-            </Text>
-          </TouchableOpacity>
-          {!!profile.crunchbaseProfile && (
-            <TouchableOpacity
-              style={styles.social}
-              onPress={() => this.openBrowser(profile.crunchbaseProfile)}
-            >
-              <Crunchbase />
-              <Text style={styles.link}>
-                {t("investorProfileScreen.crunchbaseProfile")}
-              </Text>
-            </TouchableOpacity>
-          )}
-          {!!profile.angelListProfile && (
-            <TouchableOpacity
-              style={styles.social}
-              onPress={() => this.openBrowser(profile.angelListProfile)}
-            >
-              <Angellist />
-              <Text style={styles.link}>
-                {t("investorProfileScreen.angelListProfile")}
-              </Text>
-            </TouchableOpacity>
-          )}
+
+          {linkedin(profile.linkedinProfile)}
+          {!!profile.crunchbaseProfile && crunchbase(profile.crunchbaseProfile)}
+          {!!profile.angelListProfile && angellist(profile.angelListProfile)}
           <Button style={baseStylesheet.secondaryButton}>
             <Text style={baseStylesheet.secondaryButtonText}>
               {t("investorProfileScreen.sendMessage")}
@@ -135,14 +101,5 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
     paddingBottom: 20,
-  },
-  social: {
-    flexDirection: "row",
-    marginBottom: 12,
-  },
-  link: {
-    color: colors.lightBlue,
-    marginLeft: 10,
-    alignSelf: "center",
   },
 });

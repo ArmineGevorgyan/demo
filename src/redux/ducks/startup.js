@@ -5,8 +5,11 @@ import { API_URL } from "../../config";
 const initialState = {
   isLoading: false,
   startups: null,
+  singleStartup: null,
   faqList: null,
   error: null,
+  founderModalItem: null,
+  isModalOpen: false,
 };
 
 const startupSlice = createSlice({
@@ -52,6 +55,45 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    getStartupTeamMembers: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    getStartupTeamMembersSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      currentStartupTeamMembers: action.payload,
+    }),
+    getStartupTeamMembersFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
+    getStartupById: (state) => ({
+      ...state,
+      isLoading: true,
+      singleStartup: null,
+    }),
+    getStartupByIdSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      singleStartup: action.payload,
+    }),
+    getStartupByIdFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
+    openFounderModal: (state, action) => ({
+      ...state,
+      founderModalItem: action.payload,
+      isModalOpen: true,
+    }),
+    closeFounderModal: (state) => ({
+      ...state,
+      founderModalItem: null,
+      isModalOpen: false,
+    }),
   },
 });
 
@@ -59,6 +101,18 @@ const startupReducer = startupSlice.reducer;
 
 export const toggleIsEmpty = () => {
   return (dispatch) => dispatch(startupSlice.actions.toggleIsEmpty());
+};
+
+export const closeFounderModal = () => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.closeFounderModal());
+  };
+};
+
+export const openFounderModal = (item) => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.openFounderModal(item));
+  };
 };
 
 export const getNewStartups = () => {
@@ -103,7 +157,8 @@ export const getStartupFaqList = (id) => {
   return (dispatch) => {
     dispatch(startupSlice.actions.getStartupFaqList());
 
-    axios.get(`${API_URL}/startups/${id}/info-session`)
+    axios
+      .get(`${API_URL}/startups/${id}/info-session`)
       .then((r) => {
         return r.data;
       })
@@ -112,6 +167,38 @@ export const getStartupFaqList = (id) => {
       })
       .catch((error) => {
         dispatch(startupSlice.actions.getStartupFaqListFail(error));
+      });
+  };
+};
+
+export const getStartupTeamMembers = (id) => (dispatch) => {
+  dispatch(startupSlice.actions.getStartupTeamMembers());
+
+  axios
+    .get(`${API_URL}/startups/${id}/team-members`)
+    .then((res) => res.data)
+    .then((data) => {
+      dispatch(startupSlice.actions.getStartupTeamMembersSuccess(data));
+    })
+    .catch((error) => {
+      dispatch(startupSlice.actions.getStartupTeamMembersFail(error));
+    });
+};
+
+export const getStartupById = (id) => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.getStartupById());
+
+    axios
+      .get(`${API_URL}/startups/${id}`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(startupSlice.actions.getStartupByIdSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.getStartupByIdFail(error));
       });
   };
 };
