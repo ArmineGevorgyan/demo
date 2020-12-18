@@ -297,16 +297,16 @@
     "inputPlaceholder":" Type here...",
     "post":"POST"
   },
-  "notificationsScreen":{
-    "emptyScreen":"You don't have any notifications.",
-    "yesterday":"Yesterday"
-  },
   "teamScreen": {
     "aboutTeam": "About team",
     "founders": "Founders",
     "ceo": "CEO",
     "capitalAtRisk": "Capital at risk:",
     "diversifyRisk": "Diversify to spread your risk. Approved as a financial promotion by Draper Walled Garden (FCA No.650209)."
+  },
+  "notificationsScreen":{
+    "emptyScreen":"You don't have any notifications.",
+    "yesterday":"Yesterday"
   },
   "ceoProfileScreen":{
     "bio": "Bio",    

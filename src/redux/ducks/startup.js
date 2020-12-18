@@ -8,6 +8,8 @@ const initialState = {
   singleStartup: null,
   faqList: null,
   error: null,
+  founderModalItem: null,
+  isModalOpen: false,
 };
 
 const startupSlice = createSlice({
@@ -53,19 +55,19 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    getStartupTeamMembers: state => ({
+    getStartupTeamMembers: (state) => ({
       ...state,
-      isLoading: true
+      isLoading: true,
     }),
     getStartupTeamMembersSuccess: (state, action) => ({
       ...state,
       isLoading: false,
-      currentStartupTeamMembers: action.payload
+      currentStartupTeamMembers: action.payload,
     }),
     getStartupTeamMembersFail: (state, action) => ({
       ...state,
       isLoading: false,
-      error: action.payload
+      error: action.payload,
     }),
     getStartupById: (state) => ({
       ...state,
@@ -82,6 +84,16 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    openFounderModal: (state, action) => ({
+      ...state,
+      founderModalItem: action.payload,
+      isModalOpen: true,
+    }),
+    closeFounderModal: (state) => ({
+      ...state,
+      founderModalItem: null,
+      isModalOpen: false,
+    }),
   },
 });
 
@@ -89,6 +101,18 @@ const startupReducer = startupSlice.reducer;
 
 export const toggleIsEmpty = () => {
   return (dispatch) => dispatch(startupSlice.actions.toggleIsEmpty());
+};
+
+export const closeFounderModal = () => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.closeFounderModal());
+  };
+};
+
+export const openFounderModal = (item) => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.openFounderModal(item));
+  };
 };
 
 export const getNewStartups = () => {
@@ -147,18 +171,20 @@ export const getStartupFaqList = (id) => {
   };
 };
 
-export const getStartupTeamMembers = id => dispatch => {
+export const getStartupTeamMembers = (id) => (dispatch) => {
   dispatch(startupSlice.actions.getStartupTeamMembers());
 
-  axios.get(`${API_URL}/startups/${id}/team-members`)
-    .then(res => res.data)
-    .then(data => {
+  axios
+    .get(`${API_URL}/startups/${id}/team-members`)
+    .then((res) => res.data)
+    .then((data) => {
       dispatch(startupSlice.actions.getStartupTeamMembersSuccess(data));
     })
-    .catch(error => {
-      dispatch(startupSlice.actions.getStartupTeamMembersFail(error))
-    })
-}
+    .catch((error) => {
+      dispatch(startupSlice.actions.getStartupTeamMembersFail(error));
+    });
+};
+
 export const getStartupById = (id) => {
   return (dispatch) => {
     dispatch(startupSlice.actions.getStartupById());

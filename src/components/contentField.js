@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     color: colors.blackBlue,
     fontSize: 20,
     fontFamily: "montserrat-bold",
-    marginBottom: 12,
+    marginBottom: 2,
   },
   content: {
     color: colors.blueText,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   bottomBorder: {
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
-    marginBottom: 20,
-    paddingBottom: 20,
+    marginBottom: 14,
+    paddingBottom: 14,
   },
 });

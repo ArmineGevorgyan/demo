@@ -10,12 +10,15 @@ import {
 } from "react-native";
 import { Content, Spinner } from "native-base";
 import { withTranslation } from "react-i18next";
-
 import constants from "../constants";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
-import { getStartupTeamMembers } from "../redux/ducks/startup";
+import {
+  getStartupTeamMembers,
+  openFounderModal,
+} from "../redux/ducks/startup";
 import FounderCard, { DividerLine } from "../components/teamMember";
+import FounderModal from "../components/founderModal";
 
 class TeamScreen extends Component {
   componentDidMount() {
@@ -29,6 +32,8 @@ class TeamScreen extends Component {
         startup: this.props.startup,
       });
     }
+
+    return this.props.openFounderModal(item);
   }
 
   render() {
@@ -102,6 +107,7 @@ class TeamScreen extends Component {
           </Text>{" "}
           {t("teamScreen.diversifyRisk")}
         </Text>
+        <FounderModal />
       </Content>
     );
   }
@@ -114,6 +120,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getStartupTeamMembers: (id) => dispatch(getStartupTeamMembers(id)),
+  openFounderModal: (item) => dispatch(openFounderModal(item)),
 });
 
 export default compose(

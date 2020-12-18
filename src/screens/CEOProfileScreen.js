@@ -12,6 +12,7 @@ import { colors } from "../styles/colors";
 import { getProfileData } from "../redux/ducks/entrepreneurProfile";
 import { linkedin, angellist, crunchbase } from "../components/socialLinks";
 import ContentField from "../components/contentField";
+import constants from "../constants";
 
 class CEOProfileScreen extends Component {
   componentDidMount() {
@@ -80,13 +81,18 @@ class CEOProfileScreen extends Component {
                     size={32}
                     style={styles.flag}
                   />
-                  <Text style={styles.text}>{`${profile.timeZone?.name}`}</Text>
+                  <Text
+                    style={[styles.text, styles.timezone]}
+                  >{`${profile.timeZone?.name}`}</Text>
                 </View>
-                <Text style={[styles.text, styles.flagOffset]}>
-                  {`${profile.timeZone?.code} (${t("ceoProfileScreen.utc")} ${
-                    profile.timeZone?.offset
-                  })`}
-                </Text>
+                <View style={styles.row}>
+                  <View style={{ width: 55 }} />
+                  <Text style={[styles.text, styles.flagOffset]}>
+                    {`${profile.timeZone?.code} (${t("ceoProfileScreen.utc")} ${
+                      profile.timeZone?.offset
+                    })`}
+                  </Text>
+                </View>
               </View>
               <View>
                 <Text style={styles.boldText}>{investorTime.format("LT")}</Text>
@@ -185,6 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "montserrat-regular",
     alignSelf: "center",
+    width: "80%",
   },
   boldText: {
     color: colors.blueText,
@@ -195,11 +202,11 @@ const styles = StyleSheet.create({
     lineHeight: 25,
   },
   flagOffset: {
-    marginLeft: 57,
     lineHeight: 25,
   },
   margin: {
     marginRight: 15,
+    width: "60%",
   },
   row: {
     flexDirection: "row",
