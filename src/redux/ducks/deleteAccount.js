@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
 
-initialState = {
+const initialState = {
   isLoading: false,
   error: null,
   deleteAccountReasons: null,

@@ -35,6 +35,21 @@ const notificationsSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    getUnreadNotificationCount: state => ({
+      ...state,
+      isLoading: true,
+      error: null
+    }),
+    getUnreadNotificationCountSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      unreadNotificationCount: action.payload,
+    }),
+    getUnreadNotificationCountFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
     loadMoreNotifications: (state) => ({
       ...state,
       loadingMore: true,
@@ -60,6 +75,22 @@ const notificationsSlice = createSlice({
 });
 
 const notificationsReduser = notificationsSlice.reducer;
+
+export const getUnreadNotificationCount = () => {
+  return dispatch => {
+    dispatch(notificationsSlice.actions.getUnreadNotificationCount());
+
+    axios
+      .get(`${API_URL}/notification-messages/count`)
+      .then(res => res.data)
+      .then(data => {
+        dispatch(notificationsSlice.actions.getUnreadNotificationCountSuccess(data.value));
+      })
+      .catch(error => {
+        dispatch(notificationsSlice.action.getNotificationsFail(error));
+      });
+  }
+}
 
 export const getNotifications = () => {
   return (dispatch) => {

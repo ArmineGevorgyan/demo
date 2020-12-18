@@ -10,13 +10,13 @@ import DraperRhino from "../../assets/draper-rhino.svg";
 import GrayHeader from "../components/grayHeader";
 import ListAccordion from "../components/listAccordion";
 import { getEntrepreneurFAQ, getInvestorFAQ } from "../redux/ducks/faq";
-import constants from "../constants";
+import { isEntrepreneur } from '../helpers/userTypeHelper';
 
 class FAQScreen extends Component {
   componentDidMount() {
     const { user, getEntrepreneurFAQ, getInvestorFAQ } = this.props;
 
-    user?.authorities[0] == constants.userRole.entrepreneur
+    isEntrepreneur(user?.authorities[0])
       ? getEntrepreneurFAQ()
       : getInvestorFAQ();
   }

@@ -1,10 +1,12 @@
 import React from "react";
 import { StyleSheet, Image } from "react-native";
+
+import { isInvestor } from '../helpers/userTypeHelper';
 import constants from "../constants";
 
 const getLegalItems = (userRole) => {
   const userConstants =
-    userRole === constants.userRole.investor
+  isInvestor(userRole)
       ? constants.investor
       : constants.entrepreneur;
 

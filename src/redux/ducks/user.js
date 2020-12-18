@@ -6,7 +6,7 @@ import { getProfileData as getEntrepreneurData } from "../ducks/entrepreneurProf
 import { getProfileData as getInvestorData } from "../ducks/investorProfile";
 import store from "../store";
 
-initialState = {
+const initialState = {
   isLoading: false,
   error: null,
   userData: null,

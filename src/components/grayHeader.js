@@ -1,11 +1,53 @@
 import React, { Component } from "react";
 import { Icon } from "native-base";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { withTranslation } from "react-i18next";
+import { compose } from "redux";
+import { connect } from 'react-redux';
+
+import constants from '../constants';
+import { getUnreadNotificationCount } from  "../redux/ducks/notifications";
 import { colors } from "../styles/colors";
 
+const { windowWidth } = constants;
+
+const BellIcon = ({ hasUnread }) => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => navigation.navigate("NotificationsScreen")}
+    >
+      <View style={styles.bellIconContainer}>
+        <Icon
+          type="Feather"
+          name="bell"
+          style={styles.bellIcon}
+        />
+        {hasUnread && 
+          <View style={styles.redDotContainer}>
+            <Icon
+              name="primitive-dot"
+              type="Octicons"
+              style={styles.bellRedDot}
+            />
+          </View>
+        }
+      </View>
+    </TouchableOpacity>
+  );
+}
+
 class GrayHeader extends Component {
+
+  componentDidMount(){
+    this.props.getUnreadNotificationCount();
+  }
+
   render() {
-    const { title, children, enableSearch, backButtonHandler } = this.props;
+    const { title, children, enableSearch, enableBell, backButtonHandler, unreadNotificationCount } = this.props;
 
     return (
       <View
@@ -15,29 +57,32 @@ class GrayHeader extends Component {
         ]}
       >
         <View style={styles.textRowContainer}>
-          <View style={{ minWidth: 30 }}>
-            {backButtonHandler && (
-              <Icon
-                style={{
-                  color: colors.backIconBlue,
-                }}
-                name="arrow-left"
-                type="Feather"
-                onPress={backButtonHandler}
-              />
-            )}
-          </View>
+            <View style={{ minWidth: 30 }}>
+              {backButtonHandler && (
+                <Icon
+                  style={{
+                    color: colors.backIconBlue,
+                  }}
+                  name="arrow-left"
+                  type="Feather"
+                  onPress={backButtonHandler}
+                />
+              )}
+            </View>
           <Text style={[styles.headerText, children && { marginBottom: 15 }]}>
             {title}
           </Text>
           <View
             style={{
               minWidth: 30,
+              flexDirection: "row",
+              marginBottom: !enableSearch ? 15 : 0
             }}
-          >
+            >
+            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
             {enableSearch && (
               <Icon
-                style={{
+              style={{
                   color: colors.darkText,
                 }}
                 name="search"
@@ -52,12 +97,10 @@ class GrayHeader extends Component {
   }
 }
 
-export default GrayHeader;
-
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: "7%",
-    paddingRight: "7%",
+    paddingLeft: windowWidth < 370 ? "2%" : "7%",
+    paddingRight: windowWidth < 370 ? "4%" : "7%",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
@@ -72,15 +115,60 @@ const styles = StyleSheet.create({
   },
   textRowContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: windowWidth < 370 ? "space-evenly" : "space-between",
     alignItems: "center",
   },
   headerText: {
     paddingLeft: 10,
     paddingRight: 10,
     color: colors.blackBlue,
-    fontSize: 30,
+    fontSize: windowWidth < 370 ? 24 : 30,
     fontFamily: "montserrat-light",
     textAlign: "center",
   },
+  bellIconContainer: {
+    marginRight: 10,
+    maxHeight: 28,
+  },
+  bellIcon: {
+    color: colors.darkText,
+    width: "100%",
+    height: "100%",
+  },
+  redDotContainer: {
+    position: "relative",
+    top: -30,
+    right: windowWidth < 370 ? -14 : -12,
+    width: 15,
+    height: 15,
+    backgroundColor: colors.offWhite,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  bellRedDot: {
+    color: colors.lightRed,
+    fontSize: 20,
+    position: 'absolute',
+    top: -3
+  },
 });
+
+const mapStateToProps = (state, props) => {
+  const { unreadNotificationCount } = state.notifications;
+
+  return {
+    unreadNotificationCount
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUnreadNotificationCount: () => dispatch(getUnreadNotificationCount())
+  };
+};
+
+export default compose(
+  withTranslation("translations"),
+  connect(mapStateToProps, mapDispatchToProps)
+)(GrayHeader);

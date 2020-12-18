@@ -16,8 +16,9 @@ import {
   removeCard,
 } from "../redux/ducks/pipeline";
 import BackgroundImageCard from "../components/backgroundImageCard";
-import ParkingLotIcon from "../../assets/parkingmeter";
+import ParkingLotIcon from "../../assets/parkingmeter.svg";
 import constants from "../constants";
+import { isInvestor } from '../helpers/userTypeHelper';
 
 class PipelineScreen extends Component {
   componentDidMount() {
@@ -116,11 +117,11 @@ class PipelineScreen extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, user } = this.props;
 
     return (
       <View style={baseStylesheet.baseContainer}>
-        <GrayHeader title={t("pipeline.title")}>
+        <GrayHeader title={t("pipeline.title")} enableBell={isInvestor(user?.authorities[0])}>
           <SwitchSelector
             options={[
               {
@@ -146,7 +147,9 @@ const mapStateToProps = (state, props) => {
   const loadingMore = state.pipeline.loadingMore;
   const nextPage = state.pipeline.nextPage;
   const noMoreStartups = state.pipeline.noMoreStartups;
-  return { startups, isLoading, loadingMore, nextPage, noMoreStartups };
+  const user = state.user.userData;
+
+  return { startups, isLoading, loadingMore, nextPage, noMoreStartups, user };
 };
 
 const mapDispatchToProps = (dispatch) => {
