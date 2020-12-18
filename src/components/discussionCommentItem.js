@@ -17,9 +17,11 @@ class DiscussionCommentItem extends Component {
               name="message-text"
               type="MaterialCommunityIcons"
             />
-            <Text style={styles.title}>
-              {i18n.t("discussionsScreen.answeredBy")} {comment.user.firstName} {comment.user.lastName}
+            <View>
+              <Text style={styles.title}>
+                {i18n.t("discussionsScreen.answeredBy")} Armine Gevorgyan
             </Text>
+            </View>
           </View>
           <Text style={{
             fontSize: 12,
@@ -38,11 +40,11 @@ class DiscussionCommentItem extends Component {
 export default DiscussionCommentItem;
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  topRow:{
+  topRow: {
     flexDirection: "row",
     alignItems: "center",
   },
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
     fontFamily: "montserrat-regular",
     fontSize: 12,
     color: colors.deepGreen,
+    maxWidth: "90%",
   },
   content: {
     fontFamily: "montserrat-regular",
