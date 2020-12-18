@@ -26,11 +26,15 @@ const BellIcon = ({ hasUnread }) => {
           name="bell"
           style={styles.bellIcon}
         />
-        {hasUnread && <Text
-          style={styles.bellRedDot}
-        >
-          {'\u2B24'}
-        </Text>}
+        {hasUnread && 
+          <View style={styles.redDotContainer}>
+            <Icon
+              name="primitive-dot"
+              type="Octicons"
+              style={styles.bellRedDot}
+            />
+          </View>
+        }
       </View>
     </TouchableOpacity>
   );
@@ -75,7 +79,7 @@ class GrayHeader extends Component {
               marginBottom: !enableSearch ? 15 : 0
             }}
             >
-            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
+            {enableBell && <BellIcon hasUnread={ !unreadNotificationCount} />}
             {enableSearch && (
               <Icon
               style={{
@@ -131,21 +135,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  bellRedDot: {
-    position: "absolute",
-    zIndex: 20,
-    top: 0,
-    right: windowWidth < 355 ? 4 : 0,
-    color: colors.lightRed,
-    borderColor: colors.offWhite,
-    borderWidth: 3,
+  redDotContainer: {
+    position: "relative",
+    top: -30,
+    right: windowWidth < 355 ? -14 : -12,
+    width: 15,
+    height: 15,
+    backgroundColor: colors.offWhite,
     borderRadius: 100,
-    justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
-    lineHeight: windowWidth < 355 ? 16 : 14,
-    width: windowWidth < 355 ? 13 : 11,
-    height: windowWidth < 355 ? 14 : 12
+    justifyContent: 'center'
+  },
+  bellRedDot: {
+    color: colors.lightRed,
+    fontSize: 20,
+    position: 'absolute',
+    top: -3
   },
 });
 
