@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   founderImg: {
     borderRadius: 6,
-    width: "100%",
+    width: 80,
     height: 80
   },
   founderName: {
