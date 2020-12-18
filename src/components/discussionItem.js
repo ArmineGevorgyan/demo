@@ -7,8 +7,18 @@ import { withTranslation } from "react-i18next";
 import moment from "moment";
 import constants from "../constants";
 import { colors } from "../styles/colors";
+import { addComment } from "../redux/ducks/discussion";
+import DiscussionCommentItem from "./discussionCommentItem";
 
 class DiscussionItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isCommentShow: false,
+    }
+  };
+
   getUserName() {
     const { item, currentUser, t } = this.props;
     const user = item.user;
@@ -33,7 +43,28 @@ class DiscussionItem extends Component {
     }
 
     return moment(dateString).format("LT");
-  }
+  };
+
+  addComment = (content) => {
+    this.props.addComment({
+      id: this.props.item.id,
+      content: content,
+      navigation: this.props.navigation,
+    });
+  };
+
+  openReplyScreen = () => {
+    this.props.navigation.navigate("NewDiscussionScreen", {
+      type: constants.discussionNewReply,
+      addComment: this.addComment
+    });
+  };
+
+  showComments = () => {
+    if (this.props.item.discussionReplies.length) {
+      this.setState({ isCommentShow: !this.state.isCommentShow });
+    }
+  };
 
   render() {
     const { t, item, currentUser } = this.props;
@@ -81,22 +112,42 @@ class DiscussionItem extends Component {
           <Text style={styles.content}>{item.content}</Text>
         </View>
         <View style={[styles.repliesContainer, styles.row]}>
-          <TouchableOpacity style={[styles.replies, styles.row]}>
+          <TouchableOpacity
+            style={[styles.replies, styles.row]}
+            onPress={this.showComments}
+          >
             <Icon
               style={styles.blueIcon}
               name="message-text"
               type="MaterialCommunityIcons"
             />
-            {/* TODO: change 0 to the actual number of replies */}
             <Text style={styles.answers}>
-              0 {t("discussionsScreen.answers")}
+              {(item.discussionReplies.length ?? 0)}{!this.state.isCommentShow && " " + t("discussionsScreen.answers")}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.reply, styles.row]}>
+          <TouchableOpacity
+            style={[styles.reply, styles.row]}
+            onPress={this.openReplyScreen}
+          >
             <Icon style={styles.replyIcon} name="reply" type="Entypo" />
             <Text style={styles.replyText}>{t("discussionsScreen.reply")}</Text>
           </TouchableOpacity>
         </View>
+        {
+          this.state.isCommentShow && item.discussionReplies && (
+            <View>
+              {item.discussionReplies
+                .slice()
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .map((comment) => (
+                  <DiscussionCommentItem
+                    comment={comment}
+                    getTime={this.getTime}
+                  />
+                ))}
+            </View>
+          )
+        }
       </Card>
     );
   }
@@ -107,9 +158,15 @@ const mapStateToProps = (state, props) => {
   return { currentUser };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addComment: (comment) => dispatch(addComment(comment)),
+  };
+};
+
 export default compose(
   withTranslation("translations"),
-  connect(mapStateToProps, null)
+  connect(mapStateToProps, mapDispatchToProps)
 )(DiscussionItem);
 
 const styles = StyleSheet.create({

@@ -6,9 +6,18 @@ import { withTranslation } from "react-i18next";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { colors } from "../styles/colors";
 import constants from "../constants";
-import { createDiscussion, setInput, } from "../redux/ducks/discussion";
+import { createDiscussion, setInput, setComment, } from "../redux/ducks/discussion";
 
 class NewDiscussionScreen extends Component {
+
+  onPostButtonClick = () => {
+    const type = this.props.route.params?.type;
+    if (type === constants.discussionNewReply) {
+      this.props.route.params?.addComment(this.props.comment);
+    } else {
+      this.createDiscussion();
+    }
+  };
 
   createDiscussion = () => {
     this.props.createDiscussion({
@@ -17,8 +26,25 @@ class NewDiscussionScreen extends Component {
     }, this.props.navigation);
   };
 
+  getTitle = () => {
+    const { t } = this.props;
+    const type = this.props.route.params?.type;
+    return type === constants.discussionNewReply ?
+      t("discussionsScreen.newComment") : t("discussionsScreen.newDiscussion");
+  };
+
+  handleInput = (input) => {
+    const type = this.props.route.params?.type;
+    if (type === constants.discussionNewReply) {
+      this.props.setComment(input);
+    } else {
+      this.props.setInput(input);
+    }
+  };
+
   render() {
     const { t } = this.props;
+    const type = this.props.route.params?.type;
     return (
       <Container>
         <View style={{ backgroundColor: "#FFF", flex: 1 }}>
@@ -34,16 +60,22 @@ class NewDiscussionScreen extends Component {
                 onPress={this.props.navigation.goBack}
               />
               <Text style={styles.headerText}>
-                {t("discussionsScreen.newDiscussion")}
+                {this.getTitle()}
               </Text>
               <TouchableOpacity
-                onPress={this.createDiscussion}
+                onPress={this.onPostButtonClick}
+                disabled={type === constants.discussionNewReply ? this.props.comment === "" : this.props.input === ""}
                 style={{
                   height: 20,
                   alignItems: "center",
                 }}
               >
-                <Text style={styles.postText}>
+                <Text style={[
+                  styles.postText,
+                  type === constants.discussionNewReply ?
+                    this.props.comment === "" && { color: colors.disabledText, } :
+                    this.props.input === "" && { color: colors.disabledText, }
+                ]}>
                   {t("discussionsScreen.post")}
                 </Text>
               </TouchableOpacity>
@@ -57,8 +89,8 @@ class NewDiscussionScreen extends Component {
               placeholder={t("discussionsScreen.inputPlaceholder")}
               placeholderTextColor={colors.blueBorder}
               style={styles.textarea}
-              value={this.props.input}
-              onChangeText={(e) => this.props.setInput(e)}
+              value={type === constants.discussionNewReply ? this.props.comment : this.props.input}
+              onChangeText={this.handleInput}
             />
           </Content>
 
@@ -70,9 +102,11 @@ class NewDiscussionScreen extends Component {
 
 const mapStateToProps = (state, props) => {
   const input = state.discussion.input;
+  const comment = state.discussion.comment;
   const isLoading = state.discussion.isLoading;
   return {
     input,
+    comment,
     isLoading,
   };
 };
@@ -80,6 +114,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setInput: (data) => dispatch(setInput(data)),
+    setComment: (data) => dispatch(setComment(data)),
     createDiscussion: (data, navigation) => dispatch(createDiscussion(data, navigation)),
   };
 };
@@ -115,7 +150,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textarea: {
-    padding:16,
+    padding: 16,
     marginLeft: 10,
     marginRight: 10,
     flex: 1,
@@ -125,6 +160,6 @@ const styles = StyleSheet.create({
   postText: {
     color: colors.backIconBlue,
     fontSize: 18,
-    fontFamily: "montserrat-medium"
-  }
+    fontFamily: "montserrat-medium",
+  },
 });
