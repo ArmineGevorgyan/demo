@@ -10,12 +10,7 @@ const initialState = {
   isModalOpen: false,
   isResetting: false,
   photoError: false,
-  profileData: {
-    bio: "",
-    highlights: "",
-    availableVia: "",
-    locations: null,
-  },
+  profileData: null,
 };
 
 const entrepreneurProfileSlice = createSlice({
@@ -106,6 +101,20 @@ const entrepreneurProfileSlice = createSlice({
       isResetting: false,
       error: action.payload,
     }),
+    getUserData: (state) => ({
+      ...state,
+      isLoading: true,
+    }),
+    getUserDataSuccess: (state, action) => ({
+      ...state,
+      isLoading: false,
+      profileData: { ...state.profileData, ...action.payload },
+    }),
+    getUserDataFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
   },
 });
 
@@ -150,8 +159,28 @@ export const getProfileData = (id = "current") => {
       .then((data) => {
         dispatch(entrepreneurProfileSlice.actions.getProfileDataSuccess(data));
       })
+      .then(() => {
+        if (id != "current") dispatch(getUserData(id));
+      })
       .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.getProfileDataFail(error));
+      });
+  };
+};
+
+const getUserData = (id) => {
+  return (dispatch) => {
+    dispatch(entrepreneurProfileSlice.actions.getUserData());
+    axios
+      .get(`${API_URL}/user/${id}`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(entrepreneurProfileSlice.actions.getUserDataSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(entrepreneurProfileSlice.actions.getUserDataFail(error));
       });
   };
 };
