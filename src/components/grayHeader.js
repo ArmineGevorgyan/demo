@@ -79,7 +79,7 @@ class GrayHeader extends Component {
               marginBottom: !enableSearch ? 15 : 0
             }}
             >
-            {enableBell && <BellIcon hasUnread={ !unreadNotificationCount} />}
+            {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
             {enableSearch && (
               <Icon
               style={{
@@ -99,8 +99,8 @@ class GrayHeader extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: windowWidth < 355 ? "2%" : "7%",
-    paddingRight: windowWidth < 355 ? "4%" : "7%",
+    paddingLeft: windowWidth < 370 ? "2%" : "7%",
+    paddingRight: windowWidth < 370 ? "4%" : "7%",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.blueBorder,
     borderBottomWidth: 1,
@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
   },
   textRowContainer: {
     flexDirection: "row",
-    justifyContent: windowWidth < 355 ? "space-evenly" : "space-between",
+    justifyContent: windowWidth < 370 ? "space-evenly" : "space-between",
     alignItems: "center",
   },
   headerText: {
     paddingLeft: 10,
     paddingRight: 10,
     color: colors.blackBlue,
-    fontSize: windowWidth < 355 ? 24 : 30,
+    fontSize: windowWidth < 370 ? 24 : 30,
     fontFamily: "montserrat-light",
     textAlign: "center",
   },
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   redDotContainer: {
     position: "relative",
     top: -30,
-    right: windowWidth < 355 ? -14 : -12,
+    right: windowWidth < 370 ? -14 : -12,
     width: 15,
     height: 15,
     backgroundColor: colors.offWhite,
