@@ -9,6 +9,11 @@ export const baseStylesheet = StyleSheet.create({
     flex: 1,
   },
 
+  containerSpacing: {
+    marginHorizontal: 30,
+    paddingTop: 20
+  },
+
   content: {
     flex: 1,
     justifyContent: "center",
@@ -260,6 +265,10 @@ export const baseStylesheet = StyleSheet.create({
     fontFamily: "montserrat-regular",
   },
 
+  titleText: {
+    fontSize: 20,
+    fontFamily: "montserrat-bold"
+  },
   // --------------------- OTHER STYLES-------------------
   icon: {
     color: colors.lightText,
