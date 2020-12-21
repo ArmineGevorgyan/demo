@@ -45,6 +45,7 @@ import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import TeamScreen from "./src/screens/TeamScreen";
+import ProductScreen from "./src/screens/ProductScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import Notifications from "./src/screens/NotificationsScreen";
 import { isEntrepreneur } from './src/helpers/userTypeHelper';
@@ -155,6 +156,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="DiscussionsScreen"
             component={DiscussionsScreen}
+          />
+          <Stack.Screen
+            name="ProductScreen"
+            component={ProductScreen}
           />
           <Stack.Screen
             name="NewDiscussionScreen"

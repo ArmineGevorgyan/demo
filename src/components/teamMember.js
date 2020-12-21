@@ -12,8 +12,6 @@ const {
 
 const borderRightSize = Math.round((windowWidth-80*teamMembersPerRow-teamTabHorizontalPadding*2)/teamMembersWithMargin);
 
-export const DividerLine = () => <View style={{ marginBottom: 15, borderTopColor: colors.blueBorder, borderTopWidth: 1 }} />;
-
 const FounderCard = ({ imageSrc, name, position, isLastOnLine }) => (
   <View style={{ ...styles.founderCard, marginRight: isLastOnLine ? borderRightSize : 0 }}>
     <Image source={{ uri: imageSrc }} style={styles.founderImg} />

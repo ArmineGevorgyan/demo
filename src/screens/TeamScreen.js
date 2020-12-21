@@ -17,7 +17,8 @@ import {
   getStartupTeamMembers,
   openFounderModal,
 } from "../redux/ducks/startup";
-import FounderCard, { DividerLine } from "../components/teamMember";
+import FounderCard from "../components/teamMember";
+import DividerLine from "../components/dividerLine";
 import FounderModal from "../components/founderModal";
 
 class TeamScreen extends Component {

@@ -274,10 +274,10 @@
     "context": "We will process your request and get back to you during the next 2 days.",
     "OKButton": "Close"
   },
-  "investorProfileScreen" : {
+  "investorProfileScreen": {
     "sendMessage": "Send Message"
   },
-  "socialLinks" : {
+  "socialLinks": {
     "linkedinProfile": "LinkedIn Profile",
     "angelListProfile": "AngelList Profile",
     "crunchbaseProfile": "Crunchbase Profile"
@@ -294,7 +294,7 @@
     "answers": "Answers",
     "me": "Me",
     "newDiscussion": "New Discussion",
-    "newComment":"New Comment",
+    "newComment": "New Comment",
     "inputPlaceholder": " Type here...",
     "post": "POST"
   },
@@ -305,17 +305,28 @@
     "capitalAtRisk": "Capital at risk:",
     "diversifyRisk": "Diversify to spread your risk. Approved as a financial promotion by Draper Walled Garden (FCA No.650209)."
   },
-  "notificationsScreen":{
-    "emptyScreen":"You don't have any notifications.",
-    "yesterday":"Yesterday"
+  "productScreen": {
+    "demo": "Demo",
+    "description": "Description",
+    "customers": "Customers",
+    "pricing": "Pricing",
+    "similarProducts": "Similar products"
   },
-  "ceoProfileScreen":{
-    "bio": "Bio",    
-    "locations": "Locations",    
-    "timezone": "Timezone",    
-    "residency": "Residency",    
+  "notificationsScreen": {
+    "emptyScreen": "You don't have any notifications.",
+    "yesterday": "Yesterday"
+  },
+  "ceoProfileScreen": {
+    "bio": "Bio",
+    "locations": "Locations",
+    "timezone": "Timezone",
+    "residency": "Residency",
     "highlights": "Relevant highlights",
     "ceoAt": "CEO at",
     "utc": "UTC"
+  },
+  "collapsibleText": {
+    "seeMore": "See more",
+    "seeLess": "See less"
   }
 }
