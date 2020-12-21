@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { TabView, TabBar } from "react-native-tab-view";
-import { addStartupToPipeline, getStartupById } from "../redux/ducks/startup";
+import {
+  addStartupToPipeline,
+  addStartupToParkingLot,
+  getStartupById,
+} from "../redux/ducks/startup";
 import StartupHeader from "../components/startupHeader";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabComponent } from "../helpers/startupHelper";
@@ -59,6 +63,7 @@ const StartupScreen = ({
   singleStartup,
   addStartupToPipeline,
   getStartupById,
+  addStartupToParkingLot,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
@@ -83,6 +88,9 @@ const StartupScreen = ({
       getStartupById(route.params.startup.id);
     } else {
       getStartupById(route.params.startupId);
+    }
+    if (route.params?.fromPipeline) {
+      setIsFavorite(true);
     }
   }, []);
 
@@ -144,6 +152,9 @@ const StartupScreen = ({
     if (isFavorite) {
       addStartupToPipeline(singleStartup);
       navigation.navigate("Pipeline");
+    } else if (route.params?.fromPipeline && !isFavorite) {
+      addStartupToParkingLot(route.params.startup);
+      navigation.goBack();
     } else {
       navigation.goBack();
     }
@@ -318,6 +329,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
     getStartupById: (startupId) => dispatch(getStartupById(startupId)),
+    addStartupToParkingLot: (startup) => dispatch(addStartupToParkingLot(startup)),
   };
 };
 
