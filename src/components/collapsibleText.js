@@ -16,7 +16,7 @@ const CollapsibleText = ({ textStyle, numberOfLines, t, text }) => {
       >
         {text}
       </Text>
-      <TouchableOpacity onPress={() => isCollapsed ? setIsCollapsed(false) : setIsCollapsed(true)}>
+      <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
         <Text style={innerStyles.seeText}>
           {isCollapsed ? t("collapsibleText.seeMore") : t("collapsibleText.seeLess")}
         </Text>
