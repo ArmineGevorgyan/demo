@@ -10,11 +10,12 @@ const CollapsibleText = ({ textStyle, numberOfLines, t, text }) => {
 
   return (
     <View>
-      {isCollapsed ? <Text style={textStyle} numberOfLines={numberOfLines}>
+      <Text
+        style={textStyle}
+        numberOfLines={isCollapsed ? numberOfLines : null}
+      >
         {text}
-      </Text> : <Text style={textStyle}>
-        {text}
-      </Text>}
+      </Text>
       <TouchableOpacity onPress={() => isCollapsed ? setIsCollapsed(false) : setIsCollapsed(true)}>
         <Text style={innerStyles.seeText}>
           {isCollapsed ? t("collapsibleText.seeMore") : t("collapsibleText.seeLess")}
