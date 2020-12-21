@@ -50,6 +50,7 @@ const constants = {
   },
   backendNotifiactionTypes: {
     STARTUP_DISCUSSIONS: "startup.discussion.create",
+    STARTUP_DISCUSSION_REPLY_CREATE: "startup.discussion.reply.create",
   },
   contactUsMessageMaxLength: 300,
   shortBioMaxLength: 1000,

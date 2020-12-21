@@ -14,7 +14,9 @@ export function notificationNavigate(data) {
   const state = store.getState();
   const types = constants.backendNotifiactionTypes;
 
-  if (data.type == types.STARTUP_DISCUSSIONS) {
+  if (data.type == types.STARTUP_DISCUSSIONS ||
+    data.type == types.STARTUP_DISCUSSION_REPLY_CREATE
+  ) {
     let startupId = path[1];
     store.dispatch(getStartupById(startupId));
 
