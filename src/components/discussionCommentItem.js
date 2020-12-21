@@ -19,7 +19,7 @@ class DiscussionCommentItem extends Component {
             />
             <View>
               <Text style={styles.title}>
-                {i18n.t("discussionsScreen.answeredBy")} Armine Gevorgyan
+                {i18n.t("discussionsScreen.answeredBy")} {comment.user.firstName} {comment.user.lastName}
             </Text>
             </View>
           </View>
