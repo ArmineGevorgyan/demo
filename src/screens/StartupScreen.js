@@ -11,12 +11,13 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { TabView, TabBar } from "react-native-tab-view";
-import { addStartupToPipeline } from "../redux/ducks/startup";
+import { addStartupToPipeline, getStartupById, } from "../redux/ducks/startup";
 import StartupHeader from "../components/startupHeader";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabComponent } from "../helpers/startupHelper";
 import constants from "../constants";
 import { colors } from "../styles/colors";
+import { Spinner } from "native-base";
 
 const TabScene = ({
   renderItem,
@@ -58,7 +59,9 @@ const StartupScreen = ({
   route,
   navigation,
   startups,
+  singleStartup,
   addStartupToPipeline,
+  getStartupById,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
@@ -77,6 +80,14 @@ const StartupScreen = ({
   let listRefArr = useRef([]);
   let listOffset = useRef({});
   let isListGliding = useRef(false);
+
+  useEffect(() => {
+    if (route.params.startup) {
+      getStartupById(route.params.startup.id);
+    } else {
+      getStartupById(route.params.startupId);
+    }
+  }, []);
 
   useEffect(() => {
     scrollY.addListener(({ value }) => {
@@ -133,7 +144,7 @@ const StartupScreen = ({
 
   const goBack = () => {
     if (isFavorite) {
-      addStartupToPipeline(route.params.startup);
+      addStartupToPipeline(singleStartup);
       navigation.navigate("Pipeline");
     } else {
       navigation.goBack();
@@ -197,7 +208,7 @@ const StartupScreen = ({
   const renderScene = ({ route }, startup, navigation) => {
     return (
       <TabScene
-        renderItem={() => getTabComponent(route.key, startup, navigation, tabIndex)}
+        renderItem={() => getTabComponent(route.key, startup, navigation, tabIndex, !!route.params?.startupId)}
         scrollY={scrollY}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onScrollEndDrag={onScrollEndDrag}
@@ -263,22 +274,33 @@ const StartupScreen = ({
 
   return (
     <View style={{ flex: 1 }}>
-      {renderTabView(route?.params?.startup, navigation)}
-      {renderHeader(route?.params?.startup, navigation)}
+      {
+        singleStartup ?
+          <>
+            {renderTabView(singleStartup, navigation)}
+            {renderHeader(singleStartup, navigation)}
+          </>
+          :
+          <Spinner />
+      }
     </View>
   );
 };
 
 const mapStateToProps = (state, props) => {
   const startups = state.startup.startups;
+  const singleStartup = state.startup.singleStartup;
+
   return {
     startups,
+    singleStartup,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
+    getStartupById: (startupId) => dispatch(getStartupById(startupId)),
   };
 };
 

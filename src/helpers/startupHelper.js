@@ -20,7 +20,7 @@ const EmptyContainer = ({ children }) => {
   );
 };
 
-export const getTabComponent = (key, startup, navigation, index) => {
+export const getTabComponent = (key, startup, navigation, index, reload) => {
   switch (key) {
     case "overview": {
       return (
@@ -55,15 +55,16 @@ export const getTabComponent = (key, startup, navigation, index) => {
       return <EmptyContainer>{index === 3 ? <></> : <></>}</EmptyContainer>;
     }
     case "discussions": {
-      return (
-        <EmptyContainer>
-          {index === 4 ? (
-            <DiscussionsScreen startup={startup} navigation={navigation} />
-          ) : (
-            <></>
-          )}
-        </EmptyContainer>
-      );
+      return <EmptyContainer>
+        {
+          index === 4 ?
+            <DiscussionsScreen
+              startup={startup}
+              navigation={navigation}
+              reload={reload}
+            /> : <></>
+        }
+      </EmptyContainer>
     }
     case "faq": {
       return (

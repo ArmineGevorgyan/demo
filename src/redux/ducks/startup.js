@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import store from "../store";
 
 const initialState = {
   isLoading: false,
@@ -153,13 +154,21 @@ export const getStartupTeamMembers = (id) => (dispatch) => {
 };
 
 export const getStartupById = (id) => {
+  const state = store.getState();
+  const startupState = state.startup;
+
   return (dispatch) => {
     dispatch(startupSlice.actions.getStartupById());
+    startupState.startups.map(startup => {
+      if (startup.id == id) {
+        return dispatch(startupSlice.actions.getStartupByIdSuccess(startup))
+      }
+    });
 
     axios
       .get(`${API_URL}/startups/${id}`)
       .then((r) => {
-        return r.data;
+        return r.data;  
       })
       .then((data) => {
         dispatch(startupSlice.actions.getStartupByIdSuccess(data));
