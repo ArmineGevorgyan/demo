@@ -16,10 +16,6 @@ class FounderModal extends Component {
   render() {
     const { profile, isModalOpen, closeFounderModal } = this.props;
 
-    if (!profile) {
-      return <Spinner color={colors.secondaryColor} />;
-    }
-
     return (
       <>
         <Modal
@@ -28,25 +24,34 @@ class FounderModal extends Component {
           onBackButtonPress={() => closeFounderModal()}
         >
           <View style={[baseStylesheet.modalView, styles.modal]}>
-            <ImageBackground source={HeaderImage} style={styles.container}>
-              <Icon
-                name="close"
-                type="AntDesign"
-                style={styles.icon}
-                onPress={() => closeFounderModal()}
-              />
-              <View style={styles.nameView}>
-                <Text style={styles.name}>{profile.fullName}</Text>
-              </View>
-            </ImageBackground>
-            <Image style={styles.photo} source={{ uri: profile.photoUrl }} />
-            <View style={styles.founderInfo}>
-              <Text style={styles.position}>{profile.position}</Text>
-              {linkedin(profile.linkedinProfile)}
-            </View>
-            <View style={styles.bio}>
-              <ContentField sty content={profile.bio} />
-            </View>
+            {profile ? (
+              <>
+                <ImageBackground source={HeaderImage} style={styles.container}>
+                  <Icon
+                    name="close"
+                    type="AntDesign"
+                    style={styles.icon}
+                    onPress={() => closeFounderModal()}
+                  />
+                  <View style={styles.nameView}>
+                    <Text style={styles.name}>{profile.fullName}</Text>
+                  </View>
+                </ImageBackground>
+                <Image
+                  style={styles.photo}
+                  source={{ uri: profile.photoUrl }}
+                />
+                <View style={styles.founderInfo}>
+                  <Text style={styles.position}>{profile.position}</Text>
+                  {linkedin(profile.linkedinProfile)}
+                </View>
+                <View style={styles.bio}>
+                  <ContentField sty content={profile.bio} />
+                </View>{" "}
+              </>
+            ) : (
+              <Spinner color={colors.secondaryColor} />
+            )}
           </View>
         </Modal>
       </>

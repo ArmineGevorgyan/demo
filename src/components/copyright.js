@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, StyleSheet, Text, View, Keyboard } from "react-native";
+import { StyleSheet, Text, View, Keyboard } from "react-native";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";

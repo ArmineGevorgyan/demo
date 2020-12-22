@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import { Text, Spinner, Content } from "native-base";
+import { Text, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { colors } from "../styles/colors";
@@ -19,7 +19,7 @@ class StartupFaqScreen extends Component {
 
   render() {
     const { t, isLoading, faqList } = this.props;
-    const list = faqList.filter(
+    const list = faqList?.filter(
       (item) => item.infoSessionFAQs && item.infoSessionFAQs.length > 0
     );
 
