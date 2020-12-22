@@ -12,7 +12,6 @@ import schema from "../validation/requestInviteSchema";
 import Validation from "../validation";
 import WelcomeHeader from "../components/welcomeHeader";
 import Background from "../components/background";
-import constants from "../constants";
 import { requestInvite } from "../redux/ducks/requestInvite";
 
 class RequestInviteScreen extends Component {

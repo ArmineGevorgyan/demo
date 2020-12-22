@@ -3,28 +3,37 @@ import { compose } from "redux";
 import { StyleSheet, Text, View } from "react-native";
 import { Content } from "native-base";
 import { withTranslation } from "react-i18next";
-
-import DividerLine from '../components/dividerLine';
-import VideoView from '../components/videoView';
-import CollapsibleText from '../components/collapsibleText';
+import DividerLine from "../components/dividerLine";
+import VideoView from "../components/videoView";
+import CollapsibleText from "../components/collapsibleText";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import constants from "../constants";
 
 class ProductScreen extends Component {
-
   render() {
     const {
       t,
       navigation,
-      startup: { demoVideoUrl, description, customers, pricing, similarProducts },
+      startup: {
+        demoVideoUrl,
+        description,
+        customers,
+        pricing,
+        similarProducts,
+      },
     } = this.props;
 
     const videoWidth = constants.windowWidth - 60; // 60 = cardHorizontalMargin
     const videoHeight = videoWidth / constants.widescreenVideoRatio;
 
     return (
-      <Content style={{ ...baseStylesheet.baseContainer, ...baseStylesheet.containerSpacing }}>
+      <Content
+        style={{
+          ...baseStylesheet.baseContainer,
+          ...baseStylesheet.containerSpacing,
+        }}
+      >
         {demoVideoUrl && (
           <View style={{ marginBottom: 10 }}>
             <Text style={{ ...baseStylesheet.titleText, marginBottom: 10 }}>
@@ -89,13 +98,11 @@ class ProductScreen extends Component {
   }
 }
 
-export default compose(
-  withTranslation("translations")
-)(ProductScreen);
+export default compose(withTranslation("translations"))(ProductScreen);
 
 const styles = StyleSheet.create({
   mainText: {
     marginBottom: 10,
-    color: colors.darkText
-  }
+    color: colors.darkText,
+  },
 });

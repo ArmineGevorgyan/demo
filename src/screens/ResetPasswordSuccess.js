@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import GrayHeader from "../components/grayHeader";
 
 class ResetPasswordSuccess extends Component {
@@ -17,7 +17,7 @@ class ResetPasswordSuccess extends Component {
         <GrayHeader title={t("resetPasswordSuccess.headerText")} />
         <View style={styles.contextContainer}>
           <View style={styles.imageContainer}>
-            <DraperRhino />
+            <DWG />
           </View>
           <View style={styles.imageContainer}>
             <Image

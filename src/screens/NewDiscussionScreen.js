@@ -6,10 +6,13 @@ import { withTranslation } from "react-i18next";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { colors } from "../styles/colors";
 import constants from "../constants";
-import { createDiscussion, setInput, setComment, } from "../redux/ducks/discussion";
+import {
+  createDiscussion,
+  setInput,
+  setComment,
+} from "../redux/ducks/discussion";
 
 class NewDiscussionScreen extends Component {
-
   onPostButtonClick = () => {
     const type = this.props.route.params?.type;
     if (type === constants.discussionNewReply) {
@@ -20,17 +23,19 @@ class NewDiscussionScreen extends Component {
   };
 
   createDiscussion = () => {
-    this.props.createDiscussion({
-      startup: { id: this.props.route.params.id, },
-      content: this.props.input,
-    }, this.props.navigation);
+    this.props.createDiscussion(
+      { content: this.props.input },
+      this.props.route.params.id,
+      this.props.navigation
+    );
   };
 
   getTitle = () => {
     const { t } = this.props;
     const type = this.props.route.params?.type;
-    return type === constants.discussionNewReply ?
-      t("discussionsScreen.newComment") : t("discussionsScreen.newDiscussion");
+    return type === constants.discussionNewReply
+      ? t("discussionsScreen.newComment")
+      : t("discussionsScreen.newDiscussion");
   };
 
   handleInput = (input) => {
@@ -59,23 +64,31 @@ class NewDiscussionScreen extends Component {
                 type="Feather"
                 onPress={this.props.navigation.goBack}
               />
-              <Text style={styles.headerText}>
-                {this.getTitle()}
-              </Text>
+              <Text style={styles.headerText}>{this.getTitle()}</Text>
               <TouchableOpacity
                 onPress={this.onPostButtonClick}
-                disabled={type === constants.discussionNewReply ? this.props.comment === "" : this.props.input === ""}
+                disabled={
+                  type === constants.discussionNewReply
+                    ? this.props.comment === ""
+                    : this.props.input === ""
+                }
                 style={{
                   height: 20,
                   alignItems: "center",
                 }}
               >
-                <Text style={[
-                  styles.postText,
-                  type === constants.discussionNewReply ?
-                    this.props.comment === "" && { color: colors.disabledText, } :
-                    this.props.input === "" && { color: colors.disabledText, }
-                ]}>
+                <Text
+                  style={[
+                    styles.postText,
+                    type === constants.discussionNewReply
+                      ? this.props.comment === "" && {
+                          color: colors.disabledText,
+                        }
+                      : this.props.input === "" && {
+                          color: colors.disabledText,
+                        },
+                  ]}
+                >
                   {t("discussionsScreen.post")}
                 </Text>
               </TouchableOpacity>
@@ -89,16 +102,19 @@ class NewDiscussionScreen extends Component {
               placeholder={t("discussionsScreen.inputPlaceholder")}
               placeholderTextColor={colors.blueBorder}
               style={styles.textarea}
-              value={type === constants.discussionNewReply ? this.props.comment : this.props.input}
+              value={
+                type === constants.discussionNewReply
+                  ? this.props.comment
+                  : this.props.input
+              }
               onChangeText={this.handleInput}
             />
           </Content>
-
         </View>
       </Container>
-    )
-  };
-};
+    );
+  }
+}
 
 const mapStateToProps = (state, props) => {
   const input = state.discussion.input;
@@ -115,14 +131,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setInput: (data) => dispatch(setInput(data)),
     setComment: (data) => dispatch(setComment(data)),
-    createDiscussion: (data, navigation) => dispatch(createDiscussion(data, navigation)),
+    createDiscussion: (data, startupId, navigation) =>
+      dispatch(createDiscussion(data, startupId, navigation)),
   };
 };
 
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(NewDiscussionScreen)
+)(NewDiscussionScreen);
 
 const styles = StyleSheet.create({
   container: {

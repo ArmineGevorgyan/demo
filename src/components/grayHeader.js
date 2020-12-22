@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Icon } from "native-base";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { withTranslation } from "react-i18next";
 import { compose } from "redux";
-import { connect } from 'react-redux';
-
-import constants from '../constants';
-import { getUnreadNotificationCount } from  "../redux/ducks/notifications";
+import { connect } from "react-redux";
+import constants from "../constants";
+import { getUnreadNotificationCount } from "../redux/ducks/notifications";
 import { colors } from "../styles/colors";
 
 const { windowWidth } = constants;
@@ -21,12 +20,8 @@ const BellIcon = ({ hasUnread }) => {
       onPress={() => navigation.navigate("NotificationsScreen")}
     >
       <View style={styles.bellIconContainer}>
-        <Icon
-          type="Feather"
-          name="bell"
-          style={styles.bellIcon}
-        />
-        {hasUnread && 
+        <Icon type="Feather" name="bell" style={styles.bellIcon} />
+        {hasUnread && (
           <View style={styles.redDotContainer}>
             <Icon
               name="primitive-dot"
@@ -34,20 +29,26 @@ const BellIcon = ({ hasUnread }) => {
               style={styles.bellRedDot}
             />
           </View>
-        }
+        )}
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 class GrayHeader extends Component {
-
-  componentDidMount(){
+  componentDidMount() {
     this.props.getUnreadNotificationCount();
   }
 
   render() {
-    const { title, children, enableSearch, enableBell, backButtonHandler, unreadNotificationCount } = this.props;
+    const {
+      title,
+      children,
+      enableSearch,
+      enableBell,
+      backButtonHandler,
+      unreadNotificationCount,
+    } = this.props;
 
     return (
       <View
@@ -57,18 +58,18 @@ class GrayHeader extends Component {
         ]}
       >
         <View style={styles.textRowContainer}>
-            <View style={{ minWidth: 30 }}>
-              {backButtonHandler && (
-                <Icon
-                  style={{
-                    color: colors.backIconBlue,
-                  }}
-                  name="arrow-left"
-                  type="Feather"
-                  onPress={backButtonHandler}
-                />
-              )}
-            </View>
+          <View style={{ minWidth: 30 }}>
+            {backButtonHandler && (
+              <Icon
+                style={{
+                  color: colors.backIconBlue,
+                }}
+                name="arrow-left"
+                type="Feather"
+                onPress={backButtonHandler}
+              />
+            )}
+          </View>
           <Text style={[styles.headerText, children && { marginBottom: 15 }]}>
             {title}
           </Text>
@@ -76,13 +77,13 @@ class GrayHeader extends Component {
             style={{
               minWidth: 30,
               flexDirection: "row",
-              marginBottom: !enableSearch ? 15 : 0
+              marginBottom: !enableSearch ? 15 : 0,
             }}
-            >
+          >
             {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
             {enableSearch && (
               <Icon
-              style={{
+                style={{
                   color: colors.darkText,
                 }}
                 name="search"
@@ -143,14 +144,14 @@ const styles = StyleSheet.create({
     height: 15,
     backgroundColor: colors.offWhite,
     borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   bellRedDot: {
     color: colors.lightRed,
     fontSize: 20,
-    position: 'absolute',
-    top: -3
+    position: "absolute",
+    top: -3,
   },
 });
 
@@ -158,13 +159,13 @@ const mapStateToProps = (state, props) => {
   const { unreadNotificationCount } = state.notifications;
 
   return {
-    unreadNotificationCount
-  }
+    unreadNotificationCount,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUnreadNotificationCount: () => dispatch(getUnreadNotificationCount())
+    getUnreadNotificationCount: () => dispatch(getUnreadNotificationCount()),
   };
 };
 

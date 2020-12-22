@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import store from "../store";
 
 const initialState = {
   isLoading: false,
   startups: null,
   singleStartup: null,
-  faqList: null,
   error: null,
   founderModalItem: null,
   isModalOpen: false,
@@ -40,20 +40,6 @@ const startupSlice = createSlice({
     toggleIsEmpty: (state) => ({
       ...state,
       isEmpty: !state.isEmpty,
-    }),
-    getStartupFaqList: (state) => ({
-      ...state,
-      isLoading: true,
-    }),
-    getStartupFaqListSuccess: (state, action) => ({
-      ...state,
-      isLoading: false,
-      faqList: action.payload,
-    }),
-    getStartupFaqListFail: (state, action) => ({
-      ...state,
-      isLoading: false,
-      error: action.payload,
     }),
     getStartupTeamMembers: (state) => ({
       ...state,
@@ -153,24 +139,6 @@ export const addStartupToPipeline = (startup) => {
   };
 };
 
-export const getStartupFaqList = (id) => {
-  return (dispatch) => {
-    dispatch(startupSlice.actions.getStartupFaqList());
-
-    axios
-      .get(`${API_URL}/startups/${id}/info-session`)
-      .then((r) => {
-        return r.data;
-      })
-      .then((data) => {
-        dispatch(startupSlice.actions.getStartupFaqListSuccess(data));
-      })
-      .catch((error) => {
-        dispatch(startupSlice.actions.getStartupFaqListFail(error));
-      });
-  };
-};
-
 export const getStartupTeamMembers = (id) => (dispatch) => {
   dispatch(startupSlice.actions.getStartupTeamMembers());
 
@@ -186,13 +154,21 @@ export const getStartupTeamMembers = (id) => (dispatch) => {
 };
 
 export const getStartupById = (id) => {
+  const state = store.getState();
+  const startupState = state.startup;
+
   return (dispatch) => {
     dispatch(startupSlice.actions.getStartupById());
+    startupState.startups.map(startup => {
+      if (startup.id == id) {
+        return dispatch(startupSlice.actions.getStartupByIdSuccess(startup))
+      }
+    });
 
     axios
       .get(`${API_URL}/startups/${id}`)
       .then((r) => {
-        return r.data;
+        return r.data;  
       })
       .then((data) => {
         dispatch(startupSlice.actions.getStartupByIdSuccess(data));

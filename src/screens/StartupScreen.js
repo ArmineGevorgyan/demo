@@ -1,22 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  Animated,
-} from "react-native";
+import { StyleSheet, View, Text, Dimensions, Animated } from "react-native";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { TabView, TabBar } from "react-native-tab-view";
-import { addStartupToPipeline } from "../redux/ducks/startup";
+import { addStartupToPipeline, getStartupById } from "../redux/ducks/startup";
 import StartupHeader from "../components/startupHeader";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabComponent } from "../helpers/startupHelper";
 import constants from "../constants";
 import { colors } from "../styles/colors";
+import { Spinner } from "native-base";
 
 const TabScene = ({
   renderItem,
@@ -26,7 +20,7 @@ const TabScene = ({
   onMomentumScrollEnd,
   onMomentumScrollBegin,
 }) => {
-  const windowHeight = Dimensions.get('window').height;
+  const windowHeight = Dimensions.get("window").height;
 
   return (
     <Animated.FlatList
@@ -34,14 +28,18 @@ const TabScene = ({
       numColumns={1}
       ref={onGetRef}
       scrollEventThrottle={16}
-      onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-        useNativeDriver: true,
-      })}
+      onScroll={Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+        {
+          useNativeDriver: true,
+        }
+      )}
       onMomentumScrollBegin={onMomentumScrollBegin}
       onScrollEndDrag={onScrollEndDrag}
       onMomentumScrollEnd={onMomentumScrollEnd}
       contentContainerStyle={{
-        paddingTop: constants.startupHeaderHeight + constants.startupTabBarHeight,
+        paddingTop:
+          constants.startupHeaderHeight + constants.startupTabBarHeight,
         minHeight: windowHeight - constants.startupTabBarHeight,
       }}
       showsHorizontalScrollIndicator={false}
@@ -58,7 +56,9 @@ const StartupScreen = ({
   route,
   navigation,
   startups,
+  singleStartup,
   addStartupToPipeline,
+  getStartupById,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
@@ -77,6 +77,14 @@ const StartupScreen = ({
   let listRefArr = useRef([]);
   let listOffset = useRef({});
   let isListGliding = useRef(false);
+
+  useEffect(() => {
+    if (route.params.startup) {
+      getStartupById(route.params.startup.id);
+    } else {
+      getStartupById(route.params.startupId);
+    }
+  }, []);
 
   useEffect(() => {
     scrollY.addListener(({ value }) => {
@@ -110,7 +118,8 @@ const StartupScreen = ({
                 offset: constants.startupHeaderHeight - 100,
                 animated: false,
               });
-              listOffset.current[item.key] = constants.startupHeaderHeight - 100;
+              listOffset.current[item.key] =
+                constants.startupHeaderHeight - 100;
             }
           }
         }
@@ -133,7 +142,7 @@ const StartupScreen = ({
 
   const goBack = () => {
     if (isFavorite) {
-      addStartupToPipeline(route.params.startup);
+      addStartupToPipeline(singleStartup);
       navigation.navigate("Pipeline");
     } else {
       navigation.goBack();
@@ -144,35 +153,39 @@ const StartupScreen = ({
     const y = scrollY.interpolate({
       inputRange: [0, 200, constants.startupHeaderHeight],
       outputRange: [0, -200, -constants.startupHeaderHeight / 1.5],
-      extrapolateRight: 'clamp',
+      extrapolateRight: "clamp",
     });
 
     const opacity = scrollY.interpolate({
       inputRange: [170, 190, 300],
       outputRange: [0, 1, 1],
-      extrapolate: 'clamp'
+      extrapolate: "clamp",
     });
 
     return (
-      <Animated.View style={[
-        styles.header,
-        { transform: [{ translateY: y }] }
-      ]}>
+      <Animated.View
+        style={[styles.header, { transform: [{ translateY: y }] }]}
+      >
         <StartupHeader
           isFavorite={isFavorite}
           startup={startup}
           navigation={navigation}
           goBack={goBack}
           setIsFavorite={(isFavorite) => {
-            setIsFavorite(isFavorite)
+            setIsFavorite(isFavorite);
           }}
         />
-        <Animated.View style={[{ opacity: opacity }, {
-          position: "absolute",
-          bottom: 0,
-          width: "100%",
-          height: 100,
-        }]}>
+        <Animated.View
+          style={[
+            { opacity: opacity },
+            {
+              position: "absolute",
+              bottom: 0,
+              width: "100%",
+              height: 100,
+            },
+          ]}
+        >
           <SmallStartupHeader
             isFavorite={isFavorite}
             name={startup.name}
@@ -197,7 +210,15 @@ const StartupScreen = ({
   const renderScene = ({ route }, startup, navigation) => {
     return (
       <TabScene
-        renderItem={() => getTabComponent(route.key, startup, navigation, tabIndex)}
+        renderItem={() =>
+          getTabComponent(
+            route.key,
+            startup,
+            navigation,
+            tabIndex,
+            !!route.params?.startupId
+          )
+        }
         scrollY={scrollY}
         onMomentumScrollBegin={onMomentumScrollBegin}
         onScrollEndDrag={onScrollEndDrag}
@@ -220,15 +241,23 @@ const StartupScreen = ({
   const renderTabBar = (props) => {
     const y = scrollY.interpolate({
       inputRange: [0, 200, constants.startupHeaderHeight],
-      outputRange: [constants.startupHeaderHeight, (constants.startupHeaderHeight / 3) + 0, 100],
-      extrapolateRight: 'clamp',
+      outputRange: [
+        constants.startupHeaderHeight,
+        constants.startupHeaderHeight / 3 + 0,
+        100,
+      ],
+      extrapolateRight: "clamp",
     });
 
     return (
       <Animated.View
-        style={[styles.tabContainer, {
-          transform: [{ translateY: y }],
-        }]}>
+        style={[
+          styles.tabContainer,
+          {
+            transform: [{ translateY: y }],
+          },
+        ]}
+      >
         <TabBar
           {...props}
           scrollEnabled
@@ -255,7 +284,7 @@ const StartupScreen = ({
         renderTabBar={renderTabBar}
         initialLayout={{
           height: 0,
-          width: Dimensions.get('window').width,
+          width: Dimensions.get("window").width,
         }}
       />
     );
@@ -263,22 +292,32 @@ const StartupScreen = ({
 
   return (
     <View style={{ flex: 1 }}>
-      {renderTabView(route?.params?.startup, navigation)}
-      {renderHeader(route?.params?.startup, navigation)}
+      {singleStartup ? (
+        <>
+          {renderTabView(singleStartup, navigation)}
+          {renderHeader(singleStartup, navigation)}
+        </>
+      ) : (
+        <Spinner color={colors.secondaryColor} />
+      )}
     </View>
   );
 };
 
 const mapStateToProps = (state, props) => {
   const startups = state.startup.startups;
+  const singleStartup = state.startup.singleStartup;
+
   return {
     startups,
+    singleStartup,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
+    getStartupById: (startupId) => dispatch(getStartupById(startupId)),
   };
 };
 
@@ -291,24 +330,24 @@ const styles = StyleSheet.create({
   header: {
     top: 0,
     height: constants.startupHeaderHeight,
-    width: '100%',
-    backgroundColor: '#FFF',
-    position: 'absolute',
+    width: "100%",
+    backgroundColor: "#FFF",
+    position: "absolute",
   },
   label: {
     fontSize: 16,
-    color: '#000',
+    color: "#000",
   },
   tabContainer: {
     top: 0,
     zIndex: 1,
-    position: 'absolute',
-    width: '100%',
+    position: "absolute",
+    width: "100%",
   },
   tab: {
     elevation: 0,
     shadowOpacity: 0,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderBottomColor: colors.disabledInput,
     borderBottomWidth: 1,
   },

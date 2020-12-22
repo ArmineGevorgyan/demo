@@ -103,18 +103,18 @@ export const getDiscussions = (startupId) => {
   };
 };
 
-export const createDiscussion = (data, navigation) => {
+export const createDiscussion = (data, startupId, navigation) => {
   return (dispatch) => {
     dispatch(discussionSlice.actions.createDiscussion());
 
     axios
-      .post(`${API_URL}/discussions`, data)
+      .post(`${API_URL}/startups/${startupId}/discussions`, data)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
         dispatch(discussionSlice.actions.createDiscussionSuccess(data));
-        dispatch(getDiscussions(data.startup.id));
+        dispatch(getDiscussions(startupId));
         navigation.goBack();
       })
       .catch((error) => {
@@ -155,20 +155,24 @@ export const getDiscussionById = (id, navigation) => {
         return r.data;
       })
       .then((data) => {
-        const updatedDiscussions = discussinState.discussionList.map(discussion => {
-          if (discussion.id == id) {
-            discussion = data;
+        const updatedDiscussions = discussinState.discussionList.map(
+          (discussion) => {
+            if (discussion.id == id) {
+              discussion = data;
+            }
+            return discussion;
           }
-          return discussion;
-        });
+        );
         navigation.goBack();
-        dispatch(discussionSlice.actions.getDiscussionsSuccess(updatedDiscussions));
+        dispatch(
+          discussionSlice.actions.getDiscussionsSuccess(updatedDiscussions)
+        );
         dispatch(discussionSlice.actions.setComment(""));
       })
       .catch((error) => {
-         dispatch(discussionSlice.actions.addCommentFail(error));
+        dispatch(discussionSlice.actions.addCommentFail(error));
       });
-  }
+  };
 };
 
 export default discussionReducer;

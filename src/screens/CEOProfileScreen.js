@@ -12,7 +12,6 @@ import { colors } from "../styles/colors";
 import { getProfileData } from "../redux/ducks/entrepreneurProfile";
 import { linkedin, angellist, crunchbase } from "../components/socialLinks";
 import ContentField from "../components/contentField";
-import constants from "../constants";
 
 class CEOProfileScreen extends Component {
   componentDidMount() {
@@ -191,15 +190,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "montserrat-regular",
     alignSelf: "center",
-    width: "80%",
+    width: "75%",
   },
   boldText: {
     color: colors.blueText,
     fontSize: 14,
     fontFamily: "montserrat-semi-bold",
     alignSelf: "center",
-    width: "100%",
+    width: "80%",
     lineHeight: 25,
+    marginRight: 20,
   },
   flagOffset: {
     lineHeight: 25,

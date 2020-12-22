@@ -28,6 +28,7 @@ import legalSlice from "./legal";
 import deleteAccountSlice from "./deleteAccount";
 import discussionSlice from "./discussion";
 import notificationsSlice from "./notifications";
+import infoSessionSlice from "./infoSession";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -51,7 +52,8 @@ const appReducer = combineReducers({
   legal: legalSlice,
   deleteAccount: deleteAccountSlice,
   discussion: discussionSlice,
-  notifications:notificationsSlice,
+  notifications: notificationsSlice,
+  infoSession: infoSessionSlice,
 });
 
 export const rootReducer = (state, action) => {

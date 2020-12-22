@@ -8,7 +8,7 @@ import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import GrayHeader from "../components/grayHeader";
 import Validation from "../validation";
 import schema from "../validation/emailSchema";
@@ -62,7 +62,7 @@ class ForgotPasswordScreen extends Component {
               <View style={styles.formContainer}>
                 <ResetPasswordModal email={values.email} error={error} />
                 <View style={styles.imageContainer}>
-                  <DraperRhino />
+                  <DWG />
                 </View>
                 <View style={styles.textRow}>
                   <ResetImg />

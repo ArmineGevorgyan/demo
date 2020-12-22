@@ -12,7 +12,7 @@ import { isInvestor } from '../helpers/userTypeHelper';
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
-    if (!this.props.discussionList) {
+    if (!this.props.discussionList || this.props.reload) {
       this.props.getDiscussions(this.props.startup.id);
     }
   };
@@ -77,7 +77,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createDiscussion: (data) => dispatch(createDiscussion(data)),
     getDiscussions: (data) => dispatch(getDiscussions(data)),
   };
 };

@@ -6,7 +6,7 @@ import { Content, Icon } from "native-base";
 import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import GrayHeader from "../components/grayHeader";
 import getLegalItems from "../helpers/legalScreenHelper";
 
@@ -22,7 +22,7 @@ class LegalScreen extends Component {
         />
         <Content style={baseStylesheet.baseContainer}>
           <View style={styles.imageContainer}>
-            <DraperRhino />
+            <DWG />
           </View>
           <View style={styles.itemContainer}>
             {userData &&

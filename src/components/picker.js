@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Picker } from "react-native";
 import { Icon } from "native-base";
-
 import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
 

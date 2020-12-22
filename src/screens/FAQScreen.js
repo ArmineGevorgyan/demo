@@ -6,7 +6,7 @@ import { Content, Spinner } from "native-base";
 import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import GrayHeader from "../components/grayHeader";
 import ListAccordion from "../components/listAccordion";
 import { getEntrepreneurFAQ, getInvestorFAQ } from "../redux/ducks/faq";
@@ -33,7 +33,7 @@ class FAQScreen extends Component {
         />
         <Content style={baseStylesheet.baseContainer}>
           <View style={styles.imageContainer}>
-            <DraperRhino />
+            <DWG />
           </View>
           <View style={styles.contextContainer}>
             {faqList ? (

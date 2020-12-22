@@ -27,8 +27,7 @@ class NotificationItem extends Component {
       data: { data },
       setNotificationSeen,
     } = this.props;
-
-    setNotificationSeen(data.id, this.setToSeen);
+    setNotificationSeen(this.props.data.id, this.setToSeen);
 
     if (!data.path) {
       return;

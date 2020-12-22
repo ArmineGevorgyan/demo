@@ -7,7 +7,7 @@ import { withTranslation } from "react-i18next";
 import HTML from "react-native-render-html";
 import WebView from "react-native-webview";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import GrayHeader from "../components/grayHeader";
 import PdfIcon from "../../assets/document-pdf.svg";
 import { getLegalDoc } from "../redux/ducks/legal";
@@ -43,7 +43,7 @@ class LegalDocumentScreen extends Component {
         />
         <Content style={baseStylesheet.baseContainer}>
           <View style={styles.imageContainer}>
-            <DraperRhino />
+            <DWG />
           </View>
           <View style={styles.itemContainer}>
             {document ? (
