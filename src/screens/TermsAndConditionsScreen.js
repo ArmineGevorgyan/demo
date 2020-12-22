@@ -8,7 +8,7 @@ import HTML from "react-native-render-html";
 import { ScrollView } from "react-native-gesture-handler";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { acceptTermsAndConditions } from "../redux/ducks/termsAndConditions";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import constants from "../constants";
 import { colors } from "../styles/colors";
 import Accordion from "../components/accordion";
@@ -79,7 +79,7 @@ class TermsAndConditionsScreen extends Component {
         }}
       >
         <View style={styles.imageContainer}>
-          <DraperRhino />
+          <DWG />
         </View>
         <ScrollView style={styles.buttonOffset}>
           <VideoView

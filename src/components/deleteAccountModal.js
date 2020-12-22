@@ -25,7 +25,7 @@ import {
 } from "../redux/ducks/deleteAccount";
 import DeleteAccountSuccess from "./deleteAccountSuccess";
 import CustomPicker from "./picker";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import { colors } from "../styles/colors";
 import constants from "../constants";
 
@@ -65,7 +65,7 @@ class DeleteAccountModal extends Component {
         >
           <View style={baseStylesheet.modalView}>
             <View style={styles.imageContainer}>
-              <DraperRhino />
+              <DWG />
             </View>
             <ScrollView>
               <View style={styles.alertImageContainer}>

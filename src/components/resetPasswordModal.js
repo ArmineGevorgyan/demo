@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import Modal from "react-native-modal";
 import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 import { closeModal } from "../redux/ducks/resetPassword";
 import { colors } from "../styles/colors";
 import { Button } from "native-base";
@@ -28,7 +28,7 @@ class ResetPasswordModal extends Component {
       >
         <View style={baseStylesheet.modalView}>
           <View style={styles.imageContainer}>
-            <DraperRhino />
+            <DWG />
           </View>
           <View style={styles.imageContainer}>
             <Image

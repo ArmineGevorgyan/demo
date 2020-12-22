@@ -6,7 +6,6 @@ const initialState = {
   isLoading: false,
   startups: null,
   singleStartup: null,
-  faqList: null,
   error: null,
   founderModalItem: null,
   isModalOpen: false,
@@ -40,20 +39,6 @@ const startupSlice = createSlice({
     toggleIsEmpty: (state) => ({
       ...state,
       isEmpty: !state.isEmpty,
-    }),
-    getStartupFaqList: (state) => ({
-      ...state,
-      isLoading: true,
-    }),
-    getStartupFaqListSuccess: (state, action) => ({
-      ...state,
-      isLoading: false,
-      faqList: action.payload,
-    }),
-    getStartupFaqListFail: (state, action) => ({
-      ...state,
-      isLoading: false,
-      error: action.payload,
     }),
     getStartupTeamMembers: (state) => ({
       ...state,
@@ -149,24 +134,6 @@ export const addStartupToPipeline = (startup) => {
       .post(`${API_URL}/startups/${startup.id}/interested`)
       .catch((error) => {
         dispatch(startupSlice.actions.addStartupToPipelineFail(error));
-      });
-  };
-};
-
-export const getStartupFaqList = (id) => {
-  return (dispatch) => {
-    dispatch(startupSlice.actions.getStartupFaqList());
-
-    axios
-      .get(`${API_URL}/startups/${id}/info-session`)
-      .then((r) => {
-        return r.data;
-      })
-      .then((data) => {
-        dispatch(startupSlice.actions.getStartupFaqListSuccess(data));
-      })
-      .catch((error) => {
-        dispatch(startupSlice.actions.getStartupFaqListFail(error));
       });
   };
 };

@@ -17,10 +17,6 @@ class Copyright extends Component {
       this._keyboardDidHide
     );
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.show) {
-    }
-  }
 
   componentWillUnmount = () => {
     this.keyboardDidShowListener.remove();

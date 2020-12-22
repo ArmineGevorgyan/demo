@@ -7,7 +7,7 @@ import { Button } from "native-base";
 import Modal from "react-native-modal";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { closeDeleteAccountSuccess } from "../redux/ducks/deleteAccount";
-import DraperRhino from "../../assets/draper-rhino.svg";
+import DWG from "../../assets/DWG.svg";
 
 class DeleteAccountSuccess extends Component {
   handleCancel = () => this.props.closeDeleteAccountSuccess();
@@ -23,7 +23,7 @@ class DeleteAccountSuccess extends Component {
       >
         <View style={baseStylesheet.modalView}>
           <View style={styles.imageContainer}>
-            <DraperRhino />
+            <DWG />
           </View>
           <View style={styles.infoImageContainer}>
             <Image
