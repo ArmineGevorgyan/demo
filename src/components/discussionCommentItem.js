@@ -1,17 +1,16 @@
-import React, { Component, } from "react";
+import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Icon } from "native-base";
 import { colors } from "../styles/colors";
 import i18n from "../i18n";
 
 class DiscussionCommentItem extends Component {
-
   render() {
     const { comment } = this.props;
     return (
-      <View style={{ marginTop: 15, }}>
+      <View style={{ marginTop: 15 }}>
         <View style={styles.container}>
-          <View style={styles.topRow}>
+          <View style={{ ...styles.topRow, width: "70%" }}>
             <Icon
               style={styles.icon}
               name="message-text"
@@ -20,22 +19,22 @@ class DiscussionCommentItem extends Component {
             <View>
               <Text style={styles.title}>
                 {i18n.t("discussionsScreen.answeredBy")} {comment.user.firstName} {comment.user.lastName}
-            </Text>
+              </Text>
             </View>
           </View>
-          <Text style={{
-            fontSize: 12,
-          }}>
+          <Text
+            style={{
+              fontSize: 12,
+            }}
+          >
             {this.props.getTime(comment.createdAt)}
           </Text>
         </View>
-        <Text style={styles.content}>
-          {comment.content}
-        </Text>
+        <Text style={styles.content}>{comment.content}</Text>
       </View>
-    )
-  };
-};
+    );
+  }
+}
 
 export default DiscussionCommentItem;
 
