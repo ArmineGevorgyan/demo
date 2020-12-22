@@ -40,42 +40,50 @@ class ProductScreen extends Component {
             />
           </View>
         )}
-        <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
-          {t("productScreen.description")}
-        </Text>
-        <CollapsibleText
-          text={description}
-          numberOfLines={6}
-          textStyle={{ ...styles.mainText, color: colors.darkText }}
-        />
+        {description && <>
+          <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
+            {t("productScreen.description")}
+          </Text>
+          <CollapsibleText
+            text={description}
+            numberOfLines={6}
+            textStyle={{ ...styles.mainText, color: colors.darkText }}
+          />
+          <DividerLine style={{ marginVertical: 10 }} />
+        </>}
         {/* A reusable textBlock component is not added, because there was no example of backend data, thus no info fields' differences */}
-        <DividerLine style={{ marginVertical: 10 }} />
-        <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
-          {t("productScreen.customers")}
-        </Text>
-        <CollapsibleText
-          text={customers}
-          numberOfLines={6}
-          textStyle={{ ...styles.mainText, color: colors.darkText }}
-        />
-        <DividerLine style={{ marginVertical: 10 }} />
-        <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
-          {t("productScreen.pricing")}
-        </Text>
-        <CollapsibleText
-          text={pricing}
-          numberOfLines={6}
-          textStyle={{ ...styles.mainText, color: colors.darkText }}
-        />
-        <DividerLine style={{ marginVertical: 10 }} />
-        <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
-          {t("productScreen.similarProducts")}
-        </Text>
-        <CollapsibleText
-          text={similarProducts}
-          numberOfLines={6}
-          textStyle={{ ...styles.mainText, color: colors.darkText }}
-        />
+        {customers && <>
+          <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
+            {t("productScreen.customers")}
+          </Text>
+          <CollapsibleText
+            text={customers}
+            numberOfLines={6}
+            textStyle={{ ...styles.mainText, color: colors.darkText }}
+          />
+          <DividerLine style={{ marginVertical: 10 }} />
+        </>}
+        {pricing && <>
+          <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
+            {t("productScreen.pricing")}
+          </Text>
+          <CollapsibleText
+            text={pricing}
+            numberOfLines={6}
+            textStyle={{ ...styles.mainText, color: colors.darkText }}
+          />
+          <DividerLine style={{ marginVertical: 10 }} />
+        </>}
+        {similarProducts && <>
+          <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
+            {t("productScreen.similarProducts")}
+          </Text>
+          <CollapsibleText
+            text={similarProducts}
+            numberOfLines={6}
+            textStyle={{ ...styles.mainText, color: colors.darkText }}
+          />
+        </>}
       </Content>
     );
   }
