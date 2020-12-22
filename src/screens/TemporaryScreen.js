@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import {
-  Body,
-  Container,
-  Content,
-  Header,
-  Title,
-  View,
-} from "native-base";
-import { Text, } from "react-native";
+import { Body, Container, Content, Header, View } from "native-base";
+import { Text } from "react-native";
 
 class TemporaryScreen extends Component {
   render() {
@@ -26,14 +19,12 @@ class TemporaryScreen extends Component {
         </Header>
         <Content>
           <View>
-            <Text>
-              Temporary View
-          </Text>
+            <Text>Temporary View</Text>
           </View>
         </Content>
       </Container>
-    )
+    );
   }
 }
 
-export default TemporaryScreen
+export default TemporaryScreen;

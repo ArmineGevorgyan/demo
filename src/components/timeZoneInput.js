@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Item, Input } from "native-base";
+import { Item } from "native-base";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { compose } from "redux";
 import { connect } from "react-redux";
@@ -14,57 +14,41 @@ import {
 } from "../redux/ducks/timeZoneModal";
 
 class TimeZoneInput extends Component {
-
   handleClick = (title) => {
     this.props.openModal(title);
     this.props.loadTimeZones();
-  }
+  };
 
   render() {
     const { t } = this.props;
-    return (<View>
-      <Text style={baseStylesheet.label}>
-        {t("timeZoneModal.inputTitle")}
-      </Text>
-      <Item
-        rounded
-        style={baseStylesheet.inputItem}
-      >
-        <TouchableOpacity
-          style={styles.touchableItem}
-          onPress={
-            () => this.handleClick(t("timeZoneModal.timeZoneTitle"))
-          }
-        >
-          {
-            this.props.value ?
-              <Text
-                style={styles.text}
-              >
-                {this.props.value}
-              </Text>
-              :
-              <Text
-                style={[
-                  styles.text,
-                  styles.placeholder,
-                ]}
-              >
+    return (
+      <View>
+        <Text style={baseStylesheet.label}>
+          {t("timeZoneModal.inputTitle")}
+        </Text>
+        <Item rounded style={baseStylesheet.inputItem}>
+          <TouchableOpacity
+            style={styles.touchableItem}
+            onPress={() => this.handleClick(t("timeZoneModal.timeZoneTitle"))}
+          >
+            {this.props.value ? (
+              <Text style={styles.text}>{this.props.value}</Text>
+            ) : (
+              <Text style={[styles.text, styles.placeholder]}>
                 {t("timeZoneModal.placeholder")}
               </Text>
-          }
-        </TouchableOpacity>
-      </Item>
-      <TimeZoneModal
-        isModalOpen={this.props.isModalOpen}
-        closeModal={this.props.closeModal}
-        setResult={this.props.setResult}
-      />
-    </View>
-    )
-  };
-};
-
+            )}
+          </TouchableOpacity>
+        </Item>
+        <TimeZoneModal
+          isModalOpen={this.props.isModalOpen}
+          closeModal={this.props.closeModal}
+          setResult={this.props.setResult}
+        />
+      </View>
+    );
+  }
+}
 
 const mapStateToProps = (state, props) => {
   const isModalOpen = state.timeZoneModal.isModalOpen;

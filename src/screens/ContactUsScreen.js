@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { StyleSheet, Text, View, Picker } from "react-native";
-import { Label, Textarea, Button, Content, Icon } from "native-base";
+import { Label, Textarea, Button, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { Formik } from "formik";
 import { baseStylesheet } from "../styles/baseStylesheet";
