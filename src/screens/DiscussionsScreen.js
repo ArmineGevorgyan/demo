@@ -77,7 +77,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createDiscussion: (data) => dispatch(createDiscussion(data)),
     getDiscussions: (data) => dispatch(getDiscussions(data)),
   };
 };

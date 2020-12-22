@@ -4,7 +4,7 @@ import { colors } from "../styles/colors";
 
 class ContentField extends Component {
   render() {
-    const { content, title, lineLimit, bottomBorder, children } = this.props;
+    const { content, title, bottomBorder, children } = this.props;
 
     return (
       <View style={bottomBorder ? styles.bottomBorder : styles.container}>

@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { Icon } from "native-base";
@@ -20,111 +27,119 @@ class SmallStartupCard extends Component {
       : null;
 
     return (
-      <View style={[styles.cardContainer, baseStylesheet.elevation6]}>
-        <View style={styles.cardHeader}>
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: startup.logoUrl }} style={styles.logo} />
-          </View>
-          <View style={styles.headerContent}>
-            <Text style={styles.startupName}>{startup.name}</Text>
-            {startup.location && (
-              <View style={styles.startupDetailContainer}>
-                <Icon name="location" type="Octicons" style={styles.icon} />
-                <Text style={styles.startupDetail}>
-                  {startup.location.city.name}, {startup.location.country.name}
-                </Text>
-              </View>
-            )}
-            <View style={styles.startupDetailContainer}>
-              <Icon name="user" type="AntDesign" style={styles.icon} />
-              {fullName ? (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("InvestorProfileScreen", {
-                      investorId: startup.referredByUser.id,
-                    })
-                  }
-                >
-                  <Text style={[styles.startupDetail, styles.link]}>
-                    {t("startupCard.referred")}
-                    {fullName}
+      <View
+        style={[
+          baseStylesheet.elevation6,
+          Platform.OS === "android" ? styles.cardContainer : "",
+        ]}
+      >
+        <View style={styles.cardContainer}>
+          <View style={styles.cardHeader}>
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: startup.logoUrl }} style={styles.logo} />
+            </View>
+            <View style={styles.headerContent}>
+              <Text style={styles.startupName}>{startup.name}</Text>
+              {startup.location && (
+                <View style={styles.startupDetailContainer}>
+                  <Icon name="location" type="Octicons" style={styles.icon} />
+                  <Text style={styles.startupDetail}>
+                    {startup.location.city.name},{" "}
+                    {startup.location.country.name}
                   </Text>
-                </TouchableOpacity>
-              ) : (
+                </View>
+              )}
+              <View style={styles.startupDetailContainer}>
+                <Icon name="user" type="AntDesign" style={styles.icon} />
+                {fullName ? (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("InvestorProfileScreen", {
+                        investorId: startup.referredByUser.id,
+                      })
+                    }
+                  >
+                    <Text style={[styles.startupDetail, styles.link]}>
+                      {t("startupCard.referred")}
+                      {fullName}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
                   <Text style={styles.startupDetail}>
                     {t("startupCard.referred")}
                     {t("startupCard.draperRhino")}
                   </Text>
                 )}
-            </View>
-            {startup.industry && (
-              <View style={styles.startupDetailContainer}>
-                <Icon
-                  name="business-center"
-                  type="MaterialIcons"
-                  style={styles.icon}
-                />
-                <Text style={styles.startupDetail}>
-                  {startup.industry.name}
-                </Text>
               </View>
-            )}
+              {startup.industry && (
+                <View style={styles.startupDetailContainer}>
+                  <Icon
+                    name="business-center"
+                    type="MaterialIcons"
+                    style={styles.icon}
+                  />
+                  <Text style={styles.startupDetail}>
+                    {startup.industry.name}
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
-        </View>
-        {startup.introVideoUrl && (
-          <VideoView
-            videoSource={startup.introVideoUrl}
-            navigation={this.props.navigation}
-            size={{
-              width: videoWidth,
-              height: videoHeight,
-            }}
-          />
-        )}
-        <View style={styles.card}>
-          <View style={styles.descriptionContainer}>
-            <Text
-              style={styles.description}
+          {startup.introVideoUrl && (
+            <VideoView
+              videoSource={startup.introVideoUrl}
+              navigation={this.props.navigation}
+              size={{
+                width: videoWidth,
+                height: videoHeight,
+              }}
+            />
+          )}
+          <View style={styles.card}>
+            <View style={styles.descriptionContainer}>
+              <Text
+                style={styles.description}
+                ellipsizeMode="tail"
+                numberOfLines={5}
+              >
+                {startup.description}
+              </Text>
+            </View>
+            <View style={styles.slider}>
+              {GradientSlider(
+                0,
+                startup.investmentGoal,
+                startup.totalCommittedAmount
+              )}
+            </View>
+            <View
+              style={styles.sliderDescription}
               ellipsizeMode="tail"
               numberOfLines={5}
             >
-              {startup.description}
-            </Text>
+              <Text style={styles.text}>{t("startupCard.committed")} </Text>
+              <Text style={styles.number}>
+                {numberToCashFormatter(startup.totalCommittedAmount)}
+              </Text>
+              <Text style={styles.text}>{t("startupCard.of")}</Text>
+              <Text style={styles.number}>
+                {numberToCashFormatter(startup.investmentGoal)}
+              </Text>
+            </View>
           </View>
-          <View style={styles.slider}>
-            {GradientSlider(
-              0,
-              startup.investmentGoal,
-              startup.totalCommittedAmount
-            )}
-          </View>
-          <View
-            style={styles.sliderDescription}
-            ellipsizeMode="tail"
-            numberOfLines={5}
-          >
-            <Text style={styles.text}>{t("startupCard.committed")} </Text>
-            <Text style={styles.number}>
-              {numberToCashFormatter(startup.totalCommittedAmount)}
-            </Text>
-            <Text style={styles.text}>{t("startupCard.of")}</Text>
-            <Text style={styles.number}>
-              {numberToCashFormatter(startup.investmentGoal)}
-            </Text>
-          </View>
-        </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={
-              () => { this.props.navigation.navigate("StartupScreen", { startup }) }
-            }
-          >
-            <Text style={styles.buttonText}>
-              {t("startupCard.fullProfile")}
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                this.props.navigation.navigate("StartupScreen", { startup });
+              }}
+            >
+              <Text style={styles.buttonText}>
+                {t("startupCard.fullProfile")}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
