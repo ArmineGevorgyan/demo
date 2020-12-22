@@ -58,7 +58,7 @@ class EntProfilePopulateScreen extends Component {
     this.formik.handleSubmit();
 
     this.formik.validateForm().then((value) => {
-      if (Object.keys(value).length > 0 || !this.props.profileData.photoUrl) {
+      if (Object.keys(value).length > 0 || !this.props.profileData?.photoUrl) {
         togglePhotoError(true);
       } else {
         togglePhotoError(false);
@@ -142,7 +142,7 @@ class EntProfilePopulateScreen extends Component {
             setImage={(image) => this.setTextInput({ photoUrl: image })}
           />
         </EditProfileHeader>
-        {this.props.photoError && !this.props.profileData.photoUrl && (
+        {this.props.photoError && !this.props.profileData?.photoUrl && (
           <View style={styles.errorContainer}>
             <Icon
               style={styles.alertIcon}
