@@ -12,7 +12,7 @@ import { isInvestor } from '../helpers/userTypeHelper';
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
-    if (!this.props.discussionList) {
+    if (!this.props.discussionList || this.props.reload) {
       this.props.getDiscussions(this.props.startup.id);
     }
   };
