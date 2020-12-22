@@ -43,29 +43,39 @@ class ProductScreen extends Component {
         <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
           {t("productScreen.description")}
         </Text>
-        <CollapsibleText text={description} numberOfLines={4} textStyle={{ ...styles.mainText, color: colors.darkText }} />
+        <CollapsibleText
+          text={description}
+          numberOfLines={6}
+          textStyle={{ ...styles.mainText, color: colors.darkText }}
+        />
         {/* A reusable textBlock component is not added, because there was no example of backend data, thus no info fields' differences */}
         <DividerLine style={{ marginVertical: 10 }} />
         <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
           {t("productScreen.customers")}
         </Text>
-        <Text style={styles.mainText}>
-          {customers}
-        </Text>
+        <CollapsibleText
+          text={customers}
+          numberOfLines={6}
+          textStyle={{ ...styles.mainText, color: colors.darkText }}
+        />
         <DividerLine style={{ marginVertical: 10 }} />
         <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
           {t("productScreen.pricing")}
         </Text>
-        <Text style={styles.mainText}>
-          {pricing}
-        </Text>
+        <CollapsibleText
+          text={pricing}
+          numberOfLines={6}
+          textStyle={{ ...styles.mainText, color: colors.darkText }}
+        />
         <DividerLine style={{ marginVertical: 10 }} />
         <Text style={{...baseStylesheet.titleText, marginBottom: 10 }}>
           {t("productScreen.similarProducts")}
         </Text>
-        <Text style={styles.mainText}>
-          {similarProducts}
-        </Text>
+        <CollapsibleText
+          text={similarProducts}
+          numberOfLines={6}
+          textStyle={{ ...styles.mainText, color: colors.darkText }}
+        />
       </Content>
     );
   }
