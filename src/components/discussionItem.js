@@ -16,8 +16,8 @@ class DiscussionItem extends Component {
 
     this.state = {
       isCommentShow: false,
-    }
-  };
+    };
+  }
 
   getUserName() {
     const { item, currentUser, t } = this.props;
@@ -43,7 +43,7 @@ class DiscussionItem extends Component {
     }
 
     return moment(dateString).format("LT");
-  };
+  }
 
   addComment = (content) => {
     this.props.addComment({
@@ -56,7 +56,7 @@ class DiscussionItem extends Component {
   openReplyScreen = () => {
     this.props.navigation.navigate("NewDiscussionScreen", {
       type: constants.discussionNewReply,
-      addComment: this.addComment
+      addComment: this.addComment,
     });
   };
 
@@ -77,13 +77,13 @@ class DiscussionItem extends Component {
     return (
       <Card style={styles.itemContainer}>
         <View style={styles.row}>
-          <View style={styles.row}>
+          <View style={{ ...styles.row, width: "50%" }}>
             <Thumbnail
               style={styles.authorPhoto}
               small
               source={{ uri: user.investorProfile?.photoUrl }}
             />
-            <View>
+            <View style={{ width: "100%" }}>
               <Text style={styles.authorName}>{this.getUserName()}</Text>
               <Text style={styles.authorPosition}>
                 {user.investorProfile.position}
@@ -122,7 +122,9 @@ class DiscussionItem extends Component {
               type="MaterialCommunityIcons"
             />
             <Text style={styles.answers}>
-              {(item.discussionReplies.length ?? 0)}{!this.state.isCommentShow && " " + t("discussionsScreen.answers")}
+              {item.discussionReplies.length ?? 0}
+              {!this.state.isCommentShow &&
+                " " + t("discussionsScreen.answers")}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -133,21 +135,19 @@ class DiscussionItem extends Component {
             <Text style={styles.replyText}>{t("discussionsScreen.reply")}</Text>
           </TouchableOpacity>
         </View>
-        {
-          this.state.isCommentShow && item.discussionReplies && (
-            <View>
-              {item.discussionReplies
-                .slice()
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                .map((comment) => (
-                  <DiscussionCommentItem
-                    comment={comment}
-                    getTime={this.getTime}
-                  />
-                ))}
-            </View>
-          )
-        }
+        {this.state.isCommentShow && item.discussionReplies && (
+          <View>
+            {item.discussionReplies
+              .slice()
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .map((comment) => (
+                <DiscussionCommentItem
+                  comment={comment}
+                  getTime={this.getTime}
+                />
+              ))}
+          </View>
+        )}
       </Card>
     );
   }
