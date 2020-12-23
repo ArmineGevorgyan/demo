@@ -17,7 +17,12 @@ class SmallStartupHeader extends Component {
         style={styles.container}
       >
         <View style={styles.content}>
-          <TouchableOpacity onPress={this.props.goBack}>
+          <TouchableOpacity
+            style={{
+              ...styles.iconButton,
+              alignItems: "flex-start",
+            }}
+            onPress={this.props.goBack}>
             <Icon name="arrow-left" type="Feather" style={styles.icon} />
           </TouchableOpacity>
 
@@ -25,9 +30,14 @@ class SmallStartupHeader extends Component {
             {this.props.name}
           </Text>
 
-          <TouchableOpacity onPress={
-            () => this.props.setIsFavorite(!this.props.isFavorite)
-          }>
+          <TouchableOpacity
+            style={{
+              ...styles.iconButton,
+              alignItems: "flex-end",
+            }}
+            onPress={
+              () => this.props.setIsFavorite(!this.props.isFavorite)
+            }>
             {
               !this.props.isFavorite ? (
                 <Icon
@@ -64,7 +74,7 @@ const styles = StyleSheet.create({
   },
   content: {
     height: "100%",
-    width: "90%",
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -73,6 +83,12 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 22,
     fontFamily: "montserrat-semi-bold",
+  },
+  iconButton: {
+    width: 70,
+    height: 70,
+    padding: 15,
+    justifyContent: "center",
   },
   icon: {
     color: "#FFF",
