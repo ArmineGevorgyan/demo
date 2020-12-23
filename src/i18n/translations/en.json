@@ -317,7 +317,8 @@
     "yesterday":"Yesterday"
   },
   "օverviewScreen": {
-    "infoSession": "Info Session"
+    "infoSession": "Info Session",
+    "call": "Book a Call"
   },
   "infoSessionModal": {
     "infoSession": "Info Session",
