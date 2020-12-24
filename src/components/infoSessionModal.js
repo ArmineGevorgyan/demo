@@ -5,7 +5,8 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { withTranslation } from "react-i18next";
 import { Button, Spinner } from "native-base";
 import Modal from "react-native-modal";
-import moment from "moment";
+import moment from "moment-timezone";
+import * as Localization from "expo-localization";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import {
   closeInfoSessionModal,
@@ -25,6 +26,9 @@ class InfoSessionModal extends Component {
       joinInfoSession,
       startup,
     } = this.props;
+
+    const time =
+      !!infoSession && moment(infoSession.heldOn).tz(Localization.timezone);
 
     return (
       <>
@@ -64,9 +68,7 @@ class InfoSessionModal extends Component {
                   <Text style={styles.dateTitle}>
                     {t("infoSessionModal.date")}
                   </Text>
-                  <Text style={styles.date}>
-                    {moment(infoSession.heldOn).format("LLLL")}
-                  </Text>
+                  <Text style={styles.date}>{moment(time).format("LLLL")}</Text>
                   <View style={styles.buttonView}>
                     <Button
                       style={[
