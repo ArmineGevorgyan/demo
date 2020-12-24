@@ -287,6 +287,10 @@
     "noFaqTitle": "No info sessions held yet.",
     "noFaqDescription": "You’ll find transcripts of held info sessions here."
   },
+  "startupHeader": {
+    "introVideo": "Startup-intro video",
+    "companyLogo": "Compny\nlogo"
+  },
   "discussionsScreen": {
     "createNewButton": "Create new discussion",
     "reply": "Reply",

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Platform, Image, Text, StyleSheet } from "react-native";
 import { Button, Icon, Spinner } from "native-base";
 import * as ImagePicker from "expo-image-picker";
-import * as Permissions from 'expo-permissions';
+import * as Permissions from "expo-permissions";
 import { colors } from "../styles/colors";
 import Modal from "react-native-modal";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -47,9 +47,9 @@ class SelecImage extends Component {
     let granted;
     if (type === "camera") {
       const permission = await Permissions.getAsync(Permissions.CAMERA);
-      if (permission.status !== 'granted') {
+      if (permission.status !== "granted") {
         const newPermission = await Permissions.askAsync(Permissions.CAMERA);
-        if (newPermission.status === 'granted') {
+        if (newPermission.status === "granted") {
           granted = true;
         }
       } else {
@@ -64,7 +64,6 @@ class SelecImage extends Component {
           quality: 1,
         });
       }
-
     } else {
       result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -80,9 +79,10 @@ class SelecImage extends Component {
     }
   };
 
-
   showModal = () => {
-    this.setState({ isModalOpen: true });
+    if (!this.props.isLogo) {
+      this.setState({ isModalOpen: true });
+    }
   };
 
   handleClose = () => {
@@ -90,41 +90,47 @@ class SelecImage extends Component {
   };
 
   render() {
-    const {
-      t,
-      dImage,
-      isLoading,
-    } = this.props;
+    const { t, dImage, isLoading, isLogo } = this.props;
     return (
       <>
-        <Button
-          rounded
-          style={styles.container}
-          onPress={this.showModal}
-        >
-          {isLoading ?
-            <Spinner color={colors.secondaryColor} /> :
-            (this.props.photoUrl) ? (
-              <Image
-                style={styles.imageContainer}
-                source={{
-                  uri: dImage || this.props.photoUrl,
-                  cache: "force-cache",
-                }}
-              />
-            ) : (
-                <Icon
-                  name="user"
-                  type="Feather"
-                  style={{
-                    color: colors.blueBorder,
-                    fontSize: 40,
-                    alignItems: "center",
-                  }}
-                />
-              )}
+        <Button rounded style={styles.container} onPress={this.showModal}>
+          {isLoading ? (
+            <Spinner color={colors.secondaryColor} />
+          ) : this.props.photoUrl ? (
+            <Image
+              style={styles.imageContainer}
+              source={{
+                uri: dImage || this.props.photoUrl,
+                cache: "force-cache",
+              }}
+            />
+          ) : isLogo ? (
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 14,
+                fontFalily: "montserrat-regular",
+                color: colors.blueBorder,
+              }}
+            >
+              {t("startupHeader.companyLogo")}
+            </Text>
+          ) : (
+            <Icon
+              name="user"
+              type="Feather"
+              style={{
+                color: colors.blueBorder,
+                fontSize: 40,
+                alignItems: "center",
+              }}
+            />
+          )}
           <View
-            style={styles.cameraIconContainer}
+            style={{
+              ...styles.cameraIconContainer,
+              backgroundColor: isLogo ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.53)",
+            }}
           >
             <Icon
               name="camera"
@@ -149,7 +155,9 @@ class SelecImage extends Component {
                   fontSize: 18,
                   fontFalily: "montserrat-regular",
                 }}
-              >{t("imageUploaderModal.modalTitle")}</Text>
+              >
+                {t("imageUploaderModal.modalTitle")}
+              </Text>
               <View
                 style={{
                   padding: 40,
@@ -241,7 +249,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.53)",
   },
   icon: {
     color: "#FFF",

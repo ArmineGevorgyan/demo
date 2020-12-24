@@ -92,7 +92,7 @@ class EntProfilePopulateScreen extends Component {
   };
 
   onSubmit = (values) => {
-    if (this.props.profileData.photoUrl) {
+    if (this.props.profileData?.photoUrl) {
       this.props.setTextInput({
         completed: true,
         bio: values.bio,
@@ -138,7 +138,7 @@ class EntProfilePopulateScreen extends Component {
       <Container style={{ backgroundColor: colors.offWhite }}>
         <EditProfileHeader title="My Account">
           <SelectImage
-            photoUrl={this.props.profileData.photoUrl}
+            photoUrl={this.props.profileData?.photoUrl}
             setImage={(image) => this.setTextInput({ photoUrl: image })}
           />
         </EditProfileHeader>
@@ -158,7 +158,7 @@ class EntProfilePopulateScreen extends Component {
             marginTop: 20,
           }}
         >
-          {profileData.id ? (
+          {profileData?.id ? (
             <Formik
               innerRef={(p) => (this.formik = p)}
               initialValues={{
