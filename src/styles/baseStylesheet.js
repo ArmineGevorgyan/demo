@@ -267,7 +267,8 @@ export const baseStylesheet = StyleSheet.create({
 
   titleText: {
     fontSize: 20,
-    fontFamily: "montserrat-bold"
+    fontFamily: "montserrat-bold",
+    marginBottom: 10
   },
   // --------------------- OTHER STYLES-------------------
   icon: {

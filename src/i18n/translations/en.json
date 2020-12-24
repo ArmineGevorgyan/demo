@@ -312,9 +312,21 @@
     "pricing": "Pricing",
     "similarProducts": "Similar products"
   },
-  "notificationsScreen":{
-    "emptyScreen":"You don't have any notifications.",
-    "yesterday":"Yesterday"
+  "companyScreen": {
+    "founded": "Founded",
+    "location": "Location",
+    "progressToDate": "Progress to date",
+    "longTermVision": "Long term vision",
+    "competition": "Competition",
+    "businessModel": "Business model",
+    "distribution": "Distribution",
+    "legal": "Legal",
+    "pitchDesk": "Pitch desk",
+    "media": "Media"
+  },
+  "notificationsScreen": {
+    "emptyScreen": "You don't have any notifications.",
+    "yesterday": "Yesterday"
   },
   "օverviewScreen": {
     "infoSession": "Info Session"
@@ -328,11 +340,11 @@
     "cancelButton": "Cancel",
     "joined": "Joined"
   },
-  "ceoProfileScreen":{
-    "bio": "Bio",    
-    "locations": "Locations",    
-    "timezone": "Timezone",    
-    "residency": "Residency",    
+  "ceoProfileScreen": {
+    "bio": "Bio",
+    "locations": "Locations",
+    "timezone": "Timezone",
+    "residency": "Residency",
     "highlights": "Relevant highlights",
     "ceoAt": "CEO at",
     "utc": "UTC"

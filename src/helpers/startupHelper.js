@@ -4,6 +4,7 @@ import StartupFaqScreen from "../screens/StartupFaqScreen";
 import DiscussionsScreen from "../screens/DiscussionsScreen";
 import TeamScreen from "../screens/TeamScreen";
 import ProductScreen from "../screens/ProductScreen";
+import CompanyScreen from "../screens/CompanyScreen";
 import OverviewScreen from "../screens/OverviewScreen";
 
 const EmptyContainer = ({ children }) => {
@@ -52,19 +53,30 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
       );
     }
     case "company": {
-      return <EmptyContainer>{index === 3 ? <></> : <></>}</EmptyContainer>;
+      return (
+        <EmptyContainer>
+          {index === 3 ? (
+            <CompanyScreen startup={startup} navigation={navigation} />
+          ) : (
+            <></>
+          )}
+        </EmptyContainer>
+      );
     }
     case "discussions": {
-      return <EmptyContainer>
-        {
-          index === 4 ?
+      return (
+        <EmptyContainer>
+          {index === 4 ? (
             <DiscussionsScreen
               startup={startup}
               navigation={navigation}
               reload={reload}
-            /> : <></>
-        }
-      </EmptyContainer>
+            />
+          ) : (
+            <></>
+          )}
+        </EmptyContainer>
+      );
     }
     case "faq": {
       return (
