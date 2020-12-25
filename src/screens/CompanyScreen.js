@@ -5,18 +5,29 @@ import { Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import * as WebBrowser from "expo-web-browser";
 import moment from "moment";
+import WebView from "react-native-webview";
 import Flag from "react-native-flags";
 
+import PdfIcon from "../../assets/document-pdf.svg";
 import DividerLine from "../components/dividerLine";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import TextBlock from "../components/textBlock";
 import { colors } from "../styles/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const openBrowser = async url => {
+const openBrowser = async (url) => {
   await WebBrowser.openBrowserAsync(url);
 };
 class CompanyScreen extends Component {
+  state = {
+    downloadStarted: false,
+  };
+
+  downloadPDF = () => {
+    this.setState({ downloadStarted: true });
+    setTimeout(() => this.setState({ downloadStarted: false }), 500);
+  };
+
   render() {
     const {
       t,
@@ -37,9 +48,9 @@ class CompanyScreen extends Component {
       },
     } = this.props;
 
-    const parsedFounded = moment(founded?.slice(0, founded?.indexOf("T"))).format(
-      "DD.MM.YYYY"
-    );
+    const parsedFounded = moment(
+      founded?.slice(0, founded?.indexOf("T"))
+    ).format("DD.MM.YYYY");
 
     return (
       <Content
@@ -55,13 +66,9 @@ class CompanyScreen extends Component {
           <TextBlock
             title="companyScreen.location"
             text={`${cityName}, ${countryName}`}
-            renderTextPrefix={() => 
-              <Flag
-                code={isoCode}
-                size={32}
-                style={{ marginRight: 10 }}
-              />
-            }
+            renderTextPrefix={() => (
+              <Flag code={isoCode} size={32} style={{ marginRight: 10 }} />
+            )}
           />
         )}
         {progressToDate && (
@@ -83,8 +90,23 @@ class CompanyScreen extends Component {
           <TextBlock title="companyScreen.distribution" text={distribution} />
         )}
         {legal && <TextBlock title="companyScreen.legal" text={legal} />}
-        {/*!!! Pitch desk here */}
-
+        {!!pitchDeckUrl && (
+          <View>
+            <Text style={baseStylesheet.titleText}>
+              {t("companyScreen.pitchDeck")}
+            </Text>
+            {this.state.downloadStarted && (
+              <WebView source={{ uri: pitchDeckUrl }} />
+            )}
+            <TouchableOpacity style={styles.PDFRow} onPress={this.downloadPDF}>
+              <PdfIcon />
+              <Text style={styles.downloadPDF}>
+                {t("companyScreen.downloadPDF")}
+              </Text>
+            </TouchableOpacity>
+            <DividerLine style={{ marginVertical: 10 }} />
+          </View>
+        )}
         {!!links.length && (
           <View>
             <Text style={baseStylesheet.titleText}>
@@ -101,9 +123,7 @@ class CompanyScreen extends Component {
                     />
                     <Text style={styles.mediaHeaderText}>Name here</Text>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => openBrowser(item.url)}
-                  >
+                  <TouchableOpacity onPress={() => openBrowser(item.url)}>
                     <Text style={styles.mediaLink}>{item.previewText}</Text>
                   </TouchableOpacity>
                 </View>
@@ -145,6 +165,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "montserrat-regular",
   },
+  PDFRow: {
+    flexDirection: "row",
+  },
+  downloadPDF: {
+    marginLeft: 10,
+    textDecorationLine: "underline",
+    fontFamily: "montserrat-regular",
+    fontSize: 14
+  }
 });
 
 export default compose(withTranslation("translations"))(CompanyScreen);

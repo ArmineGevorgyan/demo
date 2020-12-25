@@ -321,7 +321,8 @@
     "businessModel": "Business model",
     "distribution": "Distribution",
     "legal": "Legal",
-    "pitchDesk": "Pitch desk",
+    "pitchDeck": "Pitch deck",
+    "downloadPDF": "Download pitch deck presentation",
     "media": "Media"
   },
   "notificationsScreen": {
