@@ -5,12 +5,10 @@ import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { withTranslation } from "react-i18next";
 import { getTime } from "../helpers/timeHelper";
-import constants from "../constants";
 import { colors } from "../styles/colors";
 import { addComment } from "../redux/ducks/discussion";
-import DiscussionCommentItem from "./discussionCommentItem";
 
-class DiscussionItem extends Component {
+class UpdateItem extends Component {
   constructor(props) {
     super(props);
 
@@ -19,39 +17,9 @@ class DiscussionItem extends Component {
     };
   }
 
-  getUserName() {
-    const { item, currentUser, t } = this.props;
-    const user = item.user;
-
-    return currentUser?.id == user.id
-      ? t("discussionsScreen.me")
-      : `${user.firstName} ${user.lastName}`;
-  }
-
-  addComment = (content) => {
-    this.props.addComment({
-      id: this.props.item.id,
-      content: content,
-      navigation: this.props.navigation,
-    });
-  };
-
-  openReplyScreen = () => {
-    this.props.navigation.navigate("NewDiscussionScreen", {
-      type: constants.discussionNewReply,
-      addComment: this.addComment,
-    });
-  };
-
-  showComments = () => {
-    if (this.props.item.discussionReplies.length) {
-      this.setState({ isCommentShow: !this.state.isCommentShow });
-    }
-  };
-
   render() {
-    const { t, item, currentUser } = this.props;
-    const user = item.user;
+    const { t, item, startup, currentUser } = this.props;
+    const user = startup.entrepreneur;
 
     if (!item || !user) {
       return <Spinner color={colors.lightBlue} />;
@@ -64,12 +32,14 @@ class DiscussionItem extends Component {
             <Thumbnail
               style={styles.authorPhoto}
               small
-              source={{ uri: user.investorProfile?.photoUrl }}
+              source={{ uri: user.photoUrl }}
             />
             <View style={{ width: "100%" }}>
-              <Text style={styles.authorName}>{this.getUserName()}</Text>
+              <Text
+                style={styles.authorName}
+              >{`${user.firstName} ${user.lastName}`}</Text>
               <Text style={styles.authorPosition}>
-                {user.investorProfile.position}
+                {t("updatesScreen.entrepreneur")}
               </Text>
             </View>
           </View>
@@ -92,42 +62,11 @@ class DiscussionItem extends Component {
           </View>
         </View>
         <View style={styles.contentContainer}>
-          <Text style={styles.content}>{item.content}</Text>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.content} numberOfLines={6}>
+            {item.content}
+          </Text>
         </View>
-        <View style={[styles.repliesContainer, styles.row]}>
-          <TouchableOpacity
-            style={[styles.replies, styles.row]}
-            onPress={this.showComments}
-          >
-            <Icon
-              style={styles.blueIcon}
-              name="message-text"
-              type="MaterialCommunityIcons"
-            />
-            <Text style={styles.answers}>
-              {item.discussionReplies.length ?? 0}
-              {!this.state.isCommentShow &&
-                " " + t("discussionsScreen.answers")}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.reply, styles.row]}
-            onPress={this.openReplyScreen}
-          >
-            <Icon style={styles.replyIcon} name="reply" type="Entypo" />
-            <Text style={styles.replyText}>{t("discussionsScreen.reply")}</Text>
-          </TouchableOpacity>
-        </View>
-        {this.state.isCommentShow && item.discussionReplies && (
-          <View>
-            {item.discussionReplies
-              .slice()
-              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-              .map((comment) => (
-                <DiscussionCommentItem comment={comment} getTime={getTime} />
-              ))}
-          </View>
-        )}
       </Card>
     );
   }
@@ -147,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(DiscussionItem);
+)(UpdateItem);
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -171,9 +110,14 @@ const styles = StyleSheet.create({
   authorPhoto: {
     marginRight: 8,
   },
-  content: {
+  title: {
     fontFamily: "montserrat-semi-bold",
     fontSize: 20,
+    marginBottom: 5,
+  },
+  content: {
+    fontFamily: "montserrat-regular",
+    fontSize: 14,
   },
   contentContainer: {
     marginLeft: 12,
@@ -181,32 +125,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  repliesContainer: {
-    borderTopColor: colors.blueBorder,
-    borderTopWidth: 1,
-    paddingTop: 10,
-  },
-  replyIcon: {
-    color: colors.lightBlue,
-    fontSize: 16,
-    marginLeft: 0,
-    marginRight: 6,
-  },
   blueIcon: {
     color: colors.blueBorder,
     fontSize: 16,
     marginLeft: 0,
     marginRight: 6,
-  },
-  replyText: {
-    color: colors.lightBlue,
-    fontFamily: "montserrat-semi-bold",
-    fontSize: 12,
-  },
-  answers: {
-    color: colors.deepGreen,
-    fontSize: 12,
-    fontFamily: "montserrat-regular",
   },
   time: {
     fontSize: 12,

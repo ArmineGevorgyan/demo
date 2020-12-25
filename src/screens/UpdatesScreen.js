@@ -7,7 +7,7 @@ import { withTranslation } from "react-i18next";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { getUpdates } from "../redux/ducks/update";
-// import UpdateItem from "../components/updateItem";
+import UpdateItem from "../components/updateItem";
 import { isEntrepreneur } from "../helpers/userTypeHelper";
 
 class UpdatesScreen extends Component {
@@ -85,7 +85,7 @@ class UpdatesScreen extends Component {
       <Content style={baseStylesheet.baseContainer}>
         {isEntrepreneur(user?.authorities[0]) && this.newUpdateButton()}
         <View style={styles.list}>
-          {/* {updateList
+          {updateList
             .slice()
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((item) => (
@@ -94,7 +94,7 @@ class UpdatesScreen extends Component {
                 startup={startup}
                 navigation={navigation}
               />
-            ))} */}
+            ))}
         </View>
       </Content>
     );
