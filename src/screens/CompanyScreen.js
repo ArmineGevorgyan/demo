@@ -121,7 +121,7 @@ class CompanyScreen extends Component {
                       source={{ uri: item.icon }}
                       style={styles.mediaImage}
                     />
-                    <Text style={styles.mediaHeaderText}>Name here</Text>
+                    <Text style={styles.mediaHeaderText}>{item.title}</Text>
                   </View>
                   <TouchableOpacity onPress={() => openBrowser(item.url)}>
                     <Text style={styles.mediaLink}>{item.previewText}</Text>
