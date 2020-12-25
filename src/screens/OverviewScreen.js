@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { Button, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import * as WebBrowser from "expo-web-browser";
 import { colors } from "../styles/colors";
 import { withTranslation } from "react-i18next";
 import {
@@ -24,9 +25,14 @@ class OverviewScreen extends Component {
       startup,
       infoSession,
       openInfoSessionModal,
+      user,
     } = this.props;
 
-    if (isLoading) {
+    const openBrowser = async (profileUrl) => {
+      await WebBrowser.openBrowserAsync(profileUrl);
+    };
+
+    if (isLoading || !startup) {
       return <Spinner color={colors.secondaryColor} />;
     }
 
@@ -46,6 +52,18 @@ class OverviewScreen extends Component {
               {t("օverviewScreen.infoSession")}
             </Text>
           </Button>
+          <Button
+            style={baseStylesheet.greenFillButton}
+            onPress={() =>
+              openBrowser(
+                `${startup.entrepreneur.availableVia}/?email=${user.email}&name=${user.firstName} ${user.lastName}`
+              )
+            }
+          >
+            <Text style={baseStylesheet.mainButtonText}>
+              {t("օverviewScreen.call")}
+            </Text>
+          </Button>
         </View>
       </>
     );
@@ -55,9 +73,12 @@ class OverviewScreen extends Component {
 const mapStateToProps = (state, props) => {
   const isLoading = state.infoSession.isLoading;
   const infoSession = state.infoSession.upcomingInfoSession;
+  const user = state.user.userData;
+
   return {
     isLoading,
     infoSession,
+    user,
   };
 };
 
