@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Image, Linking, FlatList } from "react-native";
+import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import { Content } from "native-base";
 import { withTranslation } from "react-i18next";
+import * as WebBrowser from "expo-web-browser";
 import moment from "moment";
+import Flag from "react-native-flags";
 
 import DividerLine from "../components/dividerLine";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -11,6 +13,9 @@ import TextBlock from "../components/textBlock";
 import { colors } from "../styles/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+const openBrowser = async url => {
+  await WebBrowser.openBrowserAsync(url);
+};
 class CompanyScreen extends Component {
   render() {
     const {
@@ -18,7 +23,7 @@ class CompanyScreen extends Component {
       startup: {
         founded,
         location: {
-          country: { name: countryName },
+          country: { name: countryName, isoCode },
           city: { name: cityName },
         },
         progressToDate,
@@ -32,7 +37,7 @@ class CompanyScreen extends Component {
       },
     } = this.props;
 
-    const parsedFounded = moment(founded.slice(0, founded.indexOf("T"))).format(
+    const parsedFounded = moment(founded?.slice(0, founded?.indexOf("T"))).format(
       "DD.MM.YYYY"
     );
 
@@ -50,6 +55,13 @@ class CompanyScreen extends Component {
           <TextBlock
             title="companyScreen.location"
             text={`${cityName}, ${countryName}`}
+            renderTextPrefix={() => 
+              <Flag
+                code={isoCode}
+                size={32}
+                style={{ marginRight: 10 }}
+              />
+            }
           />
         )}
         {progressToDate && (
@@ -78,7 +90,6 @@ class CompanyScreen extends Component {
             <Text style={baseStylesheet.titleText}>
               {t("companyScreen.media")}
             </Text>
-
             <FlatList
               data={links}
               renderItem={({ item }) => (
@@ -91,7 +102,7 @@ class CompanyScreen extends Component {
                     <Text style={styles.mediaHeaderText}>Name here</Text>
                   </View>
                   <TouchableOpacity
-                    onPress={async () => await Linking.openURL(item.url)}
+                    onPress={() => openBrowser(item.url)}
                   >
                     <Text style={styles.mediaLink}>{item.previewText}</Text>
                   </TouchableOpacity>

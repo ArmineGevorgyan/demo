@@ -19,15 +19,17 @@ const TextBlock = ({
   hasDivider=true
 }) => (
   <View>
-    <Text style={titleStyles ?? baseStylesheet.titleText}>
+    <Text style={{ ...baseStylesheet.titleText, ...titleStyles }}>
       {t(title)}
     </Text>
-    {renderTextPrefix && renderTextPrefix()}
-    <CollapsibleText
-      text={text}
-      numberOfLines={numberOfLines}
-      textStyle={textStyles ?? styles.mainText}
-    />
+    <View style={styles.mainTextContainer}>
+      {renderTextPrefix && renderTextPrefix()}
+      <CollapsibleText
+        text={text}
+        numberOfLines={numberOfLines}
+        textStyle={{...styles.mainText, ...textStyles}}
+      />
+    </View>
     {hasDivider && <DividerLine style={{ marginVertical: 10 }} />}
   </View>
 );
@@ -38,6 +40,10 @@ const styles = StyleSheet.create({
     color: colors.darkText,
     fontFamily: "montserrat-regular"
   },
+  mainTextContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end"
+  }
 });
 
 export default compose(withTranslation("translations"))(TextBlock);
