@@ -1,37 +1,29 @@
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { View, Thumbnail, Card, Spinner, Icon } from "native-base";
-import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Content, Thumbnail, Icon } from "native-base";
 import { withTranslation } from "react-i18next";
-import { getTime } from "../helpers/timeHelper";
+import { baseStylesheet } from "../styles/baseStylesheet";
+import GrayHeader from "../components/grayHeader";
 import { colors } from "../styles/colors";
-import { addComment } from "../redux/ducks/discussion";
+import { getTime } from "../helpers/timeHelper";
 
-class UpdateItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isCommentShow: false,
-    };
-  }
-
+class SingleUpdateScreen extends Component {
   render() {
-    const { t, item, startup, currentUser, navigation } = this.props;
+    const { t, navigation, currentUser } = this.props;
+    const { startup, item } = this.props.route.params;
     const user = startup.entrepreneur;
 
-    if (!item || !user) {
-      return <Spinner color={colors.lightBlue} />;
-    }
-
     return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("SingleUpdateScreen", { startup, item })
-        }
-      >
-        <Card style={styles.itemContainer}>
+      <>
+        <GrayHeader
+          title={t(`updatesScreen.update`)}
+          backButtonHandler={() => navigation.goBack()}
+        />
+        <Content
+          style={[baseStylesheet.paddedContent, baseStylesheet.baseContainer]}
+        >
           <View style={styles.row}>
             <View style={{ ...styles.row, width: "50%" }}>
               <Thumbnail
@@ -68,12 +60,10 @@ class UpdateItem extends Component {
           </View>
           <View style={styles.contentContainer}>
             <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.content} numberOfLines={6}>
-              {item.content}
-            </Text>
+            <Text style={styles.content}>{item.content}</Text>
           </View>
-        </Card>
-      </TouchableOpacity>
+        </Content>
+      </>
     );
   }
 }
@@ -83,23 +73,16 @@ const mapStateToProps = (state, props) => {
   return { currentUser };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addComment: (comment) => dispatch(addComment(comment)),
-  };
-};
-
 export default compose(
   withTranslation("translations"),
-  connect(mapStateToProps, mapDispatchToProps)
-)(UpdateItem);
+  connect(mapStateToProps, null)
+)(SingleUpdateScreen);
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    padding: 12,
-    backgroundColor: colors.offWhite,
-    borderRadius: 6,
-    marginBottom: 5,
+  imageContainer: {
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 10,
   },
   row: {
     flexDirection: "row",

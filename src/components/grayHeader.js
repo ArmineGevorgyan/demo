@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   textRowContainer: {
     flexDirection: "row",
-    justifyContent: windowWidth < 370 ? "space-evenly" : "space-between",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   headerText: {

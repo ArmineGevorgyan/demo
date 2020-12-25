@@ -92,7 +92,11 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
     case "updates": {
       return (
         <EmptyContainer>
-          {index === 7 ? <UpdatesScreen startup={startup} /> : <></>}
+          {index === 7 ? (
+            <UpdatesScreen navigation={navigation} startup={startup} />
+          ) : (
+            <></>
+          )}
         </EmptyContainer>
       );
     }
