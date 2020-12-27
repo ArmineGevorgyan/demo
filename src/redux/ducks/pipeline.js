@@ -1,20 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import store from "../store";
 
 const initialState = {
   isLoading: false,
+  addingToPipeline: false,
   loadingMore: false,
   noMoreStartups: false,
   startups: [],
   page: 0,
   nextPage: 1,
+  error: null,
 };
 
 const pipelineSlice = createSlice({
   name: "pipeline",
   initialState,
   reducers: {
+    setPipelineLoading: (state, action) => ({
+      ...state,
+      addingToPipeline: action.payload,
+    }),
+    addStartupToPipelineFail: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
     getInterestedStartups: (state) => ({
       ...state,
       noMoreStartups: false,
@@ -69,7 +80,36 @@ const pipelineSlice = createSlice({
 
 const pipelineReducer = pipelineSlice.reducer;
 
+export const setPipelineLoading = () => {
+  return (dispatch) => {
+    dispatch(pipelineSlice.actions.setPipelineLoading(true));
+  };
+};
+
+export const addStartupToPipeline = (startup) => {
+  const state = store.getState();
+  const pipelineState = state.pipeline;
+
+  return (dispatch) => {
+    axios
+      .post(`${API_URL}/startups/${startup.id}/interested`)
+      .then(() => {
+        if (pipelineState.addingToPipeline) {
+          dispatch(getInterestedStartups());
+        } else {
+          pipelineSlice.actions.setPipelineLoading(false);
+        }
+      })
+      .catch((error) => {
+        dispatch(pipelineSlice.actions.addStartupToPipelineFail(error));
+      });
+  };
+};
+
 export const getInterestedStartups = (page = 0, size = 10) => {
+  const state = store.getState();
+  const pipelineState = state.pipeline;
+
   return (dispatch) => {
     dispatch(pipelineSlice.actions.getInterestedStartups());
 
@@ -79,6 +119,9 @@ export const getInterestedStartups = (page = 0, size = 10) => {
         return r.data;
       })
       .then((data) => {
+        if (pipelineState.addingToPipeline) {
+          dispatch(pipelineSlice.actions.setPipelineLoading(false));
+        }
         dispatch(pipelineSlice.actions.getInterestedStartupsSuccess(data));
       })
       .catch((error) =>

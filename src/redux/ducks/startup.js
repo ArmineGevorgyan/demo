@@ -29,14 +29,14 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    addStartupToParkingLotFail: (state, action) => ({
-      ...state,
-      error: action.payload,
-    }),
-    addStartupToPipelineFail: (state, action) => ({
-      ...state,
-      error: action.payload,
-    }),
+    // addStartupToParkingLotFail: (state, action) => ({
+    //   ...state,
+    //   error: action.payload,
+    // }),
+    // addStartupToPipelineFail: (state, action) => ({
+    //   ...state,
+    //   error: action.payload,
+    // }),
     toggleIsEmpty: (state) => ({
       ...state,
       isEmpty: !state.isEmpty,
@@ -119,25 +119,25 @@ export const getNewStartups = () => {
   };
 };
 
-export const addStartupToParkingLot = (startup) => {
-  return (dispatch) => {
-    axios
-      .post(`${API_URL}/startups/${startup.id}/parking-lot`)
-      .catch((error) => {
-        dispatch(startupSlice.actions.addStartupToParkingLotFail(error));
-      });
-  };
-};
+// export const addStartupToParkingLot = (startup) => {
+//   return (dispatch) => {
+//     axios
+//       .post(`${API_URL}/startups/${startup.id}/parking-lot`)
+//       .catch((error) => {
+//         dispatch(startupSlice.actions.addStartupToParkingLotFail(error));
+//       });
+//   };
+// };
 
-export const addStartupToPipeline = (startup) => {
-  return (dispatch) => {
-    axios
-      .post(`${API_URL}/startups/${startup.id}/interested`)
-      .catch((error) => {
-        dispatch(startupSlice.actions.addStartupToPipelineFail(error));
-      });
-  };
-};
+// export const addStartupToPipeline = (startup) => {
+//   return (dispatch) => {
+//     axios
+//       .post(`${API_URL}/startups/${startup.id}/interested`)
+//       .catch((error) => {
+//         dispatch(startupSlice.actions.addStartupToPipelineFail(error));
+//       });
+//   };
+// };
 
 export const getStartupTeamMembers = (id) => (dispatch) => {
   dispatch(startupSlice.actions.getStartupTeamMembers());
@@ -159,16 +159,16 @@ export const getStartupById = (id) => {
 
   return (dispatch) => {
     dispatch(startupSlice.actions.getStartupById());
-    startupState.startups.map(startup => {
+    startupState.startups.map((startup) => {
       if (startup.id == id) {
-        return dispatch(startupSlice.actions.getStartupByIdSuccess(startup))
+        return dispatch(startupSlice.actions.getStartupByIdSuccess(startup));
       }
     });
 
     axios
       .get(`${API_URL}/startups/${id}`)
       .then((r) => {
-        return r.data;  
+        return r.data;
       })
       .then((data) => {
         dispatch(startupSlice.actions.getStartupByIdSuccess(data));

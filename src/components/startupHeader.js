@@ -42,7 +42,8 @@ class StartupHeader extends Component {
               ...styles.iconButton,
               alignItems: "flex-start",
             }}
-            onPress={this.backHandler}>
+            onPress={this.backHandler}
+          >
             <Icon name="arrow-left" type="Feather" style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity
@@ -50,18 +51,19 @@ class StartupHeader extends Component {
               ...styles.iconButton,
               alignItems: "flex-end",
             }}
-            onPress={this.addToFavouritesHandler}>
+            onPress={this.addToFavouritesHandler}
+          >
             {!this.props.isFavorite ? (
               <Icon name="star" type="Feather" style={styles.icon} />
             ) : (
-                <Icon
-                  name="star"
-                  type="MaterialCommunityIcons"
-                  style={{
-                    color: "#FFFF00",
-                  }}
-                />
-              )}
+              <Icon
+                name="star"
+                type="MaterialCommunityIcons"
+                style={{
+                  color: "#FFFF00",
+                }}
+              />
+            )}
           </TouchableOpacity>
           <View style={styles.logoContainer}>
             <Image source={{ uri: startup?.logoUrl }} style={styles.logo} />

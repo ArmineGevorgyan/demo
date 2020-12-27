@@ -9,23 +9,29 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import SmallStartupCard from "../components/smallStartupCard";
 import GrayHeader from "../components/grayHeader";
 import SwitchSelector from "../components/switchSelector";
-import {
-  getNewStartups,
-  addStartupToParkingLot,
-  addStartupToPipeline,
-  toggleIsEmpty,
-} from "../redux/ducks/startup";
+import { getNewStartups, toggleIsEmpty } from "../redux/ducks/startup";
+import { addStartupToParkingLot } from "../redux/ducks/parkingLot";
+import { addStartupToPipeline } from "../redux/ducks/pipeline";
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
 import constants from "../constants";
-import { isInvestor } from '../helpers/userTypeHelper';
+import { isInvestor } from "../helpers/userTypeHelper";
 
 class DiscoverStartups extends Component {
   componentDidMount() {
-    const { getNewStartups, navigation } = this.props;
+    const {
+      getNewStartups,
+      navigation,
+      addingToPipeline,
+      addingToParkingLot,
+    } = this.props;
 
     navigation.addListener("focus", () => {
-      getNewStartups();
+      setTimeout(() => {
+        if (!addingToPipeline || !addingToParkingLot) {
+          getNewStartups();
+        }
+      }, 0);
     });
   }
 
@@ -84,7 +90,10 @@ class DiscoverStartups extends Component {
 
     return (
       <Content style={{ ...baseStylesheet.baseContainer, height: "100%" }}>
-        <GrayHeader title={t("discoverStartups.headerText")} enableBell={isInvestor(user?.authorities[0])}>
+        <GrayHeader
+          title={t("discoverStartups.headerText")}
+          enableBell={isInvestor(user?.authorities[0])}
+        >
           <SwitchSelector
             options={[
               {
@@ -116,13 +125,16 @@ const mapStateToProps = (state, props) => {
   const isLoading = state.startup.isLoading;
   const isEmpty = state.startup.isEmpty;
   const user = state.user.userData;
-
+  const addingToPipeline = state.pipeline.addingToPipeline;
+  const addingToParkingLot = state.parkingLot.addingToParkingLot;
 
   return {
     startups,
     isLoading,
     isEmpty,
-    user
+    user,
+    addingToPipeline,
+    addingToParkingLot,
   };
 };
 
