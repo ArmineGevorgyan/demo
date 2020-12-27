@@ -88,6 +88,7 @@ class AppNavigator extends Component {
     const linking = {
       prefixes: [prefix],
     };
+    const { isAuthenticated, completed, user } = this.props;
 
     const getStack = () => {
       const { isAuthenticated, completed, user } = this.props;
@@ -241,7 +242,9 @@ class AppNavigator extends Component {
         ref={navigationRef}
         fallback={<Spinner color={colors.secondaryColor} />}
       >
-        {this.props.completed == undefined || this.props.completed == null ? (
+        {(isAuthenticated && !user) ||
+        (isEntrepreneur(user?.authorities[0]) &&
+          (completed == undefined || completed == null)) ? (
           <Spinner color={colors.secondaryColor} />
         ) : (
           getStack()
