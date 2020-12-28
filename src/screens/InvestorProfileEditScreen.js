@@ -60,7 +60,7 @@ class InvestorProfileEditScreen extends Component {
             setImage={(image) => this.props.handleInput({ photoUrl: image })}
           />
         </EditProfileHeader>
-        {this.props.photoError && !this.props.profileData.photoUrl && (
+        {this.props.photoError && !this.props.profileData?.photoUrl && (
           <View style={styles.errorContainer}>
             <Icon
               style={styles.alertIcon}
@@ -76,7 +76,7 @@ class InvestorProfileEditScreen extends Component {
             marginTop: 20,
           }}
         >
-          {profileData.id ? (
+          {profileData?.id ? (
             <Formik
               innerRef={(p) => (this.formik = p)}
               initialValues={{

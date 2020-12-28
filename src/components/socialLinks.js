@@ -11,35 +11,38 @@ const openBrowser = async (profileUrl) => {
   await WebBrowser.openBrowserAsync(profileUrl);
 };
 
-export const linkedin = (profileUrl) => (
-  <TouchableOpacity
-    style={styles.social}
-    onPress={() => openBrowser(profileUrl)}
-  >
-    <Linkedin />
-    <Text style={styles.link}>{i18n.t("socialLinks.linkedinProfile")}</Text>
-  </TouchableOpacity>
-);
+export const linkedin = (profileUrl) =>
+  profileUrl && (
+    <TouchableOpacity
+      style={styles.social}
+      onPress={() => openBrowser(profileUrl)}
+    >
+      <Linkedin />
+      <Text style={styles.link}>{i18n.t("socialLinks.linkedinProfile")}</Text>
+    </TouchableOpacity>
+  );
 
-export const crunchbase = (profileUrl) => (
-  <TouchableOpacity
-    style={styles.social}
-    onPress={() => openBrowser(profileUrl)}
-  >
-    <Crunchbase />
-    <Text style={styles.link}>{i18n.t("socialLinks.crunchbaseProfile")}</Text>
-  </TouchableOpacity>
-);
+export const crunchbase = (profileUrl) =>
+  profileUrl && (
+    <TouchableOpacity
+      style={styles.social}
+      onPress={() => openBrowser(profileUrl)}
+    >
+      <Crunchbase />
+      <Text style={styles.link}>{i18n.t("socialLinks.crunchbaseProfile")}</Text>
+    </TouchableOpacity>
+  );
 
-export const angellist = (profileUrl) => (
-  <TouchableOpacity
-    style={styles.social}
-    onPress={() => openBrowser(profileUrl)}
-  >
-    <Angellist />
-    <Text style={styles.link}>{i18n.t("socialLinks.angelListProfile")}</Text>
-  </TouchableOpacity>
-);
+export const angellist = (profileUrl) =>
+  profileUrl && (
+    <TouchableOpacity
+      style={styles.social}
+      onPress={() => openBrowser(profileUrl)}
+    >
+      <Angellist />
+      <Text style={styles.link}>{i18n.t("socialLinks.angelListProfile")}</Text>
+    </TouchableOpacity>
+  );
 
 const styles = StyleSheet.create({
   social: {
