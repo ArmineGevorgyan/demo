@@ -62,7 +62,7 @@ class EntProfileEditScreen extends Component {
     this.formik.handleSubmit();
 
     this.formik.validateForm().then((value) => {
-      if (Object.keys(value).length > 0 || !this.props.profileData.photoUrl) {
+      if (Object.keys(value).length > 0 || !this.props.profileData?.photoUrl) {
         togglePhotoError(true);
       } else {
         togglePhotoError(false);
@@ -121,11 +121,11 @@ class EntProfileEditScreen extends Component {
           backButtonHandler={() => this.props.navigation.goBack()}
         >
           <SelectImage
-            photoUrl={this.props.profileData.photoUrl}
+            photoUrl={this.props.profileData?.photoUrl}
             setImage={(image) => this.setTextInput({ photoUrl: image })}
           />
         </EditProfileHeader>
-        {this.props.photoError && !this.props.profileData.photoUrl && (
+        {this.props.photoError && !this.props.profileData?.photoUrl && (
           <View style={styles.errorContainer}>
             <Icon
               style={styles.alertIcon}
@@ -141,7 +141,7 @@ class EntProfileEditScreen extends Component {
             marginTop: 20,
           }}
         >
-          {profileData.id ? (
+          {profileData?.id ? (
             <Formik
               innerRef={(p) => (this.formik = p)}
               initialValues={{

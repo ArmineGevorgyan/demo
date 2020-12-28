@@ -6,61 +6,49 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import { Icon, } from "native-base";
+import { Icon } from "native-base";
 import BackgroundImage from "../../assets/blue-header-rect.png";
 
 class SmallStartupHeader extends Component {
   render() {
     return (
-      <ImageBackground
-        source={BackgroundImage}
-        style={styles.container}
-      >
+      <ImageBackground source={BackgroundImage} style={styles.container}>
         <View style={styles.content}>
-          <TouchableOpacity
-            style={{
-              ...styles.iconButton,
-              alignItems: "flex-start",
-            }}
-            onPress={this.props.goBack}>
-            <Icon name="arrow-left" type="Feather" style={styles.icon} />
-          </TouchableOpacity>
+          {this.props.goBack ? (
+            <TouchableOpacity onPress={this.props.goBack}>
+              <Icon name="arrow-left" type="Feather" style={styles.icon} />
+            </TouchableOpacity>
+          ) : (
+            <View style={{ width: 30 }}></View>
+          )}
 
-          <Text style={styles.title}>
-            {this.props.name}
-          </Text>
-
-          <TouchableOpacity
-            style={{
-              ...styles.iconButton,
-              alignItems: "flex-end",
-            }}
-            onPress={
-              () => this.props.setIsFavorite(!this.props.isFavorite)
-            }>
-            {
-              !this.props.isFavorite ? (
+          <Text style={styles.title}>{this.props.name}</Text>
+          {this.props.setIsFavorite ? (
+            <TouchableOpacity
+              onPress={() => this.props.setIsFavorite(!this.props.isFavorite)}
+            >
+              {!this.props.isFavorite ? (
+                <Icon name="star" type="Feather" style={styles.icon} />
+              ) : (
                 <Icon
                   name="star"
-                  type="Feather"
-                  style={styles.icon}
+                  type="MaterialCommunityIcons"
+                  style={{
+                    color: "#FFFF00",
+                  }}
                 />
-              ) : (
-                  <Icon
-                    name="star"
-                    type="MaterialCommunityIcons"
-                    style={{
-                      color: "#FFFF00",
-                    }}
-                  />
-                )
-            }
-          </TouchableOpacity>
+              )}
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity>
+              <Icon name="bell" type="Feather" style={styles.icon} />
+            </TouchableOpacity>
+          )}
         </View>
       </ImageBackground>
-    )
-  };
-};
+    );
+  }
+}
 
 export default SmallStartupHeader;
 

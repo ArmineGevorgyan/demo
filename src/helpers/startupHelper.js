@@ -93,3 +93,32 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
     }
   }
 };
+
+export const getTabPopulateComponent = (key, index) => {
+  switch (key) {
+    case "overview": {
+      return <EmptyContainer>{index === 0 ? <></> : <></>}</EmptyContainer>;
+    }
+    case "product": {
+      return <EmptyContainer>{index === 1 ? <></> : <></>}</EmptyContainer>;
+    }
+    case "team": {
+      return <EmptyContainer>{index === 2 ? <></> : <></>}</EmptyContainer>;
+    }
+    case "company": {
+      return <EmptyContainer>{index === 3 ? <></> : <></>}</EmptyContainer>;
+    }
+    case "discussions": {
+      return <EmptyContainer>{index === 4 ? <></> : <></>}</EmptyContainer>;
+    }
+    case "faq": {
+      return <EmptyContainer>{index === 5 ? <></> : <></>}</EmptyContainer>;
+    }
+    case "videos": {
+      return <EmptyContainer>{index === 6 ? <></> : <></>}</EmptyContainer>;
+    }
+    default: {
+      return <></>;
+    }
+  }
+};

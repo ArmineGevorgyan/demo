@@ -50,8 +50,9 @@ import CompanyScreen from "./src/screens/CompanyScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import OverviewScreen from "./src/screens/OverviewScreen";
 import Notifications from "./src/screens/NotificationsScreen";
-import { isEntrepreneur } from './src/helpers/userTypeHelper';
+import { isEntrepreneur } from "./src/helpers/userTypeHelper";
 import CEOProfileScreen from "./src/screens/CEOProfileScreen";
+import StartupPopulateScreen from "./src/screens/StartupPopulateScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -87,6 +88,7 @@ class AppNavigator extends Component {
     const linking = {
       prefixes: [prefix],
     };
+    const { isAuthenticated, completed, user } = this.props;
 
     const getStack = () => {
       const { isAuthenticated, completed, user } = this.props;
@@ -128,10 +130,7 @@ class AppNavigator extends Component {
         );
       }
 
-      if (
-        isEntrepreneur(user?.authorities[0]) &&
-        !completed
-      ) {
+      if (isEntrepreneur(user?.authorities[0]) && !completed) {
         return (
           <Stack.Navigator
             initialRouteName="EntProfilePopulateScreen"
@@ -140,6 +139,20 @@ class AppNavigator extends Component {
             <Stack.Screen
               name="EntProfilePopulateScreen"
               component={EntProfilePopulateScreen}
+            />
+          </Stack.Navigator>
+        );
+      }
+
+      if (isEntrepreneur(user?.authorities[0]) && completed) {
+        return (
+          <Stack.Navigator
+            initialRouteName="StartupPopulateScreen"
+            headerMode={false}
+          >
+            <Stack.Screen
+              name="StartupPopulateScreen"
+              component={StartupPopulateScreen}
             />
           </Stack.Navigator>
         );
@@ -159,14 +172,8 @@ class AppNavigator extends Component {
             name="DiscussionsScreen"
             component={DiscussionsScreen}
           />
-          <Stack.Screen
-            name="ProductScreen"
-            component={ProductScreen}
-          />
-          <Stack.Screen
-            name="CompanyScreen"
-            component={CompanyScreen}
-          />
+          <Stack.Screen name="ProductScreen" component={ProductScreen} />
+          <Stack.Screen name="CompanyScreen" component={CompanyScreen} />
           <Stack.Screen
             name="NewDiscussionScreen"
             component={NewDiscussionScreen}
@@ -232,7 +239,11 @@ class AppNavigator extends Component {
         ref={navigationRef}
         fallback={<Spinner color={colors.secondaryColor} />}
       >
-        {getStack()}
+        {isAuthenticated && !user ? (
+          <Spinner color={colors.secondaryColor} />
+        ) : (
+          getStack()
+        )}
       </NavigationContainer>
     );
   }
