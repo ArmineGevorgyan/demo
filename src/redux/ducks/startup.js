@@ -29,14 +29,6 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    // addStartupToParkingLotFail: (state, action) => ({
-    //   ...state,
-    //   error: action.payload,
-    // }),
-    // addStartupToPipelineFail: (state, action) => ({
-    //   ...state,
-    //   error: action.payload,
-    // }),
     toggleIsEmpty: (state) => ({
       ...state,
       isEmpty: !state.isEmpty,
@@ -118,26 +110,6 @@ export const getNewStartups = () => {
       );
   };
 };
-
-// export const addStartupToParkingLot = (startup) => {
-//   return (dispatch) => {
-//     axios
-//       .post(`${API_URL}/startups/${startup.id}/parking-lot`)
-//       .catch((error) => {
-//         dispatch(startupSlice.actions.addStartupToParkingLotFail(error));
-//       });
-//   };
-// };
-
-// export const addStartupToPipeline = (startup) => {
-//   return (dispatch) => {
-//     axios
-//       .post(`${API_URL}/startups/${startup.id}/interested`)
-//       .catch((error) => {
-//         dispatch(startupSlice.actions.addStartupToPipelineFail(error));
-//       });
-//   };
-// };
 
 export const getStartupTeamMembers = (id) => (dispatch) => {
   dispatch(startupSlice.actions.getStartupTeamMembers());
