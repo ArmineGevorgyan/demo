@@ -173,10 +173,7 @@ class AppNavigator extends Component {
             component={DiscussionsScreen}
           />
           <Stack.Screen name="ProductScreen" component={ProductScreen} />
-          <Stack.Screen
-            name="CompanyScreen"
-            component={CompanyScreen}
-          />
+          <Stack.Screen name="CompanyScreen" component={CompanyScreen} />
           <Stack.Screen
             name="NewDiscussionScreen"
             component={NewDiscussionScreen}
@@ -242,9 +239,7 @@ class AppNavigator extends Component {
         ref={navigationRef}
         fallback={<Spinner color={colors.secondaryColor} />}
       >
-        {(isAuthenticated && !user) ||
-        (isEntrepreneur(user?.authorities[0]) &&
-          (completed == undefined || completed == null)) ? (
+        {isAuthenticated && !user ? (
           <Spinner color={colors.secondaryColor} />
         ) : (
           getStack()

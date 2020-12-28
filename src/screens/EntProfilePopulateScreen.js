@@ -132,7 +132,11 @@ class EntProfilePopulateScreen extends Component {
   };
 
   render() {
-    const { t, profileData, isLoading } = this.props;
+    const { t, profileData } = this.props;
+
+    if (!profileData?.id) {
+      return <Spinner color={colors.secondaryColor} />;
+    }
 
     return (
       <Container style={{ backgroundColor: colors.offWhite }}>
