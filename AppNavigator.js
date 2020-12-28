@@ -46,6 +46,7 @@ import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import TeamScreen from "./src/screens/TeamScreen";
 import ProductScreen from "./src/screens/ProductScreen";
+import CompanyScreen from "./src/screens/CompanyScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import OverviewScreen from "./src/screens/OverviewScreen";
 import Notifications from "./src/screens/NotificationsScreen";
@@ -161,6 +162,10 @@ class AppNavigator extends Component {
           <Stack.Screen
             name="ProductScreen"
             component={ProductScreen}
+          />
+          <Stack.Screen
+            name="CompanyScreen"
+            component={CompanyScreen}
           />
           <Stack.Screen
             name="NewDiscussionScreen"
