@@ -1,20 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../config";
+import store from "../store";
 
 const initialState = {
   isLoading: false,
+  addingToParkingLot: false,
   loadingMore: false,
   noMoreStartups: false,
   startups: [],
   page: 0,
   nextPage: 1,
+  error: null,
 };
 
 const parkingLotSlice = createSlice({
   name: "parkingLot",
   initialState,
   reducers: {
+    addStartupToParkingLotFail: (state, action) => ({
+      ...state,
+      error: action.payload,
+    }),
+    setParkingLotLoading: (state, action) => ({
+      ...state,
+      addingToParkingLot: action.payload,
+    }),
     getParkingLotStartups: (state) => ({
       ...state,
       noMoreStartups: false,
@@ -69,7 +80,36 @@ const parkingLotSlice = createSlice({
 
 const parkingLotReducer = parkingLotSlice.reducer;
 
+export const addStartupToParkingLot = (startup) => {
+  const state = store.getState();
+  const parkingLotState = state.parkingLot;
+
+  return (dispatch) => {
+    axios
+      .post(`${API_URL}/startups/${startup.id}/parking-lot`)
+      .then(() => {
+        if (parkingLotState.addingToParkingLot) {
+          dispatch(getParkingLotStartups());
+        } else {
+          dispatch(parkingLotSlice.actions.setParkingLotLoading(false));
+        }
+      })
+      .catch((error) => {
+        dispatch(parkingLotSlice.actions.addStartupToParkingLotFail(error));
+      });
+  };
+};
+
+export const setParkingLotLoading = () => {
+  return (dispatch) => {
+    dispatch(parkingLotSlice.actions.setParkingLotLoading(true));
+  };
+};
+
 export const getParkingLotStartups = (page = 0, size = 10) => {
+  const state = store.getState();
+  const parkingLotState = state.parkingLot;
+
   return (dispatch) => {
     dispatch(parkingLotSlice.actions.getParkingLotStartups());
 
@@ -79,6 +119,9 @@ export const getParkingLotStartups = (page = 0, size = 10) => {
         return r.data;
       })
       .then((data) => {
+        if (parkingLotState.addingToParkingLot) {
+          dispatch(parkingLotSlice.actions.setParkingLotLoading(false));
+        }
         dispatch(parkingLotSlice.actions.getParkingLotStartupsSuccess(data));
       })
       .catch((error) =>

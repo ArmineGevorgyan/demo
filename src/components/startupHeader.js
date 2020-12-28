@@ -9,7 +9,7 @@ class StartupHeader extends Component {
     super(props);
     this.state = { isFavorite: false };
   }
-  
+
   addToFavouritesHandler = () => {
     this.props.setIsFavorite(!this.props.isFavorite);
   };
@@ -37,10 +37,22 @@ class StartupHeader extends Component {
           }}
         />
         <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={this.backHandler}>
+          <TouchableOpacity
+            style={{
+              ...styles.iconButton,
+              alignItems: "flex-start",
+            }}
+            onPress={this.backHandler}
+          >
             <Icon name="arrow-left" type="Feather" style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.addToFavouritesHandler}>
+          <TouchableOpacity
+            style={{
+              ...styles.iconButton,
+              alignItems: "flex-end",
+            }}
+            onPress={this.addToFavouritesHandler}
+          >
             {!this.props.isFavorite ? (
               <Icon name="star" type="Feather" style={styles.icon} />
             ) : (
@@ -68,12 +80,18 @@ export default StartupHeader;
 const styles = StyleSheet.create({
   iconContainer: {
     position: "absolute",
-    width: "90%",
+    width: "100%",
     height: 260,
-    top: 30,
+    top: 0,
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "space-between",
+  },
+  iconButton: {
+    width: 70,
+    height: 80,
+    padding: 15,
+    justifyContent: "center",
   },
   icon: {
     color: "#FFF",

@@ -18,15 +18,31 @@ import {
 import BackgroundImageCard from "../components/backgroundImageCard";
 import ParkingLotIcon from "../../assets/parkingmeter.svg";
 import constants from "../constants";
-import { isInvestor } from '../helpers/userTypeHelper';
+import { isInvestor } from "../helpers/userTypeHelper";
 
 class PipelineScreen extends Component {
   componentDidMount() {
-    const { getInterestedStartups, navigation } = this.props;
+    const {
+      getInterestedStartups,
+      navigation,
+      addingToPipeline,
+      addingToParkingLot,
+    } = this.props;
 
     navigation.addListener("focus", () => {
-      getInterestedStartups();
+      if (!addingToPipeline && !addingToParkingLot) {
+        getInterestedStartups();
+      }
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      (prevProps.addingToPipeline && !this.props.addingToPipeline) ||
+      (prevProps.addingToParkingLot && !this.props.addingToParkingLot)
+    ) {
+      this.props.getInterestedStartups();
+    }
   }
 
   renderHiddenItem = () => {
@@ -73,9 +89,11 @@ class PipelineScreen extends Component {
       loadingMore,
       nextPage,
       noMoreStartups,
+      addingToPipeline,
+      addingToParkingLot,
     } = this.props;
 
-    if (isLoading) {
+    if (isLoading || addingToParkingLot) {
       return <Spinner color={colors.secondaryColor} />;
     }
 
@@ -84,7 +102,9 @@ class PipelineScreen extends Component {
         return;
       }
 
-      getMoreStartups(nextPage);
+      if (!addingToPipeline && !addingToParkingLot) {
+        getMoreStartups(nextPage);
+      }
     };
 
     const getInviteButton = () => (
@@ -121,7 +141,10 @@ class PipelineScreen extends Component {
 
     return (
       <View style={baseStylesheet.baseContainer}>
-        <GrayHeader title={t("pipeline.title")} enableBell={isInvestor(user?.authorities[0])}>
+        <GrayHeader
+          title={t("pipeline.title")}
+          enableBell={isInvestor(user?.authorities[0])}
+        >
           <SwitchSelector
             options={[
               {
@@ -148,8 +171,19 @@ const mapStateToProps = (state, props) => {
   const nextPage = state.pipeline.nextPage;
   const noMoreStartups = state.pipeline.noMoreStartups;
   const user = state.user.userData;
+  const addingToPipeline = state.pipeline.addingToPipeline;
+  const addingToParkingLot = state.parkingLot.addingToParkingLot;
 
-  return { startups, isLoading, loadingMore, nextPage, noMoreStartups, user };
+  return {
+    startups,
+    isLoading,
+    loadingMore,
+    nextPage,
+    noMoreStartups,
+    user,
+    addingToPipeline,
+    addingToParkingLot,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

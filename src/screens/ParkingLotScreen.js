@@ -15,15 +15,31 @@ import {
 } from "../redux/ducks/parkingLot";
 import BackgroundImageCard from "../components/backgroundImageCard";
 import constants from "../constants";
-import { isInvestor } from '../helpers/userTypeHelper';
+import { isInvestor } from "../helpers/userTypeHelper";
 
 class ParkingLotScreen extends Component {
   componentDidMount() {
-    const { getParkingLotStartups, navigation } = this.props;
+    const {
+      getParkingLotStartups,
+      navigation,
+      addingToParkingLot,
+      addingToPipeline,
+    } = this.props;
 
     navigation.addListener("focus", () => {
-      getParkingLotStartups();
+      if (!addingToParkingLot && !addingToPipeline) {
+        getParkingLotStartups();
+      }
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      (prevProps.addingToParkingLot && !this.props.addingToParkingLot) ||
+      (prevProps.addingToPipeline && !this.props.addingToPipeline)
+    ) {
+      this.props.getParkingLotStartups();
+    }
   }
 
   renderHiddenItem = () => {
@@ -69,9 +85,11 @@ class ParkingLotScreen extends Component {
       loadingMore,
       nextPage,
       noMoreStartups,
+      addingToParkingLot,
+      addingToPipeline,
     } = this.props;
 
-    if (isLoading) {
+    if (isLoading || addingToPipeline) {
       return <Spinner color={colors.secondaryColor} />;
     }
 
@@ -79,8 +97,9 @@ class ParkingLotScreen extends Component {
       if (noMoreStartups) {
         return;
       }
-
-      getMoreStartups(nextPage);
+      if (!addingToParkingLot && !addingToPipeline) {
+        getMoreStartups(nextPage);
+      }
     };
 
     const getLoadingMoreSpinner = () => {
@@ -130,8 +149,19 @@ const mapStateToProps = (state, props) => {
   const nextPage = state.parkingLot.nextPage;
   const noMoreStartups = state.parkingLot.noMoreStartups;
   const user = state.user.userData;
+  const addingToParkingLot = state.parkingLot.addingToParkingLot;
+  const addingToPipeline = state.pipeline.addingToPipeline;
 
-  return { startups, isLoading, loadingMore, nextPage, noMoreStartups, user };
+  return {
+    startups,
+    isLoading,
+    loadingMore,
+    nextPage,
+    noMoreStartups,
+    user,
+    addingToParkingLot,
+    addingToPipeline,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

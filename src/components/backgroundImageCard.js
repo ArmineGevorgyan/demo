@@ -32,7 +32,10 @@ class BackgroundImageCard extends Component {
         <TouchableHighlight
           style={[styles.cardContainer, baseStylesheet.elevation6]}
           onPress={() => {
-            this.props.navigation.navigate("StartupScreen", { startup });
+            this.props.navigation.navigate("StartupScreen", {
+              startup,
+              fromPipeline: !!pipelineDate,
+            });
           }}
         >
           <ImageBackground
