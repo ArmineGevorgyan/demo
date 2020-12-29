@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { TabView, TabBar } from "react-native-tab-view";
+import { useNavigation } from "@react-navigation/native";
+
 import { getStartupById } from "../redux/ducks/startup";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabPopulateComponent } from "../helpers/startupHelper";
@@ -52,6 +54,7 @@ const TabScene = ({
 
 const StartupPopulateScreen = ({ t, route, singleStartup, getStartupById }) => {
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
+  const navigation = useNavigation();
 
   const [routes] = useState([
     { key: "overview", title: t("startupTab.overview") },
@@ -167,28 +170,28 @@ const StartupPopulateScreen = ({ t, route, singleStartup, getStartupById }) => {
     );
   };
 
-  const renderScene = ({ route }) => {
-    return (
-      <TabScene
-        renderItem={() => getTabPopulateComponent(route.key, tabIndex)}
-        scrollY={scrollY}
-        onMomentumScrollBegin={onMomentumScrollBegin}
-        onScrollEndDrag={onScrollEndDrag}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        onGetRef={(ref) => {
-          if (ref) {
-            const found = listRefArr.current.find((e) => e.key === route.key);
-            if (!found) {
-              listRefArr.current.push({
-                key: route.key,
-                value: ref,
-              });
-            }
+  const renderScene = ({ route }, startup, navigation) => (
+    <TabScene
+      renderItem={() =>
+        getTabPopulateComponent(route.key, startup, navigation, tabIndex)
+      }
+      scrollY={scrollY}
+      onMomentumScrollBegin={onMomentumScrollBegin}
+      onScrollEndDrag={onScrollEndDrag}
+      onMomentumScrollEnd={onMomentumScrollEnd}
+      onGetRef={(ref) => {
+        if (ref) {
+          const found = listRefArr.current.find((e) => e.key === route.key);
+          if (!found) {
+            listRefArr.current.push({
+              key: route.key,
+              value: ref,
+            });
           }
-        }}
-      />
-    );
-  };
+        }
+      }}
+    />
+  );
 
   const renderTabBar = (props) => {
     const y = scrollY.interpolate({
@@ -227,24 +230,22 @@ const StartupPopulateScreen = ({ t, route, singleStartup, getStartupById }) => {
     );
   };
 
-  const renderTabView = () => {
-    return (
-      <TabView
-        onIndexChange={(index) => setIndex(index)}
-        navigationState={{ index: tabIndex, routes }}
-        renderScene={(e) => renderScene(e)}
-        renderTabBar={renderTabBar}
-        initialLayout={{
-          height: 0,
-          width: Dimensions.get("window").width,
-        }}
-      />
-    );
-  };
+  const renderTabView = (singleStartup, navigation) => (
+    <TabView
+      onIndexChange={(index) => setIndex(index)}
+      navigationState={{ index: tabIndex, routes }}
+      renderScene={(e) => renderScene(e, singleStartup, navigation)}
+      renderTabBar={renderTabBar}
+      initialLayout={{
+        height: 0,
+        width: Dimensions.get("window").width,
+      }}
+    />
+  );
 
   return (
     <View style={{ flex: 1 }}>
-      {renderTabView(singleStartup)}
+      {renderTabView(singleStartup, navigation)}
       {renderHeader()}
     </View>
   );

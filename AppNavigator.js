@@ -45,7 +45,7 @@ import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import TeamScreen from "./src/screens/TeamScreen";
-import ProductScreen from "./src/screens/ProductScreen";
+import InvestorProduct from "./src/screens/Product/InvestorProduct";
 import CompanyScreen from "./src/screens/CompanyScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import OverviewScreen from "./src/screens/OverviewScreen";
@@ -172,7 +172,7 @@ class AppNavigator extends Component {
             name="DiscussionsScreen"
             component={DiscussionsScreen}
           />
-          <Stack.Screen name="ProductScreen" component={ProductScreen} />
+          <Stack.Screen name="ProductScreen" component={InvestorProduct} />
           <Stack.Screen name="CompanyScreen" component={CompanyScreen} />
           <Stack.Screen
             name="NewDiscussionScreen"

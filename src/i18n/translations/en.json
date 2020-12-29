@@ -314,7 +314,8 @@
     "description": "Description",
     "customers": "Customers",
     "pricing": "Pricing",
-    "similarProducts": "Similar products"
+    "similarProducts": "Similar products",
+    "addMoreProducts": "Add More Product"
   },
   "companyScreen": {
     "founded": "Founded",
