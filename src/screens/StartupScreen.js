@@ -63,7 +63,6 @@ const StartupScreen = ({
   t,
   route,
   navigation,
-  startups,
   singleStartup,
   addStartupToPipeline,
   getStartupById,
@@ -82,6 +81,7 @@ const StartupScreen = ({
     { key: "discussions", title: t("startupTab.discussions") },
     { key: "faq", title: t("startupTab.faq") },
     { key: "videos", title: t("startupTab.videos") },
+    { key: "updates", title: t("startupTab.updates") },
   ]);
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -324,11 +324,9 @@ const StartupScreen = ({
 };
 
 const mapStateToProps = (state, props) => {
-  const startups = state.startup.startups;
   const singleStartup = state.startup.singleStartup;
 
   return {
-    startups,
     singleStartup,
   };
 };

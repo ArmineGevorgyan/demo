@@ -6,6 +6,7 @@ import TeamScreen from "../screens/TeamScreen";
 import ProductScreen from "../screens/ProductScreen";
 import CompanyScreen from "../screens/CompanyScreen";
 import OverviewScreen from "../screens/OverviewScreen";
+import UpdatesScreen from "../screens/UpdatesScreen";
 
 const EmptyContainer = ({ children }) => {
   return (
@@ -87,6 +88,17 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
     }
     case "videos": {
       return <EmptyContainer>{index === 6 ? <></> : <></>}</EmptyContainer>;
+    }
+    case "updates": {
+      return (
+        <EmptyContainer>
+          {index === 7 ? (
+            <UpdatesScreen navigation={navigation} startup={startup} />
+          ) : (
+            <></>
+          )}
+        </EmptyContainer>
+      );
     }
     default: {
       return <></>;

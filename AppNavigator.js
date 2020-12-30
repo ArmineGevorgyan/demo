@@ -53,6 +53,8 @@ import Notifications from "./src/screens/NotificationsScreen";
 import { isEntrepreneur } from "./src/helpers/userTypeHelper";
 import CEOProfileScreen from "./src/screens/CEOProfileScreen";
 import StartupPopulateScreen from "./src/screens/StartupPopulateScreen";
+import UpdatesScreen from "./src/screens/UpdatesScreen";
+import SingleUpdateScreen from "./src/screens/SingleUpdateScreen";
 
 const prefix = Linking.makeUrl("/");
 
@@ -210,6 +212,11 @@ class AppNavigator extends Component {
           <Stack.Screen name="NotificationsScreen" component={Notifications} />
           <Stack.Screen name="CEOProfileScreen" component={CEOProfileScreen} />
           <Stack.Screen name="OverviewScreen" component={OverviewScreen} />
+          <Stack.Screen name="UpdatesScreen" component={UpdatesScreen} />
+          <Stack.Screen
+            name="SingleUpdateScreen"
+            component={SingleUpdateScreen}
+          />
         </Stack.Navigator>
       );
     };

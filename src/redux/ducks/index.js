@@ -29,6 +29,7 @@ import deleteAccountSlice from "./deleteAccount";
 import discussionSlice from "./discussion";
 import notificationsSlice from "./notifications";
 import infoSessionSlice from "./infoSession";
+import updateSlice from "./update";
 
 const appReducer = combineReducers({
   requestInvite: requestInviteSlice,
@@ -54,6 +55,7 @@ const appReducer = combineReducers({
   discussion: discussionSlice,
   notifications: notificationsSlice,
   infoSession: infoSessionSlice,
+  update: updateSlice,
 });
 
 export const rootReducer = (state, action) => {
