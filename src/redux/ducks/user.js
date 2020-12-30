@@ -48,10 +48,6 @@ const userSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-    updateUserData: (state) => ({
-      ...state,
-      isLoading: true,
-    }),
     clearUserData: (state) => ({
       ...state,
       userData: null,
@@ -87,12 +83,12 @@ export const getUserData = () => {
   };
 };
 
-export const updateUserData = (fullName) => {
+export const updateUserData = (data) => {
   return (dispatch) => {
     dispatch(userSlice.actions.updateUserData());
 
     axios
-      .put(`${API_URL}/user/account`, fullName)
+      .put(`${API_URL}/user/account`, data)
       .then((r) => {
         return r.data;
       })

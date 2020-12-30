@@ -10,7 +10,6 @@ import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import SelectImage from "../components/selectImage";
 import {
-  save,
   setLocation,
   setTimeZone,
   setResidency,
@@ -363,7 +362,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    save: () => dispatch(save()),
     openModal: (title) => dispatch(openModal(title)),
     closeModal: () => dispatch(closeModal()),
     togglePhotoError: (value) => dispatch(togglePhotoError(value)),
