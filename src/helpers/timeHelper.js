@@ -1,4 +1,5 @@
 import moment from "moment";
+import i18n from "../i18n";
 import constants from "../constants";
 
 export const getTime = (dateString) => {
@@ -13,6 +14,10 @@ export const getTime = (dateString) => {
 
   if (hours - datetimeHours <= constants.showTimeFromNowHours) {
     return moment(dateString).fromNow();
+  }
+
+  if (moment(dateString).isSame(moment().subtract(1, "day"), "day")) {
+    return i18n.t("notificationsScreen.yesterday");
   }
 
   return moment(dateString).format("LT");

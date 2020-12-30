@@ -1,9 +1,9 @@
 import { Card, Text, View } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, Image, TouchableOpacity } from "react-native";
-import moment from "moment";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { getTime } from "../helpers/timeHelper";
 import { withTranslation } from "react-i18next";
 import LogoImage from "../../assets/whiteLogo.svg";
 import { setNotificationSeen } from "../redux/ducks/notifications";
@@ -34,31 +34,6 @@ class NotificationItem extends Component {
     }
 
     Navigation.notificationNavigate(data);
-  }
-
-  getTime(dateString) {
-    const format = "DD/MM/YYYY";
-    const startDate = moment(moment(), format);
-    const endDate = moment(moment().subtract(7, "day"), format);
-    const targetDate = moment(moment.utc(dateString), format);
-
-    //check if today
-    if (moment(dateString).isSame(moment(), "day")) {
-      return moment.utc(dateString).format("LT");
-    }
-
-    //check if yesterday
-    if (moment(dateString).isSame(moment().subtract(1, "day"), "day")) {
-      return this.props.t("notificationsScreen.yesterday");
-    }
-
-    //check if within week
-    if (targetDate.isBetween(endDate, startDate, "days", true)) {
-      let dt = moment(dateString, "YYYY-MM-DD HH:mm:ss");
-      return dt.format("dddd");
-    }
-
-    return moment(dateString).format(format);
   }
 
   setToSeen = () => {
@@ -97,14 +72,15 @@ class NotificationItem extends Component {
             <View style={styles.textContainer}>
               <Text
                 style={{
+                  ...styles.title,
                   fontFamily: this.state.isSeen
-                    ? "montserrat-regular"
+                    ? "montserrat-medium"
                     : "montserrat-semi-bold",
                 }}
               >
                 {data.title}
               </Text>
-              <Text>{this.getTime(data.createdAt)}</Text>
+              <Text style={styles.time}>{getTime(data.createdAt)}</Text>
             </View>
             <Text
               numberOfLines={3}
@@ -141,7 +117,6 @@ export default compose(
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    height: 100,
     padding: 10,
     marginBottom: 10,
     borderRadius: 6,
@@ -160,5 +135,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#1E87F4",
+  },
+  title: {
+    width: "50%",
+  },
+  time: {
+    fontFamily: "montserrat-medium",
   },
 });
