@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { compose } from "redux";
 import { StyleSheet, Text, View } from "react-native";
 import { withTranslation } from "react-i18next";
@@ -13,37 +13,40 @@ const TextBlock = ({
   title,
   text,
   renderTextPrefix,
-  numberOfLines=6,
+  numberOfLines = 6,
   titleStyles,
   textStyles,
-  hasDivider=true
-}) => (
-  <View>
-    <Text style={{ ...baseStylesheet.titleText, ...titleStyles }}>
-      {t(title)}
-    </Text>
-    <View style={styles.mainTextContainer}>
-      {renderTextPrefix && renderTextPrefix()}
-      <CollapsibleText
-        text={text}
-        numberOfLines={numberOfLines}
-        textStyle={{...styles.mainText, ...textStyles}}
-      />
+  hasDivider = true,
+}) =>
+  text ? (
+    <View>
+      <Text style={{ ...baseStylesheet.titleText, ...titleStyles }}>
+        {t(title)}
+      </Text>
+      <View style={styles.mainTextContainer}>
+        {renderTextPrefix && renderTextPrefix()}
+        <CollapsibleText
+          text={text}
+          numberOfLines={numberOfLines}
+          textStyle={{ ...styles.mainText, ...textStyles }}
+        />
+      </View>
+      {hasDivider && <DividerLine style={{ marginVertical: 10 }} />}
     </View>
-    {hasDivider && <DividerLine style={{ marginVertical: 10 }} />}
-  </View>
-);
+  ) : (
+    <></>
+  );
 
 const styles = StyleSheet.create({
   mainText: {
     marginBottom: 10,
     color: colors.darkText,
-    fontFamily: "montserrat-regular"
+    fontFamily: "montserrat-regular",
   },
   mainTextContainer: {
     flexDirection: "row",
-    alignItems: "flex-end"
-  }
+    alignItems: "flex-end",
+  },
 });
 
 export default compose(withTranslation("translations"))(TextBlock);

@@ -47,7 +47,7 @@ class FounderModal extends Component {
                 </View>
                 <View style={styles.bio}>
                   <ContentField sty content={profile.bio} />
-                </View>{" "}
+                </View>
               </>
             ) : (
               <Spinner color={colors.secondaryColor} />

@@ -43,9 +43,8 @@ class CEOProfileScreen extends Component {
         <View style={styles.investorInfo}>
           <View style={styles.social}>
             {linkedin(profile.linkedinProfile)}
-            {!!profile.crunchbaseProfile &&
-              crunchbase(profile.crunchbaseProfile)}
-            {!!profile.angelListProfile && angellist(profile.angelListProfile)}
+            {crunchbase(profile.crunchbaseProfile)}
+            {angellist(profile.angelListProfile)}
           </View>
 
           <ContentField
@@ -120,7 +119,7 @@ class CEOProfileScreen extends Component {
           )}
           <ContentField
             title={t("ceoProfileScreen.highlights")}
-            content={profile.bio}
+            content={profile.highlights}
           />
         </View>
       </Content>
