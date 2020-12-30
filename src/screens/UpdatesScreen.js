@@ -12,9 +12,7 @@ import { isEntrepreneur } from "../helpers/userTypeHelper";
 
 class UpdatesScreen extends Component {
   componentDidMount() {
-    if (!this.props.updateList) {
-      this.props.getUpdates(this.props.startup.id);
-    }
+    this.props.getUpdates(this.props.startup.id);
   }
 
   newUpdateButton() {
