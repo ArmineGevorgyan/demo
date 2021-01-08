@@ -17,9 +17,6 @@ const entrepreneurProfileSlice = createSlice({
   name: "entrepreneurProfile",
   initialState,
   reducers: {
-    save: (state) => ({
-      ...state,
-    }),
     openModal: (state) => ({
       ...state,
       isModalOpen: true,
@@ -118,22 +115,6 @@ const initialPrifileData = {
 
 const entrepreneurProfileReducer = entrepreneurProfileSlice.reducer;
 
-export const save = (values) => {
-  let arr = values.split(" ");
-
-  return (dispatch) => {
-    dispatch(entrepreneurProfileSlice.actions.save());
-    dispatch(
-      updateUserData({
-        firstName: arr[0],
-        lastName: arr[1],
-      })
-    );
-
-    dispatch(updateProfile(true));
-  };
-};
-
 export const getProfileData = (id = "current") => {
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.getProfileData());
@@ -152,21 +133,19 @@ export const getProfileData = (id = "current") => {
 };
 
 export const updateProfile = (save = false) => {
-  const state = store.getState();
+  const profileData = store.getState().entrepreneurProfile.profileData;
 
   return (dispatch) => {
     dispatch(entrepreneurProfileSlice.actions.updateProfile());
 
     axios
-      .put(
-        `${API_URL}/entrepreneur-profiles/current`,
-        state.entrepreneurProfile.profileData
-      )
+      .put(`${API_URL}/entrepreneur-profiles/current`, profileData)
       .then((r) => {
         return r.data;
       })
       .then((data) => {
         dispatch(entrepreneurProfileSlice.actions.updateProfileSuccess(data));
+        dispatch(getProfileData(profileData.id));
         if (save) {
           showNotification("success", "notification.saved");
         }
