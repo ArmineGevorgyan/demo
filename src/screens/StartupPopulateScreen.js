@@ -7,6 +7,7 @@ import { TabView, TabBar } from "react-native-tab-view";
 import { useNavigation } from "@react-navigation/native";
 
 import { getStartupById } from "../redux/ducks/startup";
+import { getEntrepreneurStartups } from "../redux/ducks/entrepreneurProfile";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabPopulateComponent } from "../helpers/startupHelper";
 import constants from "../constants";
@@ -52,9 +53,18 @@ const TabScene = ({
   );
 };
 
-const StartupPopulateScreen = ({ t, route, singleStartup, getStartupById }) => {
+const StartupPopulateScreen = ({
+  t,
+  route,
+  profileData,
+  getEntrepreneurStartups,
+  getStartupById,
+}) => {
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
+
+  useEffect(() => getEntrepreneurStartups(), [])
   const navigation = useNavigation();
+  const startup = profileData.startups && profileData.startups[0];
 
   const [routes] = useState([
     { key: "overview", title: t("startupTab.overview") },
@@ -230,11 +240,11 @@ const StartupPopulateScreen = ({ t, route, singleStartup, getStartupById }) => {
     );
   };
 
-  const renderTabView = (singleStartup, navigation) => (
+  const renderTabView = (startup, navigation) => (
     <TabView
       onIndexChange={(index) => setIndex(index)}
       navigationState={{ index: tabIndex, routes }}
-      renderScene={(e) => renderScene(e, singleStartup, navigation)}
+      renderScene={(e) => renderScene(e, startup, navigation)}
       renderTabBar={renderTabBar}
       initialLayout={{
         height: 0,
@@ -245,7 +255,7 @@ const StartupPopulateScreen = ({ t, route, singleStartup, getStartupById }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {renderTabView(singleStartup, navigation)}
+      {renderTabView(startup, navigation)}
       {renderHeader()}
     </View>
   );
@@ -253,17 +263,18 @@ const StartupPopulateScreen = ({ t, route, singleStartup, getStartupById }) => {
 
 const mapStateToProps = (state, props) => {
   const startups = state.startup.startups;
-  const singleStartup = state.startup.singleStartup;
+  const { profileData } = state.entrepreneurProfile;
 
   return {
     startups,
-    singleStartup,
+    profileData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getStartupById: (startupId) => dispatch(getStartupById(startupId)),
+    getEntrepreneurStartups: () => dispatch(getEntrepreneurStartups())
   };
 };
 

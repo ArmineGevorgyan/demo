@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { compose } from "redux";
-import { StyleSheet, Text, View, Icon, FlatList } from "react-native";
-import { Content } from "native-base";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import { Icon, Content } from "native-base";
 import { withTranslation } from "react-i18next";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -11,46 +11,48 @@ import CollapsibleText from "../../components/collapsibleText";
 import { baseStylesheet } from "../../styles/baseStylesheet";
 import { colors } from "../../styles/colors";
 import constants from "../../constants";
-import { render } from "react-dom";
 
-const EntrepreneurBlock = ({ titleText, content, navigate }) => (
-  <TouchableOpacity onPress={() => navigate("EditScreen", { titleText })}>
-    <Text style={{ ...baseStylesheet.titleText, marginBottom: 10 }}>
-      {titleText}
-    </Text>
-    <CollapsibleText
-      text={content}
-      textStyle={{ ...styles.mainText, color: colors.darkText }}
-    />
+const EntrepreneurBlock = ({ t, titleText, content, navigate }) => (
+  <>
+    <TouchableOpacity onPress={() => navigate("EditScreen", { titleText })}>
+      <Text style={{ ...baseStylesheet.titleText, marginBottom: 10 }}>
+        {t(`productScreen.${titleText}`)}
+      </Text>
+      <CollapsibleText
+        text={content}
+        textStyle={{ ...styles.mainText, color: colors.darkText }}
+      />
+    </TouchableOpacity>
     <DividerLine style={{ marginVertical: 10 }} />
-  </TouchableOpacity>
+  </>
 );
 
-const EntrepreneurProduct = ({ startup, t, navigation }) => {
-  // startup: {
-  // demoVideoUrl,
-  //   description='placeholder',
-  //   customers='placeholder',
-  //   pricing='placeholder',
-  //   similarProducts='placeholder',
-  // },
+const EntrepreneurProduct = ({
+  startup,
+  t,
+  navigation,
+}) => {
+  const description = startup?.description,
+  customers = startup?.customers,
+  pricing = startup?.pricing,
+  similarProducts = startup?.similarProducts;
 
   const entrepreneurFields = [
     {
       titleText: "description",
-      content: t("productScreen.description"),
+      content: description,
     },
     {
       titleText: "customers",
-      content: t("productScreen.customers"),
+      content: customers,
     },
     {
       titleText: "pricing",
-      content: t("productScreen.pricing"),
+      content: pricing,
     },
     {
       titleText: "similarProd",
-      content: t("productScreen.similarProducts"),
+      content: similarProducts,
     },
   ];
 
@@ -66,6 +68,7 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
           {t("productScreen.demo")}
         </Text>
       </View>
+      {/* Video here, separate from the rest */}
       <FlatList
         data={entrepreneurFields}
         renderItem={({ item }) => (
@@ -73,6 +76,7 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
             navigate={navigation.navigate}
             titleText={item.titleText}
             content={item.content}
+            t={t}
           />
         )}
       />
@@ -105,5 +109,6 @@ const styles = StyleSheet.create({
   },
   addProductContainer: {
     flexDirection: "row",
+    alignItems: "center"
   },
 });

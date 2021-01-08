@@ -60,6 +60,22 @@ const entrepreneurProfileSlice = createSlice({
         ...action.payload,
       },
     }),
+    getEntrepreneurStartups: (state, action) => ({
+      ...state,
+      isLoading: true
+    }),
+    getEntrepreneurStartupsSuccess: (state, action) => ({
+      ...state,
+      profileData: {
+        ...state.profileData,
+        startups: action.payload
+      }
+    }),
+    getEntrepreneurStartupsFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload
+    }),
     getProfileData: (state) => ({
       ...state,
       isLoading: true,
@@ -147,6 +163,23 @@ export const getProfileData = (id = "current") => {
       })
       .catch((error) => {
         dispatch(entrepreneurProfileSlice.actions.getProfileDataFail(error));
+      });
+  };
+};
+
+export const getEntrepreneurStartups = () => {
+  return (dispatch) => {
+    dispatch(entrepreneurProfileSlice.actions.getEntrepreneurStartups());
+    axios
+      .get(`${API_URL}/entrepreneur-profiles/current/startups`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(entrepreneurProfileSlice.actions.getEntrepreneurStartupsSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(entrepreneurProfileSlice.actions.getEntrepreneurStartupsFail(error));
       });
   };
 };
