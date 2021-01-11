@@ -1,11 +1,8 @@
-import React, { Component } from "react";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import {
   StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
 } from "react-native";
 import { Content, Input } from "native-base";
 import { withTranslation } from "react-i18next";
@@ -14,14 +11,16 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import GrayHeader from '../components/grayHeader';
 import constants from "../constants";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import { colors } from "../styles/colors";
 import {
   handleFieldEdit
 } from "../redux/ducks/startup";
 
-const EditScreen = ({ t, fieldValue, handleFieldEdit }) => {
+const { windowHeight, windowWidth, headerHeight } = constants;
+
+const EditScreen = ({ t, startup, handleFieldEdit }) => {
   const navigation = useNavigation();
   const route = useRoute();
+  const inputRef = useRef(null);
   const { title, id, editingField } = route.params;
 
   return (
@@ -34,11 +33,11 @@ const EditScreen = ({ t, fieldValue, handleFieldEdit }) => {
         editingField={editingField}
         startupId={id}
       />
-      
       <Input
-        style={{...baseStylesheet.inputField, width: "100%"}}
-        value={fieldValue}
+        style={[baseStylesheet.inputField, styles.input]}
+        value={startup[editingField]}
         onChangeText={text => handleFieldEdit(editingField, text, id)}
+        multiline={true}
         maxLength={2000}
       />
     </Content>
@@ -46,7 +45,7 @@ const EditScreen = ({ t, fieldValue, handleFieldEdit }) => {
 }
 
 const mapStateToProps = (state, props) => ({
-  fieldValue: state?.startups?.entrepreneurStartups[0]
+  startup: state?.startup?.entrepreneurStartups[0]
   //TODO change this to find by startup ids in future
 });
 
@@ -60,20 +59,13 @@ export default compose(
 )(EditScreen);
 
 const styles = StyleSheet.create({
-  mainText: {
-    marginBottom: 10,
-    fontSize: 14,
-    fontFamily: "montserrat-regular",
-  },
-  titleText: {
-    fontSize: 20,
-    fontFamily: "montserrat-bold",
-    marginBottom: 10,
-  },
-  noteText: {
-    fontSize: 14,
-    color: colors.darkText,
-    fontFamily: "montserrat-regular",
-    marginBottom: 20,
-  },
+  input: {
+    width: windowWidth-20, //30 - horizontal paddings
+    height: windowHeight-headerHeight,
+    textAlignVertical: "top",
+    marginTop: 20,
+    marginHorizontal: 10,
+    fontFamily: "montserrat-medium",
+    fontSize: 16
+  }
 });

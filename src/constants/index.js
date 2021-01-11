@@ -6,6 +6,7 @@ const constants = {
   blueHeaderContentHeight:
     Dimensions.get("window").height -
     (Dimensions.get("window").width * 204) / 375,
+  headerHeight: 100,
   windowHeight: Dimensions.get("window").height,
   windowWidth: Dimensions.get("window").width,
   widescreenVideoRatio: 16 / 9,
