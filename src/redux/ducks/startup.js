@@ -62,6 +62,22 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    getEntrepreneurStartups: (state, action) => ({
+      ...state,
+      isLoading: true,
+    }),
+    getEntrepreneurStartupsSuccess: (state, action) => ({
+      ...state,
+      profileData: {
+        ...state.profileData,
+        startups: action.payload,
+      },
+    }),
+    getEntrepreneurStartupsFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
     openFounderModal: (state, action) => ({
       ...state,
       founderModalItem: action.payload,
@@ -108,6 +124,27 @@ export const getNewStartups = () => {
       .catch((error) =>
         dispatch(startupSlice.actions.getNewStartupsFail(error))
       );
+  };
+};
+
+export const getEntrepreneurStartups = () => {
+  return (dispatch) => {
+    dispatch(startupSlice.actions.getEntrepreneurStartups());
+    axios
+      .get(`${API_URL}/entrepreneur-profiles/current/startups`)
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(
+          startupSlice.actions.getEntrepreneurStartupsSuccess(data)
+        );
+      })
+      .catch((error) => {
+        dispatch(
+          startupSlice.actions.getEntrepreneurStartupsFail(error)
+        );
+      });
   };
 };
 

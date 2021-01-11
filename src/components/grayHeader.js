@@ -5,8 +5,10 @@ import { useNavigation } from "@react-navigation/native";
 import { withTranslation } from "react-i18next";
 import { compose } from "redux";
 import { connect } from "react-redux";
+
 import constants from "../constants";
 import { getUnreadNotificationCount } from "../redux/ducks/notifications";
+import { handleFieldSave } from "../redux/ducks/entrepreneurProfile";
 import { colors } from "../styles/colors";
 
 const { windowWidth } = constants;
@@ -48,6 +50,9 @@ class GrayHeader extends Component {
       enableBell,
       backButtonHandler,
       unreadNotificationCount,
+      t,
+      editingField,
+      startupId
     } = this.props;
 
     return (
@@ -77,9 +82,19 @@ class GrayHeader extends Component {
             style={{
               minWidth: 30,
               flexDirection: "row",
-              marginBottom: !enableSearch ? 15 : 0,
+              marginBottom: !enableSearch ? 15 : 0
             }}
           >
+            {editingField && (
+              <TouchableOpacity onPress={() => {
+                handleFieldSave(editingField, startupId);
+                backButtonHandler();
+              }}>
+                <Text style={styles.saveText}>
+                  {t("editScreen.save")}
+                </Text>
+              </TouchableOpacity>
+            )}
             {enableBell && <BellIcon hasUnread={!!unreadNotificationCount} />}
             {enableSearch && (
               <Icon
@@ -153,6 +168,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -3,
   },
+  saveText: {
+    color: colors.secondaryButtonText,
+    fontSize: 18,
+    fontFamily: "montserrat-medium",
+    marginTop: 15
+  }
 });
 
 const mapStateToProps = (state, props) => {
@@ -166,6 +187,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getUnreadNotificationCount: () => dispatch(getUnreadNotificationCount()),
+    handleFieldSave: (editingField, startupId) => dispatch(handleFieldSave(editingField, startupId))
   };
 };
 

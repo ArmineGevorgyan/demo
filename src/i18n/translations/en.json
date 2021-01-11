@@ -317,6 +317,9 @@
     "similarProducts": "Similar products",
     "addMoreProducts": "Add More Product"
   },
+  "editScreen": {
+    "save": "Save"
+  },
   "companyScreen": {
     "founded": "Founded",
     "location": "Location",

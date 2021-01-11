@@ -7,12 +7,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Linking from "expo-linking";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import RequestInviteScreen from "./src/screens/RequestInviteScreen";
 import LandingScreen from "./src/screens/LandingScreen";
 import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import TermsAndConditionsScreen from "./src/screens/TermsAndConditionsScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import EditScreen from "./src/screens/EditScreen";
 import DiscoverStartups from "./src/screens/DiscoverStartups";
 import PipelineScreen from "./src/screens/PipelineScreen";
 import { colors } from "./src/styles/colors";
@@ -154,6 +156,7 @@ class AppNavigator extends Component {
               name="StartupPopulateScreen"
               component={StartupPopulateScreen}
             />
+            <Stack.Screen name="EditScreen" component={EditScreen} />
           </Stack.Navigator>
         );
       }

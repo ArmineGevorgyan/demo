@@ -7,7 +7,7 @@ import { TabView, TabBar } from "react-native-tab-view";
 import { useNavigation } from "@react-navigation/native";
 
 import { getStartupById } from "../redux/ducks/startup";
-import { getEntrepreneurStartups } from "../redux/ducks/entrepreneurProfile";
+import { getEntrepreneurStartups } from "../redux/ducks/startup";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabPopulateComponent } from "../helpers/startupHelper";
 import constants from "../constants";

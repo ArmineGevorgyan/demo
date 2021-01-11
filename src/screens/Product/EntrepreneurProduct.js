@@ -12,9 +12,17 @@ import { baseStylesheet } from "../../styles/baseStylesheet";
 import { colors } from "../../styles/colors";
 import constants from "../../constants";
 
-const EntrepreneurBlock = ({ t, titleText, content, navigate }) => (
+const EntrepreneurBlock = ({ t, titleText, id, content, navigate }) => (
   <>
-    <TouchableOpacity onPress={() => navigate("EditScreen", { titleText })}>
+    <TouchableOpacity
+      onPress={() =>
+        navigate("EditScreen", {
+          title: t(`productScreen.${titleText}`),
+          editingField: titleText,
+          id,
+        })
+      }
+    >
       <Text style={{ ...baseStylesheet.titleText, marginBottom: 10 }}>
         {t(`productScreen.${titleText}`)}
       </Text>
@@ -27,15 +35,12 @@ const EntrepreneurBlock = ({ t, titleText, content, navigate }) => (
   </>
 );
 
-const EntrepreneurProduct = ({
-  startup,
-  t,
-  navigation,
-}) => {
+const EntrepreneurProduct = ({ startup, t, navigation }) => {
   const description = startup?.description,
-  customers = startup?.customers,
-  pricing = startup?.pricing,
-  similarProducts = startup?.similarProducts;
+    customers = startup?.customers,
+    pricing = startup?.pricing,
+    similarProducts = startup?.similarProducts,
+    id = startup?.id;
 
   const entrepreneurFields = [
     {
@@ -51,7 +56,7 @@ const EntrepreneurProduct = ({
       content: pricing,
     },
     {
-      titleText: "similarProd",
+      titleText: "similarProducts",
       content: similarProducts,
     },
   ];
@@ -77,6 +82,7 @@ const EntrepreneurProduct = ({
             titleText={item.titleText}
             content={item.content}
             t={t}
+            id={id}
           />
         )}
       />
@@ -109,6 +115,6 @@ const styles = StyleSheet.create({
   },
   addProductContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
 });
