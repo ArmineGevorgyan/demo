@@ -4,7 +4,7 @@ import { View, Thumbnail, Card, Spinner, Icon } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { withTranslation } from "react-i18next";
-import moment from "moment";
+import { getTime } from "../helpers/timeHelper";
 import constants from "../constants";
 import { colors } from "../styles/colors";
 import { addComment } from "../redux/ducks/discussion";
@@ -26,23 +26,6 @@ class DiscussionItem extends Component {
     return currentUser?.id == user.id
       ? t("discussionsScreen.me")
       : `${user.firstName} ${user.lastName}`;
-  }
-
-  getTime(dateString) {
-    const date = new Date(dateString).setHours(0, 0, 0, 0);
-    const now = new Date().setHours(0, 0, 0, 0);
-    const datetimeHours = new Date(dateString).getHours();
-    const hours = new Date().getHours();
-
-    if (date !== now) {
-      return moment(dateString).format("ll");
-    }
-
-    if (hours - datetimeHours <= constants.showTimeFromNowHours) {
-      return moment(dateString).fromNow();
-    }
-
-    return moment(dateString).format("LT");
   }
 
   addComment = (content) => {
@@ -96,7 +79,7 @@ class DiscussionItem extends Component {
               name="clockcircleo"
               type="AntDesign"
             />
-            <Text style={styles.time}>{this.getTime(item.createdAt)}</Text>
+            <Text style={styles.time}>{getTime(item.createdAt)}</Text>
             {currentUser?.id == user.id && (
               <TouchableOpacity>
                 <Icon
@@ -141,10 +124,7 @@ class DiscussionItem extends Component {
               .slice()
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((comment) => (
-                <DiscussionCommentItem
-                  comment={comment}
-                  getTime={this.getTime}
-                />
+                <DiscussionCommentItem comment={comment} getTime={getTime} />
               ))}
           </View>
         )}

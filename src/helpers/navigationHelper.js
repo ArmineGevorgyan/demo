@@ -10,11 +10,16 @@ export function navigate(name, params) {
 export function notificationNavigate(data) {
   const path = data.path.split("/");
   const types = constants.backendNotifiactionTypes;
+  let startupId = path[1];
 
-  if (data.type == types.STARTUP_DISCUSSIONS ||
-    data.type == types.STARTUP_DISCUSSION_REPLY_CREATE
-  ) {
-    let startupId = path[1];
-    this.navigate("StartupScreen", { startupId, initialIndex: 4 });
+  switch (data.type) {
+    case types.STARTUP_DISCUSSIONS:
+    case types.STARTUP_DISCUSSION_REPLY_CREATE:
+      this.navigate("StartupScreen", { startupId, initialIndex: 4 });
+      break;
+
+    case types.STARTUP_UPDATE:
+      this.navigate("StartupScreen", { startupId, initialIndex: 7 });
+      break;
   }
 }

@@ -8,14 +8,12 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import { getDiscussions } from "../redux/ducks/discussion";
 import DiscussionItem from "../components/discussionItem";
-import { isInvestor } from '../helpers/userTypeHelper';
+import { isInvestor } from "../helpers/userTypeHelper";
 
 class DiscussionsScreen extends Component {
   componentDidMount() {
-    if (!this.props.discussionList || this.props.reload) {
-      this.props.getDiscussions(this.props.startup.id);
-    }
-  };
+    this.props.getDiscussions(this.props.startup.id);
+  }
 
   render() {
     const {
@@ -51,12 +49,13 @@ class DiscussionsScreen extends Component {
           </View>
         )}
         <View style={styles.list}>
-          {discussionList
-            .slice()
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .map((item) => (
-              <DiscussionItem item={item} startup={startup} navigation={navigation} />
-            ))}
+          {discussionList.map((item) => (
+            <DiscussionItem
+              item={item}
+              startup={startup}
+              navigation={navigation}
+            />
+          ))}
         </View>
       </Content>
     );

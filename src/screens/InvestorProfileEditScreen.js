@@ -14,6 +14,7 @@ import {
   getProfileData,
   handleInput,
 } from "../redux/ducks/investorProfile";
+import { updateUserData } from "../redux/ducks/user";
 import schema from "../validation/investorprofileEditSchema";
 import { Formik } from "formik";
 import Validation from "../validation";
@@ -39,6 +40,12 @@ class InvestorProfileEditScreen extends Component {
   }
 
   onSubmit = (values) => {
+    let arr = values.fullName.split(" ");
+
+    this.props.updateUserData({
+      firstName: arr[0],
+      lastName: arr[1],
+    });
     this.props.updateProfile(values);
   };
 
@@ -60,7 +67,7 @@ class InvestorProfileEditScreen extends Component {
             setImage={(image) => this.props.handleInput({ photoUrl: image })}
           />
         </EditProfileHeader>
-        {this.props.photoError && !this.props.profileData.photoUrl && (
+        {this.props.photoError && !this.props.profileData?.photoUrl && (
           <View style={styles.errorContainer}>
             <Icon
               style={styles.alertIcon}
@@ -76,7 +83,7 @@ class InvestorProfileEditScreen extends Component {
             marginTop: 20,
           }}
         >
-          {profileData.id ? (
+          {profileData?.id ? (
             <Formik
               innerRef={(p) => (this.formik = p)}
               initialValues={{
@@ -349,6 +356,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateUserData: (values) => dispatch(updateUserData(values)),
     updateProfile: (values) => dispatch(updateProfile(values)),
     getProfileData: () => dispatch(getProfileData()),
     handleInput: (input) => dispatch(handleInput(input)),

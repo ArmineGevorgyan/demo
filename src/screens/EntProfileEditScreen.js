@@ -10,7 +10,6 @@ import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import SelectImage from "../components/selectImage";
 import {
-  save,
   getProfileData,
   setLocation,
   setTimeZone,
@@ -20,6 +19,7 @@ import {
   setTextInput,
   togglePhotoError,
 } from "../redux/ducks/entrepreneurProfile";
+import { updateUserData } from "../redux/ducks/user";
 import { openModal, closeModal } from "../redux/ducks/dropdownInputModal";
 import schema from "../validation/entProfileEditSchema";
 import { Formik } from "formik";
@@ -75,7 +75,12 @@ class EntProfileEditScreen extends Component {
   };
 
   onSubmit = (values) => {
-    this.props.save(values.fullName);
+    let arr = values.fullName.split(" ");
+
+    this.props.updateUserData({
+      firstName: arr[0],
+      lastName: arr[1],
+    });
     this.props.setTextInput({
       completed: true,
       bio: values.bio,
@@ -343,7 +348,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    save: (values) => dispatch(save(values)),
+    updateUserData: (values) => dispatch(updateUserData(values)),
     openModal: (title) => dispatch(openModal(title)),
     closeModal: () => dispatch(closeModal()),
     getProfileData: () => dispatch(getProfileData()),

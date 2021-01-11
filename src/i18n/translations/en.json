@@ -103,7 +103,8 @@
     "company": "COMPANY",
     "discussions": "DISCUSSIONS",
     "faq": "FAQ",
-    "videos": "VIDEOS"
+    "videos": "VIDEOS",
+    "updates": "UPDATES"
   },
   "investmentInfo": {
     "goal": "Goal",
@@ -362,5 +363,12 @@
   "collapsibleText": {
     "seeMore": "See more",
     "seeLess": "See less"
+  },
+  "updatesScreen": {
+    "newUpdateButton": "Create new update",
+    "newUpdate": "Please share here the significant updates about your startup",
+    "noUpdates": "No updates from the startup yet.",
+    "entrepreneur": "Entrepreneur",
+    "update": "Update"
   }
 }

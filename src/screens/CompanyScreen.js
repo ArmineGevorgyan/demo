@@ -48,9 +48,9 @@ class CompanyScreen extends Component {
       },
     } = this.props;
 
-    const parsedFounded = moment(
-      founded?.slice(0, founded?.indexOf("T"))
-    ).format("DD.MM.YYYY");
+    const parsedFounded =
+      !!founded &&
+      moment(founded?.slice(0, founded?.indexOf("T"))).format("DD.MM.YYYY");
 
     return (
       <Content
@@ -59,9 +59,7 @@ class CompanyScreen extends Component {
           ...baseStylesheet.containerSpacing,
         }}
       >
-        {founded && (
-          <TextBlock title="companyScreen.founded" text={parsedFounded} />
-        )}
+        <TextBlock title="companyScreen.founded" text={parsedFounded} />
         {countryName && cityName && (
           <TextBlock
             title="companyScreen.location"
@@ -71,25 +69,12 @@ class CompanyScreen extends Component {
             )}
           />
         )}
-        {progressToDate && (
-          <TextBlock
-            title="companyScreen.progressToDate"
-            text={progressToDate}
-          />
-        )}
-        {vision && (
-          <TextBlock title="companyScreen.longTermVision" text={vision} />
-        )}
-        {competition && (
-          <TextBlock title="companyScreen.competition" text={competition} />
-        )}
-        {businessModel && (
-          <TextBlock title="companyScreen.businessModel" text={businessModel} />
-        )}
-        {distribution && (
-          <TextBlock title="companyScreen.distribution" text={distribution} />
-        )}
-        {legal && <TextBlock title="companyScreen.legal" text={legal} />}
+        <TextBlock title="companyScreen.progressToDate" text={progressToDate} />
+        <TextBlock title="companyScreen.longTermVision" text={vision} />
+        <TextBlock title="companyScreen.competition" text={competition} />
+        <TextBlock title="companyScreen.businessModel" text={businessModel} />
+        <TextBlock title="companyScreen.distribution" text={distribution} />
+        <TextBlock title="companyScreen.legal" text={legal} />
         {!!pitchDeckUrl && (
           <View>
             <Text style={baseStylesheet.titleText}>
@@ -107,7 +92,7 @@ class CompanyScreen extends Component {
             <DividerLine style={{ marginVertical: 10 }} />
           </View>
         )}
-        {!!links.length && (
+        {links?.length > 0 && (
           <View>
             <Text style={baseStylesheet.titleText}>
               {t("companyScreen.media")}
@@ -172,8 +157,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     textDecorationLine: "underline",
     fontFamily: "montserrat-regular",
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 });
 
 export default compose(withTranslation("translations"))(CompanyScreen);

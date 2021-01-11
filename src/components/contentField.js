@@ -6,6 +6,10 @@ class ContentField extends Component {
   render() {
     const { content, title, bottomBorder, children } = this.props;
 
+    if (!content && !children) {
+      return <></>;
+    }
+
     return (
       <View style={bottomBorder ? styles.bottomBorder : styles.container}>
         {!!title && <Text style={styles.title}>{title}</Text>}

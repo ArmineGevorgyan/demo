@@ -40,8 +40,8 @@ class InvestorProfileScreen extends Component {
           {!!profile.bio && <Text style={styles.bio}>{profile.bio}</Text>}
 
           {linkedin(profile.linkedinProfile)}
-          {!!profile.crunchbaseProfile && crunchbase(profile.crunchbaseProfile)}
-          {!!profile.angelListProfile && angellist(profile.angelListProfile)}
+          {crunchbase(profile.crunchbaseProfile)}
+          {angellist(profile.angelListProfile)}
           <Button style={baseStylesheet.secondaryButton}>
             <Text style={baseStylesheet.secondaryButtonText}>
               {t("investorProfileScreen.sendMessage")}
