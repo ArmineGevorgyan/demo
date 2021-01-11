@@ -4,7 +4,7 @@ import { withTranslation } from "react-i18next";
 import { compose } from "redux";
 import { colors } from "../styles/colors";
 
-const CollapsibleText = ({ textStyle, numberOfLines, t, text }) => {
+const CollapsibleText = ({ textStyle, numberOfLines=6, t, text }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [lineCount, setLineCount] = useState(0);
 

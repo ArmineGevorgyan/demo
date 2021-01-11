@@ -315,7 +315,11 @@
     "description": "Description",
     "customers": "Customers",
     "pricing": "Pricing",
-    "similarProducts": "Similar products"
+    "similarProducts": "Similar products",
+    "addMoreProducts": "Add More Product"
+  },
+  "editScreen": {
+    "save": "Save"
   },
   "companyScreen": {
     "founded": "Founded",

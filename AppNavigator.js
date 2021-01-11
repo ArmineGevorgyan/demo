@@ -7,12 +7,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Linking from "expo-linking";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import RequestInviteScreen from "./src/screens/RequestInviteScreen";
 import LandingScreen from "./src/screens/LandingScreen";
 import RequestInviteSuccess from "./src/screens/RequestInviteSuccess";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import TermsAndConditionsScreen from "./src/screens/TermsAndConditionsScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import EditScreen from "./src/screens/EditScreen";
 import DiscoverStartups from "./src/screens/DiscoverStartups";
 import PipelineScreen from "./src/screens/PipelineScreen";
 import { colors } from "./src/styles/colors";
@@ -45,7 +47,7 @@ import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
 import StartupScreen from "./src/screens/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
 import TeamScreen from "./src/screens/TeamScreen";
-import ProductScreen from "./src/screens/ProductScreen";
+import InvestorProduct from "./src/screens/Product/InvestorProduct";
 import CompanyScreen from "./src/screens/CompanyScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import OverviewScreen from "./src/screens/OverviewScreen";
@@ -156,6 +158,7 @@ class AppNavigator extends Component {
               name="StartupPopulateScreen"
               component={StartupPopulateScreen}
             />
+            <Stack.Screen name="EditScreen" component={EditScreen} />
           </Stack.Navigator>
         );
       }
@@ -174,7 +177,7 @@ class AppNavigator extends Component {
             name="DiscussionsScreen"
             component={DiscussionsScreen}
           />
-          <Stack.Screen name="ProductScreen" component={ProductScreen} />
+          <Stack.Screen name="ProductScreen" component={InvestorProduct} />
           <Stack.Screen name="CompanyScreen" component={CompanyScreen} />
           <Stack.Screen
             name="NewDiscussionScreen"

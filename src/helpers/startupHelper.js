@@ -3,7 +3,8 @@ import { View } from "react-native";
 import StartupFaqScreen from "../screens/StartupFaqScreen";
 import DiscussionsScreen from "../screens/DiscussionsScreen";
 import TeamScreen from "../screens/TeamScreen";
-import ProductScreen from "../screens/ProductScreen";
+import InvestorProduct from "../screens/Product/InvestorProduct";
+import EntrepreneurProduct from "../screens/Product/EntrepreneurProduct";
 import CompanyScreen from "../screens/CompanyScreen";
 import OverviewScreen from "../screens/OverviewScreen";
 import UpdatesScreen from "../screens/UpdatesScreen";
@@ -35,7 +36,7 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
       return (
         <EmptyContainer>
           {index === 1 ? (
-            <ProductScreen startup={startup} navigation={navigation} />
+            <InvestorProduct startup={startup} navigation={navigation} />
           ) : (
             <></>
           )}
@@ -106,13 +107,24 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
   }
 };
 
-export const getTabPopulateComponent = (key, index) => {
+export const getTabPopulateComponent = (key, startup, navigation, index) => {
   switch (key) {
     case "overview": {
       return <EmptyContainer>{index === 0 ? <></> : <></>}</EmptyContainer>;
     }
     case "product": {
-      return <EmptyContainer>{index === 1 ? <></> : <></>}</EmptyContainer>;
+      return (
+        <EmptyContainer>
+          {index === 1 ? (
+            <EntrepreneurProduct
+              startup={startup}
+              navigation={navigation}
+            />
+          ) : (
+            <></>
+          )}
+        </EmptyContainer>
+      );
     }
     case "team": {
       return <EmptyContainer>{index === 2 ? <></> : <></>}</EmptyContainer>;
