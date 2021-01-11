@@ -8,6 +8,7 @@ const initialState = {
   startups: null,
   singleStartup: null,
   error: null,
+  entrepreneurStartups: null,
   founderModalItem: null,
   isModalOpen: false,
 };
@@ -68,10 +69,7 @@ const startupSlice = createSlice({
     }),
     getEntrepreneurStartupsSuccess: (state, action) => ({
       ...state,
-      profileData: {
-        ...state.profileData,
-        startups: action.payload,
-      },
+      entrepreneurStartups: action.payload
     }),
     getEntrepreneurStartupsFail: (state, action) => ({
       ...state,

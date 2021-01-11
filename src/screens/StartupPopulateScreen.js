@@ -56,15 +56,14 @@ const TabScene = ({
 const StartupPopulateScreen = ({
   t,
   route,
-  profileData,
-  getEntrepreneurStartups,
+  entrepreneurStartups,
   getStartupById,
 }) => {
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
 
   useEffect(() => getEntrepreneurStartups(), [])
   const navigation = useNavigation();
-  const startup = profileData.startups && profileData.startups[0];
+  const startup = entrepreneurStartups && entrepreneurStartups[0];
 
   const [routes] = useState([
     { key: "overview", title: t("startupTab.overview") },
@@ -263,11 +262,11 @@ const StartupPopulateScreen = ({
 
 const mapStateToProps = (state, props) => {
   const startups = state.startup.startups;
-  const { profileData } = state.entrepreneurProfile;
+  const { entrepreneurStartups } = state.startup;
 
   return {
     startups,
-    profileData,
+    entrepreneurStartups,
   };
 };
 
