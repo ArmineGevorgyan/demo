@@ -57,11 +57,13 @@ const StartupPopulateScreen = ({
   t,
   route,
   entrepreneurStartups,
+  getEntrepreneurStartups,
   getStartupById,
 }) => {
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
 
-  useEffect(() => getEntrepreneurStartups(), [])
+  useEffect(() => getEntrepreneurStartups(), []);
+
   const navigation = useNavigation();
   const startup = entrepreneurStartups && entrepreneurStartups[0];
 
@@ -273,7 +275,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getStartupById: (startupId) => dispatch(getStartupById(startupId)),
-    getEntrepreneurStartups: () => dispatch(getEntrepreneurStartups())
+    getEntrepreneurStartups: () => dispatch(getEntrepreneurStartups()),
   };
 };
 

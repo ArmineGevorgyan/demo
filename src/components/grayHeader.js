@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 
 import constants from "../constants";
 import { getUnreadNotificationCount } from "../redux/ducks/notifications";
-import { handleFieldSave } from "../redux/ducks/entrepreneurProfile";
+import { handleFieldSave } from "../redux/ducks/startup";
 import { colors } from "../styles/colors";
 
 const { windowWidth } = constants;
@@ -52,7 +52,8 @@ class GrayHeader extends Component {
       unreadNotificationCount,
       t,
       editingField,
-      startupId
+      startupId,
+      handleFieldSave
     } = this.props;
 
     return (

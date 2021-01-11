@@ -17,7 +17,7 @@ import { baseStylesheet } from "../styles/baseStylesheet";
 import { colors } from "../styles/colors";
 import {
   handleFieldEdit
-} from "../redux/ducks/entrepreneurProfile";
+} from "../redux/ducks/startup";
 
 const EditScreen = ({ t, fieldValue, handleFieldEdit }) => {
   const navigation = useNavigation();
@@ -36,7 +36,7 @@ const EditScreen = ({ t, fieldValue, handleFieldEdit }) => {
       />
       
       <Input
-        style={baseStylesheet.inputField}
+        style={{...baseStylesheet.inputField, width: "100%"}}
         value={fieldValue}
         onChangeText={text => handleFieldEdit(editingField, text, id)}
         maxLength={2000}
@@ -46,7 +46,7 @@ const EditScreen = ({ t, fieldValue, handleFieldEdit }) => {
 }
 
 const mapStateToProps = (state, props) => ({
-  fieldValue: state.entrepreneurProfile.profileData.startups[0]
+  fieldValue: state?.startups?.entrepreneurStartups[0]
   //TODO change this to find by startup ids in future
 });
 

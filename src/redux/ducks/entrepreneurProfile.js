@@ -101,54 +101,6 @@ const entrepreneurProfileSlice = createSlice({
       isResetting: false,
       error: action.payload,
     }),
-    handleFieldEdit: (state, action) => {
-      const { editingField, text, startupId } = action.payload;
-
-      return startupId //case when the product doesn't exist yet, it is yet to be created
-        ? {
-            ...state,
-            profileData: {
-              ...state.profileData,
-              startups: state.profileData.startups.map((startup) =>
-                startup.id === startupId
-                  ? {
-                      ...startup,
-                      [editingField]: text,
-                    }
-                  : startup
-              ),
-            },
-          }
-        : {
-            ...state,
-            profileData: {
-              ...state.profileData,
-              startups: [
-                {
-                  [editingField]: text,
-                },
-              ],
-            },
-          };
-    },
-    handleFieldSave: (state, action) => ({
-      ...state,
-      isLoading: true,
-    }),
-    handleFieldSaveSuccess: (state, action) => ({
-      ...state,
-      profileData: {
-        ...state.profileData,
-        startups: state.profileData.startups.map((startup) =>
-          startup.id === action.payload.id ? action.payload : startup
-        ),
-      },
-    }), // todo дописать это, остальное по идее норм, кроме rich editor
-    handleFieldSaveFail: (state, action) => ({
-      ...state,
-      isLoading: false,
-      error: action.payload,
-    }),
   },
 });
 
@@ -197,62 +149,6 @@ export const getProfileData = (id = "current") => {
         dispatch(entrepreneurProfileSlice.actions.getProfileDataFail(error));
       });
   };
-};
-
-export const handleFieldEdit = (editingField, text, startupId) => (
-  dispatch
-) => {
-  dispatch(
-    entrepreneurProfileSlice.actions.handleFieldEdit({
-      editingField,
-      text,
-      startupId,
-    })
-  );
-};
-
-export const handleFieldSave = (editingField, startupId) => (dispatch) => {
-  const state = store.getState();
-
-  dispatch(entrepreneurProfileSlice.actions.handleFieldSave());
-
-  if (startupId) {
-    axios
-      .put(`${API_URL}/startups/${startupId}`, {
-        name: state.profileData.startups.find(
-          (startup) => startup.id === startupId
-        ).name,
-        [editingField]: state.profileData.startups[0][editingField],
-      })
-      .then((res) => {
-        return res.data;
-      })
-      .then((startup) => {
-        dispatch(
-          entrepreneurProfileSlice.actions.handleFieldSaveSuccess(startup)
-        );
-      })
-      .catch((error) => {
-        dispatch(entrepreneurProfileSlice.actions.handleFieldSaveFail(error));
-      });
-  } else {
-    axios
-      .post(`${API_URL}/startups`, {
-        name: "Placeholder", //TODO discuss and change this, how to create if name is mandatory
-        [editingField]: state.profileData.startups[0][editingField],
-      })
-      .then((res) => {
-        return res.data;
-      })
-      .then((startup) => {
-        dispatch(
-          entrepreneurProfileSlice.actions.handleFieldSaveSuccess(startup)
-        );
-      })
-      .catch((error) => {
-        dispatch(entrepreneurProfileSlice.actions.handleFieldSaveFail(error));
-      });
-  }
 };
 
 export const updateProfile = (save = false) => {

@@ -69,9 +69,48 @@ const startupSlice = createSlice({
     }),
     getEntrepreneurStartupsSuccess: (state, action) => ({
       ...state,
-      entrepreneurStartups: action.payload
+      entrepreneurStartups: action.payload,
     }),
     getEntrepreneurStartupsFail: (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
+    handleFieldEdit: (state, action) => {
+      const { editingField, text, startupId } = action.payload;
+
+      return startupId
+        ? {
+            ...state,
+            entrepreneurStartups: state?.entrepreneurStartups.map((startup) =>
+              startup.id === startupId
+                ? {
+                    ...startup,
+                    [editingField]: text,
+                  }
+                : startup
+            ),
+          }
+        : {
+            ...state,
+            entrepreneurStartups: [
+              {
+                [editingField]: text,
+              },
+            ],
+          };
+    },
+    handleFieldSave: (state, action) => ({
+      ...state,
+      isLoading: true,
+    }),
+    handleFieldSaveSuccess: (state, action) => ({
+      ...state,
+      entrepreneurStartups: state?.entrepreneurStartups.map((startup) =>
+        startup.id === action.payload.id ? action.payload : startup
+      ),
+    }),
+    handleFieldSaveFail: (state, action) => ({
       ...state,
       isLoading: false,
       error: action.payload,
@@ -134,16 +173,61 @@ export const getEntrepreneurStartups = () => {
         return r.data;
       })
       .then((data) => {
-        dispatch(
-          startupSlice.actions.getEntrepreneurStartupsSuccess(data)
-        );
+        dispatch(startupSlice.actions.getEntrepreneurStartupsSuccess(data));
       })
       .catch((error) => {
-        dispatch(
-          startupSlice.actions.getEntrepreneurStartupsFail(error)
-        );
+        dispatch(startupSlice.actions.getEntrepreneurStartupsFail(error));
       });
   };
+};
+
+export const handleFieldEdit = (editingField, text, startupId) => (
+  dispatch
+) => {
+  dispatch(
+    startupSlice.actions.handleFieldEdit({
+      editingField,
+      text,
+      startupId,
+    })
+  );
+};
+
+export const handleFieldSave = (editingField, startupId) => (dispatch) => {
+  const state = store.getState();
+  dispatch(startupSlice.actions.handleFieldSave());
+
+  if (startupId) {
+    axios
+      .put(`${API_URL}/startups/${startupId}`, {
+        ...state.startup.entrepreneurStartups[0],
+        [editingField]: state.startup.entrepreneurStartups[0][editingField],
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .then((startup) => {
+        dispatch(startupSlice.actions.handleFieldSaveSuccess(startup));
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.handleFieldSaveFail(error));
+      });
+  } else {
+    axios
+      .post(`${API_URL}/startups`, {
+        name: "Placeholder",
+        [editingField]: state.startup.entrepreneurStartups[0][editingField],
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .then((startup) => {
+        dispatch(startupSlice.actions.handleFieldSaveSuccess(startup));
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.handleFieldSaveFail(error));
+      });
+  }
 };
 
 export const getStartupTeamMembers = (id) => (dispatch) => {
