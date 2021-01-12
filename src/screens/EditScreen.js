@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import {
@@ -20,7 +20,6 @@ const { windowHeight, windowWidth, headerHeight } = constants;
 const EditScreen = ({ t, startup, handleFieldEdit }) => {
   const navigation = useNavigation();
   const route = useRoute();
-  const inputRef = useRef(null);
   const { title, id, editingField } = route.params;
 
   return (
@@ -35,7 +34,7 @@ const EditScreen = ({ t, startup, handleFieldEdit }) => {
       />
       <Input
         style={[baseStylesheet.inputField, styles.input]}
-        value={startup[editingField]}
+        value={startup && startup[editingField]}
         onChangeText={text => handleFieldEdit(editingField, text, id)}
         multiline={true}
         maxLength={2000}
@@ -60,7 +59,7 @@ export default compose(
 
 const styles = StyleSheet.create({
   input: {
-    width: windowWidth-20, //30 - horizontal paddings
+    width: windowWidth-20, //20 - horizontal paddings
     height: windowHeight-headerHeight,
     textAlignVertical: "top",
     marginTop: 20,

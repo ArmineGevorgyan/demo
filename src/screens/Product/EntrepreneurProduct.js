@@ -86,13 +86,6 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
           />
         )}
       />
-      <View style={styles.addProductContainer}>
-        <Icon type="SimpleLineIcons" name="plus" style={styles.plusIcon} />
-        <Text style={styles.addProductText}>
-          {t("productScreen.addMoreProducts")}
-        </Text>
-      </View>
-      <DividerLine style={{ marginVertical: 10 }} />
     </Content>
   );
 };
