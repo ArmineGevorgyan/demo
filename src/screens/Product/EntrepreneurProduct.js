@@ -6,11 +6,10 @@ import { withTranslation } from "react-i18next";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import DividerLine from "../../components/dividerLine";
-import VideoView from "../../components/videoView";
 import CollapsibleText from "../../components/collapsibleText";
 import { baseStylesheet } from "../../styles/baseStylesheet";
 import { colors } from "../../styles/colors";
-import constants from "../../constants";
+import AddVideoIcon from "../../../assets/video-add.svg";
 
 const EntrepreneurBlock = ({ t, titleText, id, content, navigate }) => (
   <>
@@ -40,6 +39,7 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
     customers = startup?.customers,
     pricing = startup?.pricing,
     similarProducts = startup?.similarProducts,
+    demoVideoUrl = startup?.demoVideoUrl,
     id = startup?.id;
 
   const entrepreneurFields = [
@@ -72,8 +72,15 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
         <Text style={{ ...baseStylesheet.titleText, marginBottom: 10 }}>
           {t("productScreen.demo")}
         </Text>
+        <View style={styles.videoIconTextContainer}>
+          <View style={styles.videoIconContainer}>
+            <AddVideoIcon />
+          </View>
+          <Text style={styles.introVideoText}>
+            {demoVideoUrl ? t("startupHeader.alreadyUploaded") : t("productScreen.addVideoFile")}
+          </Text>
+        </View>
       </View>
-      {/* Video here, separate from the rest */}
       <FlatList
         data={entrepreneurFields}
         renderItem={({ item }) => (
@@ -109,5 +116,33 @@ const styles = StyleSheet.create({
   addProductContainer: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  videoIconTextContainer: {
+    height: 170,
+    backgroundColor: "rgba(0,0,0,0.3)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  videoIconContainer: {
+    width: 46,
+    height: 46,
+    backgroundColor: "#FFFFFF",
+    opacity: 0.71,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconContainer: {
+    position: "absolute",
+    width: "90%",
+    height: 260,
+    top: 30,
+    alignSelf: "center",
+    justifyContent: "space-between",
+  },
+  introVideoText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: "montserrat-regular",
   },
 });
