@@ -1,10 +1,19 @@
 import React from "react";
 import { compose } from "redux";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import { Icon, Content } from "native-base";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  TouchableHighlight,
+} from "react-native";
+import { uploadFile } from "../../redux/ducks/fileUploader";
+import { handleFieldEdit, handleFieldSave } from "../../redux/ducks/startup";
+import { connect } from "react-redux";
+import * as ImagePicker from "expo-image-picker";
+import { Icon, Content, Spinner } from "native-base";
 import { withTranslation } from "react-i18next";
-import { TouchableOpacity } from "react-native-gesture-handler";
-
 import DividerLine from "../../components/dividerLine";
 import CollapsibleText from "../../components/collapsibleText";
 import { baseStylesheet } from "../../styles/baseStylesheet";
@@ -34,7 +43,21 @@ const EntrepreneurBlock = ({ t, titleText, id, content, navigate, isLast }) => (
   </>
 );
 
-const EntrepreneurProduct = ({ startup, t, navigation }) => {
+const EntrepreneurProduct = ({
+  startup,
+  t,
+  navigation,
+  uploadFile,
+  demoVideo,
+  isLoadingDemoVideo,
+  handleFieldEdit,
+  handleFieldSave,
+}) => {
+  React.useEffect(() => {
+    handleFieldEdit("demoVideoUrl", demoVideo, startup?.id);
+    handleFieldSave("demoVideoUrl", startup?.id);
+  }, [demoVideo]);
+
   const description = startup?.description,
     customers = startup?.customers,
     pricing = startup?.pricing,
@@ -61,6 +84,17 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
     },
   ];
 
+  const pickImage = async () => {
+    let result;
+
+    result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+    });
+    if (!result.cancelled) {
+      uploadFile(result, true);
+    }
+  };
+
   return (
     <Content
       style={{
@@ -73,11 +107,22 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
           {t("productScreen.demo")}
         </Text>
         <View style={styles.videoIconTextContainer}>
-          <View style={styles.videoIconContainer}>
-            <AddVideoIcon />
-          </View>
+          {isLoadingDemoVideo ? (
+            <Spinner color={colors.secondaryColor} />
+          ) : (
+            <TouchableHighlight
+              style={styles.videoIconContainer}
+              onPress={pickImage}
+            >
+              <AddVideoIcon />
+            </TouchableHighlight>
+          )}
           <Text style={styles.introVideoText}>
-            {demoVideoUrl ? t("startupHeader.alreadyUploaded") : t("productScreen.addVideoFile")}
+            {!isLoadingDemoVideo
+              ? demoVideoUrl
+                ? t("startupHeader.alreadyUploaded")
+                : t("productScreen.addVideoFile")
+              : t("startupHeader.videoUploading")}
           </Text>
         </View>
       </View>
@@ -90,7 +135,7 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
             content={item.content}
             t={t}
             id={id}
-            isLast={index === entrepreneurFields.length-1}
+            isLast={index === entrepreneurFields.length - 1}
           />
         )}
       />
@@ -98,7 +143,33 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
   );
 };
 
-export default compose(withTranslation("translations"))(EntrepreneurProduct);
+const mapStateToProps = (state, props) => {
+  const demoVideo = state.fileUploader.demoVideo;
+  const isLoadingDemoVideo = state.fileUploader.isLoadingDemoVideo;
+  const entrepreneurStartup =
+    state.startup.entrepreneurStartups && state.startup.entrepreneurStartups[0];
+  return {
+    demoVideo,
+    isLoadingDemoVideo,
+    entrepreneurStartup,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    uploadFile: (file, isDemoVideo) => dispatch(uploadFile(file, isDemoVideo)),
+    handleFieldEdit: (editingField, text, startupId) =>
+      dispatch(handleFieldEdit(editingField, text, startupId)),
+    handleFieldSave: (editingField, startupId) =>
+      dispatch(handleFieldSave(editingField, startupId)),
+    handleStartupName: (name) => dispatch(handleStartupName(name)),
+  };
+};
+
+export default compose(
+  withTranslation("translations"),
+  connect(mapStateToProps, mapDispatchToProps)
+)(EntrepreneurProduct);
 
 const styles = StyleSheet.create({
   mainText: {
@@ -142,6 +213,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   introVideoText: {
+    textAlign: "center",
     color: "#FFFFFF",
     fontSize: 14,
     fontFamily: "montserrat-regular",
