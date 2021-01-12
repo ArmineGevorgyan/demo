@@ -5,9 +5,11 @@ import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { TabView, TabBar } from "react-native-tab-view";
 import { useNavigation } from "@react-navigation/native";
-
-import { getStartupById } from "../redux/ducks/startup";
-import { getEntrepreneurStartups } from "../redux/ducks/startup";
+import {
+  createStartup,
+  getEntrepreneurStartups,
+  getStartupById,
+} from "../redux/ducks/startup";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabPopulateComponent } from "../helpers/startupHelper";
 import constants from "../constants";
@@ -57,8 +59,9 @@ const StartupPopulateScreen = ({
   t,
   route,
   entrepreneurStartups,
-  getEntrepreneurStartups,
   getStartupById,
+  getEntrepreneurStartups,
+  createStartup,
 }) => {
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
 
@@ -81,6 +84,10 @@ const StartupPopulateScreen = ({
   let listRefArr = useRef([]);
   let listOffset = useRef({});
   let isListGliding = useRef(false);
+
+  useEffect(() => {
+    getEntrepreneurStartups();
+  }, []);
 
   useEffect(() => {
     scrollY.addListener(({ value }) => {
@@ -136,7 +143,11 @@ const StartupPopulateScreen = ({
     syncScrollOffset();
   };
 
-  const renderHeader = () => {
+  const setVideo = (video) => {
+    createStartup({ demoVideoUrl: video });
+  };
+
+  const renderHeader = (startup) => {
     const y = scrollY.interpolate({
       inputRange: [0, 200, constants.startupHeaderHeight],
       outputRange: [0, -200, -constants.startupHeaderHeight / 1.5],
@@ -154,7 +165,7 @@ const StartupPopulateScreen = ({
         <Animated.View
           style={[styles.header, { transform: [{ translateY: y }] }]}
         >
-          <StartupHeaderVideoUploader />
+          <StartupHeaderVideoUploader startup={startup} setVideo={setVideo} />
         </Animated.View>
         <Animated.View
           style={[
@@ -257,7 +268,7 @@ const StartupPopulateScreen = ({
   return (
     <View style={{ flex: 1 }}>
       {renderTabView(startup, navigation)}
-      {renderHeader()}
+      {renderHeader(startup)}
     </View>
   );
 };
@@ -276,6 +287,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getStartupById: (startupId) => dispatch(getStartupById(startupId)),
     getEntrepreneurStartups: () => dispatch(getEntrepreneurStartups()),
+    createStartup: (data) => dispatch(createStartup(data)),
   };
 };
 
