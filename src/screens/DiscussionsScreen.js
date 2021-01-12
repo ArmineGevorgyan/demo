@@ -49,13 +49,16 @@ class DiscussionsScreen extends Component {
           </View>
         )}
         <View style={styles.list}>
-          {discussionList.map((item) => (
-            <DiscussionItem
-              item={item}
-              startup={startup}
-              navigation={navigation}
-            />
-          ))}
+          {discussionList
+            .slice()
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            .map((item) => (
+              <DiscussionItem
+                item={item}
+                startup={startup}
+                navigation={navigation}
+              />
+            ))}
         </View>
       </Content>
     );
