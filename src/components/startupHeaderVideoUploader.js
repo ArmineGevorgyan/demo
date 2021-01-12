@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Icon, Spinner } from "native-base";
+import { View, Icon, Spinner, Input } from "native-base";
 import { withTranslation } from "react-i18next";
 import { uploadFile, resetImage } from "../redux/ducks/fileUploader";
 import { connect } from "react-redux";
@@ -19,7 +19,11 @@ import * as ImagePicker from "expo-image-picker";
 import { colors } from "../styles/colors";
 import Modal from "react-native-modal";
 import { baseStylesheet } from "../styles/baseStylesheet";
-import { handleFieldEdit, handleFieldSave } from "../redux/ducks/startup";
+import {
+  handleFieldEdit,
+  handleFieldSave,
+  handleStartupName,
+} from "../redux/ducks/startup";
 import { showNotification } from "../helpers/notificationHelper";
 
 class StartupHeaderVideoUploader extends Component {
@@ -29,10 +33,15 @@ class StartupHeaderVideoUploader extends Component {
       isFavorite: false,
       image: null,
       isModalOpen: false,
+      startupName: "",
     };
   }
 
   componentDidMount() {
+    if (this.props.startup?.name) {
+      this.setState({ startupName: this.props.startup?.name });
+    }
+
     (async () => {
       if (Platform.OS !== "web") {
         const {
@@ -47,12 +56,7 @@ class StartupHeaderVideoUploader extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.dVideo !== prevProps.dVideo) {
-      this.props.handleFieldEdit(
-        "demoVideoUrl",
-        this.props.dVideo,
-        this.props.startup?.id
-      );
-      this.props.handleFieldSave("demoVideoUrl", this.props.startup?.id);
+      // this.props.updateStartup("demoVideoUrl", this.props.dVideo);
       showNotification("success", "Successfully uploaded");
     }
   }
@@ -114,19 +118,24 @@ class StartupHeaderVideoUploader extends Component {
             <View style={styles.logoContainer}>
               <SelectImage
                 isLogo
-                photoUrl={entrepreneurStartups?.logoUrl}
+                photoUrl={startup?.logoUrl}
                 setImage={() => {
-                  this.props.handleFieldEdit(
-                    "logoUrl",
-                    this.props.dImage,
-                    this.props.startup?.id
-                  );
-                  this.props.handleFieldSave("logoUrl", this.props.startup?.id);
+                  this.props.updateStartup("logoUrl", this.props.dImage);
                 }}
               />
             </View>
           </View>
-          <Text style={styles.startupTitle}>{startup?.name}</Text>
+          <Input
+            style={styles.startupTitle}
+            value={this.props.startupName}
+            placeholder="Startup name"
+            placeholderTextColor="rgba(0,0,0,0.3)"
+            onChange={(text) => this.props.handleStartupName(text)}
+            onBlur={() => {
+              this.props.updateStartup("name", this.state.startupName);
+            }}
+            blurOnSubmit
+          />
         </View>
         {this.state.isModalOpen && (
           <Modal
@@ -186,6 +195,7 @@ class StartupHeaderVideoUploader extends Component {
 }
 
 const mapStateToProps = (state, props) => {
+  const startupName = state.startup.startupName;
   const dImage = state.fileUploader.image;
   const dVideo = state.fileUploader.video;
   const isLoading = state.fileUploader.isLoading;
@@ -193,6 +203,7 @@ const mapStateToProps = (state, props) => {
   const entrepreneurStartups =
     state.startup.entrepreneurStartups && state.startup.entrepreneurStartups[0];
   return {
+    startupName,
     dImage,
     dVideo,
     isLoading,
@@ -209,6 +220,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(handleFieldEdit(editingField, text, startupId)),
     handleFieldSave: (editingField, startupId) =>
       dispatch(handleFieldSave(editingField, startupId)),
+    handleStartupName: (name) => dispatch(handleStartupName(name)),
   };
 };
 

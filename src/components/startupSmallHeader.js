@@ -6,10 +6,23 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import { Icon } from "native-base";
+import { Input, Icon } from "native-base";
 import BackgroundImage from "../../assets/blue-header-rect.png";
 
 class SmallStartupHeader extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      startupName: "",
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.startup?.name) {
+      this.setState({ startupName: this.props.startup?.name });
+    }
+  }
+
   render() {
     return (
       <ImageBackground source={BackgroundImage} style={styles.container}>
@@ -22,7 +35,22 @@ class SmallStartupHeader extends Component {
             <View style={{ width: 30 }}></View>
           )}
 
-          <Text style={styles.title}>{this.props.name}</Text>
+          <Input
+            style={styles.startupName}
+            value={this.state.startupName}
+            placeholder="Startup name"
+            placeholderTextColor="rgba(0,0,0,0.3)"
+            onChange={(e) => this.setState({ startupName: e })}
+            onBlur={() => {
+              this.props.updateStartup("name", this.state.startupName);
+              // this.props.handleFieldEdit(
+              //   "name",
+              //   this.state.startupName,
+              //   startup?.id
+              // );
+              // this.props.handleFieldSave("name", startup?.id);
+            }}
+          />
           {this.props.setIsFavorite ? (
             <TouchableOpacity
               onPress={() => this.props.setIsFavorite(!this.props.isFavorite)}
@@ -62,15 +90,16 @@ const styles = StyleSheet.create({
   },
   content: {
     height: "100%",
-    width: "100%",
+    width: "90%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  title: {
+  startupName: {
     color: "#FFF",
     fontSize: 22,
     fontFamily: "montserrat-semi-bold",
+    textAlign: "center",
   },
   iconButton: {
     width: 70,
