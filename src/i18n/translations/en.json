@@ -318,7 +318,8 @@
     "customers": "Customers",
     "pricing": "Pricing",
     "similarProducts": "Similar products",
-    "addMoreProducts": "Add More Product"
+    "addMoreProducts": "Add More Product",
+    "addVideoFile": "Click here to upload file"
   },
   "editScreen": {
     "save": "Save"
