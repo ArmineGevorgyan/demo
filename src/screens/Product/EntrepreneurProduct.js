@@ -11,7 +11,7 @@ import { baseStylesheet } from "../../styles/baseStylesheet";
 import { colors } from "../../styles/colors";
 import AddVideoIcon from "../../../assets/video-add.svg";
 
-const EntrepreneurBlock = ({ t, titleText, id, content, navigate }) => (
+const EntrepreneurBlock = ({ t, titleText, id, content, navigate, isLast }) => (
   <>
     <TouchableOpacity
       onPress={() =>
@@ -25,12 +25,12 @@ const EntrepreneurBlock = ({ t, titleText, id, content, navigate }) => (
       <Text style={{ ...baseStylesheet.titleText, marginBottom: 10 }}>
         {t(`productScreen.${titleText}`)}
       </Text>
-      <CollapsibleText
-        text={content}
-        textStyle={{ ...styles.mainText, color: colors.darkText }}
-      />
     </TouchableOpacity>
-    <DividerLine style={{ marginVertical: 10 }} />
+    <CollapsibleText
+      text={content}
+      textStyle={{ ...styles.mainText, color: colors.darkText }}
+    />
+    {!isLast && <DividerLine style={{ marginVertical: 10 }} />}
   </>
 );
 
@@ -83,13 +83,14 @@ const EntrepreneurProduct = ({ startup, t, navigation }) => {
       </View>
       <FlatList
         data={entrepreneurFields}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <EntrepreneurBlock
             navigate={navigation.navigate}
             titleText={item.titleText}
             content={item.content}
             t={t}
             id={id}
+            isLast={index === entrepreneurFields.length-1}
           />
         )}
       />

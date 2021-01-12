@@ -3,19 +3,18 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import {
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform
 } from "react-native";
-import { Content, Input } from "native-base";
+import { Content, Textarea } from "native-base";
 import { withTranslation } from "react-i18next";
-
 import { useNavigation, useRoute } from "@react-navigation/native";
+
 import GrayHeader from '../components/grayHeader';
-import constants from "../constants";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import {
   handleFieldEdit
 } from "../redux/ducks/startup";
-
-const { windowHeight, windowWidth, headerHeight } = constants;
 
 const EditScreen = ({ t, startup, handleFieldEdit }) => {
   const navigation = useNavigation();
@@ -32,13 +31,15 @@ const EditScreen = ({ t, startup, handleFieldEdit }) => {
         editingField={editingField}
         startupId={id}
       />
-      <Input
-        style={[baseStylesheet.inputField, styles.input]}
-        value={startup && startup[editingField]}
-        onChangeText={text => handleFieldEdit(editingField, text, id)}
-        multiline={true}
-        maxLength={2000}
-      />
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <Textarea
+          rowSpan={20}
+          maxLength={2000}
+          style={styles.textarea}
+          value={startup && startup[editingField]}
+          onChangeText={text => handleFieldEdit(editingField, text, id)}
+        />
+      </KeyboardAvoidingView>
     </Content>
   );
 }
@@ -58,11 +59,9 @@ export default compose(
 )(EditScreen);
 
 const styles = StyleSheet.create({
-  input: {
-    width: windowWidth-20, //20 - horizontal paddings
-    height: windowHeight-headerHeight,
-    textAlignVertical: "top",
+  textarea: {
     marginTop: 20,
+    flex: 1,
     marginHorizontal: 10,
     fontFamily: "montserrat-medium",
     fontSize: 16
