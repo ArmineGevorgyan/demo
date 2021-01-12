@@ -9,6 +9,8 @@ import {
   createStartup,
   getEntrepreneurStartups,
   getStartupById,
+  handleFieldEdit,
+  handleFieldSave,
 } from "../redux/ducks/startup";
 import SmallStartupHeader from "../components/startupSmallHeader";
 import { getTabPopulateComponent } from "../helpers/startupHelper";
@@ -62,6 +64,8 @@ const StartupPopulateScreen = ({
   getStartupById,
   getEntrepreneurStartups,
   createStartup,
+  handleFieldEdit,
+  handleFieldSave,
 }) => {
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
 
@@ -79,6 +83,8 @@ const StartupPopulateScreen = ({
     { key: "faq", title: t("startupTab.faq") },
     { key: "videos", title: t("startupTab.videos") },
   ]);
+
+  const [startupName, setStartupName] = useState(startup?.name);
 
   const scrollY = useRef(new Animated.Value(0)).current;
   let listRefArr = useRef([]);
@@ -147,6 +153,11 @@ const StartupPopulateScreen = ({
     createStartup({ demoVideoUrl: video });
   };
 
+  const updateStartup = (key, value) => {
+    handleFieldEdit(key, value, startup?.id);
+    handleFieldSave(key, startup?.id);
+  };
+
   const renderHeader = (startup) => {
     const y = scrollY.interpolate({
       inputRange: [0, 200, constants.startupHeaderHeight],
@@ -165,7 +176,11 @@ const StartupPopulateScreen = ({
         <Animated.View
           style={[styles.header, { transform: [{ translateY: y }] }]}
         >
-          <StartupHeaderVideoUploader startup={startup} setVideo={setVideo} />
+          <StartupHeaderVideoUploader
+            startup={startup}
+            updateStartup={updateStartup}
+            setVideo={setVideo}
+          />
         </Animated.View>
         <Animated.View
           style={[
@@ -178,7 +193,7 @@ const StartupPopulateScreen = ({
             },
           ]}
         >
-          <SmallStartupHeader name={"Startup"} />
+          <SmallStartupHeader startup={startup} updateStartup={updateStartup} />
         </Animated.View>
       </>
     );
@@ -287,6 +302,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getStartupById: (startupId) => dispatch(getStartupById(startupId)),
     getEntrepreneurStartups: () => dispatch(getEntrepreneurStartups()),
+    handleFieldEdit: (key, value, startupId) =>
+      dispatch(handleFieldEdit(key, value, startupId)),
+    handleFieldSave: (key, startupId) =>
+      dispatch(handleFieldSave(key, startupId)),
     createStartup: (data) => dispatch(createStartup(data)),
   };
 };
