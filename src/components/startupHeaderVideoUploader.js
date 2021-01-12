@@ -4,7 +4,13 @@ import { withTranslation } from "react-i18next";
 import { uploadFile, resetImage } from "../redux/ducks/fileUploader";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { TouchableOpacity, StyleSheet, Image, Text } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableHighlight,
+} from "react-native";
 import VideoView from "./videoView";
 import constants from "../constants";
 import AddVideoIcon from "../../assets/video-add.svg";
@@ -14,6 +20,7 @@ import { colors } from "../styles/colors";
 import Modal from "react-native-modal";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import { handleFieldEdit, handleFieldSave } from "../redux/ducks/startup";
+import { showNotification } from "../helpers/notificationHelper";
 
 class StartupHeaderVideoUploader extends Component {
   constructor(props) {
@@ -46,6 +53,7 @@ class StartupHeaderVideoUploader extends Component {
         this.props.startup?.id
       );
       this.props.handleFieldSave("demoVideoUrl", this.props.startup?.id);
+      showNotification("success", "Successfully uploaded");
     }
   }
 
@@ -72,36 +80,7 @@ class StartupHeaderVideoUploader extends Component {
             height: constants.startupHeaderHeight,
           }}
         >
-          {/* TODO add if statement to check if video exist or not 
-         <VideoView
-          videoSource={startup?.demoVideoUrl}
-          posterSource={startup?.coverPhoto}
-          navigation={this.props.navigation}
-          size={{
-            width: "100%",
-            height: 250,
-          }}
-        /> */}
-
-          <View style={styles.container}>
-            <View style={styles.videoIconTextContainer}>
-              {isLoadingVideo ? (
-                <Spinner color={colors.secondaryColor} />
-              ) : (
-                <TouchableOpacity
-                  style={styles.videoIconContainer}
-                  onPress={this.pickImage}
-                >
-                  <AddVideoIcon />
-                </TouchableOpacity>
-              )}
-              <Text style={styles.introVideoText}>
-                {!isLoadingVideo
-                  ? t("startupHeader.introVideo")
-                  : t("startupHeader.videoUploading")}
-              </Text>
-            </View>
-          </View>
+          <View style={styles.container}></View>
           <View style={styles.iconContainer}>
             <View
               style={{
@@ -112,6 +91,25 @@ class StartupHeaderVideoUploader extends Component {
               <TouchableOpacity onPress={this.onNotificationClick}>
                 <Icon name="bell" type="Feather" style={styles.icon} />
               </TouchableOpacity>
+            </View>
+            <View style={styles.videoIconTextContainer}>
+              {isLoadingVideo ? (
+                <Spinner color={colors.secondaryColor} />
+              ) : (
+                <TouchableHighlight
+                  style={styles.videoIconContainer}
+                  onPress={this.pickImage}
+                >
+                  <AddVideoIcon />
+                </TouchableHighlight>
+              )}
+              <Text style={styles.introVideoText}>
+                {!isLoadingVideo
+                  ? entrepreneurStartups?.demoVideoUrl
+                    ? t("startupHeader.alreadyUploaded")
+                    : t("startupHeader.introVideo")
+                  : t("startupHeader.videoUploading")}
+              </Text>
             </View>
             <View style={styles.logoContainer}>
               <SelectImage
@@ -226,7 +224,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.3)",
   },
   videoIconTextContainer: {
-    height: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -267,6 +264,7 @@ const styles = StyleSheet.create({
   introVideoText: {
     color: "#FFFFFF",
     fontSize: 14,
+    textAlign: "center",
     fontFamily: "montserrat-regular",
   },
   startupTitle: {
