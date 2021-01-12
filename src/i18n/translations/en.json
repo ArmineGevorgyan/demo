@@ -290,7 +290,9 @@
   },
   "startupHeader": {
     "introVideo": "Startup-intro video",
-    "companyLogo": "Compny\nlogo"
+    "companyLogo": "Compny\nlogo",
+    "videoUploading": "Uploading video, don't close the app",
+    "alreadyUploaded": "Already uploaded,\ntap to upload a new one"
   },
   "discussionsScreen": {
     "createNewButton": "Create new discussion",

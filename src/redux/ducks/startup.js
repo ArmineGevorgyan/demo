@@ -7,6 +7,7 @@ const initialState = {
   isLoading: false,
   startups: null,
   singleStartup: null,
+  entrepreneurStartups: null,
   error: null,
   entrepreneurStartups: null,
   founderModalItem: null,
@@ -63,12 +64,13 @@ const startupSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    getEntrepreneurStartups: (state, action) => ({
+    getEntrepreneurStartups: (state) => ({
       ...state,
       isLoading: true,
     }),
     getEntrepreneurStartupsSuccess: (state, action) => ({
       ...state,
+      isLoading: false,
       entrepreneurStartups: action.payload,
     }),
     getEntrepreneurStartupsFail: (state, action) => ({
@@ -113,6 +115,13 @@ const startupSlice = createSlice({
     handleFieldSaveFail: (state, action) => ({
       ...state,
       isLoading: false,
+    }),
+    createStartupSuccess: (state, action) => ({
+      ...state,
+      entrepreneurStartups: [action.payload],
+    }),
+    createStartupFail: (state, action) => ({
+      ...state,
       error: action.payload,
     }),
     openFounderModal: (state, action) => ({
@@ -227,6 +236,25 @@ export const handleFieldSave = (editingField, startupId) => (dispatch) => {
         dispatch(startupSlice.actions.handleFieldSaveFail(error));
       });
   }
+};
+
+export const createStartup = (data) => {
+  return (dispatch) => {
+    axios
+      .post(`${API_URL}/startups`, {
+        name: "MMM",
+        demoVideoUrl: data.demoVideoUrl,
+      })
+      .then((r) => {
+        return r.data;
+      })
+      .then((data) => {
+        dispatch(startupSlice.actions.createStartupSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(startupSlice.actions.createStartupFail(error));
+      });
+  };
 };
 
 export const getStartupTeamMembers = (id) => (dispatch) => {

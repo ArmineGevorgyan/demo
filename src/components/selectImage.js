@@ -82,6 +82,8 @@ class SelecImage extends Component {
   showModal = () => {
     if (!this.props.isLogo) {
       this.setState({ isModalOpen: true });
+    } else {
+      this.pickImage();
     }
   };
 
