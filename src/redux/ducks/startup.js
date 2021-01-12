@@ -4,6 +4,7 @@ import { API_URL } from "../../config";
 import store from "../store";
 
 const initialState = {
+  startupName: "",
   isLoading: false,
   startups: null,
   singleStartup: null,
@@ -18,6 +19,10 @@ const startupSlice = createSlice({
   name: "startup",
   initialState,
   reducers: {
+    handleStartupName: (state, action) => ({
+      ...state,
+      startupName: action.payload,
+    }),
     getNewStartups: (state) => ({ ...state, isLoading: true }),
     getNewStartupsSuccess: (state, action) => ({
       ...state,
@@ -138,6 +143,10 @@ const startupSlice = createSlice({
 });
 
 const startupReducer = startupSlice.reducer;
+
+export const handleStartupName = (name) => {
+  return (dispatch) => dispatch(startupSlice.actions.handleStartupName(name));
+};
 
 export const toggleIsEmpty = () => {
   return (dispatch) => dispatch(startupSlice.actions.toggleIsEmpty());
