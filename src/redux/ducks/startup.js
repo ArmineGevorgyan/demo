@@ -114,7 +114,9 @@ const startupSlice = createSlice({
     handleFieldSaveSuccess: (state, action) => ({
       ...state,
       entrepreneurStartups: state?.entrepreneurStartups.map((startup) =>
-        startup.id === action.payload.id ? action.payload : startup
+        startup.id === action.payload.id
+          ? action.payload
+          : { ...action.payload, ...startup }
       ),
     }),
     handleFieldSaveFail: (state, action) => ({
