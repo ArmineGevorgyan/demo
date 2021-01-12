@@ -54,8 +54,10 @@ const EntrepreneurProduct = ({
   handleFieldSave,
 }) => {
   React.useEffect(() => {
-    handleFieldEdit("demoVideoUrl", demoVideo, startup?.id);
-    handleFieldSave("demoVideoUrl", startup?.id);
+    if (demoVideo) {
+      handleFieldEdit("demoVideoUrl", demoVideo, startup?.id);
+      handleFieldSave("demoVideoUrl", startup?.id);
+    }
   }, [demoVideo]);
 
   const description = startup?.description,
