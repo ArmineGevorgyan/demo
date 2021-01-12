@@ -108,8 +108,8 @@ class SmallStartupCard extends Component {
             <View style={styles.slider}>
               {GradientSlider(
                 0,
-                startup.investmentGoal,
-                startup.totalCommittedAmount
+                startup.investmentGoal || 0,
+                startup.totalCommittedAmount || 0
               )}
             </View>
             <View
