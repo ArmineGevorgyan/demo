@@ -215,7 +215,6 @@ export const handleFieldSave = (editingField, startupId) => (dispatch) => {
   } else {
     axios
       .post(`${API_URL}/startups`, {
-        name: "Placeholder",
         [editingField]: state.startup.entrepreneurStartups[0][editingField],
       })
       .then((res) => {
