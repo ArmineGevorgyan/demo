@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Keyboard } from "react-native";
 import { View, Icon, Spinner, Input } from "native-base";
 import { withTranslation } from "react-i18next";
 import { uploadFile, resetImage } from "../redux/ducks/fileUploader";
@@ -11,7 +12,6 @@ import {
   Text,
   TouchableHighlight,
 } from "react-native";
-import VideoView from "./videoView";
 import constants from "../constants";
 import AddVideoIcon from "../../assets/video-add.svg";
 import SelectImage from "./selectImage";
@@ -29,6 +29,7 @@ import { showNotification } from "../helpers/notificationHelper";
 class StartupHeaderVideoUploader extends Component {
   constructor(props) {
     super(props);
+    this.inputRef = React.createRef();
     this.state = {
       isFavorite: false,
       image: null,
@@ -38,6 +39,7 @@ class StartupHeaderVideoUploader extends Component {
   }
 
   componentDidMount() {
+    Keyboard.addListener("keyboardDidHide", this.unBlurInputs);
     if (this.props.startup?.name) {
       this.setState({ startupName: this.props.startup?.name });
     }
@@ -54,10 +56,21 @@ class StartupHeaderVideoUploader extends Component {
     })();
   }
 
+  unBlurInputs = () => {
+    this.inputRef?._root?.blur();
+  };
+
   componentDidUpdate(prevProps) {
     if (this.props.dVideo !== prevProps.dVideo) {
-      // this.props.updateStartup("demoVideoUrl", this.props.dVideo);
+      this.props.updateStartup("introVideoUrl", this.props.dVideo);
       showNotification("success", "Successfully uploaded");
+    }
+    if (
+      this.props.entrepreneurStartup?.name !== this.props.startupName &&
+      this.props.entrepreneurStartup?.name !== ""
+    ) {
+      this.setState({ startupName: this.props.entrepreneurStartup?.name });
+      this.props.handleStartupName(this.props.entrepreneurStartup?.name);
     }
   }
 
@@ -75,7 +88,7 @@ class StartupHeaderVideoUploader extends Component {
   onNotificationClick = () => {};
 
   render() {
-    const { t, startup, isLoadingVideo, entrepreneurStartups } = this.props;
+    const { t, startup, isLoadingVideo, entrepreneurStartup } = this.props;
 
     return (
       <>
@@ -109,7 +122,7 @@ class StartupHeaderVideoUploader extends Component {
               )}
               <Text style={styles.introVideoText}>
                 {!isLoadingVideo
-                  ? entrepreneurStartups?.demoVideoUrl
+                  ? entrepreneurStartup?.introVideoUrl
                     ? t("startupHeader.alreadyUploaded")
                     : t("startupHeader.introVideo")
                   : t("startupHeader.videoUploading")}
@@ -126,15 +139,18 @@ class StartupHeaderVideoUploader extends Component {
             </View>
           </View>
           <Input
+            blurOnSubmit
+            ref={(input) => {
+              this.inputRef = input;
+            }}
             style={styles.startupTitle}
-            value={this.props.startupName}
+            value={this.state.startupName}
             placeholder="Startup name"
             placeholderTextColor="rgba(0,0,0,0.3)"
-            onChange={(text) => this.props.handleStartupName(text)}
+            onChangeText={(text) => this.setState({ startupName: text })}
             onBlur={() => {
               this.props.updateStartup("name", this.state.startupName);
             }}
-            blurOnSubmit
           />
         </View>
         {this.state.isModalOpen && (
@@ -200,7 +216,7 @@ const mapStateToProps = (state, props) => {
   const dVideo = state.fileUploader.video;
   const isLoading = state.fileUploader.isLoading;
   const isLoadingVideo = state.fileUploader.isLoadingVideo;
-  const entrepreneurStartups =
+  const entrepreneurStartup =
     state.startup.entrepreneurStartups && state.startup.entrepreneurStartups[0];
   return {
     startupName,
@@ -208,7 +224,7 @@ const mapStateToProps = (state, props) => {
     dVideo,
     isLoading,
     isLoadingVideo,
-    entrepreneurStartups,
+    entrepreneurStartup,
   };
 };
 
@@ -281,7 +297,7 @@ const styles = StyleSheet.create({
   },
   startupTitle: {
     paddingTop: 5,
-    paddingLeft: 110,
+    marginLeft: 115,
     fontSize: 20,
     color: "#262F3E",
     fontFamily: "montserrat-medium",
