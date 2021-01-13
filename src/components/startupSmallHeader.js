@@ -35,11 +35,13 @@ class SmallStartupHeader extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.entrepreneurStartup?.name !== this.props.startupName &&
-      this.props.entrepreneurStartup?.name !== ""
-    ) {
-      this.setState({ startupName: this.props.startup?.name });
+    if (this.props.user?.authorities[0]) {
+      if (
+        this.props.entrepreneurStartup?.name !== this.props.startupName &&
+        this.props.entrepreneurStartup?.name !== ""
+      ) {
+        this.setState({ startupName: this.props.startup?.name });
+      }
     }
   }
 
@@ -97,6 +99,7 @@ class SmallStartupHeader extends Component {
 }
 
 const mapStateToProps = (state, props) => {
+  const user = state.user.userData;
   const startupName = state.startup.startupName;
   const entrepreneurStartup =
     state.startup.entrepreneurStartups && state.startup.entrepreneurStartups[0];
