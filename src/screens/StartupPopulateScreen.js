@@ -84,8 +84,6 @@ const StartupPopulateScreen = ({
     { key: "videos", title: t("startupTab.videos") },
   ]);
 
-  const [startupName, setStartupName] = useState(startup?.name);
-
   const scrollY = useRef(new Animated.Value(0)).current;
   let listRefArr = useRef([]);
   let listOffset = useRef({});

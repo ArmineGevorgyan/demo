@@ -12,6 +12,7 @@ import { compose } from "redux";
 import { Keyboard } from "react-native";
 import { Input, Icon } from "native-base";
 import BackgroundImage from "../../assets/blue-header-rect.png";
+import { isEntrepreneur } from "../helpers/userTypeHelper";
 
 class SmallStartupHeader extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class SmallStartupHeader extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.user?.authorities[0]) {
+    if (isEntrepreneur(this.props.user?.authorities[0])) {
       if (
         this.props.entrepreneurStartup?.name !== this.props.startupName &&
         this.props.entrepreneurStartup?.name !== ""
@@ -56,21 +57,25 @@ class SmallStartupHeader extends Component {
           ) : (
             <View style={{ width: 30 }}></View>
           )}
+          {isEntrepreneur(this.props.user?.authorities[0]) ? (
+            <Input
+              blurOnSubmit
+              ref={(input) => {
+                this.inputRef = input;
+              }}
+              style={styles.startupName}
+              value={this.state.startupName}
+              placeholder="Startup name"
+              placeholderTextColor="rgba(0,0,0,0.3)"
+              onChangeText={(e) => this.setState({ startupName: e })}
+              onBlur={() => {
+                this.props.updateStartup("name", this.state.startupName);
+              }}
+            />
+          ) : (
+            <Text style={styles.startupName}>{this.props.name}</Text>
+          )}
 
-          <Input
-            blurOnSubmit
-            ref={(input) => {
-              this.inputRef = input;
-            }}
-            style={styles.startupName}
-            value={this.state.startupName}
-            placeholder="Startup name"
-            placeholderTextColor="rgba(0,0,0,0.3)"
-            onChangeText={(e) => this.setState({ startupName: e })}
-            onBlur={() => {
-              this.props.updateStartup("name", this.state.startupName);
-            }}
-          />
           {this.props.setIsFavorite ? (
             <TouchableOpacity
               onPress={() => this.props.setIsFavorite(!this.props.isFavorite)}
@@ -104,6 +109,7 @@ const mapStateToProps = (state, props) => {
   const entrepreneurStartup =
     state.startup.entrepreneurStartups && state.startup.entrepreneurStartups[0];
   return {
+    user,
     startupName,
     entrepreneurStartup,
   };
