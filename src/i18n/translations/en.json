@@ -345,6 +345,10 @@
     "infoSession": "Info Session",
     "call": "Book a Call"
   },
+  "validationMessage": {
+    "maxNumIs": "The maximum number of characters is 2000. Currently there are",
+    "characters": "characters"
+  },
   "infoSessionModal": {
     "infoSession": "Info Session",
     "date": "Info session date",

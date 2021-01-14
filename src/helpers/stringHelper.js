@@ -1,0 +1,1 @@
+export const removeHTML = str => str.replaceAll(/<.*?>/g, "");
