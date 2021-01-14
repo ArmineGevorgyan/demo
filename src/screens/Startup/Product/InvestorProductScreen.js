@@ -4,14 +4,14 @@ import { StyleSheet, Text, View } from "react-native";
 import { Content } from "native-base";
 import { withTranslation } from "react-i18next";
 
-import DividerLine from "../../components/dividerLine";
-import VideoView from "../../components/videoView";
-import CollapsibleText from "../../components/collapsibleText";
-import { baseStylesheet } from "../../styles/baseStylesheet";
-import { colors } from "../../styles/colors";
-import constants from "../../constants";
+import DividerLine from "../../../components/dividerLine";
+import VideoView from "../../../components/videoView";
+import CollapsibleText from "../../../components/collapsibleText";
+import { baseStylesheet } from "../../../styles/baseStylesheet";
+import { colors } from "../../../styles/colors";
+import constants from "../../../constants";
 
-class InvestorProduct extends Component {
+class InvestorProductScreen extends Component {
   render() {
     const {
       t,
@@ -109,7 +109,7 @@ class InvestorProduct extends Component {
   }
 }
 
-export default compose(withTranslation("translations"))(InvestorProduct);
+export default compose(withTranslation("translations"))(InvestorProductScreen);
 
 const styles = StyleSheet.create({
   mainText: {

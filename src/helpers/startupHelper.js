@@ -2,12 +2,13 @@ import React from "react";
 import { View } from "react-native";
 import StartupFaqScreen from "../screens/StartupFaqScreen";
 import DiscussionsScreen from "../screens/DiscussionsScreen";
-import TeamScreen from "../screens/TeamScreen";
-import InvestorProduct from "../screens/Product/InvestorProduct";
-import EntrepreneurProduct from "../screens/Product/EntrepreneurProduct";
+import InvestorTeamScreen from "../screens/Startup/Team/InvestorTeamScreen";
+import InvestorProductScreen from "../screens/Startup/Product/InvestorProductScreen";
+import EntrepreneurProductScreen from "../screens/Startup/Product/EntrepreneurProductScreen";
 import CompanyScreen from "../screens/CompanyScreen";
 import OverviewScreen from "../screens/OverviewScreen";
 import UpdatesScreen from "../screens/UpdatesScreen";
+import EntrepreneurTeamScreen from "../screens/Startup/Team/EntrepreneurTeamScreen";
 
 const EmptyContainer = ({ children }) => {
   return (
@@ -36,7 +37,7 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
       return (
         <EmptyContainer>
           {index === 1 ? (
-            <InvestorProduct startup={startup} navigation={navigation} />
+            <InvestorProductScreen startup={startup} navigation={navigation} />
           ) : (
             <></>
           )}
@@ -47,7 +48,7 @@ export const getTabComponent = (key, startup, navigation, index, reload) => {
       return (
         <EmptyContainer>
           {index === 2 ? (
-            <TeamScreen startup={startup} navigation={navigation} />
+            <InvestorTeamScreen startup={startup} navigation={navigation} />
           ) : (
             <></>
           )}
@@ -116,7 +117,7 @@ export const getTabPopulateComponent = (key, startup, navigation, index) => {
       return (
         <EmptyContainer>
           {index === 1 ? (
-            <EntrepreneurProduct
+            <EntrepreneurProductScreen
               startup={startup}
               navigation={navigation}
             />
@@ -127,7 +128,11 @@ export const getTabPopulateComponent = (key, startup, navigation, index) => {
       );
     }
     case "team": {
-      return <EmptyContainer>{index === 2 ? <></> : <></>}</EmptyContainer>;
+      return (
+        <EmptyContainer>
+          {index === 2 ? <EntrepreneurTeamScreen /> : <></>}
+        </EmptyContainer>
+      );
     }
     case "company": {
       return <EmptyContainer>{index === 3 ? <></> : <></>}</EmptyContainer>;

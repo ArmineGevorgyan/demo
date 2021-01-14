@@ -10,18 +10,18 @@ import {
 } from "react-native";
 import { Content, Spinner } from "native-base";
 import { withTranslation } from "react-i18next";
-import constants from "../constants";
-import { baseStylesheet } from "../styles/baseStylesheet";
-import { colors } from "../styles/colors";
+import constants from "../../../constants";
+import { baseStylesheet } from "../../../styles/baseStylesheet";
+import { colors } from "../../../styles/colors";
 import {
   getStartupTeamMembers,
   openFounderModal,
-} from "../redux/ducks/startup";
-import FounderCard from "../components/teamMember";
-import DividerLine from "../components/dividerLine";
-import FounderModal from "../components/founderModal";
+} from "../../../redux/ducks/startup";
+import FounderCard from "../../../components/teamMember";
+import DividerLine from "../../../components/dividerLine";
+import FounderModal from "../../../components/founderModal";
 
-class TeamScreen extends Component {
+class InvestorTeamScreen extends Component {
   componentDidMount() {
     this.props.getStartupTeamMembers(this.props.startup.id);
   }
@@ -122,7 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(TeamScreen);
+)(InvestorTeamScreen);
 
 const styles = StyleSheet.create({
   mainText: {
