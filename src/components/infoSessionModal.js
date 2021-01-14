@@ -8,6 +8,7 @@ import Modal from "react-native-modal";
 import moment from "moment-timezone";
 import * as Localization from "expo-localization";
 import { baseStylesheet } from "../styles/baseStylesheet";
+import JoinInfoSessionSuccess from "./joinInfoSessionSuccess";
 import {
   closeInfoSessionModal,
   joinInfoSession,
@@ -100,6 +101,7 @@ class InfoSessionModal extends Component {
             </View>
           </Modal>
         )}
+        <JoinInfoSessionSuccess />
       </>
     );
   }
