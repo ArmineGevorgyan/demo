@@ -10,9 +10,9 @@ import {
   RichEditor,
   RichToolbar,
 } from "react-native-pell-rich-editor";
+import { htmlToText } from "html-to-text";
 
 import { showNotification } from "../helpers/notificationHelper";
-import { removeHTML } from "../helpers/stringHelper";
 import GrayHeader from "../components/grayHeader";
 import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
@@ -52,11 +52,12 @@ const EditScreen = ({ t, startup, handleFieldEdit }) => {
         ref={richText}
         initialContentHTML={startup[editingField]}
         onChange={(text) => {
-          if (removeHTML(text).length > 2000) {
+          const { length } = htmlToText(text);
+          if (length > 2000) {
             showNotification(
               constants.notificationTypes.ERROR,
               `${t("validationMessage.maxNumIs")} ${
-                removeHTML(text).length
+                length
               } ${t("validationMessage.characters")}`,
               2000
             );

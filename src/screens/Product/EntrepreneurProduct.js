@@ -5,43 +5,18 @@ import {
   Text,
   View,
   FlatList,
-  TouchableOpacity,
   TouchableHighlight,
 } from "react-native";
 import { uploadFile } from "../../redux/ducks/fileUploader";
 import { handleFieldEdit, handleFieldSave } from "../../redux/ducks/startup";
 import { connect } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
-import { Icon, Content, Spinner } from "native-base";
+import { Content, Spinner } from "native-base";
 import { withTranslation } from "react-i18next";
-import DividerLine from "../../components/dividerLine";
-import CollapsibleText from "../../components/collapsibleText";
+import StartupTextBlock from "../../components/startupTextBlock";
 import { baseStylesheet } from "../../styles/baseStylesheet";
 import { colors } from "../../styles/colors";
 import AddVideoIcon from "../../../assets/video-add.svg";
-
-const EntrepreneurBlock = ({ t, titleText, id, content, navigate, isLast }) => (
-  <>
-    <TouchableOpacity
-      onPress={() =>
-        navigate("EditScreen", {
-          title: t(`productScreen.${titleText}`),
-          editingField: titleText,
-          id,
-        })
-      }
-    >
-      <Text style={{ ...baseStylesheet.titleText, marginBottom: 10 }}>
-        {t(`productScreen.${titleText}`)}
-      </Text>
-    </TouchableOpacity>
-    <CollapsibleText
-      text={content}
-      textStyle={{ ...styles.mainText, color: colors.darkText }}
-    />
-    {!isLast && <DividerLine style={{ marginVertical: 10 }} />}
-  </>
-);
 
 const EntrepreneurProduct = ({
   startup,
@@ -130,12 +105,13 @@ const EntrepreneurProduct = ({
       </View>
       <FlatList
         data={entrepreneurFields}
-        renderItem={({ item, index }) => (
-          <EntrepreneurBlock
+        renderItem={({ item: { titleText, content }, index }) => (
+          <StartupTextBlock
             navigate={navigation.navigate}
-            titleText={item.titleText}
-            content={item.content}
-            t={t}
+            navigateTo="EditScreen"
+            fieldName={titleText}
+            titleText={`productScreen.${titleText}`}
+            content={content}
             id={id}
             isLast={index === entrepreneurFields.length - 1}
           />
