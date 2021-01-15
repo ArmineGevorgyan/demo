@@ -31,7 +31,7 @@ import { authenticate } from "./src/redux/ducks/authentication";
 import { navigationRef } from "./src/helpers/navigationHelper";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import TemporaryScreen from "./src/screens/TemporaryScreen";
-import ParkingLotScreen from "./src/screens/ParkingLotScreen";
+import PassedDealsScreen from "./src/screens/PassedDealsScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import ContactUsSuccess from "./src/screens/ContactUsSuccess";
 import EntProfilePopulateScreen from "./src/screens/EntProfilePopulateScreen";
@@ -167,7 +167,7 @@ class AppNavigator extends Component {
         <Stack.Navigator initialRouteName="Home" headerMode={false}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="TemporaryScreen" component={TemporaryScreen} />
-          <Stack.Screen name="ParkingLotScreen" component={ParkingLotScreen} />
+          <Stack.Screen name="PassedDealsScreen" component={PassedDealsScreen} />
           <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} />
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />

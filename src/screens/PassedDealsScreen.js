@@ -17,7 +17,7 @@ import BackgroundImageCard from "../components/backgroundImageCard";
 import constants from "../constants";
 import { isInvestor } from "../helpers/userTypeHelper";
 
-class ParkingLotScreen extends Component {
+class PassedDealsScreen extends Component {
   componentDidMount() {
     const {
       getParkingLotStartups,
@@ -131,7 +131,7 @@ class ParkingLotScreen extends Component {
     return (
       <View style={baseStylesheet.baseContainer}>
         <GrayHeader
-          title="Parking Lot"
+          title="Passed Deals"
           enableSearch
           enableBell={isInvestor(user?.authorities[0])}
           backButtonHandler={this.backButtonHandler}
@@ -175,7 +175,7 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(ParkingLotScreen);
+)(PassedDealsScreen);
 
 const styles = StyleSheet.create({
   inviteButton: {

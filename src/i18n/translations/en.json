@@ -129,7 +129,7 @@
     "interested": "Interested",
     "committed": "Committed",
     "inviteStartup": "Invite Startup",
-    "hiddenItemText": "Move to Parking Lot"
+    "hiddenItemText": "Move to Passed Deals"
   },
   "parkingLot": {
     "hiddenItemText": "Move to Pipeline"
@@ -140,7 +140,7 @@
     "integration": "Integration",
     "notification": "Notifications",
     "preferences": "Preferences",
-    "parkingLot": "Parking Lot",
+    "parkingLot": "Passed Deals",
     "faq": "FAQ",
     "contactUs": "Contact Us",
     "legal": "Legal",
@@ -378,7 +378,7 @@
     "entrepreneur": "Entrepreneur",
     "update": "Update"
   },
-  "joinInfoSessionSuccess":{
+  "joinInfoSessionSuccess": {
     "contextHeading": "You have successfully joined the info session.",
     "context": "Please check your email for a calendar invite",
     "OKButton": "Close"

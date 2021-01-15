@@ -17,6 +17,7 @@ import { colors } from "../../styles/colors";
 import SmallStartupHeader from "../../components/startupSmallHeader";
 import { getTabPopulateComponent } from "../../helpers/startupHelper";
 import StartupHeaderVideoUploader from "../../components/startupHeaderVideoUploader";
+import {removeToken} from '../../helpers/auth'
 
 const TabScene = ({
   renderItem,
@@ -69,7 +70,7 @@ const StartupPopulateScreen = ({
 }) => {
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
 
-  useEffect(() => getEntrepreneurStartups(), []);
+  useEffect(() => removeToken() || getEntrepreneurStartups(), []);
 
   const navigation = useNavigation();
   const startup = entrepreneurStartups && entrepreneurStartups[0];
