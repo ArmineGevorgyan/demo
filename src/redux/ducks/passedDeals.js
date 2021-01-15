@@ -5,7 +5,7 @@ import store from "../store";
 
 const initialState = {
   isLoading: false,
-  addingToParkingLot: false,
+  addingToPassedDeals: false,
   loadingMore: false,
   noMoreStartups: false,
   startups: [],
@@ -14,32 +14,32 @@ const initialState = {
   error: null,
 };
 
-const parkingLotSlice = createSlice({
-  name: "parkingLot",
+const passedDealsSlice = createSlice({
+  name: "passedDeals",
   initialState,
   reducers: {
-    addStartupToParkingLotFail: (state, action) => ({
+    addStartupToPassedDealsFail: (state, action) => ({
       ...state,
       error: action.payload,
     }),
-    setParkingLotLoading: (state, action) => ({
+    setPassedDealsLoading: (state, action) => ({
       ...state,
-      addingToParkingLot: action.payload,
+      addingToPassedDeals: action.payload,
     }),
-    getParkingLotStartups: (state) => ({
+    getPassedDealsStartups: (state) => ({
       ...state,
       noMoreStartups: false,
       page: 0,
       nextPage: 1,
       isLoading: true,
     }),
-    getParkingLotStartupsSuccess: (state, action) => ({
+    getPassedDealsStartupsSuccess: (state, action) => ({
       ...state,
       isLoading: false,
       startups: action.payload,
       error: null,
     }),
-    getParkingLotStartupsFail: (state, action) => ({
+    getPassedDealsStartupsFail: (state, action) => ({
       ...state,
       isLoading: false,
       error: action.payload,
@@ -78,40 +78,40 @@ const parkingLotSlice = createSlice({
   },
 });
 
-const parkingLotReducer = parkingLotSlice.reducer;
+const passedDealsReducer = passedDealsSlice.reducer;
 
-export const addStartupToParkingLot = (startup) => {
+export const addStartupToPassedDeals = (startup) => {
   const state = store.getState();
-  const parkingLotState = state.parkingLot;
+  const passedDealsState = state.passedDeals;
 
   return (dispatch) => {
     axios
       .post(`${API_URL}/startups/${startup.id}/parking-lot`)
       .then(() => {
-        if (parkingLotState.addingToParkingLot) {
-          dispatch(getParkingLotStartups());
+        if (passedDealsState.addingToPassedDeals) {
+          dispatch(getPassedDealsStartups());
         } else {
-          dispatch(parkingLotSlice.actions.setParkingLotLoading(false));
+          dispatch(passedDealsSlice.actions.setPassedDealsLoading(false));
         }
       })
       .catch((error) => {
-        dispatch(parkingLotSlice.actions.addStartupToParkingLotFail(error));
+        dispatch(passedDealsSlice.actions.addStartupToPassedDealsFail(error));
       });
   };
 };
 
-export const setParkingLotLoading = () => {
+export const setPassedDealsLoading = () => {
   return (dispatch) => {
-    dispatch(parkingLotSlice.actions.setParkingLotLoading(true));
+    dispatch(passedDealsSlice.actions.setPassedDealsLoading(true));
   };
 };
 
-export const getParkingLotStartups = (page = 0, size = 10) => {
+export const getPassedDealsStartups = (page = 0, size = 10) => {
   const state = store.getState();
-  const parkingLotState = state.parkingLot;
+  const passedDealsState = state.passedDeals;
 
   return (dispatch) => {
-    dispatch(parkingLotSlice.actions.getParkingLotStartups());
+    dispatch(passedDealsSlice.actions.getPassedDealsStartups());
 
     axios
       .get(`${API_URL}/startups/parking-lot?page=${page}&size=${size}`)
@@ -119,20 +119,20 @@ export const getParkingLotStartups = (page = 0, size = 10) => {
         return r.data;
       })
       .then((data) => {
-        if (parkingLotState.addingToParkingLot) {
-          dispatch(parkingLotSlice.actions.setParkingLotLoading(false));
+        if (passedDealsState.addingToPassedDeals) {
+          dispatch(passedDealsSlice.actions.setPassedDealsLoading(false));
         }
-        dispatch(parkingLotSlice.actions.getParkingLotStartupsSuccess(data));
+        dispatch(passedDealsSlice.actions.getPassedDealsStartupsSuccess(data));
       })
       .catch((error) =>
-        dispatch(parkingLotSlice.actions.getParkingLotStartupsFail(error))
+        dispatch(passedDealsSlice.actions.getPassedDealsStartupsFail(error))
       );
   };
 };
 
 export const getMoreStartups = (page, size = 10) => {
   return (dispatch) => {
-    dispatch(parkingLotSlice.actions.getMoreStartups());
+    dispatch(passedDealsSlice.actions.getMoreStartups());
 
     axios
       .get(`${API_URL}/startups/parking-lot?page=${page}&size=${size}`)
@@ -141,12 +141,12 @@ export const getMoreStartups = (page, size = 10) => {
       })
       .then((data) => {
         if (data == undefined || data.length == 0) {
-          return dispatch(parkingLotSlice.actions.noMoreStartups());
+          return dispatch(passedDealsSlice.actions.noMoreStartups());
         }
-        dispatch(parkingLotSlice.actions.getMoreStartupsSuccess(data));
+        dispatch(passedDealsSlice.actions.getMoreStartupsSuccess(data));
       })
       .catch((error) =>
-        dispatch(parkingLotSlice.actions.getMoreStartupsFail(error))
+        dispatch(passedDealsSlice.actions.getMoreStartupsFail(error))
       );
   };
 };
@@ -156,12 +156,12 @@ export const removeCard = (startupId) => {
     axios
       .post(`${API_URL}/startups/${startupId}/interested`, {})
       .then(() => {
-        dispatch(parkingLotSlice.actions.removeCardSuccess(startupId));
+        dispatch(passedDealsSlice.actions.removeCardSuccess(startupId));
       })
       .catch((error) =>
-        dispatch(parkingLotSlice.actions.removeCardFail(error))
+        dispatch(passedDealsSlice.actions.removeCardFail(error))
       );
   };
 };
 
-export default parkingLotReducer;
+export default passedDealsReducer;

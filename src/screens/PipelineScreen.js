@@ -16,7 +16,7 @@ import {
   removeCard,
 } from "../redux/ducks/pipeline";
 import BackgroundImageCard from "../components/backgroundImageCard";
-import ParkingLotIcon from "../../assets/parkingmeter.svg";
+import PassedDealsIcon from "../../assets/parkingmeter.svg";
 import constants from "../constants";
 import { isInvestor } from "../helpers/userTypeHelper";
 
@@ -26,11 +26,11 @@ class PipelineScreen extends Component {
       getInterestedStartups,
       navigation,
       addingToPipeline,
-      addingToParkingLot,
+      addingToPassedDeals,
     } = this.props;
 
     navigation.addListener("focus", () => {
-      if (!addingToPipeline && !addingToParkingLot) {
+      if (!addingToPipeline && !addingToPassedDeals) {
         getInterestedStartups();
       }
     });
@@ -39,7 +39,7 @@ class PipelineScreen extends Component {
   componentDidUpdate(prevProps) {
     if (
       (prevProps.addingToPipeline && !this.props.addingToPipeline) ||
-      (prevProps.addingToParkingLot && !this.props.addingToParkingLot)
+      (prevProps.addingToPassedDeals && !this.props.addingToPassedDeals)
     ) {
       this.props.getInterestedStartups();
     }
@@ -49,7 +49,7 @@ class PipelineScreen extends Component {
     return (
       <View style={styles.hiddenCardContainer}>
         <View style={styles.hiddenCard}>
-          <ParkingLotIcon style={styles.icon} />
+          <PassedDealsIcon style={styles.icon} />
           <Text style={styles.hiddenText}>
             {this.props.t("pipeline.hiddenItemText")}
           </Text>
@@ -90,10 +90,10 @@ class PipelineScreen extends Component {
       nextPage,
       noMoreStartups,
       addingToPipeline,
-      addingToParkingLot,
+      addingToPassedDeals,
     } = this.props;
 
-    if (isLoading || addingToParkingLot) {
+    if (isLoading || addingToPassedDeals) {
       return <Spinner color={colors.secondaryColor} />;
     }
 
@@ -102,7 +102,7 @@ class PipelineScreen extends Component {
         return;
       }
 
-      if (!addingToPipeline && !addingToParkingLot) {
+      if (!addingToPipeline && !addingToPassedDeals) {
         getMoreStartups(nextPage);
       }
     };
@@ -172,7 +172,7 @@ const mapStateToProps = (state, props) => {
   const noMoreStartups = state.pipeline.noMoreStartups;
   const user = state.user.userData;
   const addingToPipeline = state.pipeline.addingToPipeline;
-  const addingToParkingLot = state.parkingLot.addingToParkingLot;
+  const addingToPassedDeals = state.passedDeals.addingToPassedDeals;
 
   return {
     startups,
@@ -182,7 +182,7 @@ const mapStateToProps = (state, props) => {
     noMoreStartups,
     user,
     addingToPipeline,
-    addingToParkingLot,
+    addingToPassedDeals,
   };
 };
 

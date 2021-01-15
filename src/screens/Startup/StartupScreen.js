@@ -10,9 +10,9 @@ import {
   addStartupToPipeline,
 } from "../../redux/ducks/pipeline";
 import {
-  setParkingLotLoading,
-  addStartupToParkingLot,
-} from "../../redux/ducks/parkingLot";
+  setPassedDealsLoading,
+  addStartupToPassedDeals,
+} from "../../redux/ducks/passedDeals";
 import StartupHeader from "../../components/startupHeader";
 import SmallStartupHeader from "../../components/startupSmallHeader";
 import { getTabComponent } from "../../helpers/startupHelper";
@@ -66,9 +66,9 @@ const StartupScreen = ({
   singleStartup,
   addStartupToPipeline,
   getStartupById,
-  addStartupToParkingLot,
+  addStartupToPassedDeals,
   setPipelineLoading,
-  setParkingLotLoading,
+  setPassedDealsLoading,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
@@ -160,8 +160,8 @@ const StartupScreen = ({
       addStartupToPipeline(singleStartup);
       navigation.goBack();
     } else if (route.params?.fromPipeline && !isFavorite) {
-      setParkingLotLoading();
-      addStartupToParkingLot(route.params.startup);
+      setPassedDealsLoading();
+      addStartupToPassedDeals(route.params.startup);
       navigation.goBack();
     } else {
       navigation.goBack();
@@ -335,10 +335,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
     getStartupById: (startupId) => dispatch(getStartupById(startupId)),
-    addStartupToParkingLot: (startup) =>
-      dispatch(addStartupToParkingLot(startup)),
+    addStartupToPassedDeals: (startup) =>
+      dispatch(addStartupToPassedDeals(startup)),
     setPipelineLoading: () => dispatch(setPipelineLoading()),
-    setParkingLotLoading: () => dispatch(setParkingLotLoading()),
+    setPassedDealsLoading: () => dispatch(setPassedDealsLoading()),
   };
 };
 

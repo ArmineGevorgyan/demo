@@ -131,7 +131,7 @@
     "inviteStartup": "Invite Startup",
     "hiddenItemText": "Move to Passed Deals"
   },
-  "parkingLot": {
+  "passedDeals": {
     "hiddenItemText": "Move to Pipeline"
   },
   "profileScreen": {
@@ -140,7 +140,7 @@
     "integration": "Integration",
     "notification": "Notifications",
     "preferences": "Preferences",
-    "parkingLot": "Passed Deals",
+    "passedDeals": "Passed Deals",
     "faq": "FAQ",
     "contactUs": "Contact Us",
     "legal": "Legal",
