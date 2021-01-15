@@ -52,7 +52,7 @@ const EditScreen = ({ t, startup, handleFieldEdit }) => {
         ref={richText}
         initialContentHTML={startup[editingField]}
         onChange={(text) => {
-          if (removeHTML(text).length > 10) {
+          if (removeHTML(text).length > 2000) {
             showNotification(
               constants.notificationTypes.ERROR,
               `${t("validationMessage.maxNumIs")} ${
