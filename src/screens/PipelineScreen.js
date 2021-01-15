@@ -148,7 +148,7 @@ class PipelineScreen extends Component {
           <SwitchSelector
             options={[
               {
-                label: t("pipeline.interested"),
+                label: t("pipeline.watchlist"),
                 value: false,
               },
               {

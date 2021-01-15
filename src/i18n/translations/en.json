@@ -126,7 +126,7 @@
   },
   "pipeline": {
     "title": "Pipeline",
-    "interested": "Interested",
+    "watchlist": "Watchlist",
     "committed": "Committed",
     "inviteStartup": "Invite Startup",
     "hiddenItemText": "Move to Passed Deals"
