@@ -7,6 +7,7 @@ const initialState = {
   faqList: null,
   error: null,
   isModalOpen: false,
+  isInfoSessionSuccessModalOpen: false,
   upcomingInfoSession: null,
   joinedInfoSession: false,
 };
@@ -67,6 +68,14 @@ const infoSessionSlice = createSlice({
       ...state,
       isModalOpen: false,
     }),
+    openInfoSessionSuccessModal: (state) => ({
+      ...state,
+      isInfoSessionSuccessModalOpen: true,
+    }),
+    closeInfoSessionSuccessModal: (state) => ({
+      ...state,
+      isInfoSessionSuccessModalOpen: false,
+    }),
   },
 });
 
@@ -78,9 +87,21 @@ export const closeInfoSessionModal = () => {
   };
 };
 
-export const openInfoSessionModal = (item) => {
+export const openInfoSessionModal = () => {
   return (dispatch) => {
-    dispatch(infoSessionSlice.actions.openInfoSessionModal(item));
+    dispatch(infoSessionSlice.actions.openInfoSessionModal());
+  };
+};
+
+export const closeInfoSessionSuccessModal = () => {
+  return (dispatch) => {
+    dispatch(infoSessionSlice.actions.closeInfoSessionSuccessModal());
+  };
+};
+
+export const openInfoSessionSuccessModal = () => {
+  return (dispatch) => {
+    dispatch(infoSessionSlice.actions.openInfoSessionSuccessModal());
   };
 };
 
@@ -132,6 +153,7 @@ export const joinInfoSession = (id, startupId) => {
       .then(() => {
         dispatch(getUpcomingInfoSession(startupId));
         dispatch(closeInfoSessionModal());
+        dispatch(openInfoSessionSuccessModal());
       })
       .catch((error) => {
         dispatch(infoSessionSlice.actions.joinInfoSessionFail(error));
