@@ -4,19 +4,21 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withTranslation } from "react-i18next";
 import { TabView, TabBar } from "react-native-tab-view";
-import { useNavigation } from "@react-navigation/native";
+import { getStartupById } from "../../redux/ducks/startup";
 import {
-  createStartup,
-  getEntrepreneurStartups,
-  getStartupById,
-  handleFieldEdit,
-  handleFieldSave,
-} from "../redux/ducks/startup";
-import SmallStartupHeader from "../components/startupSmallHeader";
-import { getTabPopulateComponent } from "../helpers/startupHelper";
-import constants from "../constants";
-import { colors } from "../styles/colors";
-import StartupHeaderVideoUploader from "../components/startupHeaderVideoUploader";
+  setPipelineLoading,
+  addStartupToPipeline,
+} from "../../redux/ducks/pipeline";
+import {
+  setParkingLotLoading,
+  addStartupToParkingLot,
+} from "../../redux/ducks/parkingLot";
+import StartupHeader from "../../components/startupHeader";
+import SmallStartupHeader from "../../components/startupSmallHeader";
+import { getTabComponent } from "../../helpers/startupHelper";
+import constants from "../../constants";
+import { colors } from "../../styles/colors";
+import { Spinner } from "native-base";
 
 const TabScene = ({
   renderItem,
@@ -57,22 +59,19 @@ const TabScene = ({
   );
 };
 
-const StartupPopulateScreen = ({
+const StartupScreen = ({
   t,
   route,
-  entrepreneurStartups,
+  navigation,
+  singleStartup,
+  addStartupToPipeline,
   getStartupById,
-  getEntrepreneurStartups,
-  createStartup,
-  handleFieldEdit,
-  handleFieldSave,
+  addStartupToParkingLot,
+  setPipelineLoading,
+  setParkingLotLoading,
 }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
   const [tabIndex, setIndex] = useState(route?.params?.initialIndex || 0);
-
-  useEffect(() => getEntrepreneurStartups(), []);
-
-  const navigation = useNavigation();
-  const startup = entrepreneurStartups && entrepreneurStartups[0];
 
   const [routes] = useState([
     { key: "overview", title: t("startupTab.overview") },
@@ -82,9 +81,8 @@ const StartupPopulateScreen = ({
     { key: "discussions", title: t("startupTab.discussions") },
     { key: "faq", title: t("startupTab.faq") },
     { key: "videos", title: t("startupTab.videos") },
+    { key: "updates", title: t("startupTab.updates") },
   ]);
-
-  const [startupName, setStartupName] = useState(startup?.name);
 
   const scrollY = useRef(new Animated.Value(0)).current;
   let listRefArr = useRef([]);
@@ -92,7 +90,14 @@ const StartupPopulateScreen = ({
   let isListGliding = useRef(false);
 
   useEffect(() => {
-    getEntrepreneurStartups();
+    if (route.params.startup) {
+      getStartupById(route.params.startup.id);
+    } else {
+      getStartupById(route.params.startupId);
+    }
+    if (route.params?.fromPipeline) {
+      setIsFavorite(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -149,16 +154,21 @@ const StartupPopulateScreen = ({
     syncScrollOffset();
   };
 
-  const setVideo = (video) => {
-    createStartup({ demoVideoUrl: video });
+  const goBack = () => {
+    if (isFavorite) {
+      setPipelineLoading();
+      addStartupToPipeline(singleStartup);
+      navigation.goBack();
+    } else if (route.params?.fromPipeline && !isFavorite) {
+      setParkingLotLoading();
+      addStartupToParkingLot(route.params.startup);
+      navigation.goBack();
+    } else {
+      navigation.goBack();
+    }
   };
 
-  const updateStartup = (key, value) => {
-    handleFieldEdit(key, value, startup?.id);
-    handleFieldSave(key, startup?.id);
-  };
-
-  const renderHeader = (startup) => {
+  const renderHeader = (startup, navigation) => {
     const y = scrollY.interpolate({
       inputRange: [0, 200, constants.startupHeaderHeight],
       outputRange: [0, -200, -constants.startupHeaderHeight / 1.5],
@@ -172,30 +182,39 @@ const StartupPopulateScreen = ({
     });
 
     return (
-      <>
-        <Animated.View
-          style={[styles.header, { transform: [{ translateY: y }] }]}
-        >
-          <StartupHeaderVideoUploader
-            startup={startup}
-            updateStartup={updateStartup}
-            setVideo={setVideo}
-          />
-        </Animated.View>
+      <Animated.View
+        style={[styles.header, { transform: [{ translateY: y }] }]}
+      >
+        <StartupHeader
+          isFavorite={isFavorite}
+          startup={startup}
+          navigation={navigation}
+          goBack={goBack}
+          setIsFavorite={(isFavorite) => {
+            setIsFavorite(isFavorite);
+          }}
+        />
         <Animated.View
           style={[
             { opacity: opacity },
             {
               position: "absolute",
-              top: 0,
+              bottom: 0,
               width: "100%",
               height: 100,
             },
           ]}
         >
-          <SmallStartupHeader startup={startup} updateStartup={updateStartup} />
+          <SmallStartupHeader
+            isFavorite={isFavorite}
+            name={startup.name}
+            goBack={goBack}
+            setIsFavorite={(isFavorite) => {
+              setIsFavorite(isFavorite);
+            }}
+          />
         </Animated.View>
-      </>
+      </Animated.View>
     );
   };
 
@@ -207,28 +226,36 @@ const StartupPopulateScreen = ({
     );
   };
 
-  const renderScene = ({ route }, startup, navigation) => (
-    <TabScene
-      renderItem={() =>
-        getTabPopulateComponent(route.key, startup, navigation, tabIndex)
-      }
-      scrollY={scrollY}
-      onMomentumScrollBegin={onMomentumScrollBegin}
-      onScrollEndDrag={onScrollEndDrag}
-      onMomentumScrollEnd={onMomentumScrollEnd}
-      onGetRef={(ref) => {
-        if (ref) {
-          const found = listRefArr.current.find((e) => e.key === route.key);
-          if (!found) {
-            listRefArr.current.push({
-              key: route.key,
-              value: ref,
-            });
-          }
+  const renderScene = ({ route }, startup, navigation) => {
+    return (
+      <TabScene
+        renderItem={() =>
+          getTabComponent(
+            route.key,
+            startup,
+            navigation,
+            tabIndex,
+            !!route.params?.startupId
+          )
         }
-      }}
-    />
-  );
+        scrollY={scrollY}
+        onMomentumScrollBegin={onMomentumScrollBegin}
+        onScrollEndDrag={onScrollEndDrag}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        onGetRef={(ref) => {
+          if (ref) {
+            const found = listRefArr.current.find((e) => e.key === route.key);
+            if (!found) {
+              listRefArr.current.push({
+                key: route.key,
+                value: ref,
+              });
+            }
+          }
+        }}
+      />
+    );
+  };
 
   const renderTabBar = (props) => {
     const y = scrollY.interpolate({
@@ -267,53 +294,58 @@ const StartupPopulateScreen = ({
     );
   };
 
-  const renderTabView = (startup, navigation) => (
-    <TabView
-      onIndexChange={(index) => setIndex(index)}
-      navigationState={{ index: tabIndex, routes }}
-      renderScene={(e) => renderScene(e, startup, navigation)}
-      renderTabBar={renderTabBar}
-      initialLayout={{
-        height: 0,
-        width: Dimensions.get("window").width,
-      }}
-    />
-  );
+  const renderTabView = (startup, navigation) => {
+    return (
+      <TabView
+        onIndexChange={(index) => setIndex(index)}
+        navigationState={{ index: tabIndex, routes }}
+        renderScene={(e) => renderScene(e, startup, navigation)}
+        renderTabBar={renderTabBar}
+        initialLayout={{
+          height: 0,
+          width: Dimensions.get("window").width,
+        }}
+      />
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
-      {renderTabView(startup, navigation)}
-      {renderHeader(startup)}
+      {singleStartup ? (
+        <>
+          {renderTabView(singleStartup, navigation)}
+          {renderHeader(singleStartup, navigation)}
+        </>
+      ) : (
+        <Spinner color={colors.secondaryColor} />
+      )}
     </View>
   );
 };
 
 const mapStateToProps = (state, props) => {
-  const startups = state.startup.startups;
-  const { entrepreneurStartups } = state.startup;
+  const singleStartup = state.startup.singleStartup;
 
   return {
-    startups,
-    entrepreneurStartups,
+    singleStartup,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
     getStartupById: (startupId) => dispatch(getStartupById(startupId)),
-    getEntrepreneurStartups: () => dispatch(getEntrepreneurStartups()),
-    handleFieldEdit: (key, value, startupId) =>
-      dispatch(handleFieldEdit(key, value, startupId)),
-    handleFieldSave: (key, startupId) =>
-      dispatch(handleFieldSave(key, startupId)),
-    createStartup: (data) => dispatch(createStartup(data)),
+    addStartupToParkingLot: (startup) =>
+      dispatch(addStartupToParkingLot(startup)),
+    setPipelineLoading: () => dispatch(setPipelineLoading()),
+    setParkingLotLoading: () => dispatch(setParkingLotLoading()),
   };
 };
 
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(StartupPopulateScreen);
+)(StartupScreen);
 
 const styles = StyleSheet.create({
   header: {

@@ -7,18 +7,18 @@ import {
   FlatList,
   TouchableHighlight,
 } from "react-native";
-import { uploadFile } from "../../redux/ducks/fileUploader";
-import { handleFieldEdit, handleFieldSave } from "../../redux/ducks/startup";
+import { uploadFile } from "../../../redux/ducks/fileUploader";
+import { handleFieldEdit, handleFieldSave } from "../../../redux/ducks/startup";
 import { connect } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
 import { Content, Spinner } from "native-base";
 import { withTranslation } from "react-i18next";
-import StartupTextBlock from "../../components/startupTextBlock";
-import { baseStylesheet } from "../../styles/baseStylesheet";
-import { colors } from "../../styles/colors";
-import AddVideoIcon from "../../../assets/video-add.svg";
+import StartupTextBlock from "../../../components/startupTextBlock";
+import { baseStylesheet } from "../../../styles/baseStylesheet";
+import { colors } from "../../../styles/colors";
+import AddVideoIcon from "../../../../assets/video-add.svg";
 
-const EntrepreneurProduct = ({
+const EntrepreneurProductScreen = ({
   startup,
   t,
   navigation,
@@ -147,7 +147,7 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(EntrepreneurProduct);
+)(EntrepreneurProductScreen);
 
 const styles = StyleSheet.create({
   mainText: {
