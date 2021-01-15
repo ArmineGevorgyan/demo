@@ -44,17 +44,17 @@ import LegalScreen from "./src/screens/LegalScreen";
 import LegalDocumentScreen from "./src/screens/LegalDocumentScreen";
 import InvestorProfileScreen from "./src/screens/InvestorProfileScreen";
 import EntProfileEditScreen from "./src/screens/EntProfileEditScreen";
-import StartupScreen from "./src/screens/StartupScreen";
+import StartupScreen from "./src/screens/Startup/StartupScreen";
 import DiscussionsScreen from "./src/screens/DiscussionsScreen";
-import TeamScreen from "./src/screens/TeamScreen";
-import InvestorProduct from "./src/screens/Product/InvestorProduct";
+import InvestorTeamScreen from "./src/screens/Startup/Team/InvestorTeamScreen";
+import InvestorProductScreen from "./src/screens/Startup/Product/InvestorProductScreen";
 import CompanyScreen from "./src/screens/CompanyScreen";
 import NewDiscussionScreen from "./src/screens/NewDiscussionScreen";
 import OverviewScreen from "./src/screens/OverviewScreen";
 import Notifications from "./src/screens/NotificationsScreen";
 import { isEntrepreneur } from "./src/helpers/userTypeHelper";
 import CEOProfileScreen from "./src/screens/CEOProfileScreen";
-import StartupPopulateScreen from "./src/screens/StartupPopulateScreen";
+import StartupPopulateScreen from "./src/screens/Startup/StartupPopulateScreen";
 import UpdatesScreen from "./src/screens/UpdatesScreen";
 import SingleUpdateScreen from "./src/screens/SingleUpdateScreen";
 
@@ -172,12 +172,18 @@ class AppNavigator extends Component {
           <Stack.Screen name="ContactUsSuccess" component={ContactUsSuccess} />
           <Stack.Screen name="FAQScreen" component={FAQScreen} />
           <Stack.Screen name="LegalScreen" component={LegalScreen} />
-          <Stack.Screen name="TeamScreen" component={TeamScreen} />
+          <Stack.Screen
+            name="InvestorTeamScreen"
+            component={InvestorTeamScreen}
+          />
           <Stack.Screen
             name="DiscussionsScreen"
             component={DiscussionsScreen}
           />
-          <Stack.Screen name="ProductScreen" component={InvestorProduct} />
+          <Stack.Screen
+            name="InvestorProductScreen"
+            component={InvestorProductScreen}
+          />
           <Stack.Screen name="CompanyScreen" component={CompanyScreen} />
           <Stack.Screen
             name="NewDiscussionScreen"
