@@ -9,36 +9,36 @@ import GrayHeader from "../components/grayHeader";
 import { colors } from "../styles/colors";
 import { baseStylesheet } from "../styles/baseStylesheet";
 import {
-  getParkingLotStartups,
+  getPassedDealsStartups,
   getMoreStartups,
   removeCard,
-} from "../redux/ducks/parkingLot";
+} from "../redux/ducks/passedDeals";
 import BackgroundImageCard from "../components/backgroundImageCard";
 import constants from "../constants";
 import { isInvestor } from "../helpers/userTypeHelper";
 
-class ParkingLotScreen extends Component {
+class PassedDealsScreen extends Component {
   componentDidMount() {
     const {
-      getParkingLotStartups,
+      getPassedDealsStartups,
       navigation,
-      addingToParkingLot,
+      addingToPassedDeals,
       addingToPipeline,
     } = this.props;
 
     navigation.addListener("focus", () => {
-      if (!addingToParkingLot && !addingToPipeline) {
-        getParkingLotStartups();
+      if (!addingToPassedDeals && !addingToPipeline) {
+        getPassedDealsStartups();
       }
     });
   }
 
   componentDidUpdate(prevProps) {
     if (
-      (prevProps.addingToParkingLot && !this.props.addingToParkingLot) ||
+      (prevProps.addingToPassedDeals && !this.props.addingToPassedDeals) ||
       (prevProps.addingToPipeline && !this.props.addingToPipeline)
     ) {
-      this.props.getParkingLotStartups();
+      this.props.getPassedDealsStartups();
     }
   }
 
@@ -48,7 +48,7 @@ class ParkingLotScreen extends Component {
         <View style={styles.hiddenCard}>
           <Icon type="Feather" name="star" style={styles.icon} />
           <Text style={styles.hiddenText}>
-            {this.props.t("parkingLot.hiddenItemText")}
+            {this.props.t("passedDeals.hiddenItemText")}
           </Text>
         </View>
       </View>
@@ -85,7 +85,7 @@ class ParkingLotScreen extends Component {
       loadingMore,
       nextPage,
       noMoreStartups,
-      addingToParkingLot,
+      addingToPassedDeals,
       addingToPipeline,
     } = this.props;
 
@@ -97,7 +97,7 @@ class ParkingLotScreen extends Component {
       if (noMoreStartups) {
         return;
       }
-      if (!addingToParkingLot && !addingToPipeline) {
+      if (!addingToPassedDeals && !addingToPipeline) {
         getMoreStartups(nextPage);
       }
     };
@@ -131,7 +131,7 @@ class ParkingLotScreen extends Component {
     return (
       <View style={baseStylesheet.baseContainer}>
         <GrayHeader
-          title="Parking Lot"
+          title="Passed Deals"
           enableSearch
           enableBell={isInvestor(user?.authorities[0])}
           backButtonHandler={this.backButtonHandler}
@@ -143,13 +143,13 @@ class ParkingLotScreen extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  const startups = state.parkingLot.startups;
-  const isLoading = state.parkingLot.isLoading;
-  const loadingMore = state.parkingLot.loadingMore;
-  const nextPage = state.parkingLot.nextPage;
-  const noMoreStartups = state.parkingLot.noMoreStartups;
+  const startups = state.passedDeals.startups;
+  const isLoading = state.passedDeals.isLoading;
+  const loadingMore = state.passedDeals.loadingMore;
+  const nextPage = state.passedDeals.nextPage;
+  const noMoreStartups = state.passedDeals.noMoreStartups;
   const user = state.user.userData;
-  const addingToParkingLot = state.parkingLot.addingToParkingLot;
+  const addingToPassedDeals = state.passedDeals.addingToPassedDeals;
   const addingToPipeline = state.pipeline.addingToPipeline;
 
   return {
@@ -159,14 +159,14 @@ const mapStateToProps = (state, props) => {
     nextPage,
     noMoreStartups,
     user,
-    addingToParkingLot,
+    addingToPassedDeals,
     addingToPipeline,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getParkingLotStartups: () => dispatch(getParkingLotStartups()),
+    getPassedDealsStartups: () => dispatch(getPassedDealsStartups()),
     getMoreStartups: (page) => dispatch(getMoreStartups(page)),
     removeCard: (startupId) => dispatch(removeCard(startupId)),
   };
@@ -175,7 +175,7 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
   withTranslation("translations"),
   connect(mapStateToProps, mapDispatchToProps)
-)(ParkingLotScreen);
+)(PassedDealsScreen);
 
 const styles = StyleSheet.create({
   inviteButton: {

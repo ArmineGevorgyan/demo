@@ -126,12 +126,12 @@
   },
   "pipeline": {
     "title": "Pipeline",
-    "interested": "Interested",
+    "watchlist": "Watchlist",
     "committed": "Committed",
     "inviteStartup": "Invite Startup",
-    "hiddenItemText": "Move to Parking Lot"
+    "hiddenItemText": "Move to Passed Deals"
   },
-  "parkingLot": {
+  "passedDeals": {
     "hiddenItemText": "Move to Pipeline"
   },
   "profileScreen": {
@@ -140,7 +140,7 @@
     "integration": "Integration",
     "notification": "Notifications",
     "preferences": "Preferences",
-    "parkingLot": "Parking Lot",
+    "passedDeals": "Passed Deals",
     "faq": "FAQ",
     "contactUs": "Contact Us",
     "legal": "Legal",
@@ -345,6 +345,10 @@
     "infoSession": "Info Session",
     "call": "Book a Call"
   },
+  "validationMessage": {
+    "maxNumIs": "The maximum number of characters is 2000. Currently there are",
+    "characters": "characters"
+  },
   "infoSessionModal": {
     "infoSession": "Info Session",
     "date": "Info session date",
@@ -374,7 +378,7 @@
     "entrepreneur": "Entrepreneur",
     "update": "Update"
   },
-  "joinInfoSessionSuccess":{
+  "joinInfoSessionSuccess": {
     "contextHeading": "You have successfully joined the info session.",
     "context": "Please check your email for a calendar invite",
     "OKButton": "Close"

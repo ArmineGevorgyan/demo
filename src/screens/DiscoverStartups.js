@@ -10,7 +10,7 @@ import SmallStartupCard from "../components/smallStartupCard";
 import GrayHeader from "../components/grayHeader";
 import SwitchSelector from "../components/switchSelector";
 import { getNewStartups, toggleIsEmpty } from "../redux/ducks/startup";
-import { addStartupToParkingLot } from "../redux/ducks/parkingLot";
+import { addStartupToPassedDeals } from "../redux/ducks/passedDeals";
 import { addStartupToPipeline } from "../redux/ducks/pipeline";
 import { colors } from "../styles/colors";
 import EmptyList from "../components/emptyList";
@@ -23,12 +23,12 @@ class DiscoverStartups extends Component {
       getNewStartups,
       navigation,
       addingToPipeline,
-      addingToParkingLot,
+      addingToPassedDeals,
     } = this.props;
 
     navigation.addListener("focus", () => {
       setTimeout(() => {
-        if (!addingToPipeline || !addingToParkingLot) {
+        if (!addingToPipeline || !addingToPassedDeals) {
           getNewStartups();
         }
       }, 0);
@@ -38,7 +38,7 @@ class DiscoverStartups extends Component {
   swipeLeft = (index) => {
     const { startups, toggleIsEmpty } = this.props;
     let card = startups[index];
-    this.props.addStartupToParkingLot(card);
+    this.props.addStartupToPassedDeals(card);
     if (index === startups.length - 1) {
       toggleIsEmpty();
     }
@@ -126,7 +126,7 @@ const mapStateToProps = (state, props) => {
   const isEmpty = state.startup.isEmpty;
   const user = state.user.userData;
   const addingToPipeline = state.pipeline.addingToPipeline;
-  const addingToParkingLot = state.parkingLot.addingToParkingLot;
+  const addingToPassedDeals = state.passedDeals.addingToPassedDeals;
 
   return {
     startups,
@@ -134,15 +134,15 @@ const mapStateToProps = (state, props) => {
     isEmpty,
     user,
     addingToPipeline,
-    addingToParkingLot,
+    addingToPassedDeals,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getNewStartups: () => dispatch(getNewStartups()),
-    addStartupToParkingLot: (startup) =>
-      dispatch(addStartupToParkingLot(startup)),
+    addStartupToPassedDeals: (startup) =>
+      dispatch(addStartupToPassedDeals(startup)),
     addStartupToPipeline: (startup) => dispatch(addStartupToPipeline(startup)),
     toggleIsEmpty: () => dispatch(toggleIsEmpty()),
   };

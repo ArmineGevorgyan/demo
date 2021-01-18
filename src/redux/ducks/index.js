@@ -14,7 +14,7 @@ import tcSlice from "./termsAndConditions";
 import copyRightSlice from "./copyright";
 import startupSlice from "./startup";
 import pipelineSlice from "./pipeline";
-import parkingLotSlice from "./parkingLot";
+import passedDealsSlice from "./passedDeals";
 import userSlice from "./user";
 import contactSlice from "./contact";
 import entrepreneurProfileSlice from "./entrepreneurProfile";
@@ -40,7 +40,7 @@ const appReducer = combineReducers({
   copyright: copyRightSlice,
   startup: startupSlice,
   pipeline: pipelineSlice,
-  parkingLot: parkingLotSlice,
+  passedDeals: passedDealsSlice,
   user: userSlice,
   contactRequest: contactSlice,
   entrepreneurProfile: entrepreneurProfileSlice,

@@ -50,10 +50,10 @@ const investorData = [
     },
     {
       id: 5,
-      value: "parkingLot",
+      value: "passedDeals",
       svg: <ParkingLotIcon />,
       backgroundColor: colors.profileSection2,
-      to: "ParkingLotScreen",
+      to: "PassedDealsScreen",
     },
   ],
   [
