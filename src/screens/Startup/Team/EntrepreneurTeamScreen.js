@@ -46,7 +46,7 @@ const EntrepreneurTeamScreen = ({ t, startup, navigation, profile }) => {
         renderItem={({ item: { titleText, content }, index }) => (
           <StartupTextBlock
             navigate={navigation.navigate}
-            navigateTo="NewCofounderScreen"
+            navigateTo="EditScreen"
             fieldName={titleText}
             titleText={`teamScreen.${titleText}`}
             content={content}
