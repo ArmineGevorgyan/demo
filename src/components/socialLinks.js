@@ -11,36 +11,46 @@ const openBrowser = async (profileUrl) => {
   await WebBrowser.openBrowserAsync(profileUrl);
 };
 
-export const linkedin = (profileUrl) =>
+export const linkedin = (profileUrl, noText) =>
   profileUrl && (
     <TouchableOpacity
       style={styles.social}
       onPress={() => openBrowser(profileUrl)}
     >
       <Linkedin />
-      <Text style={styles.link}>{i18n.t("socialLinks.linkedinProfile")}</Text>
+      {!noText && (
+        <Text style={styles.link}>{i18n.t("socialLinks.linkedinProfile")}</Text>
+      )}
     </TouchableOpacity>
   );
 
-export const crunchbase = (profileUrl) =>
+export const crunchbase = (profileUrl, noText) =>
   profileUrl && (
     <TouchableOpacity
       style={styles.social}
       onPress={() => openBrowser(profileUrl)}
     >
       <Crunchbase />
-      <Text style={styles.link}>{i18n.t("socialLinks.crunchbaseProfile")}</Text>
+      {!noText && (
+        <Text style={styles.link}>
+          {i18n.t("socialLinks.crunchbaseProfile")}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 
-export const angellist = (profileUrl) =>
+export const angellist = (profileUrl, noText) =>
   profileUrl && (
     <TouchableOpacity
       style={styles.social}
       onPress={() => openBrowser(profileUrl)}
     >
       <Angellist />
-      <Text style={styles.link}>{i18n.t("socialLinks.angelListProfile")}</Text>
+      {!noText && (
+        <Text style={styles.link}>
+          {i18n.t("socialLinks.angelListProfile")}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 
@@ -48,10 +58,10 @@ const styles = StyleSheet.create({
   social: {
     flexDirection: "row",
     marginBottom: 12,
+    marginRight: 10,
   },
   link: {
     color: colors.lightBlue,
-    marginLeft: 10,
     alignSelf: "center",
   },
 });
