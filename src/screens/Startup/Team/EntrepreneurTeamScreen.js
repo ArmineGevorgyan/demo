@@ -89,7 +89,7 @@ const EntrepreneurTeamScreen = ({ t, startup, navigation, profile }) => {
           <Text style={styles.profileText}>{t("teamScreen.ceo")}</Text>
           <Text>{profile.bio}</Text>
           <View style={styles.social}>
-            {linkedin(profile.linkedinProfil, true)}
+            {linkedin(profile.linkedinProfile, true)}
             {crunchbase(profile.crunchbaseProfile, true)}
             {angellist(profile.angelListProfile, true)}
           </View>
@@ -107,7 +107,7 @@ const EntrepreneurTeamScreen = ({ t, startup, navigation, profile }) => {
         <>
           <Icon name="plus" type="SimpleLineIcons" style={styles.plusIcon} />
           <Text style={styles.addProductText}>
-            {t("productScreen.addMoreProducts")}
+            {t("teamScreen.addMoreFounders")}
           </Text>
         </>
       </TouchableHighlight>
