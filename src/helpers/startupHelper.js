@@ -130,7 +130,11 @@ export const getTabPopulateComponent = (key, startup, navigation, index) => {
     case "team": {
       return (
         <EmptyContainer>
-          {index === 2 ? <EntrepreneurTeamScreen /> : <></>}
+          {index === 2 ? (
+            <EntrepreneurTeamScreen startup={startup} navigation={navigation} />
+          ) : (
+            <></>
+          )}
         </EmptyContainer>
       );
     }

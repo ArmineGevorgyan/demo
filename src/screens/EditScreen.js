@@ -56,9 +56,9 @@ const EditScreen = ({ t, startup, handleFieldEdit }) => {
           if (length > 2000) {
             showNotification(
               constants.notificationTypes.ERROR,
-              `${t("validationMessage.maxNumIs")} ${
-                length
-              } ${t("validationMessage.characters")}`,
+              `${t("validationMessage.maxNumIs")} ${length} ${t(
+                "validationMessage.characters"
+              )}`,
               2000
             );
             return;
